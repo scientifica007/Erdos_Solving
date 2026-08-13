@@ -10,13 +10,25 @@ The earlier candidate `PATH-214-A` was retracted because its claimed red square 
 
 Reformulate as a 2-colouring: blue = S, red = complement. Blue has no unit-distance pair; every unit square must contain at least one blue point if no red unit square exists.
 
-We searched for a small finite obstruction built from overlapping unit squares and unit-distance constraints. Simple axis-aligned grids and small mixtures of rotated grids did not yield an immediate contradiction.
+A stronger consequence is now established:
+
+### LEMMA-214-R1-001 — Exact one-blue-per-unit-square
+
+Under the assumption that there is no red unit square, every unit square contains exactly one blue vertex.
+
+Proof: it contains at least one blue vertex. It cannot contain two blue vertices, because any two distinct vertices of a unit square that are adjacent are distance 1, while the two diagonal vertices are distance sqrt(2); hence the only possible pair of blue vertices in a unit square would have to be adjacent, contradicting the defining property of S. Therefore exactly one vertex is blue. 
+
+## Computational exploration
+
+We tested finite configurations consisting of overlapping axis-aligned unit squares and mixtures of rotated unit squares. No infeasible finite color system was found in the tested small configurations.
+
+This is exploratory evidence only and is not a proof of the existence or non-existence of a finite obstruction.
 
 ## Current conclusion
 
-No finite obstruction or valid candidate proof has been found in Restart 01.
+No valid candidate proof has been found in Restart 01.
 
-This is recorded as an exploration result only; no theorem is claimed.
+The exact-one-blue-per-unit-square reformulation is the current central invariant. The next search should derive propagation rules from overlapping squares rather than merely enumerate small grids.
 
 ## Status
 
