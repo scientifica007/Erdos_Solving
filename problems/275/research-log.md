@@ -12,27 +12,37 @@ Reference solution has not been consulted.
 
 A system of $r$ congruences is a finite union of arithmetic progressions. We are told that its union contains $2^r$ consecutive integers. The target is to prove that the complement is empty globally.
 
-A useful normalization is to translate the alleged uncovered integer to $0$ if a counterexample exists. Then the system covers an interval of $2^r$ integers immediately adjacent to an uncovered point.
-
-The main unresolved issue is how to convert the finite interval coverage into a recursive reduction from $r$ congruences to $r-1$ congruences without consulting the known proof.
-
 ### Candidate Path A — counting only
 
-For a congruence modulo $n$, an interval of length $2^r$ contains roughly $2^r/n$ members of that class. Density estimates alone do not immediately imply global coverage because the moduli may overlap heavily.
+Density estimates alone do not immediately imply global coverage because the moduli may overlap heavily.
 
-Status: **OPEN / insufficient**.
+Status: **REJECTED / insufficient**.
 
 ### Candidate Path B — inductive reduction by parity
 
-If some modulus is even, splitting the interval into even and odd positions suggests reducing the number of relevant congruences after fixing a parity class. However, a complete reduction has not yet been established because the congruences with odd moduli behave differently under parity restriction.
+Parity splitting suggests a reduction, but odd and even moduli do not transform uniformly under the split.
 
-Status: **PROMISING / NOT PROOF**.
+Status: **REJECTED / incomplete**.
 
 ### Candidate Path C — minimal counterexample
 
-Assume an integer $x$ is uncovered. The $2^r$ consecutive integers following $x$ are all covered. The next target is to exploit the first point at which each covering progression appears and derive a binary branching contradiction with only $r$ progressions.
+Assuming an uncovered integer and using the covered block following it suggested a recursive/binary argument, but no complete reduction was obtained.
 
-Status: **PROMISING / NOT PROOF**.
+Status: **REJECTED / incomplete**.
+
+### Candidate Path D — exponential-polynomial encoding
+
+For each modulus $n_i>1$, let $\omega_i=e^{2\pi i/n_i}$ and define
+\[
+F(m)=\prod_{i=1}^r(1-\omega_i^{m-a_i}).
+\]
+Every covered integer is a zero of $F$. Expanding the product expresses $F$ as an exponential polynomial with at most $2^r$ distinct bases.
+
+A Vandermonde zero lemma shows that an exponential polynomial with $M$ distinct nonzero bases cannot have $M$ consecutive zeros unless it is identically zero. Since the covered block has $2^r$ consecutive zeros and $M\le2^r$, this gives $F\equiv0$.
+
+If an uncovered integer $m_0$ existed, every factor in $F(m_0)$ would be nonzero, contradicting $F(m_0)=0$.
+
+Status: **CANDIDATE PROOF FOUND — READY FOR INDEPENDENT AUDIT**.
 
 ## Integrity
 
@@ -43,6 +53,4 @@ Status: **PROMISING / NOT PROOF**.
 
 ## Status
 
-**Candidate proof: NONE.**
-
-The experiment is at structural exploration. No claim of solution has been made.
+**Candidate proof: READY FOR AUDIT.**
