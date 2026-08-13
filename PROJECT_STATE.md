@@ -10,15 +10,16 @@ This file is the operational memory checkpoint for the project. Read it before r
 - Distinguish problem-level status from variants, known sub-results, formalized statements, and formalized proofs.
 - During a blind challenge, do not consult the historical solution, solution discussions, or papers specifically proving the target statement before proof freeze.
 - If a candidate proof fails audit, revoke its freeze explicitly and record the failure; never silently overwrite the history.
+- A benchmark with a defective or ambiguous canonical statement is paused before proof search; do not silently repair the statement from memory or from a reference proof.
 
 ## Current project
 
-current_phase: 6
-current_stage: historical-comparison-after-blind-failure
-current_problem: 303
+current_phase: 2
+current_stage: blind-independent-solving
+current_problem: 225
 problem_status: proved-at-problem-level
-blind_mode: false
-reference_solution_accessed: true
+blind_mode: true
+reference_solution_accessed: false
 proof_frozen: false
 
 ## Phase model
@@ -35,29 +36,30 @@ proof_frozen: false
 
 A phase may only advance when its exit criteria are satisfied.
 
-## Current #303 state
+## Current #225 state
 
 canonical_statement: locked
-statement_source: user-supplied canonical text
-selection_reason: third benchmark; short finite-colouring/Diophantine statement; problem-level PROVED (LEAN); mathematically distinct from #1125 and #275
-current_substage: historical-comparison
+statement_source: benchmark README; problem-level statement verified from erdosproblems.com
+selection_reason: fourth benchmark; cleaner than #246, one-line construction problem, problem-level PROVED (LEAN), no specialized machinery expected for the blind attempt
+current_substage: initial-construction-search
 candidate_proof: none
-known_lemmas:
-  - LEMMA-303-001: algebraic parametrization via (b-a)(c-a)=a^2
-  - LEMMA-303-002: it suffices to find n with c(n)=c(n+1)=c(n(n+1))
-rejected_paths:
-  - PATH-303-A: monochromatic unit square in exponent lattice is false for arbitrary finite grid colourings
-  - PATH-303-B: direct polynomial van der Waerden invocation is not justified for the required zero-based configuration
-reference_findings:
-  - Brown–Rödl (1991) prove a general reciprocal-transfer theorem for homogeneous partition-regular systems.
-  - Apply their theorem to the homogeneous linear equation x0=x1+x2, whose distinct monochromatic solvability follows from Rado's theorem.
-  - Compactness plus the lcm construction converts a monochromatic solution in y_i to a monochromatic solution in z_i=S/y_i of the reciprocal equation.
-comparison_record: problems/303/comparison.md
-final_classification: blind-failure-reference-proved
-next_action: consolidate lessons from #303 and update the project's benchmark-selection rules.
+known_lemmas: []
+rejected_paths: []
+reference_findings: []
+comparison_record: pending
+next_action: find an explicit entire non-linear function preserving rationality in both directions
+
+## Benchmark #246 status
+
+#246 has been rejected as a benchmark under the currently published literal statement because $a=1,b=3$ satisfies $(a,b)=1$ but gives only subset sums with ternary digits in $\{0,1\}$, contradicting completeness. The issue is recorded in `problems/246/research-log.md`. No historical proof was used to manufacture a repair.
+
+## Previous completed benchmark outcomes
+
+- #1125: blind proof attempt failed; reference comparison completed; lessons preserved.
+- #275: independent proof audited and frozen before reference access; later classified as equivalent core mechanism.
+- #303: blind attempt failed/incomplete; reference proof by Brown–Rödl identified; lessons preserved.
 
 ## Last checkpoint
 
-The current research log is `problems/303/research-log.md`.
-The blind attempt is explicitly closed as incomplete; its record must not be rewritten with hindsight.
-The reference comparison is complete in `problems/303/comparison.md`.
+The current research log is `problems/225/research-log.md`.
+Blind mode is ON. Historical solution, solution discussion, and formal proof for #225 have not been consulted.
