@@ -11,78 +11,102 @@ Show the stronger statement
 
 This immediately implies Erdős's bound \(h(n!)<n\).
 
-### Key construction
+### Normalized inductive claim
 
-Take any \(r\) with
-\[
-1\le r\le n!.
-\]
-Write
-\[
-r=nq+s,\qquad 0\le s<n.
-\]
-Then
-\[
-q\le (n-1)!
-\]
-because \(r\le n!\).
+To avoid a boundary gap when an Euclidean quotient is zero, use the slightly stronger constructive claim:
 
-Assume inductively that every integer up to \((n-1)!\) is a sum of at most \(n-2\) distinct divisors of \((n-1)!
-\). Let \(D\) be such a divisor set for \(q\).
+> For every \(n\ge2\) and every integer \(m\) with \(0\le m\le n!\), there exists a set \(D\) of distinct divisors of \(n!\) such that \(|D|\le n-1\) and \(m=\sum_{d\in D}d\).
 
-For every \(d\in D\), the integer \(nd\) divides
-\[
-n(n-1)!=n!.
-\]
-Thus the scaled set
-\[
-nD:=\{nd:d\in D\}
-\]
-consists of distinct divisors of \(n!\), and its sum is \(nq\).
+For \(m=0\), take \(D=\varnothing\).
 
-If \(s=0\), this already represents \(r\) using at most \(n-2\) divisors.
+This claim implies \(h(n!)\le n-1\).
 
-If \(s>0\), then \(s<n\), hence \(s\mid n!\). Moreover no element of \(nD\) equals \(s\): every element of \(nD\) is divisible by \(n\), while \(0<s<n\). Therefore
+### Base case: \(n=2\)
+
+The divisors of \(2!=2\) are \(1,2\). The numbers \(0,1,2\) are represented respectively by
+
+- \(\varnothing\),
+- \(\{1\}\),
+- \(\{2\}\).
+
+Thus the claim holds with at most \(1=2-1\) divisor.
+
+### Inductive step
+
+Assume the claim for \(n-1\), where \(n\ge3\). Let
 \[
- nD\cup\{s\}
+0\le m\le n!.
 \]
-is a set of distinct divisors of \(n!\), with sum
+Write the Euclidean division
 \[
- nq+s=r,
+m=nq+r,\qquad 0\le r<n.
 \]
-and cardinality at most
+Since \(m\le n(n-1)!\), we have
+\[
+q\le (n-1)!.
+\]
+
+By the induction hypothesis there is a set \(D\) of distinct divisors of \((n-1)!\) with
+\[
+q=\sum_{d\in D}d,
+\qquad |D|\le n-2.
+\]
+This includes the case \(q=0\), where we take \(D=\varnothing\).
+
+Define
+\[
+nD:=\{nd:d\in D\}.
+\]
+For each \(d\in D\), since \(d\mid(n-1)!\), we have
+\[
+nd\mid n(n-1)!=n!,
+\]
+so every element of \(nD\) is a divisor of \(n!\). Multiplication by the positive integer \(n\) is injective, so the elements of \(nD\) remain distinct, and
+\[
+\sum_{x\in nD}x=nq.
+\]
+
+If \(r=0\), take the divisor set \(nD\). Its cardinality is at most \(n-2<n-1\), and its sum is \(m\).
+
+If \(r>0\), then
+\[
+1\le r<n,
+\]
+so \(r\mid n!\). Moreover every element of \(nD\) is divisible by \(n\), whereas \(0<r<n\). Hence
+\[
+ r\notin nD.
+\]
+Therefore
+\[
+ nD\cup\{r\}
+\]
+is a set of distinct divisors of \(n!\), and
+\[
+\sum_{x\in nD\cup\{r\}}x=nq+r=m.
+\]
+Its cardinality is at most
 \[
 (n-2)+1=n-1.
 \]
 
-### Base case
+This completes the induction.
 
-For \(n=2\), the divisors of \(2!=2\) are \(1,2\), and both integers \(1,2\) require only one divisor. Hence
-\[
- h(2!)=1=2-1.
-\]
+### Independent critical audit
 
-### Candidate conclusion
+1. **Domain:** the induction has been strengthened to include \(m=0\), closing the \(q=0\) boundary case.
+2. **Quotient bound:** from \(m\le n! = n(n-1)!\), \(q=\lfloor m/n\rfloor\le(n-1)!\).
+3. **Divisor scaling:** \(d\mid(n-1)!\Rightarrow nd\mid n!\).
+4. **Distinctness:** \(d\mapsto nd\) is injective because \(n>0\).
+5. **Remainder divisor:** \(1\le r<n\Rightarrow r\mid n!\).
+6. **Disjointness:** every scaled divisor is a multiple of \(n\), while \(0<r<n\).
+7. **Sum preservation:** the scaled set sums to \(nq\); adjoining \(r\) gives \(nq+r=m\).
+8. **Cardinality:** at most \(n-2\) terms when \(r=0\), and at most \(n-1\) terms when \(r>0\).
+9. **Base case:** checked directly for \(n=2\).
 
-The induction gives
-\[
- h(n!)\le n-1
-\]
-for every \(n\ge2\), hence
-\[
- h(n!)<n.
-\]
-
-### Gap audit
-
-- Quotient bound: verified from \(r\le n!\).
-- Scaled divisors remain divisors of \(n!\): verified.
-- Scaling preserves distinctness: verified because multiplication by positive \(n\) is injective.
-- Remainder is a divisor of \(n!\): verified since \(1\le s<n\).
-- Remainder is disjoint from scaled divisors: verified by divisibility and \(0<s<n\).
-- Number of summands: at most \(n-1\).
-- Base case: verified directly.
+No use was made of the historical/reference proof in constructing this argument.
 
 ## Freeze status
 
-NOT YET FROZEN. The argument is currently a candidate proof and must receive a second independent critical pass before any comparison with the historical/reference proof.
+**FROZEN — candidate proof accepted for comparison.**
+
+The next phase is deliberately separate: retrieve the historical/reference proof and compare it against this independently constructed argument. The comparison must not retroactively alter the frozen proof.
