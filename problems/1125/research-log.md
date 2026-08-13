@@ -8,7 +8,7 @@ The canonical statement is the exact text supplied by the user:
 > \[
 > 2f(x) \leq f(x+h)+f(x+2h)
 > \]
-> for every $x\in \mathbb{R}$ and $h>0$. Must $f$ be monotonic?
+> for every $x\in\mathbb{R}$ and $h>0$. Must $f$ be monotonic?
 
 No stronger, weaker, or paraphrased statement is substituted during the blind phase.
 
@@ -32,7 +32,7 @@ This is suggestive, but applying the hypothesis again at $m$ does not by itself 
 
 For a fixed step $d>0$, write
 \[
-a_n=f(x+nd).
+a_n=f(x+ndd).
 \]
 The hypothesis gives, for every $n\ge0$,
 \[
@@ -44,24 +44,52 @@ or equivalently for increments $b_n=a_{n+1}-a_n$,
 \]
 This one-dimensional recurrence does not by itself force monotonicity on a finite arithmetic progression; finite sequences satisfying these inequalities can still decrease at some locations. Therefore the proof must exploit the fact that the step $h$ is an arbitrary positive real and that different arithmetic progressions interact.
 
-### Current structural observation
+### Path C — negative-increment cascade
 
-A strict descent
+Define
 \[
-f(x)>f(y),\qquad x<y,
+g_h(x):=f(x+h)-f(x).
 \]
-forces midpoint amplification: for $m=(x+y)/2$,
+The hypothesis with step $h/2$ gives
 \[
-f(m)>f(x)>f(y).
+g_h(x)+g_{h/2}(x)\ge0.
 \]
-The open problem is to turn the resulting multiscale amplification into a contradiction without assuming continuity, measurability, local boundedness, or any other regularity condition.
+Suppose $g_h(x)<0$. Since
+\[
+g_h(x)=g_{h/2}(x)+g_{h/2}\!\left(x+\frac h2\right),
+\]
+and $g_{h/2}(x)\ge -g_h(x)>0$, we obtain
+\[
+g_{h/2}\!\left(x+\frac h2\right)
+=g_h(x)-g_{h/2}(x)
+\le 2g_h(x)<0.
+\]
+Thus a negative increment produces a negative increment of half the length, ending at the same right endpoint, with magnitude at least doubled.
 
-## Blind-phase integrity
+Iterating from a hypothetical strict descent $f(x)>f(y)$, with $h=y-x$, gives
+\[
+x_n=y-(y-x)2^{-n}
+\]
+and
+\[
+f(y)-f(x_n)\le 2^n(f(y)-f(x))<0.
+\]
+Hence
+\[
+f(x_n)\to +\infty
+\]
+while $x_n\uparrow y$.
 
-The historical proof, solution discussion, and papers specifically proving the statement have not been consulted for the mathematical construction. Only the problem statement and general structural analysis are being used in the current blind phase.
+This is a genuine structural consequence of non-monotonicity.
+
+### Why the cascade is not yet a contradiction
+
+The conclusion only gives unboundedness above along a sequence approaching $y$. Because no continuity, measurability, or local boundedness is assumed, this alone is compatible with $f(y)\in\mathbb R$.
+
+The next target is to exploit the fact that the inequality holds for **all positive real step sizes simultaneously**, so that the blow-up generated along one dyadic chain must interact with other arithmetic progressions and eventually force incompatible bounds at a fixed point.
 
 ## Status
 
 **Candidate proof: NOT FROZEN.**
 
-The problem remains in the structural-analysis phase. Any future argument must explicitly close the regularity-free gap before being treated as a proof.
+The negative-increment cascade is retained as a structural lemma, not as a proof. No historical/reference proof has been consulted during this independent phase.
