@@ -32,7 +32,7 @@ This is suggestive, but applying the hypothesis again at $m$ does not by itself 
 
 For a fixed step $d>0$, write
 \[
-a_n=f(x+ndd).
+a_n=f(x+nd).
 \]
 The hypothesis gives, for every $n\ge0$,
 \[
@@ -44,7 +44,15 @@ or equivalently for increments $b_n=a_{n+1}-a_n$,
 \]
 This one-dimensional recurrence does not by itself force monotonicity on a finite arithmetic progression; finite sequences satisfying these inequalities can still decrease at some locations. Therefore the proof must exploit the fact that the step $h$ is an arbitrary positive real and that different arithmetic progressions interact.
 
-### Path C — negative-increment cascade
+### Lemma LEMMA-1125-001 — midpoint amplification
+
+If $x<y$ and $f(x)>f(y)$, then for $m=(x+y)/2$,
+\[
+f(m)>f(x)>f(y).
+\]
+This follows directly from the hypothesis with $h=(y-x)/2$.
+
+### Lemma LEMMA-1125-002 — negative-increment cascade
 
 Define
 \[
@@ -82,14 +90,34 @@ while $x_n\uparrow y$.
 
 This is a genuine structural consequence of non-monotonicity.
 
+### Lemma LEMMA-1125-003 — all positive rational steps on an affine rational orbit
+
+Fix $x\in\mathbb R$ and $d>0$. For the sequence
+\[
+a_q:=f(x+qd),\qquad q\in\mathbb Q,
+\]
+the original hypothesis implies, for every $q\in\mathbb Q$ and every rational $r>0$,
+\[
+2a_q\le a_{q+r}+a_{q+2r}.
+\]
+Thus after restricting to any affine copy of $\mathbb Q$, the condition remains available simultaneously at **all rational positive step sizes**, not merely at one fixed lattice step. This is the first explicit point where the interaction between different arithmetic progressions enters the blind analysis.
+
+### Computational exploration — no finite certificate found
+
+A finite linear-programming search over several dyadic rational grids was used only as exploratory guidance. No nonnegative finite combination of the local inequalities on the tested grids produced a direct certificate of $f(0)\le f(1)$. This is not a mathematical impossibility result; it only indicates that a short finite linear-combination proof is unlikely to appear on those grids.
+
 ### Why the cascade is not yet a contradiction
 
 The conclusion only gives unboundedness above along a sequence approaching $y$. Because no continuity, measurability, or local boundedness is assumed, this alone is compatible with $f(y)\in\mathbb R$.
 
-The next target is to exploit the fact that the inequality holds for **all positive real step sizes simultaneously**, so that the blow-up generated along one dyadic chain must interact with other arithmetic progressions and eventually force incompatible bounds at a fixed point.
+The next target is to exploit Lemma LEMMA-1125-003: the blow-up generated along one dyadic chain must interact with other rational-step progressions and eventually force incompatible bounds at a fixed point.
+
+## Blind-phase integrity
+
+The historical proof, solution discussion, and papers specifically proving the statement have not been consulted for the mathematical construction. Only the user-supplied canonical statement, standard mathematical knowledge, and exploratory computation have been used.
 
 ## Status
 
 **Candidate proof: NOT FROZEN.**
 
-The negative-increment cascade is retained as a structural lemma, not as a proof. No historical/reference proof has been consulted during this independent phase.
+The current research state consists of structural lemmas only. No historical/reference proof has been consulted during this independent phase.
