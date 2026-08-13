@@ -1,38 +1,42 @@
-# Erdős Problem #18 — Blind Challenge
+# Erdős Problem #18 — Blind Research Case
 
-## Challenge status
+## Official status
 
-This is an independent-solving experiment. We use only the mathematical statement and standard background knowledge during the solving phase.
+**OPEN — $250 prize.** The current official Erdős Problems page classifies Problem #18 as open. The reward is offered for proving or disproving the principal growth question for practical numbers. The site also notes that the status is provisional and asks researchers to perform their own literature search.
 
-The historical/reference proof is intentionally excluded until our candidate proof is frozen and critically checked.
+## Actual problem
 
-## Target theorem
+We call \(m\) practical if every integer \(1\le r<m\) is a sum of distinct divisors of \(m\). If \(m\) is practical, let \(h(m)\) be the least number of distinct divisors that always suffice.
 
-Let \(h(m)\) be the least integer \(t\) such that every integer \(1\le r\le m\) can be represented as a sum of at most \(t\) distinct divisors of \(m\).
+The open questions are:
 
-Prove the Erdős upper bound
+1. Are there infinitely many practical \(m\) such that
 \[
-h(n!) < n
+ h(m)<(\log\log m)^{O(1)}?
 \]
-for all sufficiently large \(n\) (our candidate will in fact aim to prove the stronger bound \(h(n!)\le n-1\) for every \(n\ge2\)).
 
-## Allowed information
+2. Is it true that
+\[
+ h(n!)=n^{o(1)}?
+\]
 
-- The definition above.
-- Elementary properties of factorials, divisibility, Euclidean division, finite sets and induction.
-- Standard mathematical knowledge not specific to the historical proof.
+3. Or even
+\[
+ h(n!)=(\log n)^{O(1)}?
+\]
 
-## Forbidden until proof freeze
+The official source currently offers a **$250 reward** for a proof or disproof of the first principal question above.
 
-- The historical proof of Erdős.
-- Papers or notes whose purpose is to prove this specific bound.
-- Solution discussions or AI-generated summaries of the historical argument.
+## Important distinction
 
-## Research phases
+Erdős already proved the known upper bound
+\[
+ h(n!)<n.
+\]
+This is a **known sub-result**, not a solution of Problem #18. It does not establish any of the three open asymptotic claims above.
 
-1. Normalize the target.
-2. Construct an independent proof.
-3. Stress-test the construction for distinctness, divisibility and cardinality.
-4. Freeze the proof.
-5. Compare with the historical/reference proof.
-6. Record overlap, differences, hidden assumptions and formalization prospects.
+Our independent reconstruction of \(h(n!)\le n-1\) is therefore recorded only as a verification experiment on a known lemma, not as a solution of the Erdős problem.
+
+## Blind-research rule
+
+For any attempt aimed at the open questions, the historical/reference solution and later claimed solutions must be isolated until the candidate argument is frozen and independently audited.
