@@ -22,8 +22,11 @@
 - [Google DeepMind Formal Conjectures](https://github.com/google-deepmind/formal-conjectures)
 - [OEIS](https://oeis.org/)
 
-## الوثائق الأساسية
+## وثائق التشغيل الأساسية
 
+- [PROJECT_STATE.md](PROJECT_STATE.md) — نقطة الاستئناف الحالية وذاكرة التشغيل.
+- [DECISIONS.md](DECISIONS.md) — سجل القرارات الحاكم.
+- [RESEARCH_STATE_PROTOCOL.md](RESEARCH_STATE_PROTOCOL.md) — بروتوكول المراحل والبوابات.
 - [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md)
 - [CONSTITUTION.md](CONSTITUTION.md)
 - [ARCHITECTURE.md](ARCHITECTURE.md)
@@ -36,13 +39,14 @@
 
 ## الحالة الحالية
 
-**Phase 2 — Independent Solving / Validation**
+**Phase 2 — Blind Independent Solving**
 
-تم تأسيس النموذج المعرفي وقواعد العمل وبروتوكول البحث، ثم بدأ اختبار المعمارية على مسألة محلولة. التجربة الأولى (#447) صُنفت لاحقاً كـ **contaminated challenge** بعد كشف معلومات حل أثناء عملية التحقق، ولذلك لا تُستخدم كاختبار مستقل. التجربة الحالية هي Erdős #18، مع محاولة مستقلة لنتيجة Erdős العليا
-\[
-h(n!)<n,
-\]
-ونستهدف برهاناً أقوى هو \(h(n!)\le n-1\) لكل \(n\ge2\).
+التجربة الحالية هي Erdős #1125. نصها canonical هو النص الذي زوّد به المستخدم، وتجربة الحل ما تزال في مرحلة **Structural Analysis**. لم يتم تجميد أي برهان، ولم يتم فتح الحل التاريخي خلال المرحلة العمياء.
+
+التجارب السابقة:
+
+- #447: **contaminated challenge**؛ أُوقف الاختبار المستقل بعد كشف معلومات من الحل أثناء التحقق.
+- #18: مسألة **OPEN** وليست محلولة؛ أُعيد تصنيف النتيجة \(h(n!)<n\) بوصفها **known sub-result**، والبرهان المستقل الذي أعدناه لهذه النتيجة محفوظ كاختبار فرعي فقط.
 
 ## المبدأ الحاكم
 
