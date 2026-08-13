@@ -13,13 +13,13 @@ This file is the operational memory checkpoint for the project. Read it before r
 
 ## Current project
 
-current_phase: 2
-current_stage: blind-independent-solving
+current_phase: 8
+current_stage: final-classification
 current_problem: 275
 problem_status: proved-at-problem-level
-blind_mode: true
-reference_solution_accessed: false
-proof_frozen: false
+blind_mode: false
+reference_solution_accessed: true
+proof_frozen: true
 
 ## Phase model
 
@@ -40,20 +40,27 @@ A phase may only advance when its exit criteria are satisfied.
 canonical_statement: locked
 statement_source: official problem statement, reproduced verbatim in problems/275/README.md
 selection_reason: easier benchmark than #1125; short finite combinatorial statement; problem-level PROVED (LEAN)
-current_substage: structural-exploration
-candidate_proof: none
-known_lemmas: []
+current_substage: final-classification
+candidate_proof: frozen-and-audited
+known_lemmas:
+  - LEMMA-275-001: nontrivial modulus admits a primitive root-of-unity encoding
+  - LEMMA-275-002: an exponential polynomial with M distinct nonzero bases cannot have M consecutive zeros unless identically zero
+  - LEMMA-275-003: the product encoding for r congruences has at most 2^r distinct bases
 rejected_paths:
-  - PATH-275-A: density/counting alone appears insufficient
-  - PATH-275-B: parity reduction incomplete because odd and even moduli interact differently
-  - PATH-275-C: minimal-counterexample idea not yet formalized
+  - PATH-275-A: density/counting alone insufficient
+  - PATH-275-B: parity reduction incomplete
+  - PATH-275-C: minimal-counterexample reduction not completed
 
-reference_findings: []
+reference_findings:
+  - The short 2020 proof by Balister, Bollobás, Morris, Sahasrabudhe and Tiba uses the same root-of-unity / finite-dimensional mechanism in polynomial form.
+  - Our independent proof uses an equivalent exponential-polynomial formulation and a direct Vandermonde argument.
+  - The original theorem was proved independently by Selfridge and Crittenden–Vanden Eynden.
 
-comparison_record: pending
-next_action: continue blind exploration toward a recursive reduction from r congruences to fewer congruences.
+comparison_record: problems/275/comparison.md
+next_action: use the successful #275 cycle to refine the benchmark-selection and proof-classification protocol; do not label the core idea as a distinct historical discovery.
 
 ## Last checkpoint
 
 The current research log is `problems/275/research-log.md`.
-The benchmark selection used only problem-level status and statement information. Historical proof, formal proof, and solution discussion have not been consulted.
+The independent proof is frozen in `problems/275/frozen-proof.md` and passed `problems/275/audit.md`.
+Historical/reference material was opened only after freeze.
