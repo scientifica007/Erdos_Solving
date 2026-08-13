@@ -38,15 +38,19 @@ A phase may only advance when its exit criteria are satisfied.
 ## Current #303 state
 
 canonical_statement: locked
-statement_source: benchmark README; status and statement verified from erdosproblems.com
+statement_source: user-supplied canonical text
 selection_reason: third benchmark; short finite-colouring/Diophantine statement; problem-level PROVED (LEAN); mathematically distinct from #1125 and #275
-current_substage: invariant-hunt
+current_substage: structural-reduction
 candidate_proof: none
-known_lemmas: []
-rejected_paths: []
+known_lemmas:
+  - LEMMA-303-001: algebraic parametrization via (b-a)(c-a)=a^2
+  - LEMMA-303-002: it suffices to find n with c(n)=c(n+1)=c(n(n+1))
+rejected_paths:
+  - PATH-303-A: monochromatic unit square in exponent lattice is false for arbitrary finite grid colourings
+  - PATH-303-B: fixed refined-colouring plus Schur/Brauer has not closed the product dependency
 reference_findings: []
 comparison_record: pending
-next_action: identify a coloring-invariant or algebraic/Ramsey reduction before attempting detailed casework
+next_action: solve the finite-colouring configuration (n,n+1,n(n+1)) without consulting reference material
 
 ## Last checkpoint
 
