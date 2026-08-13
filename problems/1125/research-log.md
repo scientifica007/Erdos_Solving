@@ -14,42 +14,54 @@ No stronger, weaker, or paraphrased statement is substituted during the blind ph
 
 ## Independent attack
 
-We prove that $f$ is nondecreasing.
+We want to prove that $f$ is nondecreasing.
 
-Take arbitrary $x<y$. Put
-\[
-h=\frac{y-x}{2}>0,
-\qquad m=\frac{x+y}{2}.
-\]
-Suppose, for contradiction, that
-\[
-f(y)<f(x).
-\]
+### Path A — midpoint contradiction (rejected)
 
-Apply the hypothesis at $x$ with this value of $h$. Since $x+h=m$ and $x+2h=y$,
+Take $x<y$, put $h=(y-x)/2$, and $m=(x+y)/2$. If $f(y)<f(x)$, the hypothesis at $x$ gives
 \[
-2f(x)\leq f(m)+f(y),
+2f(x)\le f(m)+f(y),
 \]
-so
+hence
 \[
-f(m)\geq 2f(x)-f(y)>f(x)>f(y).
+f(m)>f(x)>f(y).
 \]
+This is suggestive, but applying the hypothesis again at $m$ does not by itself produce a contradiction. Further dyadic applications can propagate inequalities but do not yet close the argument. This path is therefore **not a proof**.
 
-Now apply the hypothesis at the midpoint $m$ with the same $h$. Since $m+h=y$ and $m+2h=\frac{3y-x}{2}$, this gives
-\[
-2f(m)\leq f(y)+f\!\left(\frac{3y-x}{2}\right).
-\]
+### Path B — fixed arithmetic progression (insufficient)
 
-This second inequality alone does not immediately contradict the previous lower bound. Therefore we need one further observation: apply the hypothesis at $m$ with step $h/2$. Since $m+h/2=\frac{3x+y}{4}$ and $m+h=y$,
+For a fixed step $d>0$, write
 \[
-2f(m)\leq f\!\left(\frac{3x+y}{4}\right)+f(y).
+a_n=f(x+nd).
 \]
-This still does not directly force a contradiction.
+The hypothesis gives, for every $n\ge0$,
+\[
+2a_n\le a_{n+1}+a_{n+2},
+\]
+or equivalently for increments $b_n=a_{n+1}-a_n$,
+\[
+2b_n+b_{n+1}\ge0.
+\]
+This one-dimensional recurrence does not by itself force monotonicity on a finite arithmetic progression; finite sequences satisfying these inequalities can still decrease at some locations. Therefore the proof must exploit the fact that the step $h$ is an arbitrary positive real and that different arithmetic progressions interact.
 
-The independent attack therefore requires a further structural lemma; the elementary midpoint argument above is not yet a complete proof.
+### Current structural observation
+
+A strict descent
+\[
+f(x)>f(y),\qquad x<y,
+\]
+forces midpoint amplification: for $m=(x+y)/2$,
+\[
+f(m)>f(x)>f(y).
+\]
+The open problem is to turn the resulting multiscale amplification into a contradiction without assuming continuity, measurability, local boundedness, or any other regularity condition.
+
+## Blind-phase integrity
+
+The historical proof, solution discussion, and papers specifically proving the statement have not been consulted for the mathematical construction. Only the problem statement and general structural analysis are being used in the current blind phase.
 
 ## Status
 
 **Candidate proof: NOT FROZEN.**
 
-The attempted midpoint contradiction has a genuine gap and is recorded only as an exploratory path. No historical/reference proof has been consulted.
+The problem remains in the structural-analysis phase. Any future argument must explicitly close the regularity-free gap before being treated as a proof.
