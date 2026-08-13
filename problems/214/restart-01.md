@@ -10,13 +10,13 @@ The earlier candidate `PATH-214-A` was retracted because its claimed red square 
 
 Reformulate as a 2-colouring: blue = S, red = complement. Blue has no unit-distance pair; every unit square must contain at least one blue point if no red unit square exists.
 
-A stronger consequence is now established:
+### LEMMA-214-R1-001 — Exact constraint on blue vertices of a unit square
 
-### LEMMA-214-R1-001 — Exact one-blue-per-unit-square
+Under the assumption that there is no red unit square, every unit square contains at least one blue vertex. Since S has no pair at distance 1, a unit square cannot contain three or four blue vertices, because among any three vertices of a square there are two adjacent vertices at distance 1. If a unit square contains two blue vertices, they must be the two opposite diagonal vertices, whose distance is sqrt(2).
 
-Under the assumption that there is no red unit square, every unit square contains exactly one blue vertex.
+Therefore every unit square contains either one blue vertex, or two blue vertices which are opposite each other.
 
-Proof: it contains at least one blue vertex. It cannot contain two blue vertices, because any two distinct vertices of a unit square that are adjacent are distance 1, while the two diagonal vertices are distance sqrt(2); hence the only possible pair of blue vertices in a unit square would have to be adjacent, contradicting the defining property of S. Therefore exactly one vertex is blue. 
+This is a valid invariant; the previously recorded claim "exactly one blue vertex" was false because opposite vertices may both lie in S.
 
 ## Computational exploration
 
@@ -28,7 +28,7 @@ This is exploratory evidence only and is not a proof of the existence or non-exi
 
 No valid candidate proof has been found in Restart 01.
 
-The exact-one-blue-per-unit-square reformulation is the current central invariant. The next search should derive propagation rules from overlapping squares rather than merely enumerate small grids.
+The current central invariant is the restricted pattern of blue vertices on every unit square: one blue vertex, or two opposite blue vertices. The next search should derive propagation rules from overlapping squares rather than merely enumerate small grids.
 
 ## Status
 
