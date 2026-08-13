@@ -105,8 +105,24 @@ This completes the induction.
 
 No use was made of the historical/reference proof in constructing this argument.
 
+## Historical-source search
+
+The primary source is P. Erdős, **Some problems and results on additive and multiplicative number theory**, in *Analytic Number Theory* (Philadelphia, 1980), published 1981, pp. 171–182. On p. 172 Erdős defines \(S(n)\) as the least number of distinct divisors needed to represent every \(1<m<n\), with \(S(n)=0\) when \(n\) is not practical. He then states: **“I easily observed S(n!) < n”**, in the context of seeking integers for which \(S(n)\) is small. The paper does not provide a derivation immediately after that sentence. citeturn999492view0
+
+The current Erdős Problems database independently confirms that Erdős originally proved \(h(n!)<n\), and identifies the same source as [Er81h, p.172]. citeturn593977search0turn593977search1
+
+The earlier reference suggested during the investigation — P. Erdős, *American Mathematical Monthly* 58 (1951), 496–497 — is **not** the source of the present Problem #18 result. It concerns a different older Monthly problem (4363). It must not be used as the historical proof for the present factorial/practical-number statement.
+
+A related 1979 paper by Erdős and J. H. Loxton discusses practical numbers and divisibility-restricted partitions, but the accessible text does not supply a proof of the specific bound \(S(n!)<n\). citeturn962498view0turn962498search20
+
+### Historical comparison status
+
+**Reference proof not recovered.** The original source confirms attribution and the result but does not expose the proof in the accessible text. We therefore must not claim that the independent construction is different from Erdős's argument.
+
+The independent proof remains frozen and must not be altered retroactively.
+
 ## Freeze status
 
 **FROZEN — candidate proof accepted for comparison.**
 
-The next phase is deliberately separate: retrieve the historical/reference proof and compare it against this independently constructed argument. The comparison must not retroactively alter the frozen proof.
+The historical comparison is currently limited to: attribution verified; exact historical proof not recovered. Any future reconstruction of Erdős's argument must be recorded separately and compared against this frozen attempt without modification.
