@@ -1,4 +1,4 @@
-# Lessons Learned — Experimental Cycle: Erdős Problems #1125 and #275
+# Lessons Learned — Experimental Cycle: Erdős Problems #1125, #275, and #303
 
 This document converts benchmark experiments into reusable project knowledge. It is not a mathematical proof file; it records methodological lessons for future Erdős solving attempts.
 
@@ -12,7 +12,7 @@ Consequence: the #18 episode exposed this failure mode. Future triage must recor
 
 For blind experiments, the exact problem statement supplied by the user can be designated canonical. Any paraphrase is secondary and must not silently replace it.
 
-Consequence: #1125 was kept in the exact user-supplied form.
+Consequence: #1125 and #303 were kept in the exact user-supplied form.
 
 ## L-003 — Blind-mode contamination is a first-class failure state
 
@@ -22,9 +22,9 @@ Consequence: #447 was discarded as a blind benchmark after solution information 
 
 ## L-004 — Short statements do not imply easy problems
 
-#1125 has a one-line statement, yet its solution uses a deep global mechanism involving finite quantitative estimates, a covering construction on a dense arithmetic set, interpolation, and irrational approximation via Pell sequences.
+#1125 has a one-line statement, yet its solution uses a deep global mechanism involving finite quantitative estimates, a covering construction on a dense arithmetic set, interpolation, and irrational approximation via Pell sequences. #303 is also one line but hides a compactness/partition-regularity argument.
 
-Consequence: future benchmark selection must consider proof architecture and known depth, not statement length alone.
+Consequence: future benchmark selection must consider proof architecture and hidden machinery, not statement length alone.
 
 ## L-005 — Local midpoint amplification is insufficient without regularity
 
@@ -74,7 +74,7 @@ Once the reference solution is opened, the experiment can no longer be described
 
 ## L-015 — Benchmark selection should prefer solved problems with shallow proof depth
 
-#1125 was too deep for first calibration. #275 was much better: short statement, problem-level solved status, and a concise algebraic invariant that was discoverable with standard tools.
+#1125 was too deep for first calibration. #275 was much better: short statement, problem-level solved status, and a concise algebraic invariant that was discoverable with standard tools. #303 shows that even a short statement can hide a theorem-level Ramsey transformation and therefore should be tagged as an intermediate benchmark rather than an elementary one.
 
 ## L-016 — Match conspicuous numerical thresholds to structural dimensions
 
@@ -104,6 +104,38 @@ For algebraic encodings, audit not only the main argument but also special repre
 
 The #275 success suggests adding an `Invariant Hunt` substage after statement triage. The agent should inspect conspicuous numerical thresholds and structural terms and ask what finite dimension, recurrence order, combinatorial state count, generating function, root-of-unity encoding, or other invariant could naturally produce them.
 
+## L-023 — Transform reciprocal equations before direct Diophantine search
+
+#303 exposed a broader pattern. The visible equation `1/a = 1/b + 1/c` is not best attacked as a reciprocal Diophantine equation. Brown–Rödl's solution identifies it as the reciprocal image of the homogeneous partition-regular equation `x0 = x1 + x2`.
+
+Lesson: before manipulating a reciprocal equation directly, test whether it is obtained by inverting a homogeneous partition-regular system whose colouring theorem is already accessible.
+
+## L-024 — Algebraic parametrization and colouring forcing are separate proof layers
+
+#303 produced correct reductions such as `(b-a)(c-a)=a^2` and the family `(AB, A(A+B), B(A+B))`, but these did not force a monochromatic instance.
+
+Lesson: record algebraic solution families as structural lemmas, but separately identify the combinatorial theorem that forces one member of the family to be monochromatic.
+
+## L-025 — Do not substitute a stronger-looking Ramsey theorem without matching hypotheses
+
+#303 tempted a direct invocation of polynomial van der Waerden. The needed homogeneous zero-based polynomial configuration did not match the standard translated configuration produced by that theorem.
+
+Lesson: every Ramsey/partition-regularity theorem must be checked at the level of its exact hypotheses, domain, coefficient pattern, distinctness conditions, and target configuration.
+
+## L-026 — Look for transformation classes as invariants
+
+#303 suggests extending `Invariant Hunt` beyond numerical thresholds and algebraic expressions. Search for class-level transformations such as reciprocal transfer, homogenization, duality, compactness transfer, or scaling invariance that convert the target into a known theorem class.
+
+## L-027 — Compactness + LCM is a reusable bridge for finite colourings
+
+The Brown–Rödl reciprocal-transfer argument turns a finite-colouring statement on all positive integers into a finite problem using compactness and `lcm(1,...,T)`. This is a useful reusable pattern for reciprocal/finite-colouring problems.
+
+## L-028 — Failure should be classified by missing mathematical technology
+
+#303 did not fail because its algebraic reductions were wrong. It failed because the missing step required partition-regularity/compactness machinery not derived during the blind phase.
+
+Lesson: benchmark logs should state not only `FAILED`, but also the missing proof technology: e.g. Ramsey theorem, compactness, additive combinatorics, Diophantine approximation, spectral method, etc.
+
 ## Agent checklist
 
 Before acting on a new problem, the agent should ask internally:
@@ -118,3 +150,5 @@ Before acting on a new problem, the agent should ask internally:
 8. Has the proof actually been frozen before reference access?
 9. What is the final discovery classification: new, independent rederivation, equivalent reformulation, or reference-derived?
 10. What conspicuous numerical threshold might reveal the right invariant?
+11. What theorem class might the problem belong to after a transformation of variables, reciprocals, duality, or homogenization?
+12. If the blind attempt fails, what specific mathematical technology was missing?
