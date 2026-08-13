@@ -32,7 +32,9 @@ Attempts to push this immediately to a larger concentric circle do not work: for
 
 ## Computational exploration
 
-We generated finite point configurations from unit steps in the eight directions at multiples of 45 degrees, and encoded the constraints: no unit-distance pair may both be blue, and every unit square must contain a blue vertex. Configurations with 41 points / 8 square constraints and 129 points / 56 square constraints were both satisfiable. We then tested unions of several small square lattices with rotations (including 30, 45, 60, and 90 degrees) and translations; the resulting finite systems were also feasible under the same constraints. These are finite satisfiability results only; they do not imply global colourability or non-colourability.
+We generated finite point configurations from unit steps in the eight directions at multiples of 45 degrees, and encoded the constraints: no unit-distance pair may both be blue, and every unit square must contain a blue vertex. Configurations with 41 points / 8 square constraints and 129 points / 56 square constraints were both satisfiable. We then tested unions of several small square lattices with rotations (including 30, 45, 60, and 90 degrees) and translations; the resulting finite systems were also feasible under the same constraints. In an additional randomized check, 50 unions of two 5x5 square grids with varied rotation angles and translations were all finitely feasible under the same constraints.
+
+These are finite satisfiability results only; they do not imply global colourability or non-colourability.
 
 The experiments show that simple regular or nearly regular local grids do not immediately expose the required obstruction. Any eventual finite obstruction is likely to require a richer configuration or a different structural argument.
 
