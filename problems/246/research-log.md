@@ -12,16 +12,29 @@ S=\{a^k b^l:k,l\ge0\},\qquad (a,b)=1.
 \]
 We need to show that every sufficiently large integer is a sum of distinct elements of $S$.
 
-The main blind questions are:
+## Benchmark integrity check
 
-1. What local congruence or greedy property does coprimality of $a,b$ provide?
-2. Can one prove that sufficiently large integers can be represented by a finite subset of $S$ using induction on the integer being represented?
-3. Can the representation be reduced modulo a large power of one generator and corrected using powers of the other generator?
+A statement-level counterexample appears immediately if the canonical text is interpreted literally with no further restriction on $a,b$:
 
-## Status
+- Take $a=1$, $b=3$, so $(a,b)=1$.
+- Then $S=\{3^l:l\ge0\}$.
+- Distinct sums of elements of $S$ have ternary digits only in $\{0,1\}$.
+- Hence infinitely many large integers such as $2\cdot3^m$ are not representable.
 
-Candidate proof: NONE.
+Therefore the currently copied benchmark statement is incomplete or has an omitted hypothesis. This is a **benchmark-integrity failure**, not a mathematical counterexample to the historical Erdős problem.
 
-Blind mode: ON.
-Reference solution accessed: NO.
-Proof frozen: NO.
+We will not infer or silently add a missing hypothesis from the literature during blind mode. The benchmark must be repaired by verifying the canonical source statement before mathematical work continues.
+
+## Blind status
+
+- Reference solution: NOT ACCESSED
+- Historical paper: NOT ACCESSED
+- Formal proof: NOT ACCESSED
+- Candidate proof: NONE
+- Proof frozen: NO
+
+## Decision
+
+**BLIND ATTEMPT PAUSED — INVALID BENCHMARK STATEMENT.**
+
+The correct next action is source-level statement verification or replacement of this benchmark. No proof search should proceed from the defective text.
