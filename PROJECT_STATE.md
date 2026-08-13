@@ -13,12 +13,12 @@ This file is the operational memory checkpoint for the project. Read it before r
 
 ## Current project
 
-current_phase: 6
-current_stage: historical-comparison-after-retracted-proof
-current_problem: 1125
-problem_status: proved-by-laczkovich
-blind_mode: false
-reference_solution_accessed: true
+current_phase: 2
+current_stage: blind-independent-solving
+current_problem: 275
+problem_status: proved-at-problem-level
+blind_mode: true
+reference_solution_accessed: false
 proof_frozen: false
 
 ## Phase model
@@ -35,32 +35,25 @@ proof_frozen: false
 
 A phase may only advance when its exit criteria are satisfied.
 
-## Current #1125 state
+## Current #275 state
 
 canonical_statement: locked
-statement_source: user-supplied canonical text
-current_substage: historical-comparison
-candidate_proof: retracted
-known_lemmas:
-  - LEMMA-1125-001: strict descent implies midpoint amplification
-  - LEMMA-1125-002: fixed-step recurrence alone does not force monotonicity
-  - LEMMA-1125-003: arbitrary positive rational steps remain available on affine rational orbits
+statement_source: official problem statement, reproduced verbatim in problems/275/README.md
+selection_reason: easier benchmark than #1125; short finite combinatorial statement; problem-level PROVED (LEAN)
+current_substage: structural-exploration
+candidate_proof: none
+known_lemmas: []
 rejected_paths:
-  - PATH-1125-A: naive midpoint contradiction
-  - PATH-1125-B: fixed arithmetic progression reduction
-  - PATH-1125-C: incorrect increment-monotonicity proof; revoked after algebraic audit
+  - PATH-275-A: density/counting alone appears insufficient
+  - PATH-275-B: parity reduction incomplete because odd and even moduli interact differently
+  - PATH-275-C: minimal-counterexample idea not yet formalized
 
-reference_findings:
-  - FormalConjectures/1125 points to an AI-assisted Lean proof by Aristotle and Stefano Rocca.
-  - The formal proof explicitly describes the architecture as dyadic induction, a covering lemma on I(alpha), interpolation estimates, and Pell approximants for sqrt(2).
-  - The reconstructed modern proof uses a finite-interval estimate f(0) <= f(n) + 10K/n, then transfers it to irrational additive orbits, proves monotonicity there, and finally applies an affine rescaling using alpha = sqrt(2).
-  - Pell convergents supply the required controlled approximants to sqrt(2).
-  - Historical attribution is Laczkovich (1984); the modern Lean file should be treated as a formal reconstruction, not automatically as a line-by-line transcript of the 1984 paper.
+reference_findings: []
 
-comparison_record: problems/1125/comparison/historical-reconstruction.md
-next_action: preserve the failed blind attempt unchanged, summarize the gap between our local lemmas and the global Laczkovich mechanism, then assess whether a second independent attempt should be made on a mathematically simpler proved problem.
+comparison_record: pending
+next_action: continue blind exploration toward a recursive reduction from r congruences to fewer congruences.
 
 ## Last checkpoint
 
-The current research log is `problems/1125/research-log.md`.
-The previously claimed proof freeze has been explicitly revoked. No valid independent proof of the full theorem has been obtained.
+The current research log is `problems/275/research-log.md`.
+The benchmark selection used only problem-level status and statement information. Historical proof, formal proof, and solution discussion have not been consulted.
