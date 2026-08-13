@@ -26,9 +26,9 @@ Thus every red unit edge induces an opposite edge whose two endpoints have oppos
 
 ## Computational exploration
 
-We tested finite configurations consisting of overlapping axis-aligned unit squares and mixtures of rotated unit squares. No infeasible finite color system was found in the tested small configurations.
+We generated finite point configurations from unit steps in the eight directions at multiples of 45 degrees, and encoded the constraints: no unit-distance pair may both be blue, and every unit square must contain a blue vertex. Configurations with 41 points / 8 square constraints and 129 points / 56 square constraints were both satisfiable. We also tested larger point sets without finding a contradiction. These are finite satisfiability results only; they do not imply global colourability or non-colourability.
 
-This is exploratory evidence only and is not a proof of the existence or non-existence of a finite obstruction.
+The experiments show that simple axis-aligned/45-degree local grids do not immediately expose the required obstruction. Any eventual finite obstruction is likely to require a richer configuration or a different structural argument.
 
 ## Current conclusion
 
