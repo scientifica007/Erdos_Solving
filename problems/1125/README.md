@@ -6,19 +6,15 @@ This is an independent-solving experiment. During the first phase we use only th
 
 The historical/reference proof, solution discussions, and papers whose purpose is to prove this specific statement are intentionally excluded until our candidate proof is frozen and critically checked.
 
-## Problem statement
+## Canonical problem statement
 
-Let
-\[
-f:\mathbb{R}\to\mathbb{R}
-\]
-satisfy
-\[
-2f(x)\le f(x+h)+f(x+2h)
-\]
-for every \(x\in\mathbb{R}\) and every \(h>0\).
+The following text is authoritative for this experiment and was supplied directly by the user. Do not replace it with a paraphrase during the blind-solving phase.
 
-Must \(f\) be monotonic?
+> Let $f:\mathbb{R}\to \mathbb{R}$ be such that
+> \[
+> 2f(x) \leq f(x+h)+f(x+2h)
+> \]
+> for every $x\in \mathbb{R}$ and $h>0$. Must $f$ be monotonic?
 
 ## Minimal metadata
 
