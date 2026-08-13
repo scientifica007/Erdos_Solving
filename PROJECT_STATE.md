@@ -13,12 +13,12 @@ This file is the operational memory checkpoint for the project. Read it before r
 
 ## Current project
 
-current_phase: 2
-current_stage: blind-independent-solving
+current_phase: 6
+current_stage: historical-comparison-after-blind-failure
 current_problem: 303
 problem_status: proved-at-problem-level
-blind_mode: true
-reference_solution_accessed: false
+blind_mode: false
+reference_solution_accessed: true
 proof_frozen: false
 
 ## Phase model
@@ -40,19 +40,24 @@ A phase may only advance when its exit criteria are satisfied.
 canonical_statement: locked
 statement_source: user-supplied canonical text
 selection_reason: third benchmark; short finite-colouring/Diophantine statement; problem-level PROVED (LEAN); mathematically distinct from #1125 and #275
-current_substage: structural-reduction
+current_substage: historical-comparison
 candidate_proof: none
 known_lemmas:
   - LEMMA-303-001: algebraic parametrization via (b-a)(c-a)=a^2
   - LEMMA-303-002: it suffices to find n with c(n)=c(n+1)=c(n(n+1))
 rejected_paths:
   - PATH-303-A: monochromatic unit square in exponent lattice is false for arbitrary finite grid colourings
-  - PATH-303-B: fixed refined-colouring plus Schur/Brauer has not closed the product dependency
-reference_findings: []
-comparison_record: pending
-next_action: solve the finite-colouring configuration (n,n+1,n(n+1)) without consulting reference material
+  - PATH-303-B: direct polynomial van der Waerden invocation is not justified for the required zero-based configuration
+reference_findings:
+  - Brown–Rödl (1991) prove a general reciprocal-transfer theorem for homogeneous partition-regular systems.
+  - Apply their theorem to the homogeneous linear equation x0=x1+x2, whose distinct monochromatic solvability follows from Rado's theorem.
+  - Compactness plus the lcm construction converts a monochromatic solution in y_i to a monochromatic solution in z_i=S/y_i of the reciprocal equation.
+comparison_record: problems/303/comparison.md
+final_classification: blind-failure-reference-proved
+next_action: consolidate lessons from #303 and update the project's benchmark-selection rules.
 
 ## Last checkpoint
 
 The current research log is `problems/303/research-log.md`.
-Blind mode is ON. Historical proof, solution discussion, and formal proof have not been consulted.
+The blind attempt is explicitly closed as incomplete; its record must not be rewritten with hindsight.
+The reference comparison is complete in `problems/303/comparison.md`.
