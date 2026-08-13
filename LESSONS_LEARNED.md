@@ -1,6 +1,6 @@
-# Lessons Learned — Experimental Cycle: Erdős Problem #1125
+# Lessons Learned — Experimental Cycle: Erdős Problems #1125 and #275
 
-This document converts the #1125 experiment into reusable project knowledge. It is not a mathematical proof file; it records methodological lessons for future Erdős solving attempts.
+This document converts benchmark experiments into reusable project knowledge. It is not a mathematical proof file; it records methodological lessons for future Erdős solving attempts.
 
 ## L-001 — Problem-level status must be verified independently
 
@@ -34,69 +34,77 @@ Consequence: a successful proof must exploit the universal quantification over a
 
 ## L-006 — Fixed-step reduction loses essential information
 
-Restricting the inequality to one arithmetic progression yields a recurrence such as
-
-`2 a_n ≤ a_(n+1) + a_(n+2)`.
-
-That recurrence alone does not force monotonicity. The real problem uses interactions among many step sizes and arithmetic progressions.
+Restricting the inequality to one arithmetic progression yields a recurrence such as `2 a_n ≤ a_(n+1) + a_(n+2)`. That recurrence alone does not force monotonicity. The real problem uses interactions among many step sizes and arithmetic progressions.
 
 ## L-007 — Quantitative finite-interval estimates can replace unavailable regularity
 
-The reference reconstruction for #1125 derives bounds of the form
-
-`f(0) ≤ f(n) + O(K/n)`
-
-for finite discrete restrictions bounded by `K`. This creates an error term that can later be driven to zero by taking `n → ∞`.
+The reference reconstruction for #1125 derives bounds of the form `f(0) ≤ f(n) + O(K/n)` for finite discrete restrictions bounded by `K`. This creates an error term that can later be driven to zero by taking `n → ∞`.
 
 Methodological lesson: when a proof lacks continuity or measurability, search for quantitative inequalities whose error tends to zero under refinement.
 
 ## L-008 — Dense arithmetic subsets can bridge discrete and real arguments
 
-The reference mechanism works on
+The reference mechanism works on `I(α) = {n α + k : n,k ∈ Z}` and proves monotonicity there before transporting the conclusion back to arbitrary real points.
 
-`I(α) = {n α + k : n,k ∈ Z}`
+## L-009 — Irrational approximation can provide refinement scales
 
-and proves monotonicity there before transporting the conclusion back to arbitrary real points.
-
-Methodological lesson: search for a structured dense subgroup or orbit on which the discrete inequality is tractable.
-
-## L-009 — Irrational approximation can provide the needed refinement scales
-
-For #1125, `α = √2` is used together with Pell approximants having controlled growth, small approximation error, and alternating signs.
-
-Methodological lesson: when arbitrary real step sizes create a Diophantine obstacle, continued fractions/Pell-type approximants may supply the required controlled scales.
+For #1125, `α = √2` is used with Pell approximants having controlled growth, small approximation error, and alternating signs.
 
 ## L-010 — Candidate proofs need algebraic audit before freeze
 
-The attempted increment-monotonicity proof contained an invalid algebraic rearrangement. It was initially close enough to look convincing, but a deliberate audit exposed the mistake.
+The attempted increment-monotonicity proof for #1125 contained an invalid algebraic rearrangement. A deliberate audit exposed it.
 
 Consequence: no proof is frozen until every transformation has been checked independently. A revoked freeze must remain visible in history.
 
-## L-011 — GitHub is useful as operational memory, not as mathematical authority
+## L-011 — GitHub is operational memory, not mathematical authority
 
-`PROJECT_STATE.md`, research logs, decision records, and lesson records allow the research process to resume consistently. They do not turn an unchecked mathematical claim into truth.
-
-Consequence: repository state tracks claims, provenance, and workflow state; mathematical validity still requires explicit verification.
+`PROJECT_STATE.md`, research logs, decision records, and lesson records allow the process to resume consistently. They do not turn an unchecked mathematical claim into truth.
 
 ## L-012 — Failed paths are valuable research data
 
-Rejected approaches must be preserved with the reason for rejection. Deleting them causes repeated work and hides why an apparently natural route was abandoned.
+Rejected approaches must be preserved with the reason for rejection. Deleting them causes repeated work and hides why a natural route was abandoned.
 
 ## L-013 — Separate historical attribution from modern formal reconstruction
 
-A modern Lean file may formalize a historical theorem while having different authors and a different implementation structure. For #1125, Laczkovich is the historical attribution, while the inspected Lean reconstruction credits Aristotle and Stefano Rocca as formal authors.
+A modern Lean file may formalize a historical theorem while having different authors and a different implementation structure. Future comparison records should distinguish historical proof, modern reconstruction, and machine-checked formalization.
 
-Consequence: future comparison records should distinguish historical proof, modern reconstruction, and machine-checked formalization.
-
-## L-014 — The blind phase and reference-comparison phase must be immutable boundaries
+## L-014 — The blind phase and reference-comparison phase are immutable boundaries
 
 Once the reference solution is opened, the experiment can no longer be described as a blind independent solve. The transition must be recorded explicitly, and previous failed attempts must not be rewritten with hindsight.
 
 ## L-015 — Benchmark selection should prefer solved problems with shallow proof depth
 
-#1125 was too deep for a first benchmark of the workflow. The next calibration problem should be verified at the problem level, have an independently available reference solution, and have a proof whose main ideas are likely recoverable without specialized machinery.
+#1125 was too deep for first calibration. #275 was much better: short statement, problem-level solved status, and a concise algebraic invariant that was discoverable with standard tools.
 
-## Lessons for the agent
+## L-016 — Match conspicuous numerical thresholds to structural dimensions
+
+#275 demonstrates a strong benchmark heuristic: when a statement contains a number such as `2^r`, immediately ask whether the same quantity appears naturally as a dimension/state count/number of terms in an algebraic expansion. This led from the covering count to a `2^r`-term exponential polynomial.
+
+## L-017 — Encode combinatorial predicates as algebraic vanishing conditions when possible
+
+In #275, roots of unity turned membership in a congruence class into the vanishing of one factor. The whole covering system became a zero-set problem for a finite-dimensional exponential polynomial.
+
+## L-018 — Consecutive vanishing can be stronger than density information
+
+Counting or density arguments did not solve #275. The decisive information was `2^r` consecutive zeros, which interacts rigidly with a finite-dimensional exponential family via Vandermonde/linear independence.
+
+## L-019 — Independent rederivation is a distinct classification from novelty
+
+The #275 blind proof and the reference proof share the same root-of-unity / finite-dimensional mechanism but package it differently. The correct classification is `independent rederivation / equivalent core mechanism`, not historical novelty.
+
+## L-020 — Freeze-before-reference makes similarity evidence meaningful
+
+Because #275 was frozen before reference access, the later match with the reference mechanism is evidence of genuine blind rediscovery rather than information leakage.
+
+## L-021 — Representation-level audits are essential
+
+For algebraic encodings, audit not only the main argument but also special representations: modulus `1`, repeated moduli, repeated bases/frequencies, zero coefficients after merging, and the exact hypotheses of the linear-independence lemma.
+
+## L-022 — Add an explicit Invariant Hunt stage
+
+The #275 success suggests adding an `Invariant Hunt` substage after statement triage. The agent should inspect conspicuous numerical thresholds and structural terms and ask what finite dimension, recurrence order, combinatorial state count, generating function, root-of-unity encoding, or other invariant could naturally produce them.
+
+## Agent checklist
 
 Before acting on a new problem, the agent should ask internally:
 
@@ -107,5 +115,6 @@ Before acting on a new problem, the agent should ask internally:
 5. Which lemmas are established versus merely conjectured?
 6. Have failed paths been recorded?
 7. Has every candidate proof passed an algebraic/logical audit?
-8. If reference material is opened, has the blind boundary been closed?
-
+8. Has the proof actually been frozen before reference access?
+9. What is the final discovery classification: new, independent rederivation, equivalent reformulation, or reference-derived?
+10. What conspicuous numerical threshold might reveal the right invariant?
