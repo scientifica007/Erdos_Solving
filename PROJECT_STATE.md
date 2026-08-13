@@ -52,12 +52,15 @@ rejected_paths:
 
 reference_findings:
   - FormalConjectures/1125 points to an AI-assisted Lean proof by Aristotle and Stefano Rocca.
-  - The formal proof description uses dyadic induction, a covering lemma on I(alpha), interpolation estimates, and Pell approximants for sqrt(2).
-  - Historical attribution remains Laczkovich (1984).
+  - The formal proof explicitly describes the architecture as dyadic induction, a covering lemma on I(alpha), interpolation estimates, and Pell approximants for sqrt(2).
+  - The reconstructed modern proof uses a finite-interval estimate f(0) <= f(n) + 10K/n, then transfers it to irrational additive orbits, proves monotonicity there, and finally applies an affine rescaling using alpha = sqrt(2).
+  - Pell convergents supply the required controlled approximants to sqrt(2).
+  - Historical attribution is Laczkovich (1984); the modern Lean file should be treated as a formal reconstruction, not automatically as a line-by-line transcript of the 1984 paper.
 
-next_action: compare the frozen-independent record against the actual Laczkovich/reference argument; do not retroactively alter the failed independent attempt.
+comparison_record: problems/1125/comparison/historical-reconstruction.md
+next_action: preserve the failed blind attempt unchanged, summarize the gap between our local lemmas and the global Laczkovich mechanism, then assess whether a second independent attempt should be made on a mathematically simpler proved problem.
 
 ## Last checkpoint
 
 The current research log is `problems/1125/research-log.md`.
-The previously claimed proof freeze has been explicitly revoked. No valid independent proof has yet been obtained.
+The previously claimed proof freeze has been explicitly revoked. No valid independent proof of the full theorem has been obtained.
