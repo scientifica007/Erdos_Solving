@@ -24,11 +24,17 @@ Assume x and y are red and |x-y|=1. Let u be either of the two unit vectors perp
 
 Thus every red unit edge induces an opposite edge whose two endpoints have opposite colours. This is a genuine propagation rule and may be iterated through overlapping unit squares.
 
+### LEMMA-214-R1-003 — Blue point forces its unit circle to be red
+
+If p is blue, then every point x with |x-p|=1 is red, directly from the defining condition that S contains no two points at distance 1.
+
+This gives a complete red circle around every blue point. Attempts to push this immediately to the circle of radius sqrt(3) do not work: for q with |q-p|=sqrt(3), one can choose x,y on the unit circle so that p,x,y,q form a unit square, but q may be blue as the opposite diagonal vertex. Thus no new colour is forced at radius sqrt(3) from this argument alone.
+
 ## Computational exploration
 
-We generated finite point configurations from unit steps in the eight directions at multiples of 45 degrees, and encoded the constraints: no unit-distance pair may both be blue, and every unit square must contain a blue vertex. Configurations with 41 points / 8 square constraints and 129 points / 56 square constraints were both satisfiable. We also tested larger point sets without finding a contradiction. These are finite satisfiability results only; they do not imply global colourability or non-colourability.
+We generated finite point configurations from unit steps in the eight directions at multiples of 45 degrees, and encoded the constraints: no unit-distance pair may both be blue, and every unit square must contain a blue vertex. Configurations with 41 points / 8 square constraints and 129 points / 56 square constraints were both satisfiable. We also tested several richer small configurations generated from multiple unit-step directions (including 15, 30, 45, 60, and 90 degree directions); none of the tested finite systems was found infeasible. These are finite satisfiability results only; they do not imply global colourability or non-colourability.
 
-The experiments show that simple axis-aligned/45-degree local grids do not immediately expose the required obstruction. Any eventual finite obstruction is likely to require a richer configuration or a different structural argument.
+The experiments show that simple regular local grids do not immediately expose the required obstruction. Any eventual finite obstruction is likely to require a richer configuration or a different structural argument.
 
 ## Current conclusion
 
@@ -38,6 +44,7 @@ The current central invariants are:
 
 1. Every unit square has one blue vertex, or two opposite blue vertices.
 2. Every red unit edge forces the opposite edge of either adjacent unit square to have opposite endpoint colours.
+3. Every blue point has a full red unit circle around it.
 
 The next search should derive nontrivial propagation cycles from these rules rather than merely enumerate isolated grids.
 
