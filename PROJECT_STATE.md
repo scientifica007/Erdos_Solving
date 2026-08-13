@@ -9,15 +9,16 @@ This file is the operational memory checkpoint for the project. Read it before r
 - Never call an AI-generated argument a proof until it has passed the required audit and proof-freeze gates.
 - Distinguish problem-level status from variants, known sub-results, formalized statements, and formalized proofs.
 - During a blind challenge, do not consult the historical solution, solution discussions, or papers specifically proving the target statement before proof freeze.
+- If a candidate proof fails audit, revoke its freeze explicitly and record the failure; never silently overwrite the history.
 
 ## Current project
 
-current_phase: 2
-current_stage: blind-independent-solving
+current_phase: 6
+current_stage: historical-comparison-after-retracted-proof
 current_problem: 1125
-problem_status: open-for-blind-work
-blind_mode: true
-reference_solution_accessed: false
+problem_status: proved-by-laczkovich
+blind_mode: false
+reference_solution_accessed: true
 proof_frozen: false
 
 ## Phase model
@@ -38,17 +39,25 @@ A phase may only advance when its exit criteria are satisfied.
 
 canonical_statement: locked
 statement_source: user-supplied canonical text
-current_substage: structural-analysis
-candidate_proof: none
+current_substage: historical-comparison
+candidate_proof: retracted
 known_lemmas:
   - LEMMA-1125-001: strict descent implies midpoint amplification
   - LEMMA-1125-002: fixed-step recurrence alone does not force monotonicity
+  - LEMMA-1125-003: arbitrary positive rational steps remain available on affine rational orbits
 rejected_paths:
   - PATH-1125-A: naive midpoint contradiction
   - PATH-1125-B: fixed arithmetic progression reduction
-next_action: derive a global constraint from interaction of arbitrary positive step sizes
+  - PATH-1125-C: incorrect increment-monotonicity proof; revoked after algebraic audit
+
+reference_findings:
+  - FormalConjectures/1125 points to an AI-assisted Lean proof by Aristotle and Stefano Rocca.
+  - The formal proof description uses dyadic induction, a covering lemma on I(alpha), interpolation estimates, and Pell approximants for sqrt(2).
+  - Historical attribution remains Laczkovich (1984).
+
+next_action: compare the frozen-independent record against the actual Laczkovich/reference argument; do not retroactively alter the failed independent attempt.
 
 ## Last checkpoint
 
 The current research log is `problems/1125/research-log.md`.
-No historical/reference proof has been consulted during the current blind phase.
+The previously claimed proof freeze has been explicitly revoked. No valid independent proof has yet been obtained.
