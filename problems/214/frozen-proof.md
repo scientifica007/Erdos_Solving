@@ -1,64 +1,17 @@
-# Frozen Independent Proof — Erdős Problem #214
+# Retracted Independent Proof — Erdős Problem #214
 
-**Freeze status: FROZEN**
+**Status: RETRACTED — FAILED AUDIT**
 
-**Reference solution accessed before freeze: NO**
+The previous file was incorrectly marked FROZEN. The error is logical, not algebraic: the constructed square has vertex $p\in S$, so it is not a square contained in the complement $\mathbb R^2\setminus S$.
 
-## Theorem
+## Exact failure
 
-Let $S\subset\mathbb R^2$ have no two points at Euclidean distance $1$. Then $\mathbb R^2\setminus S$ contains four points forming a unit square.
+We considered $p\in S$ and points $p+u$, $p+v$, $q=p+u+v$. Since $|u|=|v|=1$, $p+u,p+v\notin S$. However, even when $q\notin S$, the four vertices are colored
 
-## Proof
+$\text{blue},\ \text{red},\ \text{red},\ \text{red}$,
 
-If $S=\varnothing$, the complement is all of $\mathbb R^2$, so the conclusion is immediate.
+not four red vertices. Thus the implication “$q\notin S$ therefore the four vertices form a red unit square” is false.
 
-Assume $S\ne\varnothing$ and choose $p\in S$. Suppose, for contradiction, that $\mathbb R^2\setminus S$ contains no unit square.
+The subsequent conclusion $C(p,\sqrt2)\subseteq S$ is therefore unsupported, and everything depending on it must be rejected.
 
-Take any point $q$ with $|q-p|=\sqrt2$. Put $w=q-p$. Since $|w|=\sqrt2$, there exist orthonormal unit vectors $u,v$ such that
-\[
-w=u+v.
-\]
-Then
-\[
-q=p+u+v,
-\]
-and the four points
-\[
-p,\quad p+u,\quad q,\quad p+v
-\]
-form a unit square: each of the four consecutive side vectors is a unit vector ($u,v,-u,-v$).
-
-Because $p\in S$ and $S$ contains no two points at distance $1$, both $p+u$ and $p+v$ lie outside $S$. Under our supposition that the complement contains no unit square, the remaining vertex $q$ must therefore lie in $S$; otherwise the four vertices above would form a unit square entirely in the complement.
-
-Since $q$ was arbitrary on the circle $C(p,\sqrt2)$, we obtain
-\[
-C(p,\sqrt2)\subseteq S.
-\]
-
-Now that circle contains two points at distance $1$. After translating and rotating, take $p=(0,0)$ and
-\[
-q_1=(1,1),
-\qquad
-q_2=\left(\frac{3+\sqrt7}{4},\frac{3-\sqrt7}{4}\right).
-\]
-Both points have squared distance $2$ from $p$, while
-\[
-|q_1-q_2|^2
-=\left(\frac{\sqrt7-1}{4}\right)^2+\left(\frac{\sqrt7+1}{4}\right)^2
-=1.
-\]
-Thus $q_1,q_2\in S$ are at distance $1$, contradicting the defining property of $S$.
-
-Therefore $\mathbb R^2\setminus S$ contains a unit square.
-\quad\square
-
-## Audit status
-
-- Empty-set case: PASS.
-- Construction of orthonormal $u,v$ with $u+v=q-p$: PASS.
-- Four constructed points form a unit square: PASS.
-- Since $p\in S$, the two adjacent vertices at distance $1$ from $p$ are outside $S$: PASS.
-- The argument applies to every $q$ on $C(p,\sqrt2)$: PASS.
-- Explicit unit-distance pair on $C(p,\sqrt2)$: PASS.
-- No continuity, measurability, density, or compactness assumptions: PASS.
-- Reference solution or discussion consulted before freeze: NO.
+The original failed candidate text is preserved in Git history through commit `ad192098e0a3da51df52866a2ad2fece5340ab8a`.
