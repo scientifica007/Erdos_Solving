@@ -1,13 +1,17 @@
 import Mathlib
 
+/-!
+Length-based interval primitives for Erdős Problem #678.
+
+The second interval argument is always a length, never a right-endpoint offset.
+This convention is intentionally chosen to prevent the off-by-one error that
+invalidated an earlier construction in this project.
+-/
+
 namespace Erdos678
 
 /-- `intervalFinset start len` contains exactly `len` consecutive naturals,
-starting at `start`: `start, start+1, ..., start+len-1`.
-
-The second argument is a *length*, not a right-endpoint offset.  This
-convention is deliberately chosen to prevent the off-by-one ambiguity that
-invalidated an earlier #678 construction. -/
+starting at `start`: `start, start+1, ..., start+len-1`. -/
 def intervalFinset (start len : ℕ) : Finset ℕ :=
   (Finset.range len).image (fun i => start + i)
 
@@ -24,15 +28,13 @@ def intervalLCM (start len : ℕ) : ℕ :=
 def erdosM (n k : ℕ) : ℕ :=
   intervalLCM (n + 1) k
 
-/-! Boundary regression tests for the length convention. -/
-
 example : intervalFinset 10 0 = ∅ := by
-  native_decide
+  decide
 
 example : intervalFinset 10 1 = {10} := by
-  native_decide
+  decide
 
 example : intervalFinset 10 3 = {10, 11, 12} := by
-  native_decide
+  decide
 
 end Erdos678
