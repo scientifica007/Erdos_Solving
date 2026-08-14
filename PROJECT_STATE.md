@@ -2,9 +2,9 @@
 
 > **Operational checkpoint synchronized on 2026-08-14.**
 >
-> Verified code-state basis: commit `e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf`.
-> Canonical pull-request CI run: `31845987598` — **SUCCESS**.
-> The run passed `lake exe mk_all --check`, reached `SmallPrimeClaim5.lean` and `SmallPrimeTests.lean`, and completed the canonical `lake build`.
+> Verified code-state basis: commit `61431b8881e481a56d06e00d702eabb6b64ae471`.
+> Canonical pull-request CI run: `31847883886` — **SUCCESS**.
+> The run passed `lake exe mk_all --check`, reached `Claim5Assembly.lean` and `Claim5AssemblyTests.lean`, and completed the canonical `lake build` with 8729 jobs.
 
 This file is the authoritative operational memory checkpoint. It must agree with the reachable Lean graph and the latest credited CI evidence.
 
@@ -24,8 +24,8 @@ This file is the authoritative operational memory checkpoint. It must agree with
 
 ```yaml
 current_problem: 678
-current_phase: cambie-claim5
-current_stage: full-claim5-assembly
+current_phase: cambie-claim4
+current_stage: claim4-crt-formalization
 current_mode: external-proof-reconstruction
 blind_mode: false
 reference_solution_accessed: true
@@ -37,17 +37,17 @@ independent_attempt_status: rejected
 reference_proof: Cambie-2024
 reference_understanding_status: analyzed
 
-current_target: assemble-full-claim5
+current_target: formalize-claim4-crt-residue-construction
 small_prime_claim5_status: machine-checked
-full_claim5_status: not-proved
+full_claim5_status: machine-checked-under-explicit-residue-hypotheses
 full_erdos678_formalization_status: not-proved
 
 ci_status: green
-canonical_ci_run: 31845987598
-canonical_ci_commit: e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf
+canonical_ci_run: 31847883886
+canonical_ci_commit: 61431b8881e481a56d06e00d702eabb6b64ae471
 build_graph_audit: mk-all-check-passed
 ci_blocker: none
-next_action: state the cross-range residue hypotheses and prove the complete Claim 5 natural-number identity
+next_action: formalize Claim 4 and construct residues satisfying the two verified Claim 5 interfaces
 ```
 
 ## Verified small-prime transition
@@ -79,9 +79,14 @@ The reachable graph now machine-checks:
 - capped small-prime congruence, window, supremum, initial-LCM, and valuation lemmas;
 - integrated theorem `claim5_small_prime_range`;
 - concrete theorem-instantiation regressions at `e = 1` and `e = 0`;
-- a negative congruence regression showing that the `y` residue hypothesis is active.
+- a negative congruence regression showing that the `y` residue hypothesis is active;
+- explicit medium- and small-prime residue interfaces for the future Claim 4 / CRT layer;
+- nonzero interval-product, interval-LCM, and exact quotient lemmas;
+- the prime-by-prime assembled Claim 5 valuation identity;
+- the final Claim 5 natural-number identity under the explicit residue hypotheses;
+- a reachable assembled theorem-interface regression at `k = 2`.
 
-## Small-prime module state
+## Claim 5 module state
 
 | Module | Current classification |
 |---|---|
@@ -92,6 +97,8 @@ The reachable graph now machine-checks:
 | `SmallPrimeSup.lean` | repaired, reachable, and machine-checked |
 | `SmallPrimeClaim5.lean` | reachable and machine-checked |
 | `SmallPrimeTests.lean` | reachable; positive boundary and negative congruence regressions checked |
+| `Claim5Assembly.lean` | reachable; all-range valuation assembly, nonzero bridge, and natural identity checked |
+| `Claim5AssemblyTests.lean` | reachable; assembled theorem interface checked at `k = 2` |
 
 ## Current #678 mathematical state
 
@@ -101,12 +108,12 @@ Verified:
 
 - the valid concrete witness and its domain condition;
 - rejection of the false scaling and `Q=P/M` constructions;
-- all three range-specific Claim 5 valuation identities under explicit hypotheses.
+- all three range-specific Claim 5 valuation identities under explicit hypotheses;
+- a single theorem assembling Claim 5 across every prime;
+- nonzero side conditions and the final natural-number equality for Claim 5 under the explicit residue interfaces.
 
 Not yet proved in this repository:
 
-- a single theorem assembling Claim 5 across every prime;
-- nonzero side conditions and the final natural-number equality for Claim 5;
 - Claim 4 CRT-density lemma;
 - CRT construction of `x` and `y`;
 - quantitative LCM-ratio estimate;
@@ -116,13 +123,13 @@ Not yet proved in this repository:
 
 ## Required restart sequence
 
-1. Define the exact cross-range residue hypotheses consumed by Claim 5.
-2. Prove the nonzero product/LCM quotient lemmas needed by prime-valuation extensionality.
-3. Split an arbitrary prime into `p > k`, `p ≤ k < p²`, or `p² ≤ k`.
-4. Apply the verified range theorem in each case.
-5. Prove the complete natural-number identity using equality of all prime valuations.
-6. Add a reachable regression and run the canonical CI gate.
-7. Synchronize this checkpoint and the roadmap before any work on Claim 4.
+1. Extract the exact Claim 4 / CRT-density statement used by Cambie and state it without importing Claim 5 conclusions.
+2. Define admissible residue boxes that produce `Claim5MediumResidues` and `Claim5SmallResidues`.
+3. Formalize the CRT combination and prove existence of representatives satisfying both interfaces.
+4. Add the quantitative bounds and separation condition required for the later `x,y` construction.
+5. Connect the constructed residues to `claim5_full_identity_of_residues`.
+6. Add reachable positive and negative regressions, then run the canonical CI gate.
+7. Synchronize this checkpoint and the roadmap before opening the quantitative-finish phase.
 
 ## Completed benchmark outcomes
 
@@ -137,4 +144,4 @@ Not yet proved in this repository:
 
 ## Documentation synchronization status
 
-The root README, this checkpoint, the decision register, the active #678 roadmap, the problem index, the #678 README, the agent guide, and the #678 lessons addendum were synchronized with the verified small-prime checkpoint in one atomic change.
+The root README, this checkpoint, the active #678 roadmap, the problem index, the #678 README, and the #678 lessons addendum are synchronized with the verified full-Claim-5 checkpoint. The decision register and agent guide remain current and require no semantic change.

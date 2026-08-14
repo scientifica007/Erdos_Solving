@@ -2,12 +2,12 @@
 
 **Status:** ACTIVE — canonical execution roadmap  
 **Mode:** reconstruction and independent Lean reimplementation of Cambie (2024), not independent mathematical discovery  
-**Code-state basis:** `e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf`  
+**Code-state basis:** `61431b8881e481a56d06e00d702eabb6b64ae471`  
 **Canonical CI status:** GREEN  
-**Verified run:** `31845987598`  
-**Current phase:** Phase B — Cambie Claim 5  
-**Current target:** assemble the full Claim 5 identity across all prime ranges  
-**Expansion gate:** OPEN for B4 only; Claim 4 and later phases remain closed
+**Verified run:** `31847883886`  
+**Current phase:** Phase D — CRT combinatorial engine  
+**Current target:** formalize Claim 4 and construct the residue interfaces consumed by Claim 5  
+**Expansion gate:** OPEN for D1 only; quantitative and prime-density phases remain closed
 
 This file is the sole operational answer to: **what is the next Lean/formalization task for #678?**
 
@@ -26,7 +26,8 @@ Externally, Erdős #678 is proved. In this repository:
 - the Claim 5 ranges `p > k` and `p ≤ k < p²` are machine-checked;
 - the capped small-prime congruence core is machine-checked;
 - the integrated small-prime Claim 5 theorem is machine-checked with reachable boundary regressions;
-- full Claim 5 is not assembled;
+- full Claim 5 is machine-checked under explicit medium- and small-prime residue hypotheses;
+- Claim 4 / CRT residue construction is not proved;
 - the full #678 theorem is not formalized.
 
 A source file containing a theorem statement is not evidence that Lean accepted the theorem. Only a successful canonical build of a reachable module grants machine-checked status.
@@ -69,7 +70,7 @@ Consolidation established:
 - finite-product valuation;
 - a green checkpoint at run `31827146122`.
 
-The consolidation checkpoint was historical; the present credited code state is also green at run `31845987598`.
+The consolidation checkpoint was historical; the present credited code state is also green at run `31847883886`.
 
 ---
 
@@ -98,7 +99,7 @@ The graph defines prime-power divisibility counts, connects them to `padicValNat
 
 ---
 
-# Phase B — Cambie Claim 5 — IN PROGRESS
+# Phase B — Cambie Claim 5 — PASSED
 
 ## B1 — Prime range `p > k` — DONE / MACHINE-CHECKED
 
@@ -141,23 +142,25 @@ Verified module classification:
 
 Closing checkpoint: run `31845987598`, commit `e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf`.
 
-## B4 — Full Claim 5 assembly — CURRENT
+## B4 — Full Claim 5 assembly — DONE / MACHINE-CHECKED
 
-Now that B3 is green:
+Completed components:
 
-1. state the complete residue hypotheses required for every prime range;
-2. split an arbitrary prime into large, medium, or small cases;
-3. apply the range-specific valuation identities;
-4. prove both sides of the proposed identity are nonzero;
-5. use equality of all prime `padicValNat` values to prove the natural-number identity.
+- `Claim5MediumResidues` and `Claim5SmallResidues` expose exactly the data expected from the later CRT layer;
+- `intervalProd_ne_zero_of_mem_ne_zero`, `intervalLCM_ne_zero_of_mem_ne_zero`, and `intervalProd_div_intervalLCM_ne_zero` discharge the extensionality side conditions;
+- `claim5_prime_valuation_of_residues` partitions every prime into the large, medium, or small range and applies the verified theorem;
+- `claim5_full_identity_of_residues` derives the natural-number identity from equality of all prime valuations;
+- `Claim5AssemblyTests.lean` provides a reachable theorem-interface regression at `k = 2`.
 
-Exit condition: Cambie's exact Claim 5 identity is machine-checked without Claim 4, prime-density existence, or the final asymptotic estimate.
+Exit evidence: commit `61431b8881e481a56d06e00d702eabb6b64ae471`, run `31847883886`, `mk_all --check` reported no update, both new modules were reached, and the 8729-job canonical build succeeded.
+
+Boundary: this proves Claim 5 **conditional on the explicit residue interfaces**. It does not prove Claim 4, construct CRT representatives, supply prime-density input, or finish Erdős #678.
 
 ---
 
-# Phase D — CRT combinatorial engine — PENDING
+# Phase D — CRT combinatorial engine — CURRENT
 
-## D1 — Claim 4
+## D1 — Claim 4 — CURRENT
 
 Formalize Cambie's CRT-density lemma independently of the LCM application.
 
@@ -197,16 +200,17 @@ Set `C = 1`, translate `n=x-1`, `m=y-1`, and prove all domain and infinitude con
 Erdős #678
 ├── Consolidation gate ........................... PASSED AT CHECKPOINT
 ├── Arithmetic core .............................. PASSED
-└── Cambie Claim 5 ............................... IN PROGRESS
-    ├── B1: p > k ................................ MACHINE-CHECKED
-    ├── B2: p ≤ k < p² .......................... MACHINE-CHECKED
-    ├── B3: small-prime exponent range ........... MACHINE-CHECKED
-    └── B4: full Claim 5 assembly ................ CURRENT
+├── Cambie Claim 5 ............................... PASSED
+│   ├── B1: p > k ................................ MACHINE-CHECKED
+│   ├── B2: p ≤ k < p² .......................... MACHINE-CHECKED
+│   ├── B3: small-prime exponent range ........... MACHINE-CHECKED
+│   └── B4: full Claim 5 assembly ................ MACHINE-CHECKED
+└── Claim 4 / CRT engine .......................... CURRENT
 ```
 
 ## Sole next action
 
-Define and machine-check the complete Claim 5 assembly across the large, medium, and small prime ranges. Do not start Claim 4 before this theorem and its nonzero side conditions pass the canonical gate.
+State and machine-check the exact Claim 4 / CRT-density interface that constructs residues satisfying `Claim5MediumResidues` and `Claim5SmallResidues`. Do not open the quantitative-finish phase until that construction and its bounds pass the canonical gate.
 
 ## Global audit gates
 

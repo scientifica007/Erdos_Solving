@@ -213,3 +213,12 @@ Reusable rule:
 
 > When a definition is opaque or non-reducible, test the proved interface and discharge concrete hypotheses; do not force kernel reduction or enlarge the trusted computing base merely for convenience.
 
+
+
+## L-678-024 — Separate a theorem consumer from its construction layer
+
+The full Claim 5 assembly became short and auditable only after the residue data were named as two explicit interfaces. The assembly module consumes those interfaces, combines the three already verified prime ranges, proves the nonzero side conditions, and obtains natural-number equality from every prime valuation. It does not pretend to construct the residues supplied later by Claim 4 and CRT.
+
+Reusable rule:
+
+> When a proof has a construction layer and a consequence layer, formalize their interface first. Completing the consumer theorem under that exact interface is real progress, but it must not be credited as completing the producer.
