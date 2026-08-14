@@ -141,4 +141,16 @@ theorem padicValNat_intervalProd_div_intervalLCM_eq_zero
   rw [interval_padicValNat_sum_eq_sup hp hlen hne]
   exact Nat.sub_self _
 
+/-- Cambie's `p > k` case for both consecutive blocks in Claim 5.
+The `x` block has length `k`, while the `y` block has length `k + 1`. -/
+theorem claim5_large_prime_range
+    {x y k p : ℕ} (hp : Nat.Prime p) (hpk : k < p)
+    (hxne : ∀ z ∈ intervalFinset x k, z ≠ 0)
+    (hyne : ∀ z ∈ intervalFinset y (k + 1), z ≠ 0) :
+    padicValNat p (intervalProd x k / intervalLCM x k) = 0 ∧
+      padicValNat p (intervalProd y (k + 1) / intervalLCM y (k + 1)) = 0 := by
+  constructor
+  · exact padicValNat_intervalProd_div_intervalLCM_eq_zero hp (Nat.le_of_lt hpk) hxne
+  · exact padicValNat_intervalProd_div_intervalLCM_eq_zero hp (Nat.succ_le_of_lt hpk) hyne
+
 end Erdos678
