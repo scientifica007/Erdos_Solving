@@ -19,7 +19,7 @@ This file is the operational memory checkpoint for the project. Read it before r
 
 current_problem: 678
 current_phase: cambie-claim5
-current_stage: large-prime-range
+current_stage: medium-prime-range
 current_mode: external-proof-reconstruction
 blind_mode: false
 reference_solution_accessed: true
@@ -32,7 +32,7 @@ reference_proof: Cambie-2024
 reference_understanding_status: analyzed
 
 current_target: Cambie-Claim-5
-current_substage: B1-prime-greater-than-k
+current_substage: B2-medium-prime-range
 full_claim5_status: not-proved
 full_erdos678_formalization_status: not-proved
 
@@ -41,7 +41,8 @@ ci_blocker: none
 consolidation_gate_status: passed
 arithmetic_core_status: passed
 latest_arithmetic_green_run: 31829795250
-next_action: formalize Claim 5 prime range `p > k` (Roadmap B1)
+latest_claim5_green_run: 31832061313
+next_action: formalize exact multiple counts for Claim 5 range `k < p^2` and `p <= k` (Roadmap B2)
 
 ## Current #678 mathematical state
 
@@ -60,8 +61,8 @@ rejected_paths:
 
 current_reference_structure:
   - Claim 5: prime-by-prime arithmetic identity — active reconstruction target
-  - B1 `p > k` — current
-  - B2 `sqrt(k) < p <= k` — not started
+  - B1 `p > k` — machine-checked
+  - B2 `sqrt(k) < p <= k` — current; use arithmetic condition `k < p^2` with `p <= k`
   - B3 `p <= sqrt(k)` — not started
   - Claim 4: CRT-density combinatorial lemma — not started
   - CRT residue construction for `x,y` — not started
@@ -85,6 +86,7 @@ live_modules:
   - `Formalization/Erdos678/LCMValuation.lean`
   - `Formalization/Erdos678/ReciprocalLCMValuation.lean`
   - `Formalization/Erdos678/ValuationCounting.lean`
+  - `Formalization/Erdos678/LargePrimeRange.lean`
 
 machine_checked_components:
   - length-based consecutive interval API
@@ -99,10 +101,13 @@ machine_checked_components:
   - exact product-over-LCM valuation formula via `Finset.lcm_dvd_prod` and `padicValNat.div_of_dvd`
   - prime-power divisibility-counting primitive for finite sets and consecutive intervals
   - finite-support theorem: counts vanish above the supremum of `p`-adic valuations
+  - B1 interval-spacing theorem: a block of length at most `p` contains at most one multiple of `p`
+  - B1 zero reciprocal-LCM valuation theorem for a block of length at most `p`
+  - combined Claim 5 theorem for the range `p > k`, covering the `x` block of length `k` and `y` block of length `k+1`
 
 not_started_components:
-  - Cambie Claim 5 prime range `p > k`
-  - Cambie Claim 5 prime range `sqrt(k) < p <= k`
+  - exact residue-class counting for B2
+  - B2 reciprocal-LCM valuation relation
   - Cambie Claim 5 prime range `p <= sqrt(k)`
   - Cambie Claim 5 assembly
   - Claim 4
@@ -134,6 +139,11 @@ Completed sequence:
 - A2 reciprocal-LCM factor: machine-checked after normalizing `id`; corrected run `31829283998` passed.
 - A3 prime-power divisibility counting and finite-support bound: machine-checked in run `31829795250`.
 
+## Phase B — Cambie Claim 5 — IN PROGRESS
+
+- B1 `p > k`: machine-checked. The implementation proves uniqueness of a multiple of `p` in any block of length at most `p`, derives equality of valuation sum and supremum, then proves zero valuation for `product / lcm`. The combined Claim 5 corollary for the `x` and `y` blocks passed in GitHub Actions run `31832061313`.
+- B2 `sqrt(k) < p <= k`: current. The Lean-facing arithmetic condition will use `k < p^2` and `p <= k`; the main unresolved task is exact residue-class counting under Cambie's admissible windows.
+
 ## Reusable lessons
 
 - **Length-first interval API:** when an endpoint ambiguity has already caused a proof failure, represent consecutive blocks by `(start, length)`, not by an ambiguous endpoint offset.
@@ -141,6 +151,7 @@ Completed sequence:
 - **Kernel-checked closed regressions:** use kernel-checked `decide` for closed computational regressions when practical rather than `native_decide`, which expands the trusted computing base to the compiler.
 - **API-driven proof repair:** when Mathlib rejects a guessed theorem name or rewrite shape, inspect the actual library API and reformulate the proof rather than stacking speculative rewrites.
 - **Thin-wrapper policy:** prefer existing Mathlib structural theorems such as `Finset.factorization_lcm`, `Finset.lcm_dvd_prod`, and `padicValNat.div_of_dvd` over rebuilding standard number theory by bespoke induction.
+- **Arithmetic range normalization:** for the medium-prime range, prefer `k < p^2` to a square-root inequality when that is the exact property used by the proof.
 
 ## Historical #214 checkpoint
 
