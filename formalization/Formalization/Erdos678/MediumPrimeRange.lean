@@ -53,7 +53,16 @@ theorem intervalPrimePowerCount_one_eq_count_modEq
     ⟨fun i => start + i, fun _ _ h => Nat.add_left_cancel h⟩
   have hinterval : intervalFinset start len = (Finset.range len).map e := by
     ext z
-    simp [intervalFinset, e]
+    simp only [intervalFinset, Finset.mem_image, Finset.mem_map, Finset.mem_range]
+    constructor
+    · rintro ⟨i, hi, hiz⟩
+      refine ⟨i, hi, ?_⟩
+      change start + i = z
+      exact hiz
+    · rintro ⟨i, hi, hiz⟩
+      refine ⟨i, hi, ?_⟩
+      change start + i = z at hiz
+      exact hiz
   unfold intervalPrimePowerCount primePowerDivisibleCount
   simp only [pow_one]
   rw [hinterval, Finset.filter_map, Finset.card_map]
