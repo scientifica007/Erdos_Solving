@@ -28,3 +28,4 @@ jobs:
           use-mathlib-cache: true
           build: true
           test: false
+          mk_all-check: true

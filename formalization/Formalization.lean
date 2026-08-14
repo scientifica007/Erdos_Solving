@@ -17,3 +17,4 @@ import Formalization.Erdos678.SmallPrimeWindows
 import Formalization.Erdos678.SmallPrimeInitialLCM
 import Formalization.Erdos678.SmallPrimeSup
 import Formalization.Erdos678.SmallPrimeClaim5
+import Formalization.Erdos678.SmallPrimeTests
