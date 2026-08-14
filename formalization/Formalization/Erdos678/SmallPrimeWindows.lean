@@ -57,4 +57,41 @@ theorem interval_sum_min_padicValNat_eq_of_modEq_prime_pow
     apply mem_intervalFinset_iff.mpr
     exact ⟨i, hi, rfl⟩
 
+/-- A block of length `len+1` is its first element together with the tail block
+of length `len` beginning one step later. -/
+theorem intervalFinset_succ_len (start len : ℕ) :
+    intervalFinset start (len + 1) =
+      insert start (intervalFinset (start + 1) len) := by
+  ext z
+  simp only [Finset.mem_insert, mem_intervalFinset_iff]
+  constructor
+  · rintro ⟨i, hi, hiz⟩
+    rcases i with _ | i
+    · left
+      simpa using hiz
+    · right
+      refine ⟨i, by omega, ?_⟩
+      omega
+  · intro hz
+    rcases hz with h | ⟨i, hi, hiz⟩
+    · subst z
+      exact ⟨0, by omega, by simp⟩
+    · refine ⟨i + 1, by omega, ?_⟩
+      omega
+
+/-- The first element of a block is not in its one-step-later tail. -/
+theorem start_not_mem_interval_tail (start len : ℕ) :
+    start ∉ intervalFinset (start + 1) len := by
+  intro h
+  obtain ⟨i, hi, hiz⟩ := mem_intervalFinset_iff.mp h
+  omega
+
+/-- Sum decomposition matching `intervalFinset_succ_len`. -/
+theorem intervalFinset_sum_succ_len
+    (start len : ℕ) (f : ℕ → ℕ) :
+    (intervalFinset start (len + 1)).sum f =
+      f start + (intervalFinset (start + 1) len).sum f := by
+  rw [intervalFinset_succ_len]
+  exact Finset.sum_insert (start_not_mem_interval_tail start len) f
+
 end Erdos678
