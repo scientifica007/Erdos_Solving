@@ -14,7 +14,7 @@ Let `M(n,k) = lcm{n+1,...,n+k}`. Are there infinitely many `m,n,k ≥ 3` with `m
 - Valid concrete witness: `M(36,8) > M(47,9)` — machine-checked.
 - Rejected candidate: `(495,504,8)` — machine-refuted and retained as a negative regression.
 - Current mode: reconstruction of Cambie's proof architecture.
-- Full Claim 5 in this repository: not proved.
+- Full Claim 5 in this repository: machine-checked under explicit residue hypotheses; residue construction remains Claim 4.
 - Full Erdős #678 theorem in this repository: not formalized.
 
 ## Historical independent-attempt failure
@@ -40,20 +40,20 @@ The failures were recorded before reference reconstruction and remain part of pr
 | Claim 5 range `p ≤ k < p²` | machine-checked |
 | small-prime capped congruence core | machine-checked |
 | integrated small-prime Claim 5 | machine-checked with reachable boundary regressions |
-| full Claim 5 assembly | pending |
+| full Claim 5 assembly | machine-checked under explicit residue hypotheses |
 | Claim 4 / CRT construction | pending |
 | quantitative finish and prime-density input | pending |
 | full theorem | pending |
 
 ## Verified checkpoint
 
-Canonical run `31845987598` passed the generated import-graph check and the full Lean build at commit `e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf`. The earlier equality-orientation, natural-subtraction, and finset type-inference failures are repaired without weakening the theorem statements.
+Canonical run `31847883886` passed the generated import-graph check and the full Lean build at commit `61431b8881e481a56d06e00d702eabb6b64ae471`. It reached the new assembly and regression modules and completed 8729 jobs.
 
-The three prime ranges of Claim 5 are now independently machine-checked under their explicit hypotheses. This does **not** yet constitute the single assembled natural-number identity.
+The three range theorems are now assembled into a single prime-by-prime valuation theorem and a natural-number identity. The result is deliberately conditional on `Claim5MediumResidues` and `Claim5SmallResidues`; constructing those residues is the still-unproved Claim 4 / CRT layer.
 
 ## Sole next action
 
-Assemble full Claim 5: state the shared residue hypotheses, split an arbitrary prime into the three verified ranges, prove both sides nonzero, and conclude equality from all prime `padicValNat` values. Claim 4, CRT construction, and the final estimate remain outside the current gate.
+Formalize Claim 4: state the CRT-density lemma and construct residue data satisfying `Claim5MediumResidues` and `Claim5SmallResidues`. The quantitative finish, prime-density input, and full Erdős #678 theorem remain outside the current gate.
 
 ## Main references inside this folder
 
