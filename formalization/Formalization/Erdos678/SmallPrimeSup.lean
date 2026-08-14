@@ -81,6 +81,9 @@ theorem exp_le_interval_sum_min_padicValNat_of_modEq_one
   calc
     e = min (padicValNat p z) e := hzcap.symm
     _ ≤ (intervalFinset start len).sum (fun x => min (padicValNat p x) e) :=
-      Finset.single_le_sum (fun x hx => Nat.zero_le _) hzmem
+      Finset.single_le_sum
+        (s := intervalFinset start len)
+        (f := fun x => min (padicValNat p x) e)
+        (fun x _ => Nat.zero_le _) hzmem
 
 end Erdos678
