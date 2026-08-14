@@ -1,10 +1,12 @@
-# Erdős Problem #678 — Cambie Proof Analysis and Lean Roadmap
+# Erdős Problem #678 — Cambie Proof Analysis
 
 ## Status
 
 The independent construction attempted in our experiment was rejected. The concrete witness `M(36,8) > M(47,9)` is machine-verified, but it does not by itself yield infinitely many solutions.
 
-This document records the structure of Cambie's 2024 proof and the revised formalization strategy. It is an analysis/reimplementation roadmap, not a claim of an independent new proof.
+This document records the mathematical structure of Cambie's 2024 proof. It is an analysis/reference document, not a task tracker and not a claim of an independent new proof.
+
+**Canonical execution roadmap:** `LEAN_FORMALIZATION_ROADMAP.md`.
 
 ## 1. Stronger theorem actually proved
 
@@ -95,7 +97,7 @@ There is at most one multiple of `p^2` in the relevant intervals. Therefore it i
 
 They occur at most once in either interval, so their contribution to the reciprocal-LCM factors is zero.
 
-This Claim 5 is the best first target for a clean independent Lean formalization because it is local, arithmetic, and separates the CRT existence machinery from the final size estimate.
+This Claim 5 is the best first arithmetic target for a clean Lean reconstruction because it is local and separates the CRT existence machinery from the final size estimate.
 
 ## 6. Final analytic/combinatorial estimate
 
@@ -120,36 +122,24 @@ The published proof uses density of primes in intervals around `k/2` and near `k
 Therefore we must distinguish:
 
 - **Mathematical proof in Cambie's paper:** unconditional, using the cited prime-density input.
-- **Current online Lean formalization reported by the site:** conditional on a PNT-style axiom/hypothesis in the posted version.
+- **Reported online Lean formalization:** conditional on a PNT-style axiom/hypothesis in the posted version unless the missing prime-density theorem is supplied formally.
 
-## 8. Revised Lean roadmap
+## 8. Formalization decomposition — mathematical dependency view
 
-Do not formalize the whole theorem immediately.
+This section describes dependency structure only. Operational status and next actions belong exclusively to `LEAN_FORMALIZATION_ROADMAP.md`.
 
-### Stage A — already completed
+The mathematical dependency order is:
 
-1. Lean/Lake/Mathlib CI infrastructure.
-2. Correct concrete witness `M(36,8) > M(47,9)`.
-3. Negative regression test for the false `(495,504,8)` witness.
-
-### Stage B — arithmetic core
-
-4. Formalize finite-interval LCMs and reciprocal-LCM factors.
-5. Formalize Claim 5 as a theorem about `p`-adic valuations.
-6. Split Claim 5 by prime ranges: `p <= sqrt(k)`, `sqrt(k) < p <= k`, `p > k`.
-
-### Stage C — CRT combinatorial engine
-
-7. Formalize Claim 4 independently.
-8. Formalize the residue-box construction for `x` and `y`.
-9. Prove existence of representatives satisfying the residue constraints and the required size separation.
-
-### Stage D — quantitative finish
-
-10. Formalize the lower bound for the LCM ratio.
-11. Import or axiomatize only the exact prime-density statement needed, with the dependency explicitly named.
-12. Derive the final theorem for sufficiently large `k`.
-13. Deduce Erdős #678.
+1. finite consecutive blocks, products, and LCMs;
+2. prime-adic valuation of products and LCMs;
+3. reciprocal-LCM valuation;
+4. Claim 5 split into the three prime ranges;
+5. Claim 4 as a separate CRT-density lemma;
+6. residue-box construction for `x` and `y`;
+7. quantitative LCM-ratio estimate;
+8. exact prime-density input;
+9. strong Cambie theorem;
+10. deduction of Erdős #678.
 
 ## 9. Lessons from our failed attempt
 
@@ -161,4 +151,4 @@ not `lcm(t,...,t+k)`.
 
 Cambie's proof avoids this trap by constructing **two different endpoints `x` and `y`** and proving the exact valuation identity directly.
 
-This is a major methodological lesson: when working with interval operators, formalize the interval endpoints first and only then derive algebraic identities.
+This is a major methodological lesson: when working with interval operators, formalize interval length/endpoints first and only then derive algebraic identities.
