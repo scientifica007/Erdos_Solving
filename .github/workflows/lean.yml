@@ -25,5 +25,7 @@ jobs:
           build: true
           test: false
 
-      - name: Verify explicit Erdős #678 test
-        run: lake env lean Formalization/Erdos678_Test1.lean
+      - name: Verify explicit Erdős tests
+        run: |
+          lake env lean Formalization/Erdos678_Test1.lean
+          lake env lean Formalization/Erdos678_Test2.lean
