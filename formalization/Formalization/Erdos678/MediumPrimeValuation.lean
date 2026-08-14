@@ -61,4 +61,68 @@ theorem finset_sum_sub_sup_eq_card_pos_sub_one
   rw [hsum_decomp, hsup_decomp, htail_eq]
   omega
 
+/-- If a nonzero finite set contains at least one multiple of the prime `p`
+and at most one multiple of `p^2`, then the reciprocal-LCM factor has
+`p`-adic valuation equal to the number of multiples of `p` minus one. -/
+theorem padicValNat_prod_div_lcm_eq_primePowerCount_sub_one
+    {p : ℕ} (hp : Nat.Prime p) {s : Finset ℕ}
+    (hne : ∀ x ∈ s, x ≠ 0)
+    (hcount1 : 0 < primePowerDivisibleCount s p 1)
+    (hcount2 : primePowerDivisibleCount s p 2 ≤ 1) :
+    padicValNat p ((s.prod id) / (s.lcm id)) =
+      primePowerDivisibleCount s p 1 - 1 := by
+  have hcount1_filter :
+      primePowerDivisibleCount s p 1 =
+        (s.filter fun x => 0 < padicValNat p x).card := by
+    calc
+      primePowerDivisibleCount s p 1 =
+          (s.filter fun x => 1 ≤ padicValNat p x).card :=
+        primePowerDivisibleCount_eq_card_filter_padicValNat hp hne
+      _ = (s.filter fun x => 0 < padicValNat p x).card := by
+        congr 1
+        ext x
+        simp only [Finset.mem_filter]
+        constructor
+        · rintro ⟨hx, hv⟩
+          exact ⟨hx, by omega⟩
+        · rintro ⟨hx, hv⟩
+          exact ⟨hx, by omega⟩
+  have hcount2_filter :
+      primePowerDivisibleCount s p 2 =
+        (s.filter fun x => 0 < padicValNat p x - 1).card := by
+    calc
+      primePowerDivisibleCount s p 2 =
+          (s.filter fun x => 2 ≤ padicValNat p x).card :=
+        primePowerDivisibleCount_eq_card_filter_padicValNat hp hne
+      _ = (s.filter fun x => 0 < padicValNat p x - 1).card := by
+        congr 1
+        ext x
+        simp only [Finset.mem_filter]
+        constructor
+        · rintro ⟨hx, hv⟩
+          exact ⟨hx, by omega⟩
+        · rintro ⟨hx, hv⟩
+          exact ⟨hx, by omega⟩
+  have hpos : (s.filter fun x => 0 < padicValNat p x).Nonempty := by
+    rw [← Finset.card_pos, ← hcount1_filter]
+    exact hcount1
+  have htail : (s.filter fun x => 0 < padicValNat p x - 1).card ≤ 1 := by
+    rw [← hcount2_filter]
+    exact hcount2
+  rw [padicValNat_prod_div_lcm hp hne]
+  rw [finset_sum_sub_sup_eq_card_pos_sub_one hpos htail]
+  rw [← hcount1_filter]
+
+/-- Interval specialization of the medium-prime valuation bridge. -/
+theorem padicValNat_intervalProd_div_intervalLCM_eq_count_sub_one
+    {start len p : ℕ} (hp : Nat.Prime p)
+    (hne : ∀ x ∈ intervalFinset start len, x ≠ 0)
+    (hcount1 : 0 < intervalPrimePowerCount start len p 1)
+    (hcount2 : intervalPrimePowerCount start len p 2 ≤ 1) :
+    padicValNat p (intervalProd start len / intervalLCM start len) =
+      intervalPrimePowerCount start len p 1 - 1 := by
+  simpa [intervalPrimePowerCount] using
+    (padicValNat_prod_div_lcm_eq_primePowerCount_sub_one
+      (s := intervalFinset start len) hp hne hcount1 hcount2)
+
 end Erdos678
