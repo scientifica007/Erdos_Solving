@@ -11,3 +11,4 @@ import Formalization.Erdos678.MediumPrimeRange
 import Formalization.Erdos678.MediumPrimeWindows
 import Formalization.Erdos678.MediumPrimeValuation
 import Formalization.Erdos678.MediumPrimeClaim5
+import Formalization.Erdos678.SmallPrimeRange
