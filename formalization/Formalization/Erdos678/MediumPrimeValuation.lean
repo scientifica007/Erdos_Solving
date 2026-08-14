@@ -79,14 +79,17 @@ theorem padicValNat_prod_div_lcm_eq_primePowerCount_sub_one
           (s.filter fun x => 1 ≤ padicValNat p x).card :=
         primePowerDivisibleCount_eq_card_filter_padicValNat hp hne
       _ = (s.filter fun x => 0 < padicValNat p x).card := by
-        congr 1
-        ext x
-        simp only [Finset.mem_filter]
-        constructor
-        · rintro ⟨hx, hv⟩
-          exact ⟨hx, by omega⟩
-        · rintro ⟨hx, hv⟩
-          exact ⟨hx, by omega⟩
+        have hfilter :
+            (s.filter fun x => 1 ≤ padicValNat p x) =
+              (s.filter fun x => 0 < padicValNat p x) := by
+          ext x
+          simp only [Finset.mem_filter]
+          constructor
+          · rintro ⟨hx, hv⟩
+            exact ⟨hx, by omega⟩
+          · rintro ⟨hx, hv⟩
+            exact ⟨hx, by omega⟩
+        exact congrArg Finset.card hfilter
   have hcount2_filter :
       primePowerDivisibleCount s p 2 =
         (s.filter fun x => 0 < padicValNat p x - 1).card := by
@@ -95,14 +98,17 @@ theorem padicValNat_prod_div_lcm_eq_primePowerCount_sub_one
           (s.filter fun x => 2 ≤ padicValNat p x).card :=
         primePowerDivisibleCount_eq_card_filter_padicValNat hp hne
       _ = (s.filter fun x => 0 < padicValNat p x - 1).card := by
-        congr 1
-        ext x
-        simp only [Finset.mem_filter]
-        constructor
-        · rintro ⟨hx, hv⟩
-          exact ⟨hx, by omega⟩
-        · rintro ⟨hx, hv⟩
-          exact ⟨hx, by omega⟩
+        have hfilter :
+            (s.filter fun x => 2 ≤ padicValNat p x) =
+              (s.filter fun x => 0 < padicValNat p x - 1) := by
+          ext x
+          simp only [Finset.mem_filter]
+          constructor
+          · rintro ⟨hx, hv⟩
+            exact ⟨hx, by omega⟩
+          · rintro ⟨hx, hv⟩
+            exact ⟨hx, by omega⟩
+        exact congrArg Finset.card hfilter
   have hpos : (s.filter fun x => 0 < padicValNat p x).Nonempty := by
     rw [← Finset.card_pos, ← hcount1_filter]
     exact hcount1
@@ -121,7 +127,7 @@ theorem padicValNat_intervalProd_div_intervalLCM_eq_count_sub_one
     (hcount2 : intervalPrimePowerCount start len p 2 ≤ 1) :
     padicValNat p (intervalProd start len / intervalLCM start len) =
       intervalPrimePowerCount start len p 1 - 1 := by
-  simpa [intervalPrimePowerCount] using
+  simpa [intervalPrimePowerCount, intervalProd, intervalLCM] using
     (padicValNat_prod_div_lcm_eq_primePowerCount_sub_one
       (s := intervalFinset start len) hp hne hcount1 hcount2)
 
