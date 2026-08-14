@@ -86,4 +86,20 @@ theorem intervalPrimePowerCount_one_formula
   rw [intervalPrimePowerCount_one_eq_count_modEq ha hstart]
   exact Nat.count_modEq_card len hp0 (p - a)
 
+/-- Cambie's admissible `a_p` window gives exactly `k / p` multiples of `p`
+in the `x` block of length `k`. -/
+theorem cambie_x_prime_count
+    {x k p a : ℕ} (hp : Nat.Prime p)
+    (ha1 : 1 ≤ a) (haUpper : a ≤ p - k % p)
+    (hx : x ≡ a [MOD p]) :
+    intervalPrimePowerCount x k p 1 = k / p := by
+  have hp0 : 0 < p := hp.pos
+  have hrlt : k % p < p := Nat.mod_lt k hp0
+  have ha : a ≤ p := haUpper.trans (Nat.sub_le p (k % p))
+  have hpa_lt : p - a < p := by omega
+  have hrem_le : k % p ≤ p - a := by omega
+  rw [intervalPrimePowerCount_one_formula hp0 ha hx]
+  rw [Nat.mod_eq_of_lt hpa_lt]
+  simp only [if_neg (not_lt_of_ge hrem_le), Nat.add_zero]
+
 end Erdos678
