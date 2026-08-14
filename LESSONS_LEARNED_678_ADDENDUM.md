@@ -2,151 +2,164 @@
 
 ## Purpose
 
-This addendum records the lessons learned from the third benchmark experiment on Erdős Problem #678, including the transition from informal proof reconstruction to Lean/Mathlib machine checking and the failure of the proposed infinitude construction.
+This addendum records lessons learned from the Erdős Problem #678 benchmark, including the failed independent infinitude construction, the transition to Cambie-proof reconstruction, and the subsequent Lean formalization consolidation.
 
 ## L-678-005 — Separate infrastructure validation from mathematical validation
 
-A successful Lean/Lake/Mathlib CI run proves that the formalization environment and the submitted Lean statements type-check. It does **not** prove that the mathematical strategy behind those statements is correct.
+A successful Lean/Lake/Mathlib CI run proves that the submitted Lean statements type-check. It does **not** prove a stronger mathematical strategy that was not encoded.
 
 Protocol:
 
-1. Validate the CI infrastructure with a minimal machine-checkable statement.
+1. Validate CI infrastructure.
 2. Validate a complete concrete mathematical witness.
-3. Only then formalize general lemmas and the infinitude mechanism.
-
-The first CI test used only elementary admissibility inequalities. This was intentionally classified as an infrastructure/sanity test, not as a proof of #678.
+3. Only then formalize general lemmas and an infinitude mechanism.
 
 ## L-678-006 — A concrete witness must verify the actual definition, not only the parameters
 
-The candidate `(n,m,k) = (495,504,8)` was initially accepted because it satisfies the side conditions
+The candidate `(n,m,k) = (495,504,8)` satisfied side conditions but failed the defining inequality. Therefore side-condition success can never substitute for direct evaluation of the target expression.
 
-`k >= 3` and `m >= n+k`.
-
-That is insufficient. The defining inequality must also be checked:
-
-`M(n,k) > M(m,k+1)`.
-
-Direct computation instead gives
-
-`M(495,8) < M(504,9)`.
-
-Therefore `(495,504,8)` is a false witness and must never be used as evidence for the theorem.
-
-A correct concrete witness used for the machine-checkable test is
-
-`(n,m,k) = (36,47,8)`,
-
-which satisfies the side condition and the required LCM inequality.
+The retained positive witness is `(36,47,8)`; the rejected `(495,504,8)` case is retained as a negative regression.
 
 ## L-678-007 — Interval endpoints are part of the mathematics
 
-The decisive failure in the proposed `Q=P/M` construction was an off-by-one error in the interval corresponding to `M(t,k+1)`.
+The decisive failure in the proposed `Q=P/M` construction was an off-by-one error:
 
-By definition,
+`M(t,k+1) = lcm(t+1,...,t+k+1)`,
 
-`M(t,k+1) = lcm(t+1, ..., t+k+1)`.
-
-The failed argument treated the relevant interval as
-
-`[t, t+k]`,
-
-which is instead the interval associated with a different quantity.
-
-Consequently the claimed identity
-
-`Q(t,k+1) / Q(t-k-1,k) = L_k`
-
-was not established for the actual problem. The error occurs before the final product comparison, so the resulting infinitude argument is invalid.
+not the LCM of `[t,t+k]`.
 
 Protocol rule:
 
-> Whenever an argument compares indexed products, LCMs, gcds, sums, or sets, expand both definitions explicitly and write their exact index intervals before simplifying.
-
-This is now a mandatory interval-audit step for #678 and analogous problems.
+> Whenever an argument compares indexed products, LCMs, gcds, sums, or sets, expand the exact index ranges before simplifying.
 
 ## L-678-008 — Do not rescue a proof by preserving its conclusion
 
-Once a candidate construction fails a concrete Lean computation, the correct action is to invalidate the construction, not to modify isolated inequalities until the desired conclusion reappears.
+Once a construction fails an exact finite computation, invalidate the construction first. Do not alter isolated inequalities merely to recover the desired conclusion.
 
-For #678, the correct response to the failed `(495,504,8)` witness was:
+Correct workflow:
 
-`candidate -> exact computation -> rejection -> identify root cause -> document lesson`.
-
-This prevents confirmation bias and keeps the research record auditable.
+`candidate -> exact computation -> rejection -> root cause -> documented lesson`.
 
 ## L-678-009 — Use negative machine tests as regression tests
 
-The formalization should contain both:
+A rejected construction can still contribute permanent value. Keep both:
 
-- a positive test for a known valid witness;
-- a negative test for a previously proposed but false witness.
+- positive regression: `(36,47,8)`;
+- negative regression: `(495,504,8)`.
 
-The negative test is valuable because it prevents accidental reintroduction of the invalid construction during later refactoring.
-
-For this experiment:
-
-- positive: `(36,47,8)`;
-- negative: `(495,504,8)`.
+This prevents later refactors from accidentally reintroducing a known false construction.
 
 ## L-678-010 — Cloud CI is preferable when local Mathlib builds are operationally unsafe
 
-The local environment showed severe I/O pressure during Lean/Mathlib processing and expanded `.lake` to several gigabytes. The project therefore moved machine verification to GitHub Actions.
-
-The resulting architecture is:
+The project uses GitHub Actions as the authoritative reproducible Lean check. The workflow is conceptually:
 
 `edit -> commit/push -> GitHub Actions -> Lean + Mathlib -> PASS/FAIL`.
 
-The local machine is no longer required to perform the expensive Mathlib build merely to validate a proof candidate.
-
-This does not eliminate the need for local testing when convenient; it establishes cloud CI as the authoritative reproducible check for the repository.
+Local testing remains optional when convenient; it is not the authoritative gate.
 
 ## L-678-011 — A single finite witness does not imply infinitude
 
-The experiment reinforces the project-level infinitude audit rule:
+For an infinitude claim audit four separate layers:
 
-1. `Witness`: prove at least one valid triple.
-2. `Generator`: prove a transformation or parameter family producing valid triples.
-3. `Distinctness`: prove infinitely many generated triples are distinct.
-4. `Domain preservation`: prove every generated triple satisfies all side conditions.
+1. `Witness`.
+2. `Generator` or parameter family.
+3. `Distinctness`.
+4. `Domain preservation`.
 
-A successful witness test establishes only layer 1.
-
-The failed `t`-construction demonstrates why layers 2–4 must be independently audited.
+Passing layer 1 says nothing by itself about layers 2–4.
 
 ## L-678-012 — Formalization should follow mathematical stabilization
 
-Do not spend large computational effort formalizing a construction that has not survived exact finite checks.
+Lean should be used early enough to expose definitional mistakes, but expensive formalization should not proceed far on a construction that has not survived exact finite checks.
 
-Recommended order for future #678 attempts:
+## L-678-013 — Correct benchmark classification
 
-`paper derivation -> exact small cases -> concrete witness -> transformation check -> infinitude proof -> Lean formalization`.
+Current classification:
 
-Lean should be used early enough to catch definitional mistakes, but not as a substitute for checking whether the proposed mathematical mechanism is actually coherent.
+- external #678 status: **proved**;
+- our independent attempt: **rejected**;
+- current work: **external-proof reconstruction / independent Lean reimplementation**;
+- full Claim 5 in this repository: **not yet proved**;
+- full #678 theorem in this repository: **not yet formalized**.
 
-## L-678-013 — Benchmark status after this experiment
-
-At the end of this experiment:
-
-- Lean 4.33 + Lake + Mathlib CI: **working**.
-- Positive concrete witness `(36,47,8)`: **machine-checked**.
-- Proposed witness `(495,504,8)`: **machine-refuted**.
-- `Q=P/M` infinitude construction based on the `[t,t+k]` interval: **rejected**.
-- General infinitude theorem for #678: **not established by our independent construction**.
-
-The correct research status is therefore **OPEN FOR OUR RECONSTRUCTION**, regardless of any external status of the problem. An externally known proof must be treated as a separate source and independently understood before incorporation.
+These labels must not be collapsed into “solved by us”.
 
 ## L-678-014 — External formalization is a reference, not a substitute for understanding
 
-Once an external Lean formalization or published proof is discovered, it may be used as a reference for locating the missing mathematical mechanism. It must not be silently copied into the project's independent proof record.
-
-For future work, distinguish explicitly between:
+Distinguish explicitly:
 
 - `independent discovery`;
 - `external proof reconstruction`;
 - `formal verification of an external proof`;
 - `independent formal proof`.
 
-These are different research achievements and must receive different labels in the project state.
+They are different research achievements.
+
+## L-678-015 — Encode interval length, not an ambiguous endpoint offset
+
+The consolidation replaced the earlier interval abstraction with a canonical API whose second argument is a **length**:
+
+`intervalFinset(start,len) = {start,...,start+len-1}`.
+
+Then
+
+`erdosM(n,k) = intervalLCM(n+1,k)`
+
+contains exactly `k` terms by construction.
+
+This is not cosmetic API design. It removes the exact ambiguity that caused the earlier proof failure.
+
+Reusable rule:
+
+> When an indexing convention has already produced an off-by-one mathematical error, redesign the formal interface so that the intended cardinality is explicit.
+
+## L-678-016 — A live Lean module must be reachable from the canonical build graph
+
+The earlier workflow manually enumerated Lean files. That allowed a dangerous state: a newly created file could fail while CI stayed green simply because the workflow did not list it.
+
+The consolidated architecture imports every live #678 module through the canonical `Formalization.lean` dependency graph, and GitHub Actions runs `lake build` as the authoritative check.
+
+Reusable rule:
+
+> A Lean file is not integrated merely because it exists in the repository. It is live only when the canonical build graph reaches it and CI checks it automatically.
+
+## L-678-017 — Prefer kernel-checked closed regressions when practical
+
+The first consolidated closed examples used `native_decide`. Mathlib's linter correctly noted that `native_decide` expands the trusted computing base to the compiler.
+
+For these finite regression cases, ordinary `decide` was practical, so the live tree was changed to use it. A repository-wide check then confirmed there was no remaining `native_decide`.
+
+This does not make `native_decide` universally forbidden; it establishes a preference for the smaller trust base when computationally feasible.
+
+## L-678-018 — Inspect the actual Mathlib API before repairing proof scripts
+
+During finite-product valuation formalization, guessed API usage failed:
+
+- `Finset.prod_ne_zero` did not exist in the current Mathlib interface;
+- the actual useful theorem was `Finset.prod_ne_zero_iff`;
+- direct `rw` on a pretty-printed product expression was brittle because elaboration had changed its syntactic shape.
+
+The successful repair inspected the Mathlib source and rewrote the proof as a structured `calc` chain that retained `s.prod id` explicitly.
+
+Reusable rule:
+
+> On an API or elaboration failure, inspect the library theorem and reformulate around its actual statement rather than stacking speculative rewrites.
+
+## L-678-019 — Consolidation gates are mathematical risk controls
+
+The formalization consolidation was not merely repository housekeeping. It established all of the following before further Claim 5 work:
+
+- one authoritative operational state;
+- one canonical roadmap;
+- a length-safe interval model;
+- explicit abstraction-vs-oracle regression checks;
+- a clean production Lean tree;
+- a canonical Lake build graph;
+- a machine-checked finite-product valuation theorem;
+- green CI;
+- no repository occurrences of `sorry`, `axiom`, or `native_decide` at the gate checkpoint.
+
+GitHub Actions run `31827146122` is the green machine-check checkpoint for this consolidation.
 
 ## Updated protocol for future benchmarks
 
@@ -159,5 +172,7 @@ Before declaring a proposed solution successful:
 - [ ] Generated instances shown distinct.
 - [ ] Domain constraints preserved.
 - [ ] Negative tests added for rejected constructions.
-- [ ] Lean CI passes on the concrete mathematical claim.
-- [ ] Only after all of the above: formalize the general theorem.
+- [ ] All live Lean files are reachable from the canonical build graph.
+- [ ] Lean CI passes on the exact mathematical claims being credited.
+- [ ] No hidden `sorry` or undeclared axiom is used in the claimed core.
+- [ ] Only after all of the above: credit the exact level of mathematical/formal achievement reached.
