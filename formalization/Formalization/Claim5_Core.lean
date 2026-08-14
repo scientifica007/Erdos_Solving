@@ -15,7 +15,7 @@ def intervalProd (a k : ℕ) : ℕ :=
 This is the equality principle that will be used to prove Claim 5. -/
 theorem eq_of_prime_padicValNat_eq
     {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0)
-    (h : ∀ p : ℕ, Nat.Prime p → Nat.padicValNat p a = Nat.padicValNat p b) :
+    (h : ∀ p : ℕ, Nat.Prime p → padicValNat p a = padicValNat p b) :
     a = b := by
   exact (Nat.eq_iff_prime_padicValNat_eq a b ha hb).2 h
 
