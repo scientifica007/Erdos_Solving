@@ -29,3 +29,4 @@ jobs:
         run: |
           lake env lean Formalization/Erdos678_Test1.lean
           lake env lean Formalization/Erdos678_Test2.lean
+          lake env lean Formalization/Claim5_Core.lean
