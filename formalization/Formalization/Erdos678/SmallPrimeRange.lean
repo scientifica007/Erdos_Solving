@@ -47,4 +47,23 @@ theorem padicValNat_level_iff_of_modEq_prime_pow
     have hda : p ^ r ∣ a := Nat.modEq_zero_iff_dvd.mp haMod0
     exact (padicValNat_dvd_iff_le (p := p) (n := r) ha0).1 hda
 
+/-- Congruence modulo `p^e` forces equality of the `p`-adic valuations after
+capping both at `e`. -/
+theorem min_padicValNat_eq_of_modEq_prime_pow
+    {a b p e : ℕ} (hp : Nat.Prime p)
+    (ha0 : a ≠ 0) (hb0 : b ≠ 0)
+    (hmod : a ≡ b [MOD p ^ e]) :
+    min (padicValNat p a) e = min (padicValNat p b) e := by
+  apply le_antisymm
+  · apply le_min
+    · have hre : min (padicValNat p a) e ≤ e := min_le_right _ _
+      have hva : min (padicValNat p a) e ≤ padicValNat p a := min_le_left _ _
+      exact (padicValNat_level_iff_of_modEq_prime_pow hp ha0 hb0 hre hmod).1 hva
+    · exact min_le_right _ _
+  · apply le_min
+    · have hre : min (padicValNat p b) e ≤ e := min_le_right _ _
+      have hvb : min (padicValNat p b) e ≤ padicValNat p b := min_le_left _ _
+      exact (padicValNat_level_iff_of_modEq_prime_pow hp ha0 hb0 hre hmod).2 hvb
+    · exact min_le_right _ _
+
 end Erdos678
