@@ -24,5 +24,6 @@ example :
     ¬ (∃ z ∈ Finset.range 2,
       ∀ i ∈ ({0, 1} : Finset ℕ), z ∉ ({i} : Finset ℕ)) := by
   simp
+  omega
 
 end Erdos678
