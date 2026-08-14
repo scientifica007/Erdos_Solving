@@ -58,7 +58,6 @@ Claim 4, CRT, and quantitative estimates remain closed until B4 is complete.
 ---
 
 # Phase C — Formalization Consolidation Gate — PASSED HISTORICALLY
-# Phase C — Formalization Consolidation Gate — PASSED HISTORICALLY
 
 Consolidation established:
 
@@ -143,7 +142,6 @@ Verified module classification:
 Closing checkpoint: run `31845987598`, commit `e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf`.
 
 ## B4 — Full Claim 5 assembly — CURRENT
-## B4 — Full Claim 5 assembly — PENDING
 
 Now that B3 is green:
 

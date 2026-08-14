@@ -188,3 +188,28 @@ Protocol rule:
 > A phase transition is not complete until code, CI, `PROJECT_STATE.md`, the active roadmap, and every current-status README agree.
 
 Historical documents retain their original chronology, but any embedded status superseded by later work must be labeled explicitly.
+
+## L-678-021 — A repaired blocker can expose a masked blocker
+
+The first live small-prime run named failures in `SmallPrimeWindows.lean` and `SmallPrimeValuation.lean`. After both were repaired, the graph reached `SmallPrimeSup.lean` and exposed an unresolved summand metavariable.
+
+Reusable rule:
+
+> Never infer that the first red run lists every integration defect. Rebuild the entire reachable graph and credit completion only when the terminal module is reached.
+
+## L-678-022 — Import-graph completeness must be executable policy
+
+The project had already declared that every Lean file must be reachable, but the aggregator remained hand-maintained. Enabling `lake exe mk_all --check` immediately rejected that mismatch and forced `Formalization.lean` to equal the generated canonical import list.
+
+Reusable rule:
+
+> “Every file is imported” must be checked by CI, not remembered by an agent or inferred from a directory listing.
+
+## L-678-023 — Regressions should exercise theorem interfaces
+
+Direct `decide` evaluation of concrete `padicValNat` expressions did not reduce and consumed substantial CI time before failing. Concrete instantiations of `claim5_small_prime_range` instead checked the theorem interface, the exponent boundaries `e = 1` and `e = 0`, and all required hypotheses. A separate negative test records failure of the deliberately violated congruence.
+
+Reusable rule:
+
+> When a definition is opaque or non-reducible, test the proved interface and discharge concrete hypotheses; do not force kernel reduction or enlarge the trusted computing base merely for convenience.
+
