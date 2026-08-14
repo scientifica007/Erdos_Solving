@@ -3,8 +3,9 @@
 **Status:** ACTIVE — canonical execution roadmap  
 **Mode:** reconstruction and independent reimplementation of Cambie (2024), not independent mathematical discovery  
 **Consolidation gate:** PASSED  
-**Current phase:** Phase A — arithmetic core  
-**Current target:** A1 — finite-LCM valuation  
+**Arithmetic core:** PASSED  
+**Current phase:** Phase B — Cambie Claim 5  
+**Current target:** B1 — prime range `p > k`  
 **Canonical mathematical analysis:** `CAMBIE_PROOF_ANALYSIS.md`
 
 This file is the single operational answer to: **what is the next Lean/formalization task for #678?**
@@ -34,7 +35,7 @@ Green machine-check checkpoint: GitHub Actions run `31827146122`.
 
 ## C1 — Operational memory — DONE
 
-`PROJECT_STATE.md` now identifies #678, reconstruction mode, rejected independent paths, verified facts, and the next formalization target.
+`PROJECT_STATE.md` identifies #678, reconstruction mode, rejected independent paths, verified facts, and the current formalization target.
 
 ## C2 — One canonical roadmap — DONE
 
@@ -63,35 +64,11 @@ Boundary regressions for lengths `0`, `1`, and `3` are kernel-checked with `deci
 
 ## C4 — Canonical `M(n,k)` and abstraction tests — DONE / MACHINE-CHECKED
 
-The canonical `erdosM` definition is checked against independent hand-expanded LCM oracles for:
-
-```text
-(36,8)
-(47,9)
-(495,8)
-(504,9)
-```
-
-The live graph also checks:
-
-```text
-erdosM 36 8 > erdosM 47 9
-¬ (erdosM 495 8 > erdosM 504 9)
-```
+The canonical `erdosM` definition is checked against independent hand-expanded LCM oracles for `(36,8)`, `(47,9)`, `(495,8)`, and `(504,9)`. The live graph also checks the positive and negative witness regressions.
 
 ## C5 — Clean live Lean tree — DONE
 
-Canonical production tree:
-
-```text
-Formalization/Erdos678/
-  Intervals.lean
-  ConcreteTests.lean
-  ValuationBasic.lean
-  ProductValuation.lean
-```
-
-Superseded `Claim5_*`, `*Test*`, and version-suffixed experiment modules were removed from the live tree; their provenance remains in Git history and Markdown records.
+The production tree is concept-oriented; version-suffixed and superseded experiment modules were removed from the live tree while their provenance remains in Git history and Markdown records.
 
 ## C6 — Canonical Lake build graph — DONE
 
@@ -103,112 +80,112 @@ Invariant:
 
 ## C7 — Finite-product valuation — DONE / MACHINE-CHECKED
 
-The live theorem proves, for prime `p` and a finite set of nonzero naturals:
+For prime `p` and a finite set of nonzero naturals:
 
 ```text
 padicValNat p (s.prod id) = s.sum (fun x => padicValNat p x)
 ```
 
-The proof uses the actual Mathlib API (`Finset.prod_ne_zero_iff`, `padicValNat.mul`) and a structured `calc` proof rather than brittle syntactic rewrites.
-
 ## C8 — Restore green CI — DONE
 
-GitHub Actions run `31827146122` passed the canonical Lean build graph.
-
-Repository-wide safety checks at the gate checkpoint found no occurrences of:
-
-```text
-sorry
-axiom
-native_decide
-```
+GitHub Actions run `31827146122` passed the consolidated canonical graph. Repository safety checks found no `sorry`, `axiom`, or `native_decide` at that checkpoint.
 
 ## C9 — Consolidation checkpoint — DONE
 
-`PROJECT_STATE.md` records:
-
-```text
-consolidation_gate_status: passed
-ci_status: green
-current_substage: lcm-valuation
-next_action: formalize finite-LCM valuation (A1)
-```
-
-Reusable consolidation lessons are recorded in `LESSONS_LEARNED_678_ADDENDUM.md`.
+The project advanced to the arithmetic core.
 
 ---
 
-# Phase A — Arithmetic core — CURRENT
+# Phase A — Arithmetic core — PASSED
 
-## A1 — Finite-LCM valuation — CURRENT
+## A1 — Finite-LCM valuation — DONE / MACHINE-CHECKED
 
-### Goal
-
-Formalize the prime-adic structure of a finite LCM. The mathematical target is of the form
+Mathlib inspection found the existing structural theorem `Finset.factorization_lcm`; together with `Nat.factorization_def` it yields the live theorem
 
 ```text
-v_p(lcm of a finite nonzero set)
-  = maximum p-adic valuation among the elements.
+padicValNat p (s.lcm f)
+  = s.sup (fun a => padicValNat p (f a))
 ```
 
-### First action
+under explicit nonzero hypotheses.
 
-Before designing a bespoke theorem, inspect current Mathlib for the strongest existing lemmas around:
+Important integration lesson: the file-creation run passed before the new module was imported by the canonical root, so it did **not** validate the new theorem. The true integration run after root import was GitHub Actions `31828058986`, which passed.
+
+## A2 — Reciprocal-LCM factor — DONE / MACHINE-CHECKED
+
+Using `Finset.lcm_dvd_prod` and `padicValNat.div_of_dvd`, the live theorem proves
 
 ```text
-Finset.lcm
-Nat.factorization_lcm
-Nat.factorization
-padicValNat
+padicValNat p (product / lcm)
+  = sum of valuations - supremum of valuations.
 ```
 
-Prefer reducing to an existing factorization-of-LCM theorem if it gives the required result with less custom infrastructure.
+An initial elaboration mismatch caused by `id` inside `Finset.sup` was repaired explicitly with `simp only [id_eq]`. Corrected GitHub Actions run `31829283998` passed.
 
-### Required constraints
+The interval-specialized theorem is also live:
 
-- exact nonzero hypotheses must be explicit;
-- empty-set behavior must be specified rather than silently ignored;
-- no custom maximum convention may be introduced without defining its empty-set semantics;
-- no division appears yet;
-- no `sorry` or new axiom.
+```text
+padicValNat p (intervalProd start len / intervalLCM start len)
+  = sum_{x in interval} padicValNat p x
+    - sup_{x in interval} padicValNat p x.
+```
+
+## A3 — Interval valuation counting primitives — DONE / MACHINE-CHECKED
+
+Live definitions:
+
+```text
+primePowerDivisibleCount s p r
+intervalPrimePowerCount start len p r
+```
+
+The formalization connects `p^r ∣ x` with `r ≤ padicValNat p x` through Mathlib's `padicValNat_dvd_iff_le`, and proves the finite-support theorem:
+
+```text
+if sup_{x in s} padicValNat p x < r,
+then primePowerDivisibleCount s p r = 0.
+```
+
+GitHub Actions run `31829795250` passed the canonical graph.
+
+Arithmetic-core exit condition: PASSED.
+
+---
+
+# Phase B — Cambie Claim 5 — CURRENT
+
+## B1 — Prime range `p > k` — CURRENT
+
+### Mathematical target
+
+For each of the two Claim 5 blocks, prove that if the prime `p` is larger than `k`, then at most one block element is divisible by `p`. Consequently all `p`-adic valuation occurring in the product is concentrated in at most one factor, the LCM captures exactly that valuation, and therefore
+
+```text
+padicValNat p (intervalProd / intervalLCM) = 0.
+```
+
+For the block of length `k+1`, the integer condition `p > k` gives `k+1 ≤ p`, so the same one-multiple argument applies.
+
+### Implementation policy
+
+1. First formalize a reusable interval-spacing lemma: two distinct multiples of `p` inside a consecutive block of length at most `p` are impossible.
+2. Keep the statement independent of Cambie's CRT residue hypotheses; none are needed in this prime range.
+3. Derive the zero valuation through the existing A2 formula rather than reproving product/LCM arithmetic.
+4. No Claim 4, prime-density, or asymptotic input is permitted here.
 
 ### Exit condition
 
-A theorem sufficient to compute/control the `p`-adic valuation of `intervalLCM start len` is reachable from the canonical Lake graph and passes CI.
+A machine-checked theorem sufficient to discharge the `p > k` case for both Claim 5 intervals is reachable from the canonical Lake graph.
 
-## A2 — Reciprocal-LCM factor — PENDING
-
-For a positive finite block, formalize the valuation of
-
-```text
-product(block) / lcm(block)
-```
-
-Prefer proving divisibility first or using an equivalent cross-multiplied/valuation formulation rather than relying prematurely on `Nat` division.
-
-Any reformulation must be proved equivalent to the intended Claim 5 identity; equivalence must never be assumed.
-
-## A3 — Interval valuation counting primitives — PENDING
-
-Formalize the number of elements in a block divisible by `p^r` and the finite-support bound required to make valuation sums finite and explicit.
-
----
-
-# Phase B — Cambie Claim 5 — PENDING
-
-## B1 — Prime range `p > k`
-
-Prove that such a prime can occur at most once in each relevant interval, so the product/LCM quotient contributes valuation zero.
-
-## B2 — Prime range `sqrt(k) < p <= k`
+## B2 — Prime range `sqrt(k) < p <= k` — PENDING
 
 Formalize the “at most one multiple of `p^2`” structure and connect Cambie's residue-window conditions to the exact count of multiples of `p`.
 
-## B3 — Prime range `p <= sqrt(k)`
+## B3 — Prime range `p <= sqrt(k)` — PENDING
 
 Formalize the small-prime capped valuation sums using the modulus `m` and the congruences on `x` and `y`.
 
-## B4 — Claim 5 assembly
+## B4 — Claim 5 assembly — PENDING
 
 Combine all prime ranges and use equality by prime valuations to prove Cambie's exact arithmetic identity.
 
@@ -286,17 +263,13 @@ These apply to every phase:
 ```text
 Erdős #678
 ├── Phase C — Formalization Consolidation Gate .... PASSED
-│   ├── C1 Operational memory ..................... DONE
-│   ├── C2 Canonical roadmap ...................... DONE
-│   ├── C3 Length-based interval API .............. DONE
-│   ├── C4 Canonical M + regressions .............. DONE
-│   ├── C5 Clean live Lean tree ................... DONE
-│   ├── C6 Canonical Lake build graph ............. DONE
-│   ├── C7 Finite-product valuation ............... DONE
-│   ├── C8 Green CI ............................... DONE
-│   └── C9 Consolidation checkpoint ............... DONE
-└── Phase A — Arithmetic core
-    ├── A1 Finite-LCM valuation ................... CURRENT
-    ├── A2 Reciprocal-LCM factor .................. PENDING
-    └── A3 Interval valuation counting ............ PENDING
+├── Phase A — Arithmetic core ..................... PASSED
+│   ├── A1 Finite-LCM valuation ................... DONE
+│   ├── A2 Reciprocal-LCM factor .................. DONE
+│   └── A3 Interval valuation counting ............ DONE
+└── Phase B — Cambie Claim 5 ...................... CURRENT
+    ├── B1 Prime range p > k ...................... CURRENT
+    ├── B2 sqrt(k) < p <= k ....................... PENDING
+    ├── B3 p <= sqrt(k) ........................... PENDING
+    └── B4 Claim 5 assembly ....................... PENDING
 ```
