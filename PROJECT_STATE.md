@@ -18,8 +18,8 @@ This file is the operational memory checkpoint for the project. Read it before r
 ## Current project
 
 current_problem: 678
-current_phase: arithmetic-core
-current_stage: finite-lcm-valuation
+current_phase: cambie-claim5
+current_stage: large-prime-range
 current_mode: external-proof-reconstruction
 blind_mode: false
 reference_solution_accessed: true
@@ -32,15 +32,16 @@ reference_proof: Cambie-2024
 reference_understanding_status: analyzed
 
 current_target: Cambie-Claim-5
-current_substage: lcm-valuation
+current_substage: B1-prime-greater-than-k
 full_claim5_status: not-proved
 full_erdos678_formalization_status: not-proved
 
 ci_status: green
 ci_blocker: none
 consolidation_gate_status: passed
-consolidation_green_run: 31827146122
-next_action: formalize finite-LCM valuation (Roadmap A1)
+arithmetic_core_status: passed
+latest_arithmetic_green_run: 31829795250
+next_action: formalize Claim 5 prime range `p > k` (Roadmap B1)
 
 ## Current #678 mathematical state
 
@@ -59,6 +60,9 @@ rejected_paths:
 
 current_reference_structure:
   - Claim 5: prime-by-prime arithmetic identity — active reconstruction target
+  - B1 `p > k` — current
+  - B2 `sqrt(k) < p <= k` — not started
+  - B3 `p <= sqrt(k)` — not started
   - Claim 4: CRT-density combinatorial lemma — not started
   - CRT residue construction for `x,y` — not started
   - quantitative size estimate — not started
@@ -78,6 +82,9 @@ live_modules:
   - `Formalization/Erdos678/ConcreteTests.lean`
   - `Formalization/Erdos678/ValuationBasic.lean`
   - `Formalization/Erdos678/ProductValuation.lean`
+  - `Formalization/Erdos678/LCMValuation.lean`
+  - `Formalization/Erdos678/ReciprocalLCMValuation.lean`
+  - `Formalization/Erdos678/ValuationCounting.lean`
 
 machine_checked_components:
   - length-based consecutive interval API
@@ -88,12 +95,15 @@ machine_checked_components:
   - equality of nonzero naturals from equality of all prime `padicValNat` values
   - multiplicativity/additivity wrapper for `padicValNat` under prime/nonzero hypotheses
   - finite-product `padicValNat` theorem for nonzero finite sets
+  - finite-LCM `padicValNat` theorem via Mathlib `Finset.factorization_lcm`
+  - exact product-over-LCM valuation formula via `Finset.lcm_dvd_prod` and `padicValNat.div_of_dvd`
+  - prime-power divisibility-counting primitive for finite sets and consecutive intervals
+  - finite-support theorem: counts vanish above the supremum of `p`-adic valuations
 
 not_started_components:
-  - finite-LCM valuation theorem
-  - reciprocal-LCM valuation theorem
-  - interval divisibility-counting primitives
-  - Cambie Claim 5 prime-range cases
+  - Cambie Claim 5 prime range `p > k`
+  - Cambie Claim 5 prime range `sqrt(k) < p <= k`
+  - Cambie Claim 5 prime range `p <= sqrt(k)`
   - Cambie Claim 5 assembly
   - Claim 4
   - CRT construction
@@ -116,14 +126,21 @@ Completed sequence:
 6. C6 — made the canonical Lake build graph authoritative; GitHub Actions no longer manually enumerates Lean files.
 7. C7 — proved finite-product `padicValNat` additivity with the exact Mathlib hypotheses.
 8. C8 — restored green CI; GitHub Actions run `31827146122` passed the canonical build graph.
-9. C9 — this checkpoint records the gate closure and sets A1 as the next target.
+9. C9 — checkpoint recorded and Phase A started.
 
-## Reusable lessons from consolidation
+## Phase A — Arithmetic Core — PASSED
+
+- A1 finite-LCM valuation: machine-checked; true integration validated by run `31828058986` after importing the module from the canonical root.
+- A2 reciprocal-LCM factor: machine-checked after normalizing `id`; corrected run `31829283998` passed.
+- A3 prime-power divisibility counting and finite-support bound: machine-checked in run `31829795250`.
+
+## Reusable lessons
 
 - **Length-first interval API:** when an endpoint ambiguity has already caused a proof failure, represent consecutive blocks by `(start, length)`, not by an ambiguous endpoint offset.
-- **Build-graph liveness:** a Lean module is live only if it is reachable from the canonical Lake build graph and therefore checked automatically by CI.
+- **Build-graph liveness:** a Lean module is live only if it is reachable from the canonical Lake build graph and therefore checked automatically by CI. A successful build before root import is not validation of a newly created module.
 - **Kernel-checked closed regressions:** use kernel-checked `decide` for closed computational regressions when practical rather than `native_decide`, which expands the trusted computing base to the compiler.
 - **API-driven proof repair:** when Mathlib rejects a guessed theorem name or rewrite shape, inspect the actual library API and reformulate the proof rather than stacking speculative rewrites.
+- **Thin-wrapper policy:** prefer existing Mathlib structural theorems such as `Finset.factorization_lcm`, `Finset.lcm_dvd_prod`, and `padicValNat.div_of_dvd` over rebuilding standard number theory by bespoke induction.
 
 ## Historical #214 checkpoint
 
