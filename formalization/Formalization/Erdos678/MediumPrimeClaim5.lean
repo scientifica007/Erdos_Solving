@@ -3,10 +3,11 @@ import Formalization.Erdos678.MediumPrimeValuation
 /-!
 Assembly of the medium-prime range of Cambie's Claim 5.
 
-This file first proves the missing valuation of
-`M = lcm(1, ..., k)`: when `p <= k < p^2`, its `p`-adic valuation is exactly
-one.  The final medium-prime Claim 5 relation is assembled only after this
-input is machine-checked.
+The Lean-facing range is `p <= k < p^2`, which is the exact arithmetic
+property used in Cambie's `sqrt(k) < p <= k` case.  The residue-window counts,
+the reciprocal-LCM valuation bridge, and the valuation of
+`M = lcm(1, ..., k)` are combined here into the prime-by-prime Claim 5
+identity for this range.
 -/
 
 namespace Erdos678
@@ -50,5 +51,51 @@ theorem padicValNat_initial_intervalLCM_eq_one
       1 = padicValNat p p := hpval.symm
       _ ≤ (intervalFinset 1 k).sup (fun z => padicValNat p z) :=
         Finset.le_sup hpmem
+
+/-- Cambie's Claim 5 valuation identity in the medium-prime range.
+
+The `x` block is `[x, ..., x+k-1]`, the `y` block is `[y, ..., y+k]`,
+and `intervalLCM 1 k = lcm(1,...,k)`. -/
+theorem claim5_medium_prime_range
+    {x y k p a b : ℕ}
+    (hp : Nat.Prime p)
+    (hpk : p ≤ k) (hkp2 : k < p ^ 2)
+    (ha1 : 1 ≤ a) (haUpper : a ≤ p - k % p)
+    (hbLower : p - k % p ≤ b) (hbUpper : b ≤ p)
+    (hx : x ≡ a [MOD p]) (hy : y ≡ b [MOD p])
+    (hxne : ∀ z ∈ intervalFinset x k, z ≠ 0)
+    (hyne : ∀ z ∈ intervalFinset y (k + 1), z ≠ 0) :
+    padicValNat p (intervalProd y (k + 1) / intervalLCM y (k + 1)) =
+      padicValNat p (intervalLCM 1 k) +
+        padicValNat p (intervalProd x k / intervalLCM x k) := by
+  have hxcount : intervalPrimePowerCount x k p 1 = k / p :=
+    cambie_x_prime_count hp ha1 haUpper hx
+  have hycount : intervalPrimePowerCount y (k + 1) p 1 = k / p + 1 :=
+    cambie_y_prime_count hp hbLower hbUpper hy
+  have hkdivpos : 0 < k / p := Nat.div_pos hpk hp.pos
+  have hxcountpos : 0 < intervalPrimePowerCount x k p 1 := by
+    rw [hxcount]
+    exact hkdivpos
+  have hycountpos : 0 < intervalPrimePowerCount y (k + 1) p 1 := by
+    rw [hycount]
+    omega
+  have hxcount2 : intervalPrimePowerCount x k p 2 ≤ 1 := by
+    change ((intervalFinset x k).filter fun z => p ^ 2 ∣ z).card ≤ 1
+    exact interval_sq_multiples_card_le_one
+      (start := x) (len := k) (p := p) (Nat.le_of_lt hkp2)
+  have hycount2 : intervalPrimePowerCount y (k + 1) p 2 ≤ 1 := by
+    change ((intervalFinset y (k + 1)).filter fun z => p ^ 2 ∣ z).card ≤ 1
+    exact interval_sq_multiples_card_le_one
+      (start := y) (len := k + 1) (p := p) (Nat.succ_le_of_lt hkp2)
+  have hvx :=
+    padicValNat_intervalProd_div_intervalLCM_eq_count_sub_one
+      hp hxne hxcountpos hxcount2
+  have hvy :=
+    padicValNat_intervalProd_div_intervalLCM_eq_count_sub_one
+      hp hyne hycountpos hycount2
+  have hM := padicValNat_initial_intervalLCM_eq_one hp hpk hkp2
+  rw [hxcount] at hvx
+  rw [hycount] at hvy
+  omega
 
 end Erdos678
