@@ -26,6 +26,7 @@ theorem padicValNat_prod_div_lcm
   rw [padicValNat.div_of_dvd (Finset.lcm_dvd_prod s id)]
   rw [padicValNat_finset_prod hp hne]
   rw [padicValNat_finset_lcm (f := id) hne hp]
+  simp only [id_eq]
 
 /-- The same valuation formula specialized to a consecutive length-based block. -/
 theorem padicValNat_intervalProd_div_intervalLCM
