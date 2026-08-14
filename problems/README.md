@@ -15,7 +15,7 @@ This directory contains local research records for nine selected Erdős problems
 | 275 | completed successful blind cycle and historical comparison | `275/comparison.md` |
 | 303 | blind attempt incomplete; reference comparison completed | `303/comparison.md` |
 | 447 | contaminated benchmark; not an active blind challenge | `447/README.md` |
-| 678 | active Cambie reconstruction in Lean; CI red | `678/LEAN_FORMALIZATION_ROADMAP.md` |
+| 678 | active Cambie reconstruction in Lean; all three Claim 5 ranges checked, full assembly pending, CI green | `678/LEAN_FORMALIZATION_ROADMAP.md` |
 | 1125 | blind attempt failed; historical reconstruction completed | `1125/comparison/historical-reconstruction.md` |
 
 ## Reading rule

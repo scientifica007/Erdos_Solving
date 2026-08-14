@@ -2,12 +2,12 @@
 
 **Status:** ACTIVE — canonical execution roadmap  
 **Mode:** reconstruction and independent Lean reimplementation of Cambie (2024), not independent mathematical discovery  
-**Code-state basis:** `ac65fb32a90abf5183b52f117248793517262e65`  
-**Canonical CI status:** RED  
-**Diagnostic run:** `31839041104`  
+**Code-state basis:** `e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf`  
+**Canonical CI status:** GREEN  
+**Verified run:** `31845987598`  
 **Current phase:** Phase B — Cambie Claim 5  
-**Current target:** restore the small-prime graph and machine-check `SmallPrimeClaim5.lean`  
-**Expansion gate:** CLOSED until CI is green
+**Current target:** assemble the full Claim 5 identity across all prime ranges  
+**Expansion gate:** OPEN for B4 only; Claim 4 and later phases remain closed
 
 This file is the sole operational answer to: **what is the next Lean/formalization task for #678?**
 
@@ -25,7 +25,7 @@ Externally, Erdős #678 is proved. In this repository:
 - the arithmetic core is machine-checked;
 - the Claim 5 ranges `p > k` and `p ≤ k < p²` are machine-checked;
 - the capped small-prime congruence core is machine-checked;
-- the integrated small-prime Claim 5 theorem is **not** machine-checked;
+- the integrated small-prime Claim 5 theorem is machine-checked with reachable boundary regressions;
 - full Claim 5 is not assembled;
 - the full #678 theorem is not formalized.
 
@@ -33,32 +33,27 @@ A source file containing a theorem statement is not evidence that Lean accepted 
 
 ---
 
-## 1. Current integration incident — BLOCKING
+## 1. Small-prime integration incident — RESOLVED
 
-Commit `ac65fb32` imported `Formalization.Erdos678.SmallPrimeClaim5` into `Formalization.lean`. This correctly made the dependency graph live, but canonical run `31839041104` failed.
+Commit `ac65fb32` first made the small-prime graph live and exposed two failures. Successive canonical runs then exposed a third inference failure and two test/integration defects.
 
-### Failure SP-I1 — equality orientation
+Resolved items:
 
-- File: `SmallPrimeWindows.lean`
-- Location: line 71 in the diagnostic run
-- Symptom: `hiz` simplifies to `start = z`, while the goal is `z = start`.
-- Required action: repair the orientation explicitly; do not alter interval semantics.
+- `SmallPrimeWindows.lean`: equality orientation repaired explicitly with symmetry.
+- `SmallPrimeValuation.lean`: natural-subtraction positivity expressed by `Nat.sub_pos_iff_lt` instead of opaque automation.
+- `SmallPrimeSup.lean`: the finset and summand supplied explicitly to `Finset.single_le_sum`.
+- `Formalization.lean`: regenerated in the exact order required by `lake exe mk_all`.
+- `SmallPrimeTests.lean`: tests instantiate the theorem rather than attempting non-reducible direct evaluation of `padicValNat`.
 
-### Failure SP-I2 — natural subtraction/supremum proof
+Exit evidence:
 
-- File: `SmallPrimeValuation.lean`
-- Location: line 55 in the diagnostic run
-- Symptom: `omega` cannot prove the required step.
-- Required action: replace the opaque automation step with an explicit order/subtraction argument and verify all natural-number truncation conditions.
+- commit `e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf`;
+- run `31845987598`;
+- `mk_all --check`: no update necessary;
+- `SmallPrimeClaim5.lean` and `SmallPrimeTests.lean`: reached;
+- canonical build: success.
 
-### Exit condition for the incident
-
-- both failures repaired;
-- `lake build` succeeds through `Formalization.lean`;
-- `SmallPrimeClaim5.lean` appears in the successful reachable graph;
-- `PROJECT_STATE.md` and this roadmap record the successful commit and run.
-
-No work on Claim 4, CRT, or the quantitative estimate is allowed before this exit condition.
+Claim 4, CRT, and quantitative estimates remain closed until B4 is complete.
 
 ---
 
@@ -74,7 +69,7 @@ Consolidation established:
 - finite-product valuation;
 - a green checkpoint at run `31827146122`.
 
-The phrase `PASSED HISTORICALLY` does not mean that the present head is green. It records that the consolidation requirements were met at their checkpoint.
+The consolidation checkpoint was historical; the present credited code state is also green at run `31845987598`.
 
 ---
 
@@ -122,7 +117,7 @@ Completed components:
 
 Integrated closing checkpoint: run `31836288385`, commit `25987ea7`.
 
-## B3 — Small-prime exponent range — CURRENT / INTEGRATION FAILED
+## B3 — Small-prime exponent range — DONE / MACHINE-CHECKED
 
 Lean-facing parameterization:
 
@@ -132,22 +127,23 @@ x ≡ 1 (mod p^e)
 y ≡ 0 (mod p^e)
 ```
 
-Current module classification:
+Verified module classification:
 
 | Module | Status |
 |---|---|
-| `SmallPrimeRange.lean` | imported and machine-checked |
-| `SmallPrimeInitialLCM.lean` | source compiles in the diagnostic run, but the total graph is red |
-| `SmallPrimeWindows.lean` | live and failing |
-| `SmallPrimeValuation.lean` | live and failing |
-| `SmallPrimeSup.lean` | present; dependent graph not fully validated |
-| `SmallPrimeClaim5.lean` | imported but not reached successfully |
+| `SmallPrimeRange.lean` | reachable and machine-checked |
+| `SmallPrimeInitialLCM.lean` | reachable and machine-checked |
+| `SmallPrimeWindows.lean` | repaired, reachable, and machine-checked |
+| `SmallPrimeValuation.lean` | repaired, reachable, and machine-checked |
+| `SmallPrimeSup.lean` | repaired, reachable, and machine-checked |
+| `SmallPrimeClaim5.lean` | reachable and machine-checked |
+| `SmallPrimeTests.lean` | boundary theorem instantiations and a negative congruence regression checked |
 
-B3 is not `DONE` until the full dependency graph passes.
+Closing checkpoint: run `31845987598`, commit `e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf`.
 
-## B4 — Full Claim 5 assembly — PENDING
+## B4 — Full Claim 5 assembly — CURRENT
 
-After B3 is green:
+Now that B3 is green:
 
 1. state the complete residue hypotheses required for every prime range;
 2. split an arbitrary prime into large, medium, or small cases;
@@ -204,13 +200,13 @@ Erdős #678
 └── Cambie Claim 5 ............................... IN PROGRESS
     ├── B1: p > k ................................ MACHINE-CHECKED
     ├── B2: p ≤ k < p² .......................... MACHINE-CHECKED
-    ├── B3: small-prime exponent range ........... LIVE / CI FAILURE
-    └── B4: full Claim 5 assembly ................ PENDING
+    ├── B3: small-prime exponent range ........... MACHINE-CHECKED
+    └── B4: full Claim 5 assembly ................ CURRENT
 ```
 
 ## Sole next action
 
-Restore a green canonical build for the currently imported small-prime graph. Do not start a new mathematical phase.
+Define and machine-check the complete Claim 5 assembly across the large, medium, and small prime ranges. Do not start Claim 4 before this theorem and its nonzero side conditions pass the canonical gate.
 
 ## Global audit gates
 

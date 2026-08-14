@@ -1,6 +1,6 @@
 # Erdős Problem #678 — Active Cambie Reconstruction
 
-> **Current repository status (2026-08-14): ACTIVE, CI RED.**
+> **Current repository status (2026-08-14): ACTIVE, CI GREEN.**
 > The independent attempt was invalidated. The active work is an external-proof reconstruction and independent Lean reimplementation of Cambie (2024). The canonical operational sources are `PROJECT_STATE.md` and `LEAN_FORMALIZATION_ROADMAP.md`.
 
 ## Canonical statement
@@ -39,24 +39,21 @@ The failures were recorded before reference reconstruction and remain part of pr
 | Claim 5 range `p > k` | machine-checked |
 | Claim 5 range `p ≤ k < p²` | machine-checked |
 | small-prime capped congruence core | machine-checked |
-| integrated small-prime Claim 5 | source present, canonical build failing |
+| integrated small-prime Claim 5 | machine-checked with reachable boundary regressions |
 | full Claim 5 assembly | pending |
 | Claim 4 / CRT construction | pending |
 | quantitative finish and prime-density input | pending |
 | full theorem | pending |
 
-## Current blocker
+## Verified checkpoint
 
-Canonical run `31839041104` fails in:
+Canonical run `31845987598` passed the generated import-graph check and the full Lean build at commit `e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf`. The earlier equality-orientation, natural-subtraction, and finset type-inference failures are repaired without weakening the theorem statements.
 
-- `SmallPrimeWindows.lean` — equality orientation mismatch;
-- `SmallPrimeValuation.lean` — an unclosed natural subtraction/supremum proof.
-
-`SmallPrimeClaim5.lean` is imported but cannot yet be credited as machine-checked.
+The three prime ranges of Claim 5 are now independently machine-checked under their explicit hypotheses. This does **not** yet constitute the single assembled natural-number identity.
 
 ## Sole next action
 
-Repair the two Lean failures and restore a green canonical build. No work on Claim 4, CRT, or the final estimate begins before that gate.
+Assemble full Claim 5: state the shared residue hypotheses, split an arbitrary prime into the three verified ranges, prove both sides nonzero, and conclude equality from all prime `padicValNat` values. Claim 4, CRT construction, and the final estimate remain outside the current gate.
 
 ## Main references inside this folder
 

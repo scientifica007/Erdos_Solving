@@ -35,3 +35,16 @@ When the canonical head is red, state documents must say `red`, identify the blo
 
 ## DEC-010 — Historical snapshot labeling
 Stage-specific records may preserve historically correct statements such as `blind mode: ON` or `candidate under audit`, but once superseded they must carry an explicit `HISTORICAL SNAPSHOT` or `SUPERSEDED` notice pointing to the authoritative final outcome. Historical chronology is preserved; operational ambiguity is not.
+
+## DEC-011 — Green-main pull-request workflow
+
+This decision supersedes `DEC-004`, following the user's explicit approval on 2026-08-14.
+
+- `main` is the stable integration branch, not the routine working branch.
+- Every substantive code or mathematical change is developed on a dedicated branch and presented through a pull request.
+- The exact pull-request head must pass the canonical required check before merge.
+- State documents and the decision record must be synchronized in the same pull request before merge.
+- Direct writes to `main` are reserved for an explicitly authorized emergency correction.
+- Repository-level branch protection should enforce this policy when the administrative interface is available; the policy remains binding even if that setting has not yet been enabled.
+- A previously verified green commit is cited explicitly as the recovery checkpoint; history is not rewritten merely to create a label.
+
