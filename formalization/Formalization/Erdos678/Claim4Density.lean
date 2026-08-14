@@ -38,10 +38,11 @@ theorem claim4_exists_avoiding_coordinate_exclusions
         simpa [bad] using hz
       exact hz'.2
     · intro z hz z' hz' hval
-      apply hinj i hi
-      · exact (by simpa [bad] using hz).1
-      · exact (by simpa [bad] using hz').1
-      · exact hval
+      have hzmem : z ∈ positions ∧ value i z ∈ excluded i := by
+        simpa [bad] using hz
+      have hz'mem : z' ∈ positions ∧ value i z' ∈ excluded i := by
+        simpa [bad] using hz'
+      exact hinj i hi hzmem.1 hz'mem.1 hval
   have hsum :
       ∑ i ∈ indices, (bad i).card ≤
         ∑ i ∈ indices, (excluded i).card := by
@@ -49,7 +50,7 @@ theorem claim4_exists_avoiding_coordinate_exclusions
   have hunion : (indices.biUnion bad).card < positions.card :=
     lt_of_le_of_lt (Finset.card_biUnion_le.trans hsum) hbudget
   by_contra hnone
-  push_neg at hnone
+  push Not at hnone
   have hsubset : positions ⊆ indices.biUnion bad := by
     intro z hz
     obtain ⟨i, hi, hzbad⟩ := hnone z hz
