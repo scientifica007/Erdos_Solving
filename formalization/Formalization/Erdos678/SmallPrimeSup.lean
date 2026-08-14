@@ -1,7 +1,8 @@
 import Formalization.Erdos678.SmallPrimeWindows
 
 /-!
-Lower bounds for the valuation supremum in Cambie's small-prime range.
+Lower bounds for the valuation supremum and capped valuation sum in Cambie's
+small-prime range.
 -/
 
 namespace Erdos678
@@ -51,5 +52,35 @@ theorem exp_le_interval_padicValNat_sup_of_modEq_one
   have hzval : e ≤ padicValNat p z :=
     exp_le_padicValNat_of_modEq_zero hp hz0 hzmod
   exact hzval.trans (Finset.le_sup hzmem)
+
+/-- Under the same hypotheses, the sum of valuations capped at `e` is at
+least `e`.  This is the exact side condition needed to make the final natural
+subtraction in Claim 5 nontruncated. -/
+theorem exp_le_interval_sum_min_padicValNat_of_modEq_one
+    {start len p e : ℕ} (hp : Nat.Prime p)
+    (hlen : p ^ e ≤ len)
+    (hstart : start ≡ 1 [MOD p ^ e])
+    (hne : ∀ x ∈ intervalFinset start len, x ≠ 0) :
+    e ≤ (intervalFinset start len).sum (fun x => min (padicValNat p x) e) := by
+  have hpowe_pos : 0 < p ^ e := pow_pos hp.pos e
+  let z : ℕ := start + (p ^ e - 1)
+  have hzmem : z ∈ intervalFinset start len := by
+    apply mem_intervalFinset_iff.mpr
+    refine ⟨p ^ e - 1, ?_, rfl⟩
+    omega
+  have htarget : 1 + (p ^ e - 1) ≡ 0 [MOD p ^ e] := by
+    have hone : 1 + (p ^ e - 1) = p ^ e := by omega
+    rw [hone]
+    exact (dvd_refl (p ^ e)).modEq_zero_nat
+  have hzmod : z ≡ 0 [MOD p ^ e] := by
+    dsimp [z]
+    exact (hstart.add_right (p ^ e - 1)).trans htarget
+  have hz0 : z ≠ 0 := hne z hzmem
+  have hzcap : min (padicValNat p z) e = e :=
+    min_padicValNat_eq_exp_of_modEq_zero hp hz0 hzmod
+  calc
+    e = min (padicValNat p z) e := hzcap.symm
+    _ ≤ (intervalFinset start len).sum (fun x => min (padicValNat p x) e) :=
+      Finset.single_le_sum (fun x hx => Nat.zero_le _) hzmem
 
 end Erdos678
