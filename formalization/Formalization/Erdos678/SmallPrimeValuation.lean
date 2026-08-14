@@ -51,8 +51,7 @@ theorem finset_sum_sub_sup_eq_sum_min_sub
     have hfilter :
         (s.filter fun x => 0 < f x - e) = (s.filter fun x => e < f x) := by
       ext x
-      simp only [Finset.mem_filter]
-      omega
+      simp only [Finset.mem_filter, Nat.sub_pos_iff_lt]
     rw [hfilter]
     exact htail
   have htail_eq :

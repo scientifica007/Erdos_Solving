@@ -68,7 +68,7 @@ theorem intervalFinset_succ_len (start len : ℕ) :
   · rintro ⟨i, hi, hiz⟩
     rcases i with _ | i
     · left
-      simpa using hiz
+      simpa using hiz.symm
     · right
       refine ⟨i, by omega, ?_⟩
       omega
