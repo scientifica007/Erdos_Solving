@@ -5,7 +5,7 @@
 **Consolidation gate:** PASSED  
 **Arithmetic core:** PASSED  
 **Current phase:** Phase B — Cambie Claim 5  
-**Current target:** B1 — prime range `p > k`  
+**Current target:** B2 — medium-prime range `k < p^2` and `p <= k`  
 **Canonical mathematical analysis:** `CAMBIE_PROOF_ANALYSIS.md`
 
 This file is the single operational answer to: **what is the next Lean/formalization task for #678?**
@@ -154,32 +154,56 @@ Arithmetic-core exit condition: PASSED.
 
 # Phase B — Cambie Claim 5 — CURRENT
 
-## B1 — Prime range `p > k` — CURRENT
+## B1 — Prime range `p > k` — DONE / MACHINE-CHECKED
+
+The live file `LargePrimeRange.lean` proves:
+
+1. a consecutive block of length at most `p` contains at most one multiple of `p`;
+2. if a natural-valued function is positive at at most one point, its finite sum equals its finite supremum;
+3. for nonzero block entries and prime `p`, this gives
+
+```text
+padicValNat p (intervalProd / intervalLCM) = 0
+```
+
+whenever the block length is at most `p`;
+4. the combined theorem `claim5_large_prime_range` applies this to Cambie's `x` block of length `k` and `y` block of length `k+1` under `k < p`.
+
+GitHub Actions run `31832061313` passed the canonical graph.
+
+## B2 — Medium-prime range `sqrt(k) < p <= k` — CURRENT
+
+### Lean-facing arithmetic form
+
+Use the exact property consumed by the proof:
+
+```text
+k < p^2
+p <= k
+```
+
+rather than introducing square roots into the arithmetic layer prematurely.
 
 ### Mathematical target
 
-For each of the two Claim 5 blocks, prove that if the prime `p` is larger than `k`, then at most one block element is divisible by `p`. Consequently all `p`-adic valuation occurring in the product is concentrated in at most one factor, the LCM captures exactly that valuation, and therefore
+For Cambie's residue representatives, prove that:
 
-```text
-padicValNat p (intervalProd / intervalLCM) = 0.
-```
+- there is at most one multiple of `p^2` in either relevant block;
+- the `x` block of length `k` contains exactly `k / p` multiples of `p` under the admissible `a_p` window;
+- the `y` block of length `k+1` contains exactly `k / p + 1` multiples of `p` under the admissible `b_p` window;
+- hence the reciprocal-LCM valuations differ by exactly one, matching `v_p(M)=1` in this range.
 
-For the block of length `k+1`, the integer condition `p > k` gives `k+1 ≤ p`, so the same one-multiple argument applies.
+### Implementation route
 
-### Implementation policy
-
-1. First formalize a reusable interval-spacing lemma: two distinct multiples of `p` inside a consecutive block of length at most `p` are impossible.
-2. Keep the statement independent of Cambie's CRT residue hypotheses; none are needed in this prime range.
-3. Derive the zero valuation through the existing A2 formula rather than reproving product/LCM arithmetic.
-4. No Claim 4, prime-density, or asymptotic input is permitted here.
+1. Reuse the B1 interval-spacing lemma with modulus `p^2` for uniqueness of a `p^2` multiple.
+2. Translate interval counting to offsets in `Finset.range`.
+3. Use Mathlib `Nat.count_modEq_card` from `Mathlib.Data.Int.CardIntervalMod` for exact residue-class counts instead of rebuilding modular counting.
+4. Encode Cambie's windows as congruence hypotheses and explicit inequalities on representatives.
+5. Only after the exact count lemmas pass CI, derive the reciprocal-LCM valuation relation.
 
 ### Exit condition
 
-A machine-checked theorem sufficient to discharge the `p > k` case for both Claim 5 intervals is reachable from the canonical Lake graph.
-
-## B2 — Prime range `sqrt(k) < p <= k` — PENDING
-
-Formalize the “at most one multiple of `p^2`” structure and connect Cambie's residue-window conditions to the exact count of multiples of `p`.
+A machine-checked theorem proves the B2 prime-by-prime valuation relation used by Claim 5, with no use of Claim 4 or prime-density existence.
 
 ## B3 — Prime range `p <= sqrt(k)` — PENDING
 
@@ -268,8 +292,8 @@ Erdős #678
 │   ├── A2 Reciprocal-LCM factor .................. DONE
 │   └── A3 Interval valuation counting ............ DONE
 └── Phase B — Cambie Claim 5 ...................... CURRENT
-    ├── B1 Prime range p > k ...................... CURRENT
-    ├── B2 sqrt(k) < p <= k ....................... PENDING
+    ├── B1 Prime range p > k ...................... DONE
+    ├── B2 k < p^2 and p <= k ..................... CURRENT
     ├── B3 p <= sqrt(k) ........................... PENDING
     └── B4 Claim 5 assembly ....................... PENDING
 ```
