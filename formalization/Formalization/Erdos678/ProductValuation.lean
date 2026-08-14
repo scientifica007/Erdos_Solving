@@ -28,9 +28,15 @@ lemma padicValNat_finset_prod
       have hprod0 : s.prod id ≠ 0 := by
         rw [Finset.prod_ne_zero_iff]
         exact hs0
-      rw [Finset.prod_insert ha, Finset.sum_insert ha]
-      simp only [id_eq]
-      rw [padicValNat.mul ha0 hprod0]
-      rw [ih hs0]
+      calc
+        padicValNat p ((insert a s).prod id)
+            = padicValNat p (a * s.prod id) := by
+                simp [Finset.prod_insert, ha]
+        _ = padicValNat p a + padicValNat p (s.prod id) :=
+              padicValNat.mul ha0 hprod0
+        _ = padicValNat p a + s.sum (fun x => padicValNat p x) := by
+              rw [ih hs0]
+        _ = (insert a s).sum (fun x => padicValNat p x) := by
+              rw [Finset.sum_insert ha]
 
 end Erdos678
