@@ -2,7 +2,11 @@
 
 ## Goal
 
-Turn the salvaged construction into a Lean-checkable theorem in layers. The first target is the concrete witness for `p = 5`, followed by the general valuation/CRT lemmas.
+Turn a *correct* solution of #678 into a Lean-checkable theorem in layers. The first concrete-witness gate is now based on the independently verified instance
+
+`M(36,8) > M(47,9)`.
+
+The earlier proposed `(n,m,k) = (495,504,8)` construction has been rejected after direct arithmetic found the inequality to be false. See `FORMALIZATION_CORRECTION_2026-08-14.md`.
 
 ## Layer 0 — Concrete witness
 
@@ -15,18 +19,23 @@ M(n,k) = Nat.lcm of all integers n+i, 1 <= i <= k.
 Prove the concrete statement
 
 ```text
-M 495 8 > M 504 9
+M 36 8 > M 47 9
 ```
 
-and the domain conditions
+and the domain condition
 
 ```text
-495 >= 1
-504 >= 495 + 8
+47 >= 36 + 8
 8 >= 3.
 ```
 
-This is the first formalization gate because it requires no CRT, no p-adic valuation theory, and no asymptotic estimate.
+Also retain a regression test showing that the rejected candidate is false:
+
+```text
+¬ (M 495 8 > M 504 9)
+```
+
+This gate requires no CRT, no p-adic valuation theory, and no asymptotic estimate.
 
 ## Layer 1 — Product/LCM decomposition
 
@@ -61,92 +70,53 @@ This should preferably be split into:
 
 ## Layer 3 — The CRT construction
 
-For prime `p >= 5`, set `k = 2*p - 2` and
+No general CRT construction is accepted until its interval indexing has been re-derived from the exact definitions of `M(n,k)`, `P(n,k)`, and `Q(n,k)`.
+
+Earlier reasoning incorrectly compared the right-hand interval `[t,t+k]` with `M(t,k+1)`. The actual interval is
 
 ```text
-L = lcm 1 2 ... k
-A = L / p.
+[t+1,t+k+1].
 ```
 
-Prove the existence of `t` satisfying
+Therefore the former `Q`-ratio lemma is invalid and must not be reused.
+
+## Layer 4 — Re-derive the exact Q-ratio
+
+Any future construction must prove the exact ratio for the actual intervals
 
 ```text
-t ≡ -1 [MOD p]
-t ≡ 0  [MOD q^(floor(log_q k))]   for every prime q <= k, q != p.
+[t-k,t-1]
+[t+1,t+k+1].
 ```
 
-For Lean, package this as an existence theorem first; only later define the least positive representative.
+before any product estimate is attempted.
 
-## Layer 4 — Exact Q-ratio
+The formalization must explicitly track all endpoint shifts.
 
-Prove
+## Layer 5 — Product estimate
 
-```text
-Q(t,k+1) / Q(t-k-1,k) = L
-```
+Only after the exact `Q`-ratio is proved for the true intervals should we derive a product estimate. No inequality direction is accepted without a Lean-checked lemma.
 
-in a rational-valued formulation, or prove equality of every prime valuation. This is the central arithmetic lemma.
+## Layer 6 — General infinitude theorem
 
-## Layer 5 — Correct product estimate
+A general theorem must separately establish:
 
-The exact ratio is
-
-```text
-M(t-k-1,k) / M(t,k+1)
-  = (L/t) * product_{j=1}^k ((t-j)/(t+j)).
-```
-
-The original draft incorrectly reversed an inequality here. The salvaged proof instead needs the lower bound
-
-```text
-product_{j=1}^k ((t-j)/(t+j))
-  >= 1 - k*(k+1)/t.
-```
-
-A Lean-friendly lemma is
-
-```text
-prod_one_sub_le_sum
-```
-
-or an explicitly proven finite-product inequality for factors in `[0,1]`.
-
-## Layer 6 — Elementary LCM growth bound
-
-The general proof needs a bound strong enough to show
-
-```text
-L_k > p^2 * k * (k+1)
-```
-
-for `k = 2*p - 2` and `p >= 7`.
-
-If formalizing `L_k >= 2^(k-1)` is inconvenient, replace it by a directly proved weaker bound sufficient for the target inequality. The theorem used here should be isolated so the main construction does not depend on a large imported analytic theorem.
-
-## Layer 7 — General infinitude theorem
-
-Package the full result as
-
-```text
-Theorem exists_infinite_family :
-  ∀ p >= 7, Prime p →
-    let k := 2*p - 2
-    ∃ n m, m >= n + k ∧ M n k > M m (k+1)
-```
-
-Then deduce infinitude because infinitely many primes `p >= 7` give distinct values of `k`.
+- admissibility of each generated triple;
+- the strict LCM inequality;
+- infinitude/distinctness of the generated triples.
 
 ## Important audit gates
 
-Lean formalization must explicitly prevent the earlier failure modes:
+Lean formalization must explicitly prevent earlier failure modes:
 
 - no use of the false identity `M (t*n) k = t * M n k`;
 - no replacement of `<` by `>` in the final product estimate;
 - no assertion `L_k / p = L_(k-1)`;
-- exact indexing of the intervals `[t-k,t-1]` and `[t,t+k]`;
+- exact indexing of both LCM intervals after every substitution;
+- direct numerical validation of every proposed witness before encoding a positive theorem;
 - explicit treatment of primes `q > k`;
-- explicit proof that the generated triples are distinct.
+- explicit proof that generated triples are distinct.
 
 ## Current environment
 
-The current execution environment does not contain `lean` or `lake`, so this file is the formalization specification, not a compiler-verified Lean proof yet.
+Lean 4.33.0 and Mathlib v4.33.0 are configured under `formalization/`. GitHub Actions performs the machine-checking using the Mathlib cache. Local full builds are not required.
