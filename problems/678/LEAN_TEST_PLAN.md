@@ -1,5 +1,9 @@
 # Erdős Problem #678 — Lean Test Plan
 
+> **Status: SUPERSEDED — historical record only.**  
+> **Canonical active roadmap:** `LEAN_FORMALIZATION_ROADMAP.md`  
+> This file is retained for provenance because it records the early `Q=P/M` / `t`-construction test plan and the interval-audit lessons that followed its rejection. It must not be used to choose the next formalization task.
+
 ## Goal
 
 Turn a *correct* solution of #678 into a Lean-checkable theorem in layers. The first concrete-witness gate is now based on the independently verified instance
