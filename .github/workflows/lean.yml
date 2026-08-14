@@ -1,0 +1,29 @@
+name: Lean Verification
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: formalization
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Lean and Mathlib
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: formalization
+          use-mathlib-cache: true
+          build: true
+          test: false
+
+      - name: Verify explicit Erdős #678 test
+        run: lake env lean Formalization/Erdos678_Test1.lean
