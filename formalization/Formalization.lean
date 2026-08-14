@@ -5,3 +5,4 @@ import Formalization.Erdos678.ValuationBasic
 import Formalization.Erdos678.ProductValuation
 import Formalization.Erdos678.LCMValuation
 import Formalization.Erdos678.ReciprocalLCMValuation
+import Formalization.Erdos678.ValuationCounting
