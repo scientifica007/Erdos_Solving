@@ -176,3 +176,15 @@ Before declaring a proposed solution successful:
 - [ ] Lean CI passes on the exact mathematical claims being credited.
 - [ ] No hidden `sorry` or undeclared axiom is used in the claimed core.
 - [ ] Only after all of the above: credit the exact level of mathematical/formal achievement reached.
+
+## L-678-020 — State drift is a verification failure
+
+After the medium-prime range was completed, implementation advanced into the small-prime range while `README.md`, `PROJECT_STATE.md`, and the canonical roadmap continued to report older phases and green CI. The canonical head later became red after importing the small-prime Claim 5 graph.
+
+A correct theorem file cannot compensate for an incorrect operational checkpoint. State drift can cause a later agent to skip the actual blocker, credit an unchecked theorem, or continue from the wrong phase.
+
+Protocol rule:
+
+> A phase transition is not complete until code, CI, `PROJECT_STATE.md`, the active roadmap, and every current-status README agree.
+
+Historical documents retain their original chronology, but any embedded status superseded by later work must be labeled explicitly.

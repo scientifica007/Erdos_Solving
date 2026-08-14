@@ -1,11 +1,14 @@
-# Erdős Problem #275 — Benchmark
+# Erdős Problem #275 — Completed Benchmark
+
+> **FINAL STATUS — COMPLETED SUCCESSFULLY.** The independent proof passed audit, was frozen before reference access, and was later classified as an independent rederivation using an equivalent core mechanism. The blind restrictions below are retained as historical protocol.
 
 ## Benchmark classification
 
 - Problem-level status: PROVED (LEAN) on erdosproblems.com.
 - Domain: number theory / covering systems.
-- Blind challenge: enabled.
-- Reference solution: locked until proof-freeze or explicit failure of the blind attempt.
+- Blind challenge: completed without contamination.
+- Reference solution: accessed only after proof freeze.
+- Final discovery classification: independent rederivation / equivalent core mechanism.
 
 ## Canonical statement
 
@@ -17,7 +20,7 @@ This statement is the benchmark target. No strengthening, weakening, or paraphra
 
 This problem was selected after the #1125 experiment because it has a short, finite combinatorial statement and is classified as solved at the problem level, not merely through a solved variant or sub-result. The selection did not consult the proof text or solution discussion.
 
-## Blind-mode restrictions
+## Historical blind-mode restrictions — satisfied
 
 Until proof-freeze:
 
@@ -26,6 +29,6 @@ Until proof-freeze:
 3. Do not inspect a formal proof of #275.
 4. External inspection is limited to statement, problem-level status, and bibliographic identity needed to establish the benchmark.
 
-## Goal
+## Original goal — completed
 
 Construct an independent proof, audit it, freeze it if valid, and only then compare it with the historical/reference solution.

@@ -1,5 +1,7 @@
 # Benchmark #214 — Retraction and Corrected State
 
+> **HISTORICAL RETRACTION RECORD.** This accurately records the first proof failure. Later work proceeded to an incomplete restart and then contamination; `lessons-learned-v2.md` is the authoritative final benchmark status.
+
 ## What happened
 
 A candidate proof for #214 was incorrectly frozen. The audit checked metric identities but failed to check the color of every vertex of the alleged red square.

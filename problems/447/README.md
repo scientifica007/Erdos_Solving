@@ -1,10 +1,12 @@
-# Erdős Problem #447 — Blind Challenge
+# Erdős Problem #447 — Contaminated Benchmark Record
 
-## Challenge status
+> **FINAL STATUS — CONTAMINATED / BLIND CHALLENGE TERMINATED.** Target-specific solution information was exposed during identification/verification before any proof freeze. This file preserves the original statement and protocol only; it is not an active blind challenge.
 
-This is a **blind independent-solving record**. The repository intentionally contains only the problem statement and minimal metadata at this stage.
+## Historical challenge status
 
-**Do not consult the official solution, discussion thread, papers cited by the official solution, or other solution material before the independent attempt is frozen.**
+This began as a **blind independent-solving record**. The experiment was later discarded as an independent benchmark after contamination.
+
+**Historical rule:** solution material was forbidden before freeze. That boundary was breached by exposure, so the blind experiment is closed.
 
 ## Problem statement
 
@@ -18,13 +20,13 @@ Prove that there exists an absolute constant \(c>0\) such that, whenever \(\{1,\
 - Original source reference: `Er56`
 - Official problem page: https://www.erdosproblems.com/447
 
-## Separation rule
+## Historical separation rule
 
 For the first solving phase, only the statement above and standard mathematical knowledge may be used.
 
 No comparison with the known proof is permitted until our candidate proof has been explicitly frozen and independently checked.
 
-## Research phases
+## Original research phases — not completed
 
 1. Statement normalization.
 2. Independent mathematical attack.

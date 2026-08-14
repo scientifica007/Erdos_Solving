@@ -1,5 +1,7 @@
 # Research Log — Erdős Problem #1125
 
+> **HISTORICAL SNAPSHOT WITH FINAL STATUS.** The blind attempt failed, the erroneous freeze was revoked, and reference comparison was subsequently completed in `comparison/historical-reconstruction.md`. This problem is not the active project.
+
 ## Canonical statement
 
 The canonical statement is the exact text supplied by the user:
@@ -80,6 +82,6 @@ The historical proof was **not used** in constructing the independent attempts a
 
 **Proof Freeze: REVOKED.**
 
-Current stage: **Historical Comparison / Blind Attempt Audit**.
+Final repository stage: **Historical comparison completed**.
 
-The independent blind attempt has not solved the problem. The next independent target is to derive a correct global argument, now explicitly aware that the naive increment-monotonicity route is invalid.
+The independent blind attempt did not solve the problem. No further independent target is currently active; any future reopening must create a new research stage rather than resume this superseded checkpoint.

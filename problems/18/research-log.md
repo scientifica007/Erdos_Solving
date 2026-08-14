@@ -1,5 +1,7 @@
 # Research Log — Erdős Problem #18
 
+> **CURRENT REPOSITORY STATUS — COMPLETED SUB-RESULT CHECKPOINT / NO ACTIVE ATTEMPT.** The proof below concerns a known lemma only. It must not be presented as progress on the open asymptotic questions without new evidence.
+
 ## Critical correction: target was misclassified
 
 The first version of this experiment incorrectly treated the known inequality

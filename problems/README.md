@@ -1,8 +1,34 @@
 # problems/
 
-هذا المجلد سيحتوي لاحقاً على ملفات المسائل بصيغة مهيكلة. لا ننسخ قاعدة `teorth/erdosproblems` كاملة هنا في هذه المرحلة؛ بل نبني طبقة محلية تحفظ ما يلزم للعمل البحثي مع روابط واضحة إلى المصادر upstream.
+> **Current index synchronized on 2026-08-14.**
 
-المخطط المقترح لكل مسألة:
+This directory contains local research records for nine selected Erdős problems. It is not a mirror of the full upstream database and does not claim that every folder is an active benchmark.
+
+## Current inventory
+
+| Problem | Repository-level research status | Authoritative outcome file |
+|---|---|---|
+| 18 | known sub-result reconstructed; parent problem not solved | `18/research-log.md` |
+| 214 | retracted proof, incomplete restart, then contamination | `214/lessons-learned-v2.md` |
+| 225 | inactive; no candidate proof; blind boundary intact | `225/research-log.md` |
+| 246 | paused because the copied statement is defective | `246/research-log.md` |
+| 275 | completed successful blind cycle and historical comparison | `275/comparison.md` |
+| 303 | blind attempt incomplete; reference comparison completed | `303/comparison.md` |
+| 447 | contaminated benchmark; not an active blind challenge | `447/README.md` |
+| 678 | active Cambie reconstruction in Lean; CI red | `678/LEAN_FORMALIZATION_ROADMAP.md` |
+| 1125 | blind attempt failed; historical reconstruction completed | `1125/comparison/historical-reconstruction.md` |
+
+## Reading rule
+
+A problem folder may contain stage snapshots whose embedded text was correct at the time, such as `blind mode: ON`, `candidate under audit`, or `restart possible`. Such a file must carry a `HISTORICAL SNAPSHOT` notice once superseded. Use the outcome file listed above for current classification.
+
+## Source principle
+
+Local records are not replacements for the original problem page, primary literature, OEIS, upstream structured data, or external formalization repositories. Any external status should be reverified when a benchmark is resumed.
+
+## Intended structured form
+
+The long-term target remains a structured problem package:
 
 ```text
 problems/<number>/
@@ -16,10 +42,4 @@ problems/<number>/
   evidence/
 ```
 
-## مبدأ المصدر
-
-البيانات المحلية ليست بديلاً عن المصادر الأصلية. أي قيمة مهمة يجب أن تشير إلى مصدرها وتاريخ الوصول إليها عند الحاجة.
-
-## متى نضيف مسألة؟
-
-نضيف المسألة بعد مرحلة triage، وليس بمجرد نسخها آلياً. الهدف هو أن يكون لكل ملف محلي معنى بحثي واضح.
+This schema is not yet implemented. The current Markdown files are the working record and should not be described as structured source-of-truth data.

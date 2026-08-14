@@ -1,5 +1,7 @@
 # Research Log — Erdős Problem #303
 
+> **HISTORICAL BLIND-PHASE LOG — SUPERSEDED BY COMPARISON.** The authorized transition recorded at the end of this file was subsequently completed. See `comparison.md` for the final outcome.
+
 ## Canonical statement
 
 The exact user-supplied statement is the sole canonical statement during the blind phase:
@@ -87,4 +89,4 @@ The reference solution may now be consulted under the project protocol, but the 
 
 ## Current status
 
-**Blind phase closed as incomplete; transition to historical/reference comparison authorized by the explicit failure declaration.**
+**Blind phase closed as incomplete. The authorized historical/reference comparison was subsequently completed and is recorded in `comparison.md`.**

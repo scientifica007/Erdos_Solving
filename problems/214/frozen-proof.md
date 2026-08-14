@@ -1,5 +1,7 @@
 # Retracted Independent Proof — Erdős Problem #214
 
+> **HISTORICAL RETRACTED ARTIFACT.** The proof remains revoked. The benchmark later ended as `INCONCLUSIVE / CONTAMINATED`; see `lessons-learned-v2.md`.
+
 **Status: RETRACTED — FAILED AUDIT**
 
 The previous file was incorrectly marked FROZEN. The error is logical, not algebraic: the constructed square has vertex $p\in S$, so it is not a square contained in the complement $\mathbb R^2\setminus S$.

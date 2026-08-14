@@ -1,5 +1,7 @@
 # Lessons Learned — Erdős Problem #214
 
+> **SUPERSEDED LESSON SNAPSHOT.** This file records lessons from the first retraction. The complete and authoritative postmortem, including the later contamination event, is `lessons-learned-v2.md`.
+
 ## Experiment classification
 
 - Blind attempt: FAILED

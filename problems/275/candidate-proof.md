@@ -1,8 +1,10 @@
 # Candidate Proof — Erdős Problem #275
 
+> **HISTORICAL CANDIDATE SNAPSHOT.** This candidate later passed `audit.md`, was frozen in `frozen-proof.md`, and was compared with the reference in `comparison.md`.
+
 ## Status
 
-**Candidate proof under audit. Not frozen.**
+**Status at the time of this snapshot: under audit. Final status: audit passed and proof frozen.**
 
 ## Claim
 

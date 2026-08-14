@@ -1,5 +1,7 @@
 # Erdős Problem #225 — Benchmark
 
+> **CURRENT REPOSITORY STATUS — INACTIVE / PAUSED.** No candidate proof was produced, the reference solution was not accessed, and the blind boundary remains intact if this benchmark is explicitly resumed. The active project is #678.
+
 ## Problem-level classification
 
 The main Erdős problem is classified as PROVED (LEAN) on erdosproblems.com. The status is verified at the problem level, not through a solved variant.

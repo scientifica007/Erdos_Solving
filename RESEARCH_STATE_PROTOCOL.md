@@ -57,3 +57,25 @@ After every material transition, update `PROJECT_STATE.md`. The next session sho
 ## Integrity rule
 
 If new information reveals that a previous stage was contaminated or misclassified, do not rewrite history silently. Record the correction as a new decision/state update and preserve the previous record.
+
+## Synchronization gate
+
+A checkpoint is valid only when it identifies:
+
+- the code-state commit or ref on which it is based;
+- the canonical CI status and a diagnostic run when red;
+- the exact live blocker;
+- which Lean modules are reachable and actually machine-checked;
+- the sole next action;
+- every current-status document that was updated with the transition.
+
+Before starting new mathematical or formalization work, compare:
+
+1. repository head;
+2. canonical build graph;
+3. latest known CI conclusion;
+4. `PROJECT_STATE.md`;
+5. the active roadmap;
+6. problem and root READMEs.
+
+If they disagree materially, documentation synchronization is the current task. Historical logs must be labeled rather than silently rewritten.

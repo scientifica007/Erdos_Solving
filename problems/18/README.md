@@ -1,4 +1,6 @@
-# Erdős Problem #18 — Blind Research Case
+# Erdős Problem #18 — Research Record
+
+> **CURRENT REPOSITORY STATUS — INACTIVE.** This repository reconstructed the known sub-result `h(n!) ≤ n-1`; it did not solve the parent problem. The external status recorded below must be reverified if research resumes.
 
 ## Official status
 

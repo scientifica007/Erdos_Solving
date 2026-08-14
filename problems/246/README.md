@@ -1,5 +1,7 @@
 # Erdős Problem #246 — Benchmark
 
+> **CURRENT REPOSITORY STATUS — PAUSED / INVALID BENCHMARK STATEMENT.** The literal copied statement admits the `a=1, b=3` obstruction recorded in `research-log.md`. No proof search may resume until the canonical source statement is repaired.
+
 ## Problem-level classification
 
 The problem is classified as PROVED (LEAN) on erdosproblems.com. The benchmark selection was verified at the problem level, not via a solved variant or sub-result.
@@ -19,7 +21,7 @@ Until proof-freeze or explicit failure:
 3. Do not inspect the formal proof.
 4. External verification is limited to problem-level status and canonical statement.
 
-## Objective
+## Original objective before the integrity failure
 
 Construct an independent proof, audit it, freeze it if valid, and only then compare it with the reference literature.
 

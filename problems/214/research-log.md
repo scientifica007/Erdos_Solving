@@ -1,5 +1,7 @@
 # Research Log — Erdős Problem #214
 
+> **HISTORICAL SNAPSHOT — SUPERSEDED.** This file ends at the first retraction. A restart followed, and the experiment was later terminated by contamination. See `lessons-learned-v2.md` for final status.
+
 ## Phase 2 — Blind Independent Solving
 
 Reference solution, historical proof, discussion, and formal proof have not been consulted.
@@ -32,4 +34,4 @@ In every coloring/Ramsey proof, audit the color of each vertex of every claimed 
 
 ## Current status
 
-**Blind attempt: FAILED / RESTART POSSIBLE.**
+**Status at this historical checkpoint: FAILED / RESTART POSSIBLE. Final repository status: INCONCLUSIVE / CONTAMINATED.**

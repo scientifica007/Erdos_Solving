@@ -1,5 +1,7 @@
 # Lessons Learned — Erdős Problem #214
 
+> **HISTORICAL APPENDIX — SUPERSEDED FOR FINAL BENCHMARK STATUS.** These retraction lessons remain valid; the later contamination and terminal classification are recorded in `problems/214/lessons-learned-v2.md` and `LESSONS_LEARNED_214_ADDENDUM.md`.
+
 - Blind attempt: FAILED.
 - Candidate proof: RETRACTED.
 - Audit: FAILED.

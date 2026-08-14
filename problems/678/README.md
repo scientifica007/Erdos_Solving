@@ -1,94 +1,66 @@
-# Erdős Problem #678 — Experiment Postmortem
+# Erdős Problem #678 — Active Cambie Reconstruction
 
-## Experiment classification
-
-- Blind proof attempt: INVALIDATED
-- Candidate argument: numerically correct example, globally invalid extension
-- Reference research: consulted only after the flaw was identified
-- Final status: lesson-bearing failure
+> **Current repository status (2026-08-14): ACTIVE, CI RED.**
+> The independent attempt was invalidated. The active work is an external-proof reconstruction and independent Lean reimplementation of Cambie (2024). The canonical operational sources are `PROJECT_STATE.md` and `LEAN_FORMALIZATION_ROADMAP.md`.
 
 ## Canonical statement
 
-Let `M(n,k) = lcm{n+1,...,n+k}`. Are there infinitely many `m,n,k>=3` with `m>=n+k` such that `M(n,k) > M(m,k+1)`?
+Let `M(n,k) = lcm{n+1,...,n+k}`. Are there infinitely many `m,n,k ≥ 3` with `m ≥ n+k` such that `M(n,k) > M(m,k+1)`?
 
-## What we found before reference access
+## Exact project classification
 
-A concrete inequality was found:
+- External problem status: proved.
+- Independent proof attempt in this repository: rejected.
+- Valid concrete witness: `M(36,8) > M(47,9)` — machine-checked.
+- Rejected candidate: `(495,504,8)` — machine-refuted and retained as a negative regression.
+- Current mode: reconstruction of Cambie's proof architecture.
+- Full Claim 5 in this repository: not proved.
+- Full Erdős #678 theorem in this repository: not formalized.
 
-`M(36,8) > M(47,9)`.
+## Historical independent-attempt failure
 
-The numerical comparison itself is correct.
+The project found the correct finite witness `(36,47,8)` but then asserted the false scaling identity
 
-The attempted infinitude argument then asserted the scaling identity
+```text
+M(t*n,k) = t*M(n,k).
+```
 
-`M(tn,k) = t M(n,k)`
+This fails because `M(t*n,k)` is the LCM of `tn+1,...,tn+k`, not of `t(n+1),...,t(n+k)`. A later attempted `Q=P/M` construction also failed because it used the wrong interval for `M(t,k+1)`.
 
-and similarly for `M(tm,k+1)`.
+The failures were recorded before reference reconstruction and remain part of project provenance.
 
-This identity is false because
+## Current Lean reconstruction
 
-`M(tn,k) = lcm(tn+1,...,tn+k)`,
+| Layer | Status |
+|---|---|
+| length-based intervals and canonical `erdosM` | machine-checked |
+| positive and negative concrete regressions | machine-checked |
+| finite product/LCM valuation core | machine-checked |
+| Claim 5 range `p > k` | machine-checked |
+| Claim 5 range `p ≤ k < p²` | machine-checked |
+| small-prime capped congruence core | machine-checked |
+| integrated small-prime Claim 5 | source present, canonical build failing |
+| full Claim 5 assembly | pending |
+| Claim 4 / CRT construction | pending |
+| quantitative finish and prime-density input | pending |
+| full theorem | pending |
 
-whereas
+## Current blocker
 
-`t M(n,k) = lcm(t(n+1),...,t(n+k))`.
+Canonical run `31839041104` fails in:
 
-The intervals being lcm'd are different.
+- `SmallPrimeWindows.lean` — equality orientation mismatch;
+- `SmallPrimeValuation.lean` — an unclosed natural subtraction/supremum proof.
 
-Therefore the argument proving infinitely many solutions was invalid even though its starting example was valid.
+`SmallPrimeClaim5.lean` is imported but cannot yet be credited as machine-checked.
 
-## Audit lesson
+## Sole next action
 
-A valid witness does not validate an extension mechanism. Whenever a proof turns one example into infinitely many examples, the proposed symmetry/induction/translation/scaling map must be checked by direct substitution into the exact statement.
+Repair the two Lean failures and restore a green canonical build. No work on Claim 4, CRT, or the final estimate begins before that gate.
 
-In particular, for a claimed transformation `T` one must verify:
+## Main references inside this folder
 
-1. `T` maps admissible tuples to admissible tuples;
-2. every domain constraint is preserved (`k>=3`, `m>=n+k`, etc.);
-3. each defined quantity transforms according to the claimed identity;
-4. the strict inequality is preserved;
-5. the transformed instances are genuinely distinct.
-
-## Reusable rule — No assumed scaling symmetry
-
-Do not infer homogeneity merely because an expression contains an LCM, product, norm, determinant, or another apparently scale-sensitive operation. Check the actual arguments of the operator after scaling.
-
-The correct question is not:
-
-`"Does the quantity look homogeneous?"`
-
-but:
-
-`"After the proposed transformation, is the exact input set to the operator the transformed version of the original input set?"`
-
-## Deeper lesson — Example vs. infinite family
-
-For existence-of-infinitely-many problems, separate the proof into two explicit layers:
-
-`Layer A: existence of one witness`
-
-`Layer B: a valid infinitude mechanism`
-
-A proof may pass Layer A and completely fail Layer B.
-
-## Reference comparison
-
-After the invalid scaling step was isolated, the historical literature was consulted. The known result is much stronger than the single witness: Cambie (2024) proves that for sufficiently large `k` one can make the ratio between the two relevant LCMs arbitrarily large. Historical examples include
-
-`M(96,7) > M(104,8)`
-
-and
-
-`M(132,7) > M(139,8)`.
-
-The published result therefore requires genuine number-theoretic structure; simple scaling of one witness is not the mechanism.
-
-## Protocol update
-
-For any benchmark asking for infinitely many objects, add an explicit `Infinitude Mechanism Audit` before accepting a proof:
-
-- witness verified independently;
-- infinitude map identified;
-- map checked against the exact statement;
-- preservation identities proved, not guessed;
-- distinctness verified.
+- `CAMBIE_PROOF_ANALYSIS.md` — mathematical architecture of the reference proof.
+- `LEAN_FORMALIZATION_ROADMAP.md` — sole active execution roadmap.
+- `FORMALIZATION_CORRECTION_2026-08-14.md` — exact rejection of the false `(495,504,8)` construction.
+- `LEAN_TEST_PLAN.md` — superseded historical plan; not an execution source.

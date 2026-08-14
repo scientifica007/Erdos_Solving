@@ -1,5 +1,7 @@
 # Research Log — Erdős Problem #275
 
+> **HISTORICAL BLIND-PHASE LOG — COMPLETED.** The candidate recorded here later passed audit, was frozen, and underwent reference comparison. Use `comparison.md` for the final classification.
+
 ## Phase 1 — Canonical Statement
 
 The canonical benchmark statement is locked exactly as supplied in `problems/275/README.md`.
@@ -46,11 +48,11 @@ Status: **CANDIDATE PROOF FOUND — READY FOR INDEPENDENT AUDIT**.
 
 ## Integrity
 
-- Blind mode: ON.
+- Blind mode at this historical stage: ON.
 - Historical proof accessed: NO.
 - Formal proof accessed: NO.
 - Solution discussion accessed: NO.
 
 ## Status
 
-**Candidate proof: READY FOR AUDIT.**
+**Historical stage outcome: candidate advanced to audit. Final outcome: AUDIT PASSED, PROOF FROZEN, REFERENCE COMPARISON COMPLETED.**

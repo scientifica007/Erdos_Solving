@@ -1,4 +1,6 @@
-# Erdős Problem #303 — Benchmark
+# Erdős Problem #303 — Completed Benchmark Record
+
+> **FINAL STATUS — BLIND ATTEMPT INCOMPLETE; REFERENCE COMPARISON COMPLETED.** Brown–Rödl's reciprocal-transfer mechanism was studied only after the blind failure decision. The restrictions below are historical.
 
 ## Canonical Statement
 
@@ -15,10 +17,11 @@ No strengthening, weakening, or paraphrase is to replace this statement during t
 ## Benchmark classification
 
 - Problem-level status: PROVED (LEAN).
-- Blind challenge: enabled.
-- Reference solution: locked until proof freeze or explicit failure.
+- Blind challenge: closed as incomplete.
+- Reference solution: accessed after the explicit failure declaration.
+- Final repository classification: reference-understood, no independent proof.
 
-## Blind-mode restrictions
+## Historical blind-mode restrictions — satisfied during the attempt
 
 Until proof-freeze:
 
@@ -27,6 +30,6 @@ Until proof-freeze:
 3. Do not inspect a formal proof of #303.
 4. External inspection is limited to statement, problem-level status, and bibliographic identity needed to establish the benchmark.
 
-## Goal
+## Original goal
 
 Construct an independent proof, audit it, freeze it if valid, and only then compare it with the historical/reference solution.

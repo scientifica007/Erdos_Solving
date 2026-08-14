@@ -1,4 +1,6 @@
-# Erdős Problem #1125 — Blind Challenge
+# Erdős Problem #1125 — Completed Benchmark Record
+
+> **CURRENT STATUS — COMPLETED HISTORICAL BENCHMARK.** The blind candidate failed audit and its freeze was revoked. Reference material was later accessed and the historical/modern reconstruction was completed. The blind restrictions below describe the original experiment only; they are not the current project phase.
 
 ## Challenge status
 

@@ -1,5 +1,7 @@
 # Restart 01 — Blind continuation for Erdős Problem #214
 
+> **HISTORICAL SNAPSHOT — DO NOT RESUME FROM THIS FILE.** Blind mode was on during this restart, but later external-context contamination terminated the experiment. The authoritative final outcome is `lessons-learned-v2.md`.
+
 Reference solution, historical paper, discussion, and formal proof have not been consulted during this restart.
 
 ## Scope
@@ -50,9 +52,11 @@ The current central invariants are:
 
 The next search should derive nontrivial propagation cycles from these rules rather than merely enumerate isolated grids.
 
-## Status
+## Historical status at the time of Restart 01
 
-Blind mode: ON.
-Reference solution accessed: NO.
+Blind mode at this checkpoint: ON.
+Reference solution accessed at this checkpoint: NO.
 Candidate proof: NONE.
 Proof frozen: NO.
+
+Final repository status after later events: **INCONCLUSIVE / CONTAMINATED; blind mode terminated.**

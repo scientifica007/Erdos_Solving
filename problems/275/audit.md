@@ -1,5 +1,7 @@
 # Independent Audit — Erdős Problem #275
 
+> **HISTORICAL AUDIT SNAPSHOT — COMPLETED.** This audit passed. The proof was subsequently frozen in `frozen-proof.md` and compared with the reference in `comparison.md`.
+
 ## Audit target
 
 Candidate proof in `candidate-proof.md` based on an exponential polynomial.
