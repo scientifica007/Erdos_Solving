@@ -1,3 +1,5 @@
 import Formalization.Basic
 import Formalization.Erdos678.Intervals
 import Formalization.Erdos678.ConcreteTests
+import Formalization.Erdos678.ValuationBasic
+import Formalization.Erdos678.ProductValuation
