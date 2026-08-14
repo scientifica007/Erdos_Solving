@@ -8,3 +8,4 @@ import Formalization.Erdos678.ReciprocalLCMValuation
 import Formalization.Erdos678.ValuationCounting
 import Formalization.Erdos678.LargePrimeRange
 import Formalization.Erdos678.MediumPrimeRange
+import Formalization.Erdos678.MediumPrimeWindows
