@@ -91,7 +91,6 @@ theorem intervalFinset_sum_succ_len
     (start len : ℕ) (f : ℕ → ℕ) :
     (intervalFinset start (len + 1)).sum f =
       f start + (intervalFinset (start + 1) len).sum f := by
-  rw [intervalFinset_succ_len]
-  exact Finset.sum_insert (start_not_mem_interval_tail start len) f
+  rw [intervalFinset_succ_len, Finset.sum_insert (start_not_mem_interval_tail start len)]
 
 end Erdos678
