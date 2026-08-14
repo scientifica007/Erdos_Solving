@@ -15,3 +15,4 @@ import Formalization.Erdos678.SmallPrimeRange
 import Formalization.Erdos678.SmallPrimeValuation
 import Formalization.Erdos678.SmallPrimeWindows
 import Formalization.Erdos678.SmallPrimeInitialLCM
+import Formalization.Erdos678.SmallPrimeSup
