@@ -1,5 +1,9 @@
 import Formalization.Erdos678.ValuationBasic
 
+/-!
+Finite-product `p`-adic valuation lemmas for the Erdős #678 formalization.
+-/
+
 namespace Erdos678
 
 /-- For a prime `p`, the `p`-adic valuation of a finite product of nonzero
@@ -22,10 +26,10 @@ lemma padicValNat_finset_prod
         intro x hx
         exact hne x (by simp [hx])
       have hprod0 : s.prod id ≠ 0 := by
-        apply Finset.prod_ne_zero
-        intro x hx
-        exact hs0 x hx
+        rw [Finset.prod_ne_zero_iff]
+        exact hs0
       rw [Finset.prod_insert ha, Finset.sum_insert ha]
+      simp only [id_eq]
       rw [padicValNat.mul ha0 hprod0]
       rw [ih hs0]
 
