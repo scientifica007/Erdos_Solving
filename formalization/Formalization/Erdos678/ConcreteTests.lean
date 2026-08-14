@@ -1,5 +1,12 @@
 import Formalization.Erdos678.Intervals
 
+/-!
+Concrete positive and negative regression tests for Erdős Problem #678.
+
+The explicit nested LCM definitions act as an independent arithmetic oracle
+for the canonical length-based `erdosM` abstraction.
+-/
+
 namespace Erdos678
 
 /-- Independent explicit oracle for `M(36,8) = lcm(37,...,44)`. -/
@@ -24,24 +31,21 @@ def M504_9_explicit : ℕ :=
     (Nat.lcm 509 (Nat.lcm 510 (Nat.lcm 511
       (Nat.lcm 512 513)))))))
 
-/-! The general length-based abstraction must agree with the independent
-hand-expanded definitions before it is trusted downstream. -/
-
 example : erdosM 36 8 = M36_8_explicit := by
-  native_decide
+  decide
 
 example : erdosM 47 9 = M47_9_explicit := by
-  native_decide
+  decide
 
 example : erdosM 495 8 = M495_8_explicit := by
-  native_decide
+  decide
 
 example : erdosM 504 9 = M504_9_explicit := by
-  native_decide
+  decide
 
 /-- Positive regression: a genuine concrete solution. -/
 example : erdosM 36 8 > erdosM 47 9 := by
-  native_decide
+  decide
 
 /-- Domain conditions for the positive witness. -/
 example : 8 ≥ 3 ∧ 47 ≥ 36 + 8 := by
@@ -49,6 +53,6 @@ example : 8 ≥ 3 ∧ 47 ≥ 36 + 8 := by
 
 /-- Negative regression: the rejected candidate remains rejected. -/
 example : ¬ (erdosM 495 8 > erdosM 504 9) := by
-  native_decide
+  decide
 
 end Erdos678
