@@ -31,4 +31,4 @@ jobs:
           lake env lean Formalization/Erdos678_Test2.lean
           lake env lean Formalization/Claim5_Core.lean
           lake env lean Formalization/Claim5_Valuation.lean
-          lake env lean Formalization/Claim5_ProductValuation.lean
+          lake env lean Formalization/Claim5_ProductValuation2.lean
