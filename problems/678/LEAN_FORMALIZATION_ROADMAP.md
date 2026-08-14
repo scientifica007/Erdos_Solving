@@ -2,7 +2,9 @@
 
 **Status:** ACTIVE — canonical execution roadmap  
 **Mode:** reconstruction and independent reimplementation of Cambie (2024), not independent mathematical discovery  
-**Current gate:** Formalization Consolidation Gate  
+**Consolidation gate:** PASSED  
+**Current phase:** Phase A — arithmetic core  
+**Current target:** A1 — finite-LCM valuation  
 **Canonical mathematical analysis:** `CAMBIE_PROOF_ANALYSIS.md`
 
 This file is the single operational answer to: **what is the next Lean/formalization task for #678?**
@@ -26,90 +28,60 @@ No CI success may be described as proof of more than the exact statements checke
 
 ---
 
-# Phase C — Formalization Consolidation Gate
+# Phase C — Formalization Consolidation Gate — PASSED
 
-No new Claim 5 mathematics is added before this gate passes.
+Green machine-check checkpoint: GitHub Actions run `31827146122`.
 
-## C1 — Operational memory
+## C1 — Operational memory — DONE
 
-**Goal:** make `PROJECT_STATE.md` reflect #678 and the actual reconstruction state.
+`PROJECT_STATE.md` now identifies #678, reconstruction mode, rejected independent paths, verified facts, and the next formalization target.
 
-**Exit condition:** a new agent can read `PROJECT_STATE.md` alone and correctly identify the current problem, mode, verified facts, rejected paths, CI status, and next action.
+## C2 — One canonical roadmap — DONE
 
-**Status:** DONE.
+- this file is the sole active Lean execution roadmap;
+- `CAMBIE_PROOF_ANALYSIS.md` is mathematical analysis only;
+- `LEAN_TEST_PLAN.md` is explicitly `SUPERSEDED` and historical.
 
-## C2 — One canonical roadmap
+## C3 — Length-based interval API — DONE / MACHINE-CHECKED
 
-**Goal:** eliminate competing execution plans.
-
-Actions:
-
-1. Use this file as the sole active Lean execution roadmap.
-2. Keep `CAMBIE_PROOF_ANALYSIS.md` as mathematical analysis, not a task tracker.
-3. Mark `LEAN_TEST_PLAN.md` as `SUPERSEDED` while retaining it for provenance.
-
-**Exit condition:** only this file answers “what is the next formalization step?”.
-
-**Status:** IN PROGRESS.
-
-## C3 — Length-based interval API
-
-**Goal:** make interval length explicit so the type-level/formal interface resists the off-by-one failure that invalidated the earlier construction.
-
-Preferred canonical semantics:
+Canonical semantics:
 
 ```text
-intervalFinset(start, len) = {start, start+1, ..., start+len-1}
+intervalFinset(start,len) = {start,start+1,...,start+len-1}
 ```
 
-Implementation should prefer a construction based on `Finset.range len` mapped/embedded by `i ↦ start + i`, rather than an endpoint formula whose meaning changes at `len = 0`.
-
-Required definitions:
+Live definitions:
 
 ```text
-intervalFinset(start, len)
-intervalProd(start, len)
-intervalLCM(start, len)
+intervalFinset(start,len)
+intervalProd(start,len)
+intervalLCM(start,len)
 erdosM(n,k) = intervalLCM(n+1,k)
 ```
 
-Required boundary regression tests:
+Boundary regressions for lengths `0`, `1`, and `3` are kernel-checked with `decide`.
+
+## C4 — Canonical `M(n,k)` and abstraction tests — DONE / MACHINE-CHECKED
+
+The canonical `erdosM` definition is checked against independent hand-expanded LCM oracles for:
 
 ```text
-intervalFinset 10 0 = ∅
-intervalFinset 10 1 = {10}
-intervalFinset 10 3 = {10,11,12}
+(36,8)
+(47,9)
+(495,8)
+(504,9)
 ```
 
-**Exit condition:** all live interval APIs use length semantics; no live theorem relies on the ambiguous former endpoint-offset interpretation.
-
-## C4 — Canonical `M(n,k)` and abstraction tests
-
-**Goal:** connect the general abstraction to an independent explicit arithmetic oracle.
-
-Keep explicit hand-expanded LCMs for the known positive and rejected negative examples. Then prove that the canonical general definition agrees with them:
-
-```text
-erdosM 36 8 = M36_8_explicit
-erdosM 47 9 = M47_9_explicit
-erdosM 495 8 = M495_8_explicit
-erdosM 504 9 = M504_9_explicit
-```
-
-Then machine-check:
+The live graph also checks:
 
 ```text
 erdosM 36 8 > erdosM 47 9
 ¬ (erdosM 495 8 > erdosM 504 9)
 ```
 
-**Exit condition:** the general definition passes positive and negative regression tests against independent explicit definitions.
+## C5 — Clean live Lean tree — DONE
 
-## C5 — Clean the live Lean tree
-
-**Goal:** distinguish production formalization from failed experiments.
-
-Target shape (exact filenames may vary if Lean module naming suggests a better form):
+Canonical production tree:
 
 ```text
 Formalization/Erdos678/
@@ -117,108 +89,94 @@ Formalization/Erdos678/
   ConcreteTests.lean
   ValuationBasic.lean
   ProductValuation.lean
-  LCMValuation.lean        # created later
-  Claim5.lean              # created later
 ```
 
-Rules:
+Superseded `Claim5_*`, `*Test*`, and version-suffixed experiment modules were removed from the live tree; their provenance remains in Git history and Markdown records.
 
-- no `v2`, `fixed`, `final`, or similar suffixes in the live tree;
-- failed experiments are preserved by Git history and explanatory Markdown, not by ambiguous production modules;
-- every live file has one clear responsibility.
+## C6 — Canonical Lake build graph — DONE
 
-**Exit condition:** one canonical live module per concept.
+`Formalization.lean` imports every live #678 module. GitHub Actions no longer manually enumerates `.lean` files; `lake build` is the authoritative integration check.
 
-## C6 — Canonical Lake build graph
+Invariant:
 
-**Goal:** `lake build` must check all live formalization modules without manually listing them in GitHub Actions.
+> A new Lean module is not considered live until it is reachable from the canonical build graph.
 
-Actions:
+## C7 — Finite-product valuation — DONE / MACHINE-CHECKED
 
-1. Create/maintain a canonical import root for #678.
-2. Import every live #678 module from that root or through its dependency graph.
-3. Ensure the Lake target includes that root.
-4. Reduce the workflow to the canonical build plus only genuinely independent smoke/regression checks if needed.
-
-**Invariant:** a new live `.lean` module that is not reachable from the canonical build graph is not considered integrated.
-
-**Exit condition:** `lake build` failing is sufficient to detect a broken live module.
-
-## C7 — Finite-product valuation
-
-**Goal:** prove the generic theorem
+The live theorem proves, for prime `p` and a finite set of nonzero naturals:
 
 ```text
-padicValNat p (product over s) = sum over s of padicValNat p
+padicValNat p (s.prod id) = s.sum (fun x => padicValNat p x)
 ```
 
-under the exact Mathlib hypotheses:
+The proof uses the actual Mathlib API (`Finset.prod_ne_zero_iff`, `padicValNat.mul`) and a structured `calc` proof rather than brittle syntactic rewrites.
 
-- `Nat.Prime p`;
-- each factor is nonzero.
+## C8 — Restore green CI — DONE
 
-Implementation policy:
+GitHub Actions run `31827146122` passed the canonical Lean build graph.
 
-- prefer explicit APIs such as `s.prod id` and `s.sum ...` if notation causes parser/elaboration fragility;
-- use `Finset.induction`;
-- use `padicValNat.mul` only with its required hypotheses;
-- no `sorry` and no new axiom.
+Repository-wide safety checks at the gate checkpoint found no occurrences of:
 
-**Exit condition:** theorem machine-checks through the canonical Lake build.
+```text
+sorry
+axiom
+native_decide
+```
 
-## C8 — Restore green CI
+## C9 — Consolidation checkpoint — DONE
 
-**Goal:** make `main` green with the consolidated architecture.
-
-The green run must cover at least:
-
-- canonical interval API;
-- canonical `erdosM`;
-- positive witness regression;
-- negative witness regression;
-- equality-by-prime-valuations core;
-- multiplicative `padicValNat` wrapper;
-- finite-product valuation theorem.
-
-**Exit condition:** GitHub Actions PASS on `main` with no `sorry` introduced by this consolidation.
-
-## C9 — Consolidation checkpoint
-
-Update `PROJECT_STATE.md`:
+`PROJECT_STATE.md` records:
 
 ```text
 consolidation_gate_status: passed
 ci_status: green
 current_substage: lcm-valuation
-next_action: formalize finite-LCM valuation
+next_action: formalize finite-LCM valuation (A1)
 ```
 
-Record reusable lessons:
-
-1. interval APIs must encode length explicitly when endpoint ambiguity has already caused proof failure;
-2. a Lean module is live only if reachable from the canonical build graph and checked in CI.
-
-**Exit condition:** restart instructions are unambiguous.
+Reusable consolidation lessons are recorded in `LESSONS_LEARNED_678_ADDENDUM.md`.
 
 ---
 
-# Phase A — Arithmetic core after consolidation
+# Phase A — Arithmetic core — CURRENT
 
-This phase starts only after C9.
+## A1 — Finite-LCM valuation — CURRENT
 
-## A1 — Finite-LCM valuation
+### Goal
 
-Target mathematical content:
+Formalize the prime-adic structure of a finite LCM. The mathematical target is of the form
 
 ```text
-v_p(lcm of a finite nonzero set) = maximum p-adic valuation among the elements
+v_p(lcm of a finite nonzero set)
+  = maximum p-adic valuation among the elements.
 ```
 
-The exact Lean statement may use `Nat.factorization`, `Finset.lcm`, divisibility lemmas, or a maximum formulation dictated by Mathlib's strongest existing API.
+### First action
 
-Do not force a bespoke theorem if Mathlib already provides the required factorization-of-LCM result.
+Before designing a bespoke theorem, inspect current Mathlib for the strongest existing lemmas around:
 
-## A2 — Reciprocal-LCM factor
+```text
+Finset.lcm
+Nat.factorization_lcm
+Nat.factorization
+padicValNat
+```
+
+Prefer reducing to an existing factorization-of-LCM theorem if it gives the required result with less custom infrastructure.
+
+### Required constraints
+
+- exact nonzero hypotheses must be explicit;
+- empty-set behavior must be specified rather than silently ignored;
+- no custom maximum convention may be introduced without defining its empty-set semantics;
+- no division appears yet;
+- no `sorry` or new axiom.
+
+### Exit condition
+
+A theorem sufficient to compute/control the `p`-adic valuation of `intervalLCM start len` is reachable from the canonical Lake graph and passes CI.
+
+## A2 — Reciprocal-LCM factor — PENDING
 
 For a positive finite block, formalize the valuation of
 
@@ -230,13 +188,13 @@ Prefer proving divisibility first or using an equivalent cross-multiplied/valuat
 
 Any reformulation must be proved equivalent to the intended Claim 5 identity; equivalence must never be assumed.
 
-## A3 — Interval valuation counting primitives
+## A3 — Interval valuation counting primitives — PENDING
 
 Formalize the number of elements in a block divisible by `p^r` and the finite-support bound required to make valuation sums finite and explicit.
 
 ---
 
-# Phase B — Cambie Claim 5
+# Phase B — Cambie Claim 5 — PENDING
 
 ## B1 — Prime range `p > k`
 
@@ -254,11 +212,11 @@ Formalize the small-prime capped valuation sums using the modulus `m` and the co
 
 Combine all prime ranges and use equality by prime valuations to prove Cambie's exact arithmetic identity.
 
-**Exit condition:** Claim 5 is machine-checked without using Claim 4, prime-density existence, or the final asymptotic estimate.
+Exit condition: Claim 5 is machine-checked without using Claim 4, prime-density existence, or the final asymptotic estimate.
 
 ---
 
-# Phase D — CRT combinatorial engine
+# Phase D — CRT combinatorial engine — PENDING
 
 ## D1 — Claim 4
 
@@ -274,7 +232,7 @@ Obtain representatives `x,y` satisfying the residue restrictions, range bounds, 
 
 ---
 
-# Phase E — Quantitative finish
+# Phase E — Quantitative finish — PENDING
 
 ## E1 — LCM-ratio estimate
 
@@ -327,14 +285,18 @@ These apply to every phase:
 
 ```text
 Erdős #678
-└── Formalization Consolidation Gate
-    ├── C1 Operational memory ............... DONE
-    ├── C2 Canonical roadmap ................ IN PROGRESS
-    ├── C3 Length-based interval API ........ PENDING
-    ├── C4 Canonical M + regressions ......... PENDING
-    ├── C5 Clean live Lean tree .............. PENDING
-    ├── C6 Canonical Lake build graph ........ PENDING
-    ├── C7 Finite-product valuation .......... PENDING
-    ├── C8 Green CI .......................... PENDING
-    └── C9 Consolidation checkpoint .......... PENDING
+├── Phase C — Formalization Consolidation Gate .... PASSED
+│   ├── C1 Operational memory ..................... DONE
+│   ├── C2 Canonical roadmap ...................... DONE
+│   ├── C3 Length-based interval API .............. DONE
+│   ├── C4 Canonical M + regressions .............. DONE
+│   ├── C5 Clean live Lean tree ................... DONE
+│   ├── C6 Canonical Lake build graph ............. DONE
+│   ├── C7 Finite-product valuation ............... DONE
+│   ├── C8 Green CI ............................... DONE
+│   └── C9 Consolidation checkpoint ............... DONE
+└── Phase A — Arithmetic core
+    ├── A1 Finite-LCM valuation ................... CURRENT
+    ├── A2 Reciprocal-LCM factor .................. PENDING
+    └── A3 Interval valuation counting ............ PENDING
 ```
