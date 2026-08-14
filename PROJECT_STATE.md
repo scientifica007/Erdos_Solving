@@ -18,8 +18,8 @@ This file is the operational memory checkpoint for the project. Read it before r
 ## Current project
 
 current_problem: 678
-current_phase: formalization-consolidation
-current_stage: consolidation-gate
+current_phase: arithmetic-core
+current_stage: finite-lcm-valuation
 current_mode: external-proof-reconstruction
 blind_mode: false
 reference_solution_accessed: true
@@ -32,14 +32,15 @@ reference_proof: Cambie-2024
 reference_understanding_status: analyzed
 
 current_target: Cambie-Claim-5
-current_substage: consolidation-C1-to-C9
+current_substage: lcm-valuation
 full_claim5_status: not-proved
 full_erdos678_formalization_status: not-proved
 
-ci_status: red
-ci_blocker: Claim5_ProductValuation2-parser
-consolidation_gate_status: in-progress
-next_action: execute the Formalization Consolidation Gate before adding new Claim 5 mathematics
+ci_status: green
+ci_blocker: none
+consolidation_gate_status: passed
+consolidation_green_run: 31827146122
+next_action: formalize finite-LCM valuation (Roadmap A1)
 
 ## Current #678 mathematical state
 
@@ -57,7 +58,7 @@ rejected_paths:
   - interval identification `[t,t+k]` for `M(t,k+1)` — false; the correct interval is `[t+1,t+k+1]`
 
 current_reference_structure:
-  - Claim 5: prime-by-prime arithmetic identity — current formalization target after consolidation
+  - Claim 5: prime-by-prime arithmetic identity — active reconstruction target
   - Claim 4: CRT-density combinatorial lemma — not started
   - CRT residue construction for `x,y` — not started
   - quantitative size estimate — not started
@@ -68,42 +69,61 @@ current_reference_structure:
 environment:
   - Lean: 4.33.0
   - Lake: 5.0.0
-  - Mathlib: configured through the current project lockfile
+  - Mathlib: configured through the project lockfile
   - authoritative machine check: GitHub Actions
+  - canonical check command: `lake build`
+
+live_modules:
+  - `Formalization/Erdos678/Intervals.lean`
+  - `Formalization/Erdos678/ConcreteTests.lean`
+  - `Formalization/Erdos678/ValuationBasic.lean`
+  - `Formalization/Erdos678/ProductValuation.lean`
 
 machine_checked_components:
-  - concrete positive witness
+  - length-based consecutive interval API
+  - canonical `erdosM n k = lcm(n+1,...,n+k)` abstraction
+  - abstraction agreement with independent explicit LCM oracles for the positive and negative regression cases
+  - concrete positive witness and domain condition
   - concrete negative regression witness
-  - Claim 5 core definitions/equality-by-prime-valuations scaffold
-  - multiplicativity wrapper for `padicValNat` under the required prime/nonzero hypotheses
-
-in_progress_components:
-  - finite-product valuation lemma
+  - equality of nonzero naturals from equality of all prime `padicValNat` values
+  - multiplicativity/additivity wrapper for `padicValNat` under prime/nonzero hypotheses
+  - finite-product `padicValNat` theorem for nonzero finite sets
 
 not_started_components:
   - finite-LCM valuation theorem
   - reciprocal-LCM valuation theorem
+  - interval divisibility-counting primitives
   - Cambie Claim 5 prime-range cases
   - Cambie Claim 5 assembly
   - Claim 4
   - CRT construction
   - final quantitative theorem
 
-## Formalization Consolidation Gate
+safety_checks:
+  - repository search found no `sorry`
+  - repository search found no `axiom`
+  - repository search found no `native_decide`
 
-The current mandatory sequence is:
+## Formalization Consolidation Gate — PASSED
 
-1. C1 — repair `PROJECT_STATE.md`.
-2. C2 — establish one canonical Lean formalization roadmap; mark the old test plan superseded.
-3. C3 — replace ambiguous interval-offset abstractions with a length-based interval API.
-4. C4 — define canonical `M(n,k)` from that interval API and connect it to independent explicit witness tests.
-5. C5 — clean the live Lean tree; remove version-suffixed experimental files from the production path.
-6. C6 — make the canonical Lake build graph cover every live formalization file.
-7. C7 — rebuild the finite-product valuation lemma using robust explicit APIs.
-8. C8 — restore `main` to green CI.
-9. C9 — record the checkpoint and set the next target to finite-LCM valuation.
+Completed sequence:
 
-No new Claim 5 mathematics should be added before C8 passes.
+1. C1 — repaired `PROJECT_STATE.md`.
+2. C2 — established `LEAN_FORMALIZATION_ROADMAP.md` as the sole active execution roadmap and marked the old test plan superseded.
+3. C3 — replaced ambiguous endpoint-offset intervals with a length-based API.
+4. C4 — defined canonical `erdosM` and connected it to independent explicit positive/negative regression oracles.
+5. C5 — cleaned the live Lean tree and removed version-suffixed/superseded experiment modules from production paths.
+6. C6 — made the canonical Lake build graph authoritative; GitHub Actions no longer manually enumerates Lean files.
+7. C7 — proved finite-product `padicValNat` additivity with the exact Mathlib hypotheses.
+8. C8 — restored green CI; GitHub Actions run `31827146122` passed the canonical build graph.
+9. C9 — this checkpoint records the gate closure and sets A1 as the next target.
+
+## Reusable lessons from consolidation
+
+- **Length-first interval API:** when an endpoint ambiguity has already caused a proof failure, represent consecutive blocks by `(start, length)`, not by an ambiguous endpoint offset.
+- **Build-graph liveness:** a Lean module is live only if it is reachable from the canonical Lake build graph and therefore checked automatically by CI.
+- **Kernel-checked closed regressions:** use kernel-checked `decide` for closed computational regressions when practical rather than `native_decide`, which expands the trusted computing base to the compiler.
+- **API-driven proof repair:** when Mathlib rejects a guessed theorem name or rewrite shape, inspect the actual library API and reformulate the proof rather than stacking speculative rewrites.
 
 ## Historical #214 checkpoint
 
