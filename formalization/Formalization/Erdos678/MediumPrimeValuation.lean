@@ -27,14 +27,16 @@ theorem finset_sum_sub_sup_eq_card_pos_sub_one
         apply Finset.sum_congr rfl
         intro x hx
         by_cases hfx : 0 < f x
-        · simp [hfx]
+        · simp only [if_pos hfx]
+          omega
         · have hz : f x = 0 := Nat.eq_zero_of_not_pos hfx
           simp [hz]
       _ = s.sum (fun x => if 0 < f x then 1 else 0) +
           s.sum (fun x => f x - 1) := Finset.sum_add_distrib
       _ = (s.filter fun x => 0 < f x).card +
           s.sum (fun x => f x - 1) := by
-        rw [Finset.sum_boole]
+        simpa using
+          (Finset.sum_boole (R := ℕ) (fun x => 0 < f x) s)
   have hsup_pos : 0 < s.sup f := by
     obtain ⟨a, ha⟩ := hpos
     have haS : a ∈ s := (Finset.mem_filter.mp ha).1
@@ -45,12 +47,13 @@ theorem finset_sum_sub_sup_eq_card_pos_sub_one
     apply le_antisymm
     · apply Finset.sup_le
       intro x hx
-      have hle : f x - 1 ≤ s.sup (fun y => f y - 1) := Finset.le_sup hx
+      have hle : f x - 1 ≤ s.sup (fun y => f y - 1) :=
+        Finset.le_sup (f := fun y => f y - 1) hx
       omega
     · have htail_le : s.sup (fun x => f x - 1) ≤ s.sup f - 1 := by
         apply Finset.sup_le
         intro x hx
-        exact Nat.sub_le_sub_right (Finset.le_sup hx) 1
+        exact Nat.sub_le_sub_right (Finset.le_sup (f := f) hx) 1
       omega
   have htail_eq :
       s.sum (fun x => f x - 1) = s.sup (fun x => f x - 1) :=
