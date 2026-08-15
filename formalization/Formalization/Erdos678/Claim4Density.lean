@@ -58,6 +58,6 @@ theorem claim4_exists_avoiding_coordinate_exclusions
     refine ⟨i, hi, ?_⟩
     simp [bad, hz, hzbad]
   have hcard := Finset.card_le_card hsubset
-  omega
+  exact (not_lt_of_ge hcard) hunion
 
 end Erdos678
