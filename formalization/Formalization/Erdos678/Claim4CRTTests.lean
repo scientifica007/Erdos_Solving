@@ -41,4 +41,40 @@ inverse for the standard pair basis. -/
 example : ¬(5 * 7 ≡ 1 [MOD 5]) := by
   norm_num [Nat.ModEq]
 
+/-- For coordinates `5`, `7`, and `11`, the standard triple weights have the
+concrete inverse multipliers `3`, `6`, and `6`. -/
+example :
+    Claim4WeightedRepresentation
+      (Finset.univ : Finset (Fin 3))
+      (claim4TriplePrime 5 7 11)
+      (claim4TripleMultiplier 3 6 6)
+      (claim4TripleWeight 5 7 11)
+      385 := by
+  apply claim4_triple_weightedRepresentation_of_inverses
+  · norm_num
+  · norm_num
+  · norm_num
+  · norm_num [Nat.ModEq]
+  · norm_num [Nat.ModEq]
+  · norm_num [Nat.ModEq]
+
+/-- The triple producer constructs bounded, nondivisible multipliers and the
+complete representation contract from pairwise-coprime primes. -/
+example :
+    ∃ cp cq cr : ℕ,
+      cp < 5 ∧ cq < 7 ∧ cr < 11 ∧
+      (∀ i : Fin 3,
+        ¬claim4TriplePrime 5 7 11 i ∣
+          claim4TripleMultiplier cp cq cr i) ∧
+      Claim4WeightedRepresentation
+        (Finset.univ : Finset (Fin 3))
+        (claim4TriplePrime 5 7 11)
+        (claim4TripleMultiplier cp cq cr)
+        (claim4TripleWeight 5 7 11)
+        385 := by
+  simpa using exists_claim4_triple_crt_multipliers
+    (p := 5) (q := 7) (r := 11)
+    (by norm_num) (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num)
+
 end Erdos678
