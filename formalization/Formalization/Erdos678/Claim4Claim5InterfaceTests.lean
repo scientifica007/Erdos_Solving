@@ -34,13 +34,19 @@ example :
         p ≠ 13 → p ≠ 17 → p ≠ 19 → p ∣ 12 := by
     intro p hp hpk hkp2 hp13 hp17 hp19
     have hp2 : 2 ≤ p := hp.two_le
-    interval_cases p <;> norm_num at hp hkp2 ⊢
+    interval_cases p
+    · norm_num at hkp2
+    · norm_num
+    · norm_num at hp
   have hyother :
       ∀ p : ℕ, Nat.Prime p → p ≤ 4 → 4 < p ^ 2 →
         p ≠ 3 → p ≠ 5 → p ∣ 4 := by
     intro p hp hpk hkp2 hp3 hp5
     have hp2 : 2 ≤ p := hp.two_le
-    interval_cases p <;> norm_num at hp hkp2 hp3 ⊢
+    interval_cases p
+    · norm_num at hkp2
+    · norm_num at hp3
+    · norm_num at hp
   have hsmall : Claim4SmallPrimeScaleData 12 4 4 := by
     intro p hp hp2k
     have hp2 : 2 ≤ p := hp.two_le
