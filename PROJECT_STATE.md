@@ -1,10 +1,10 @@
 # Project State
 
-> **Operational checkpoint synchronized on 2026-08-14.**
+> **Operational checkpoint synchronized on 2026-08-15.**
 >
-> Verified code-state basis: commit `61431b8881e481a56d06e00d702eabb6b64ae471`.
-> Canonical pull-request CI run: `31847883886` — **SUCCESS**.
-> The run passed `lake exe mk_all --check`, reached `Claim5Assembly.lean` and `Claim5AssemblyTests.lean`, and completed the canonical `lake build` with 8729 jobs.
+> Verified pull-request head basis: commit `0a6151977c4d27449c2e2fecbe64b716c7ae4818`.
+> Canonical pull-request CI run for that head: `31854637490` — **SUCCESS**.
+> The run passed `lake exe mk_all --check`, reached all six live Claim 4 implementation and regression modules, and completed the canonical `lake build` with 8735 jobs.
 
 This file is the authoritative operational memory checkpoint. It must agree with the reachable Lean graph and the latest credited CI evidence.
 
@@ -25,7 +25,7 @@ This file is the authoritative operational memory checkpoint. It must agree with
 ```yaml
 current_problem: 678
 current_phase: cambie-claim4
-current_stage: claim4-crt-formalization
+current_stage: claim4-crt-weight-representation
 current_mode: external-proof-reconstruction
 blind_mode: false
 reference_solution_accessed: true
@@ -35,19 +35,20 @@ external_problem_status: proved
 project_reconstruction_status: in-progress
 independent_attempt_status: rejected
 reference_proof: Cambie-2024
-reference_understanding_status: analyzed
+reference_understanding_status: exact-claim4-audited
 
-current_target: formalize-claim4-crt-residue-construction
+current_target: prove-claim4-weighted-representation-for-actual-crt-basis
 small_prime_claim5_status: machine-checked
 full_claim5_status: machine-checked-under-explicit-residue-hypotheses
+claim4_status: partial-machine-checked-density-modular-and-weighted-interface
 full_erdos678_formalization_status: not-proved
 
 ci_status: green
-canonical_ci_run: 31847883886
-canonical_ci_commit: 61431b8881e481a56d06e00d702eabb6b64ae471
+canonical_ci_run: 31854637490
+canonical_ci_commit: 0a6151977c4d27449c2e2fecbe64b716c7ae4818
 build_graph_audit: mk-all-check-passed
 ci_blocker: none
-next_action: formalize Claim 4 and construct residues satisfying the two verified Claim 5 interfaces
+next_action: prove the representation contract for the actual CRT basis, then instantiate the admissible residue boxes consumed by Claim 5
 ```
 
 ## Verified small-prime transition
@@ -84,7 +85,14 @@ The reachable graph now machine-checks:
 - nonzero interval-product, interval-LCM, and exact quotient lemmas;
 - the prime-by-prime assembled Claim 5 valuation identity;
 - the final Claim 5 natural-number identity under the explicit residue hypotheses;
-- a reachable assembled theorem-interface regression at `k = 2`.
+- a reachable assembled theorem-interface regression at `k = 2`;
+- a generic finite coordinate-avoidance theorem from injectivity and a strict excluded-cardinality budget;
+- positive and equality-budget negative regressions for that union bound;
+- injectivity of multiplication modulo a coprime modulus over a short consecutive interval;
+- its prime/nondivisibility specialization and the resulting prime-coordinate density theorem;
+- a positive unit-multiplier regression and a negative non-unit regression;
+- a named weighted-combination representation contract and a theorem transporting coordinate density through it;
+- a positive one-coordinate weighted representation and a negative zero-weight regression.
 
 ## Claim 5 module state
 
@@ -100,6 +108,25 @@ The reachable graph now machine-checks:
 | `Claim5Assembly.lean` | reachable; all-range valuation assembly, nonzero bridge, and natural identity checked |
 | `Claim5AssemblyTests.lean` | reachable; assembled theorem interface checked at `k = 2` |
 
+## Claim 4 module state
+
+| Module | Current classification |
+|---|---|
+| `Claim4Density.lean` | reachable; generic strict finite union-bound theorem machine-checked |
+| `Claim4DensityTests.lean` | reachable; positive and equality-budget negative regressions checked |
+| `Claim4Modular.lean` | reachable; coprime/prime modular injectivity and prime-coordinate density checked |
+| `Claim4ModularTests.lean` | reachable; unit positive and non-unit negative regressions checked |
+| `Claim4Weighted.lean` | reachable; weighted representation contract and conditional consumer theorem checked |
+| `Claim4WeightedTests.lean` | reachable; one-coordinate positive and zero-weight negative regressions checked |
+
+The table does **not** certify Cambie's full Claim 4. `Claim4WeightedRepresentation` is an explicit producer contract; the actual CRT basis still has to be defined and proved to satisfy it.
+
+## Claim 4 CI disk incident — RESOLVED
+
+Run `31853895481` reached `No update necessary`, built all six Claim 4 modules, and reported `Build completed successfully (8735 jobs)`. The job then failed while GitHub's cache-save path exhausted the runner disk, so that run is correctly classified as red despite the successful Lean build.
+
+The workflow now keeps `use-mathlib-cache: true` but sets the official `lean-action` input `use-github-cache: false`. In run `31854637490`, both GitHub `.lake` cache restore and save were explicitly skipped, `mk_all --check` passed, all six modules were reached, and the 8735-job build and job conclusion were successful.
+
 ## Current #678 mathematical state
 
 Canonical statement: locked.
@@ -110,12 +137,18 @@ Verified:
 - rejection of the false scaling and `Q=P/M` constructions;
 - all three range-specific Claim 5 valuation identities under explicit hypotheses;
 - a single theorem assembling Claim 5 across every prime;
-- nonzero side conditions and the final natural-number equality for Claim 5 under the explicit residue interfaces.
+- nonzero side conditions and the final natural-number equality for Claim 5 under the explicit residue interfaces;
+- the finite counting mechanism at the heart of Cambie's Claim 4;
+- the modular injectivity obligation made explicit as coprimality/nondivisibility;
+- the prime-coordinate density specialization;
+- the weighted conclusion under an explicit representation contract.
 
 Not yet proved in this repository:
 
-- Claim 4 CRT-density lemma;
-- CRT construction of `x` and `y`;
+- `Claim4WeightedRepresentation` for Cambie's actual CRT basis weights;
+- the admissible residue boxes that instantiate Claim 4 for `x` and `y`;
+- the connection from those boxes to `Claim5MediumResidues` and `Claim5SmallResidues`;
+- quantitative representative bounds and the separation condition;
 - quantitative LCM-ratio estimate;
 - exact formal prime-density input;
 - strong Cambie theorem;
@@ -123,13 +156,13 @@ Not yet proved in this repository:
 
 ## Required restart sequence
 
-1. Extract the exact Claim 4 / CRT-density statement used by Cambie and state it without importing Claim 5 conclusions.
-2. Define admissible residue boxes that produce `Claim5MediumResidues` and `Claim5SmallResidues`.
-3. Formalize the CRT combination and prove existence of representatives satisfying both interfaces.
-4. Add the quantitative bounds and separation condition required for the later `x,y` construction.
-5. Connect the constructed residues to `claim5_full_identity_of_residues`.
-6. Add reachable positive and negative regressions, then run the canonical CI gate.
-7. Synchronize this checkpoint and the roadmap before opening the quantitative-finish phase.
+1. Define the actual squarefree modulus and CRT basis weights used for the two-prime and three-prime constructions.
+2. Prove their coordinate congruences and derive `Claim4WeightedRepresentation`; do not replace this producer proof by an assumption.
+3. Instantiate `claim4_weighted_density_of_representation` with the exact admissible residue boxes and integer exclusion budgets.
+4. Translate the chosen coefficients into representatives satisfying `Claim5MediumResidues` and `Claim5SmallResidues`.
+5. Add the quantitative bounds and separation condition required for the later `x,y` construction.
+6. Connect the constructed residues to `claim5_full_identity_of_residues`.
+7. Add reachable positive and negative regressions, pass the exact-head canonical CI gate, and synchronize this checkpoint again before opening the quantitative-finish phase.
 
 ## Completed benchmark outcomes
 
@@ -144,4 +177,4 @@ Not yet proved in this repository:
 
 ## Documentation synchronization status
 
-The root README, this checkpoint, the active #678 roadmap, the problem index, the #678 README, and the #678 lessons addendum are synchronized with the verified full-Claim-5 checkpoint. The decision register and agent guide remain current and require no semantic change.
+The root README, this checkpoint, the active #678 roadmap, the problem index, the #678 README, the Cambie proof analysis, and the #678 lessons addendum are synchronized with the verified partial-Claim-4 checkpoint and the resolved CI disk incident. The decision register and agent guide remain current and require no semantic change.

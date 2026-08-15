@@ -6,6 +6,8 @@ The independent construction attempted in our experiment was rejected. The concr
 
 This document records the mathematical structure of Cambie's 2024 proof. It is an analysis/reference document, not a task tracker and not a claim of an independent new proof.
 
+The Claim 4 audit in this document is synchronized with the machine-checked partial implementation at code commit `f9f6c068fc199a6639a12befadfda126dd99764c`. The current exact pull-request head `0a6151977c4d27449c2e2fecbe64b716c7ae4818` passed canonical CI run `31854637490`.
+
 **Canonical execution roadmap:** `LEAN_FORMALIZATION_ROADMAP.md`.
 
 ## 1. Stronger theorem actually proved
@@ -46,11 +48,49 @@ The large-prime residue constraints are then combined with the Chinese Remainder
 
 ## 3. Claim 4 — density of CRT-generated residues
 
-Cambie proves a general combinatorial lemma: if linear combinations of CRT basis weights cover every residue modulo a squarefree modulus, and each coordinate set excludes at most an `epsilon` fraction, then sufficiently short consecutive integer intervals still contain a permitted combination.
+### Exact mathematical content
 
-This is the mechanism used to locate suitable representatives `x` and `y` close to each other while satisfying many simultaneous modular restrictions.
+In the paper, Claim 4 has the following data and conclusion.
 
-This claim should be formalized independently of the LCM problem.
+- Let `p₁ < ... < pᵣ` be primes and put `P = ∏ᵢ pᵢ`.
+- Fix integer weights `wᵢ` such that the weighted combinations `∑ᵢ cᵢ wᵢ`, with `0 < cᵢ ≤ pᵢ`, cover every residue modulo `P`.
+- For every coordinate choose `Bᵢ ⊆ {1,...,pᵢ}` with `|Bᵢ| ≥ (1-ε)pᵢ`.
+- If `ε ∑ᵢ pᵢ < n ≤ p₁`, then every block of `n` consecutive integers contains a residue modulo `P` represented by a weighted combination whose every coefficient lies in its corresponding `Bᵢ`.
+
+The coefficient convention `{1,...,pᵢ}` encodes residue zero by `pᵢ`. The Lean layer instead uses residues in `Finset.range (p i)`; the two conventions are equivalent but must not be mixed silently.
+
+### Proof mechanism and hidden obligations made explicit
+
+1. The coefficient domain has exactly `P` elements, as does the residue space modulo `P`. Therefore the assumed coverage is a surjection between finite sets of equal cardinality and hence a bijection. In particular the residue `1` has a unique coefficient vector.
+2. Multiply that vector coordinatewise by each consecutive integer `z`. The representation of `1` then transports the weighted combination to the residue `z` modulo `P`.
+3. In coordinate `i`, the map `z ↦ z*cᵢ mod pᵢ` must be injective on a block of length at most `pᵢ`. This needs `cᵢ` to be a unit modulo `pᵢ`; it is a real arithmetic obligation, not a consequence to leave implicit in formal code.
+4. Injectivity implies that coordinate `i` rejects at most the number of excluded residues in that coordinate.
+5. The union of all rejected-position sets has cardinality strictly below `n`, so at least one position is accepted in every coordinate.
+
+For the actual CRT basis, the unit obligation should follow by reducing the representation of `1` in each prime coordinate. The present implementation exposes it as the explicit premise `¬ p i ∣ c i`, so the later basis theorem must supply it rather than relying on an informal inference.
+
+### Current Lean boundary
+
+The canonical graph now machine-checks three independent layers:
+
+- `claim4_exists_avoiding_coordinate_exclusions`: the generic finite injection plus strict union-bound argument;
+- `claim4_prime_coordinate_density`: the modular specialization for prime coordinates, nondivisible multipliers, and a consecutive interval no longer than each prime;
+- `claim4_weighted_density_of_representation`: the weighted conclusion under the explicit producer contract `Claim4WeightedRepresentation`.
+
+The formal theorem uses the sharper integer condition
+
+`∑ᵢ |excludedᵢ| < n`
+
+instead of introducing real-valued `ε`. The paper's bound implies this integer condition once the application-specific cardinality estimates are proved.
+
+What is **not** yet proved:
+
+- a concrete definition of Cambie's actual two-prime and three-prime CRT basis weights;
+- `Claim4WeightedRepresentation` for those weights;
+- the application residue boxes and their excluded-cardinality estimates;
+- the translation of the selected representatives into the two Claim 5 residue interfaces.
+
+Therefore Claim 4 is only partially formalized and must not yet be classified as complete.
 
 ## 4. Choice of x and y
 
@@ -97,7 +137,7 @@ There is at most one multiple of `p^2` in the relevant intervals. Therefore it i
 
 They occur at most once in either interval, so their contribution to the reciprocal-LCM factors is zero.
 
-This Claim 5 is the best first arithmetic target for a clean Lean reconstruction because it is local and separates the CRT existence machinery from the final size estimate.
+The repository now machine-checks this Claim 5 architecture under the two explicit residue interfaces expected from the unfinished Claim 4 producer.
 
 ## 6. Final analytic/combinatorial estimate
 
@@ -134,8 +174,8 @@ The mathematical dependency order is:
 2. prime-adic valuation of products and LCMs;
 3. reciprocal-LCM valuation;
 4. Claim 5 split into the three prime ranges;
-5. Claim 4 as a separate CRT-density lemma;
-6. residue-box construction for `x` and `y`;
+5. Claim 4 finite counting and modular density;
+6. actual CRT-basis representation and residue-box construction for `x` and `y`;
 7. quantitative LCM-ratio estimate;
 8. exact prime-density input;
 9. strong Cambie theorem;

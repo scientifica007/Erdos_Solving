@@ -1,4 +1,10 @@
 import Formalization.Basic
+import Formalization.Erdos678.Claim4Density
+import Formalization.Erdos678.Claim4DensityTests
+import Formalization.Erdos678.Claim4Modular
+import Formalization.Erdos678.Claim4ModularTests
+import Formalization.Erdos678.Claim4Weighted
+import Formalization.Erdos678.Claim4WeightedTests
 import Formalization.Erdos678.Claim5Assembly
 import Formalization.Erdos678.Claim5AssemblyTests
 import Formalization.Erdos678.ConcreteTests
