@@ -1,6 +1,6 @@
 # problems/
 
-> **Current index synchronized on 2026-08-14.**
+> **Current index synchronized on 2026-08-15.**
 
 This directory contains local research records for nine selected Erdős problems. It is not a mirror of the full upstream database and does not claim that every folder is an active benchmark.
 
@@ -15,7 +15,7 @@ This directory contains local research records for nine selected Erdős problems
 | 275 | completed successful blind cycle and historical comparison | `275/comparison.md` |
 | 303 | blind attempt incomplete; reference comparison completed | `303/comparison.md` |
 | 447 | contaminated benchmark; not an active blind challenge | `447/README.md` |
-| 678 | active Cambie reconstruction in Lean; full Claim 5 checked under explicit residue hypotheses, Claim 4/CRT pending, CI green | `678/LEAN_FORMALIZATION_ROADMAP.md` |
+| 678 | active Cambie reconstruction in Lean; Claim 5 checked under explicit residue hypotheses; Claim 4 counting, modular, and weighted-consumer layers checked; actual CRT-weight representation pending; CI green | `678/LEAN_FORMALIZATION_ROADMAP.md` |
 | 1125 | blind attempt failed; historical reconstruction completed | `1125/comparison/historical-reconstruction.md` |
 
 ## Reading rule

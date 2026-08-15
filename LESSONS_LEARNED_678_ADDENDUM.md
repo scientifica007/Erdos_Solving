@@ -79,7 +79,7 @@ Current classification:
 - external #678 status: **proved**;
 - our independent attempt: **rejected**;
 - current work: **external-proof reconstruction / independent Lean reimplementation**;
-- full Claim 5 in this repository: **not yet proved**;
+- full Claim 5 in this repository: **machine-checked under explicit residue hypotheses**;
 - full #678 theorem in this repository: **not yet formalized**.
 
 These labels must not be collapsed into “solved by us”.
@@ -222,3 +222,29 @@ The full Claim 5 assembly became short and auditable only after the residue data
 Reusable rule:
 
 > When a proof has a construction layer and a consequence layer, formalize their interface first. Completing the consumer theorem under that exact interface is real progress, but it must not be credited as completing the producer.
+
+## L-678-025 — Coverage and cardinality do not discharge the CRT producer
+
+Cambie's Claim 4 starts from weighted combinations that cover every residue modulo the product of the coordinate primes. Because the coefficient domain and the residue space have the same finite cardinality, that coverage also yields uniqueness. It does not remove the need to prove that the concrete weights have the required coordinate behavior or that the coefficient vector representing one is a unit in every prime coordinate.
+
+The Lean decomposition therefore separates three obligations:
+
+1. a generic finite counting consumer;
+2. modular injectivity under an explicit coprimality or nondivisibility premise;
+3. a weighted representation contract that the actual CRT basis must later produce.
+
+Reusable rule:
+
+> When a paper compresses a finite CRT argument into “coverage”, audit cardinality, uniqueness, coordinate congruences, and unit conditions separately. A conditional consumer theorem is progress, but it is not the missing producer proof.
+
+## L-678-026 — Replace broad arithmetic automation with the exact order contradiction
+
+An early green version closed the final strict-cardinality contradiction in `Claim4Density.lean` with `omega`. The theorem compiled, but that module took about 248 seconds in run `31851839365`. Replacing the tactic with the direct order proof
+
+`exact (not_lt_of_ge hcard) hunion`
+
+reduced the same module to about 56 seconds in run `31852630076`, without changing the statement or trusted assumptions.
+
+Reusable rule:
+
+> When the remaining goal is already a contradiction between a proved lower bound and a strict upper bound, apply the matching order lemma directly before invoking general arithmetic automation.
