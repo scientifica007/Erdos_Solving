@@ -51,7 +51,7 @@ theorem claim4_pair_weighted_modEq
     (hcp : cp * q ≡ 1 [MOD p])
     (hcq : cq * p ≡ 1 [MOD q]) :
     ((z * cp) % p) * q + ((z * cq) % q) * p ≡ z [MOD p * q] := by
-  apply (Nat.modEq_and_modEq_iff_modEq_mul hpq).mpr
+  apply (Nat.modEq_and_modEq_iff_modEq_mul hpq).mp
   constructor
   · calc
       ((z * cp) % p) * q + ((z * cq) % q) * p ≡ z + 0 [MOD p] :=
