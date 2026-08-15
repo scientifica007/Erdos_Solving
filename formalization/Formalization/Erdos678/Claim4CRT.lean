@@ -192,7 +192,7 @@ theorem claim4_triple_weighted_modEq
     exact ⟨hpr, hqr⟩
   apply (Nat.modEq_and_modEq_iff_modEq_mul hpqr).mp
   constructor
-    · apply (Nat.modEq_and_modEq_iff_modEq_mul hpq).mp
+  · apply (Nat.modEq_and_modEq_iff_modEq_mul hpq).mp
     constructor
     · calc
         ((z * cp) % p) * (q * r) +
