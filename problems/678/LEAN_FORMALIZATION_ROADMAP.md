@@ -2,12 +2,12 @@
 
 **Status:** ACTIVE — canonical execution roadmap  
 **Mode:** reconstruction and independent Lean reimplementation of Cambie (2024), not independent mathematical discovery  
-**Code-state basis:** `b2a05790b4ae466133e792ca6afa3eae730c0427`  
+**Code-state basis:** `853a3486af63e86030e5b669266b6e0fe5e16ce8`  
 **Canonical CI status:** GREEN  
-**Verified run:** `31870476963`  
+**Verified run:** `31872525005`  
 **Current phase:** Phase D — CRT combinatorial engine  
-**Current target:** connect the verified application-box outputs to the two Claim 5 residue interfaces  
-**Expansion gate:** OPEN for D3 interface connection only; quantitative representatives and prime-density phases remain closed
+**Current target:** construct and bound the actual scales and separated representatives  
+**Expansion gate:** OPEN for D4 representatives and separation only; analytic and prime-density phases remain closed
 
 This file is the sole operational answer to: **what is the next Lean/formalization task for #678?**
 
@@ -30,7 +30,8 @@ Externally, Erdős #678 is proved. In this repository:
 - the Claim 4 finite union-bound core, modular injectivity layer, prime-coordinate density theorem, and conditional weighted consumer are machine-checked;
 - the concrete two- and three-prime CRT basis weights, inverse multipliers, weighted representation contracts, and density endpoints are machine-checked;
 - the pair/triple application residue boxes, paper/canonical coefficient translation, exact exclusion cardinalities, strict budgets, and application endpoints are machine-checked;
-- the translation of those outputs into the Claim 5 residue interfaces is not proved;
+- the scaled/affine application endpoints and their connection to both Claim 5 residue interfaces are machine-checked under explicit scale-support data;
+- the general-`k` construction and quantitative control of the scales and representatives are not proved;
 - the full #678 theorem is not formalized.
 
 A source file containing a theorem statement is not evidence that Lean accepted the theorem. Only a successful canonical build of a reachable module grants machine-checked status.
@@ -71,7 +72,7 @@ Consolidation established:
 - finite-product valuation;
 - a green checkpoint at run `31827146122`.
 
-The consolidation checkpoint is historical; the present credited theorem-and-regression head is green at run `31870476963`.
+The consolidation checkpoint is historical; the present credited theorem-and-regression head is green at run `31872525005`.
 
 ---
 
@@ -246,35 +247,56 @@ Completed obligations:
 
 Exit evidence: commit `b2a05790b4ae466133e792ca6afa3eae730c0427`, run `31870476963`; `mk_all --check` reported `No update necessary`, both new modules were reached, and the full 8739-job build succeeded.
 
-Boundary: D2 proves the coefficient boxes and obtains weighted representatives. It does not yet prove that the selected data satisfy `Claim5MediumResidues` and `Claim5SmallResidues`, and it does not prove the D4 size/separation conditions.
+Boundary: D2 proves the normalized coefficient boxes and weighted representatives. The later D3 layer handles the essential scaling to actual `x,y`; D2 alone must not be cited as the Claim 5 connection and does not prove the D4 size/separation conditions.
 
 ### D2 implementation incident — RESOLVED
 
 Run `31870123794` exposed four local proof-closure issues: one explicit `Nat.ModEq.refl`, one use of positivity, and two branches already closed by `simp`. Commit `b2a05790b4ae466133e792ca6afa3eae730c0427` repaired those endpoints without changing a definition, theorem statement, or assumption.
 
-## D3 — Claim 5 interface connection — CURRENT
+## D3 — Claim 5 interface connection — DONE / MACHINE-CHECKED UNDER EXPLICIT SCALE-SUPPORT DATA
 
-Translate the selected coordinate coefficients and weighted representatives into `Claim5MediumResidues` and `Claim5SmallResidues`.
+`Claim4Claim5Interface.lean` distinguishes the normalized D2 coordinates from the actual representatives `x = 1 + z*Nx` and `y = z*Ny`, then connects those representatives to both Claim 5 residue interfaces.
+
+Completed obligations:
+
+1. `claim4_modEq_paperCoefficient_mod` turns the paper representative of a canonical remainder into a direct congruence witness;
+2. `interval_one_add_mul_mod_injective_of_prime` proves the affine injectivity needed for `x = 1 + z*Nx`;
+3. `claim4_pair_y_scaled_box_density` and `claim4_triple_x_scaled_box_density` apply the exact D2 exclusions to the actual scaled residues;
+4. `Claim4SmallPrimeScaleData` records common prime-power divisibility, and `claim5SmallResidues_of_scales` derives the unchanged small-prime interface;
+5. `claim5MediumResidues_of_pair_triple_boxes` combines the five special boxes with the fixed other medium coordinates;
+6. `claim4_exists_claim5_residue_interfaces_of_scales` produces both interfaces from prime, unit, search-length, medium-support, and small-support data;
+7. `Claim4Claim5InterfaceTests.lean` checks a nonvacuous small-prime case and a `k = 4` producer that reaches `claim5_full_identity_of_residues`, plus a malformed medium-interface regression.
+
+Exit evidence: commit `853a3486af63e86030e5b669266b6e0fe5e16ce8`, run `31872525005`; `mk_all --check` reported `No update necessary`, both D3 modules were reached, and the full 8741-job build succeeded.
+
+Boundary: the combined theorem assumes explicit data proving which medium primes divide `Nx,Ny`, which small prime powers divide both, that each special prime is a unit for its scale, and that the exact pair/triple search lengths fit. Constructing those scales and proving the quantitative placement of the resulting representatives belongs to D4.
+
+### D3 implementation incident — RESOLVED
+
+Run `31872158679` built the complete D3 theorem module and rejected only two test lines where `norm_num` continued after closing an `interval_cases` branch. Commit `853a3486af63e86030e5b669266b6e0fe5e16ce8` separated the branches without changing any definition, theorem statement, or assumption.
+
+## D4 — Representatives and separation — CURRENT
+
+Construct the actual scales and prime choices, discharge every premise of `claim4_exists_claim5_residue_interfaces_of_scales`, and prove the quantitative representative bounds and `y > x + k` required by Cambie's application.
 
 Exact obligations:
 
-1. audit which D2 output supplies each medium-prime lower/upper coefficient inequality;
-2. derive the required modular congruences for the future `x` and `y` representatives;
-3. combine the pair/triple CRT information with the small-prime modulus used by `Claim5SmallResidues`;
-4. package the result in the existing interfaces without weakening their statements;
-5. add reachable positive and malformed-interface regressions and invoke `claim5_full_identity_of_residues` at the new boundary.
+1. define `Nx` and `Ny` from the fixed small-prime powers and all non-special medium primes;
+2. prove their divisibility at fixed coordinates and their nondivisibility at the five special primes;
+3. isolate the prime-window hypotheses for two primes near `k/2` and three near `k` and derive the exact pair/triple search-length inequalities;
+4. choose the `zx,zy` search intervals so the resulting `x,y` lie in Cambie's target ranges;
+5. prove positivity, `x < y`, and `y > x + k`, then feed the verified Claim 5 identity;
+6. retain the prime-density dependency as an explicit later input rather than adding an axiom here.
 
-Exit gate: both Claim 5 residue interfaces are constructed from the D2 outputs and consumed by the full Claim 5 theorem in the canonical graph. Do not open D4 until the exact-head run is green.
-
-## D4 — Representatives and separation — PENDING
-
-Prove the quantitative representative bounds and `y > x + k` required by the application.
+Exit gate: a reachable theorem constructs quantitatively separated `x,y` satisfying the full Claim 5 identity from a clearly isolated prime-window hypothesis, with a green exact-head run. Do not open Phase E before this gate.
 
 Historical theorem-code checkpoint for D1a–D1c: commit `f9f6c068fc199a6639a12befadfda126dd99764c`, run `31853105621`.
 
 D1a–D1d gate: commit `12306b5ec393f5521ef2ebaa7ca09c7443e06867`, run `31858024749`; `mk_all --check` reported no update, all eight Claim 4 modules were reached, the 8737-job build succeeded, and GitHub `.lake` cache restore/save remained skipped to avoid the post-build disk exhaustion recorded in run `31853895481`.
 
 D2 gate: commit `b2a05790b4ae466133e792ca6afa3eae730c0427`, run `31870476963`; `mk_all --check` reported no update, all ten Claim 4 modules were reached, the 8739-job build succeeded, and GitHub `.lake` cache restore/save remained skipped.
+
+D3 gate: commit `853a3486af63e86030e5b669266b6e0fe5e16ce8`, run `31872525005`; `mk_all --check` reported no update, all twelve Claim 4 modules were reached, the 8741-job build succeeded, and GitHub `.lake` cache restore/save remained skipped.
 
 ---
 
@@ -315,12 +337,13 @@ Erdős #678
     ├── D1c: weighted consumer interface ......... MACHINE-CHECKED
     ├── D1d: pair/triple CRT-basis producer ...... MACHINE-CHECKED
     ├── D2: application residue boxes ............ MACHINE-CHECKED
-    └── D3: Claim 5 interface connection ......... CURRENT
+    ├── D3: Claim 5 interface connection ......... MACHINE-CHECKED
+    └── D4: representatives and separation ....... CURRENT
 ```
 
 ## Sole next action
 
-Translate the verified outputs of `claim4_pair_y_box_density` and `claim4_triple_x_box_density` into `Claim5MediumResidues` and `Claim5SmallResidues`, then exercise `claim5_full_identity_of_residues` across that boundary. Do not credit D4 representative bounds or open the quantitative phase until this connection and its regressions pass the canonical gate.
+Define and verify the actual scales `Nx,Ny`, discharge the combined scaled producer's divisibility/unit/search-length premises, and choose search intervals yielding Cambie's representative bounds and `y > x + k`. Do not open the analytic finish until this D4 theorem and its boundary regressions pass the canonical gate.
 
 ## Global audit gates
 

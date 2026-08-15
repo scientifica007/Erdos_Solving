@@ -6,7 +6,7 @@ The independent construction attempted in our experiment was rejected. The concr
 
 This document records the mathematical structure of Cambie's 2024 proof. It is an analysis/reference document, not a task tracker and not a claim of an independent new proof.
 
-The Claim 4 audit in this document is synchronized through the concrete pair/triple application residue boxes at code commit `b2a05790b4ae466133e792ca6afa3eae730c0427`. Canonical CI run `31870476963` passed the generated graph check and the full 8739-job build for that theorem-and-regression head.
+The Claim 4 audit in this document is synchronized through the scaled connection to both Claim 5 residue interfaces at code commit `853a3486af63e86030e5b669266b6e0fe5e16ce8`. Canonical CI run `31872525005` passed the generated graph check and the full 8741-job build for that theorem-and-regression head.
 
 **Canonical execution roadmap:** `LEAN_FORMALIZATION_ROADMAP.md`.
 
@@ -71,13 +71,14 @@ For the actual CRT basis, the unit obligation follows by reducing the inverse co
 
 ### Current Lean boundary
 
-The canonical graph now machine-checks five layers:
+The canonical graph now machine-checks six layers:
 
 - `claim4_exists_avoiding_coordinate_exclusions`: the generic finite injection plus strict union-bound argument;
 - `claim4_prime_coordinate_density`: the modular specialization for prime coordinates, nondivisible multipliers, and a consecutive interval no longer than each prime;
 - `claim4_weighted_density_of_representation`: the weighted conclusion under the explicit producer contract `Claim4WeightedRepresentation`.
 - `claim4_pair_crt_density` and `claim4_triple_crt_density`: the concrete two-/three-prime producers and density endpoints, with the representation contract and nondivisibility proofs internalized.
 - `claim4_pair_y_box_density` and `claim4_triple_x_box_density`: the exact two-prime `y` and three-prime `x` application boxes, with the strict exclusion budgets internalized.
+- `claim4_exists_claim5_residue_interfaces_of_scales`: the scaled/affine application endpoints and their packaging as `Claim5MediumResidues` and `Claim5SmallResidues` under explicit scale-support data.
 
 The generic formal theorem uses the sharper integer condition
 
@@ -89,13 +90,20 @@ The concrete definitions now use weights `q,p` for modulus `p*q` and `q*r,p*r,p*
 
 The application layer also makes the paper's endpoint convention executable. `claim4PaperCoefficient p 0 = p`, while every nonzero canonical residue is left unchanged. For the `x` interval `1 ≤ a ≤ p - (k mod p)`, the canonical exclusion set has exactly `k mod p` elements. For the `y` interval `p - (k mod p) ≤ b ≤ p`, it has exactly `p - (k mod p) - 1` elements; the upper endpoint `p` is canonical residue zero and is therefore allowed. These exact counts feed the triple and pair density endpoints respectively.
 
+The interface audit exposed one further distinction that the normalized coefficient theorem cannot hide. After every non-special CRT coordinate is fixed, the actual representatives have the forms
+
+`x = 1 + z_x N_x` and `y = z_y N_y`.
+
+Consequently the paper boxes must be imposed on `(1 + z_x N_x) mod p` and `(z_y N_y) mod p`, not directly on an unscaled normalized coordinate. The verified D3 layer proves affine injectivity for the first map, applies the exact exclusions to both scaled maps, obtains fixed residues at every other medium prime from divisibility of `N_x,N_y`, and obtains the small-prime congruences from common prime-power divisibility. A reachable `k = 4` regression carries both resulting interfaces through the full Claim 5 identity.
+
 What is **not** yet proved:
 
-- the translation of the selected representatives into the two Claim 5 residue interfaces;
+- the general-`k` construction of the scales `N_x,N_y` and the proof of all their support/unit properties;
+- the required prime choices and search-interval placement;
 - the quantitative bounds and separation needed to realize the final `x,y` construction;
 - a generic arbitrary-finite-family CRT-basis theorem.
 
-Therefore the pair/triple producer and application-box boundary is complete, but Claim 4's role in the #678 reconstruction is still only partially formalized until D3 connects those outputs to Claim 5 and D4 supplies quantitative representatives.
+Therefore the pair/triple producer, application boxes, and conditional scaled connection to Claim 5 are complete. Claim 4's role in the #678 reconstruction is still only partially formalized until D4 constructs and quantitatively places the actual scales and representatives.
 
 ## 4. Choice of x and y
 
@@ -142,7 +150,7 @@ There is at most one multiple of `p^2` in the relevant intervals. Therefore it i
 
 They occur at most once in either interval, so their contribution to the reciprocal-LCM factors is zero.
 
-The repository now machine-checks this Claim 5 architecture under two explicit residue interfaces. The Claim 4 application boxes are verified, but the interface-packaging theorem that connects their outputs to this Claim 5 architecture remains the current boundary.
+The repository now machine-checks this Claim 5 architecture under two explicit residue interfaces, and the scaled Claim 4 layer now produces both interfaces from explicit support data for `N_x,N_y`. Constructing those scale data and proving the quantitative placement of `x,y` remains the current boundary.
 
 ## 6. Final analytic/combinatorial estimate
 
@@ -182,11 +190,12 @@ The mathematical dependency order is:
 5. Claim 4 finite counting and modular density;
 6. concrete pair/triple CRT-basis representation;
 7. residue-box construction for `x` and `y`;
-8. connection of the selected data to the Claim 5 residue interfaces;
-9. quantitative LCM-ratio estimate;
-10. exact prime-density input;
-11. strong Cambie theorem;
-12. deduction of Erdős #678.
+8. scaled connection of the selected data to the Claim 5 residue interfaces;
+9. construction and quantitative placement of the actual scales and representatives;
+10. quantitative LCM-ratio estimate;
+11. exact prime-density input;
+12. strong Cambie theorem;
+13. deduction of Erdős #678.
 
 ## 9. Lessons from our failed attempt
 

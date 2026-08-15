@@ -15,7 +15,7 @@ Let `M(n,k) = lcm{n+1,...,n+k}`. Are there infinitely many `m,n,k ≥ 3` with `m
 - Rejected candidate: `(495,504,8)` — machine-refuted and retained as a negative regression.
 - Current mode: reconstruction of Cambie's proof architecture.
 - Full Claim 5 in this repository: machine-checked under explicit residue hypotheses.
-- Claim 4 in this repository: partially machine-checked through the concrete pair/triple application boxes; the paper/canonical coefficient translation, exact exclusions and cardinalities, strict budgets, and application-density endpoints are live, while their Claim 5 connection remains pending.
+- Claim 4 in this repository: partially machine-checked through the scaled connection to both Claim 5 residue interfaces; actual representatives are modeled as `x = 1 + z*Nx` and `y = z*Ny`, while construction and quantitative control of the scales and representatives remain pending.
 - Full Erdős #678 theorem in this repository: not formalized.
 
 ## Historical independent-attempt failure
@@ -47,13 +47,14 @@ The failures were recorded before reference reconstruction and remain part of pr
 | Claim 4 weighted consumer under `Claim4WeightedRepresentation` | machine-checked with positive and zero-weight negative regressions |
 | concrete pair/triple CRT-basis producer | machine-checked with positive, full-contract negative, and density-endpoint regressions |
 | application residue boxes and exclusion-cardinality budgets | machine-checked with coefficient-convention, concrete endpoint, and equality-budget regressions |
-| connection to `Claim5MediumResidues` and `Claim5SmallResidues` | current / not yet proved |
+| scaled connection to `Claim5MediumResidues` and `Claim5SmallResidues` | machine-checked under explicit scale-support data; full Claim 5 boundary regression live |
+| quantitative scales, representatives, and separation | current / not yet proved |
 | quantitative finish and prime-density input | pending |
 | full theorem | pending |
 
 ## Verified checkpoint
 
-Canonical run `31870476963` passed the generated import-graph check and the full Lean build at theorem-and-regression head `b2a05790b4ae466133e792ca6afa3eae730c0427`. It reached all ten Claim 4 implementation and regression modules and completed 8739 jobs. The workflow retains Mathlib's cache but skips GitHub's `.lake` archive, preserving the repair for the post-build disk exhaustion seen in run `31853895481`.
+Canonical run `31872525005` passed the generated import-graph check and the full Lean build at theorem-and-regression head `853a3486af63e86030e5b669266b6e0fe5e16ce8`. It reached all twelve Claim 4 implementation and regression modules and completed 8741 jobs. The workflow retains Mathlib's cache but skips GitHub's `.lake` archive, preserving the repair for the post-build disk exhaustion seen in run `31853895481`.
 
 The verified boundary is deliberate:
 
@@ -62,13 +63,15 @@ The verified boundary is deliberate:
 - `claim4_weighted_density_of_representation` transports the accepted coordinate vector to a weighted residue, provided `Claim4WeightedRepresentation` is supplied;
 - `claim4_pair_crt_density` and `claim4_triple_crt_density` construct the actual basis multipliers, prove their representation contracts, and expose density endpoints with no representation assumption left to the caller;
 - `claim4_pair_y_box_density` and `claim4_triple_x_box_density` instantiate those producers with Cambie's exact coefficient boxes and internalized strict exclusion budgets;
-- no theorem yet packages the resulting coefficients and weighted representatives as the Claim 5 residue interfaces.
+- `claim4_pair_y_scaled_box_density` and `claim4_triple_x_scaled_box_density` apply those boxes to the actual scaled/affine representatives;
+- `claim4_exists_claim5_residue_interfaces_of_scales` packages the special boxes, all fixed medium coordinates, and common small-prime scale data as both Claim 5 residue interfaces;
+- the construction and quantitative bounds for the scales, prime choices, and search intervals remain outside the verified theorem.
 
 The verified producer is specialized to the two- and three-prime bases used in Cambie's construction. A generic arbitrary-finite-family basis theorem is not claimed.
 
 ## Sole next action
 
-Translate the outputs of `claim4_pair_y_box_density` and `claim4_triple_x_box_density` into `Claim5MediumResidues` and `Claim5SmallResidues`, add reachable interface regressions, and do not yet credit quantitative representative bounds or separation.
+Define and verify Cambie's general-`k` scales `Nx,Ny`, discharge the combined producer's divisibility, unit, and search-length premises, and choose intervals yielding the required representative bounds and `y > x + k`. Do not open the analytic finish until this D4 gate is green.
 
 ## Main references inside this folder
 

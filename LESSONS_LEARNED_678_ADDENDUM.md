@@ -307,3 +307,25 @@ Run `31870123794` first exposed only local proof-closure issues in the new modul
 Reusable rule:
 
 > At a finite-density application boundary, compute exact exclusion cards and choose `length = total excluded + 1`; keep the coordinate-length inequalities explicit and retain an equality-budget negative regression.
+
+## L-678-032 — Normalized CRT coordinates are not the actual representatives
+
+The D2 pair/triple endpoints correctly place normalized coefficients inside the paper boxes, but the D3 audit showed that they cannot be connected to Claim 5 by renaming their output. Once every non-special coordinate is fixed, Cambie's actual integers have the forms
+
+`x = 1 + z_x N_x` and `y = z_y N_y`.
+
+The admissible inequalities concern the remainders of these actual integers. Multiplication by `N_y` and the affine map `z ↦ 1 + zN_x` therefore belong in the density maps themselves. `Claim4Claim5Interface.lean` makes this explicit, proves affine injectivity from the same unit premise, and reuses the exact D2 exclusion-cardinality budgets.
+
+Reusable rule:
+
+> Before connecting a normalized CRT theorem to an application, write the actual reconstructed integer as a formula in the search parameter and apply every residue box to that formula—not to an isomorphic but differently scaled coordinate.
+
+## L-678-033 — Test the entire interface chain, not just the packaging theorem
+
+A proof of `Claim5MediumResidues ∧ Claim5SmallResidues` could still be dead code if the interfaces were shaped incorrectly for the assembled theorem. The D3 regression therefore uses nonvacuous scale data at `k = 4`, obtains both interfaces from `claim4_exists_claim5_residue_interfaces_of_scales`, proves positivity of the resulting interval starts, and invokes `claim5_full_identity_of_residues` directly.
+
+Run `31872158679` already built the complete theorem module; it rejected only test branches where `norm_num` continued after an `interval_cases` contradiction had closed the goal. Splitting those branches explicitly yielded the green 8741-job run `31872525005`, with no statement or assumption changed.
+
+Reusable rule:
+
+> When one layer claims to satisfy another layer's contract, include a regression that crosses the contract and invokes the downstream theorem; keep a malformed-interface negative case alongside it.

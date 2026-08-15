@@ -3,6 +3,8 @@ import Formalization.Erdos678.Claim4ApplicationBoxes
 import Formalization.Erdos678.Claim4ApplicationBoxesTests
 import Formalization.Erdos678.Claim4CRT
 import Formalization.Erdos678.Claim4CRTTests
+import Formalization.Erdos678.Claim4Claim5Interface
+import Formalization.Erdos678.Claim4Claim5InterfaceTests
 import Formalization.Erdos678.Claim4Density
 import Formalization.Erdos678.Claim4DensityTests
 import Formalization.Erdos678.Claim4Modular
