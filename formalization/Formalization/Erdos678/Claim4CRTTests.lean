@@ -36,10 +36,21 @@ example :
   simpa using exists_claim4_pair_crt_multipliers
     (p := 5) (q := 7) (by norm_num) (by norm_num) (by norm_num)
 
-/-- A multiplier divisible by its coordinate prime cannot serve as the
-inverse for the standard pair basis. -/
-example : ¬(5 * 7 ≡ 1 [MOD 5]) := by
-  norm_num [Nat.ModEq]
+/-- A multiplier divisible by its coordinate prime does not merely fail the
+local inverse equation: it falsifies the complete pair representation
+contract. -/
+example :
+    ¬Claim4WeightedRepresentation
+      (Finset.univ : Finset (Fin 2))
+      (claim4PairPrime 5 7)
+      (claim4PairMultiplier 5 3)
+      (claim4PairWeight 5 7)
+      35 := by
+  intro h
+  have h1 := h 1
+  norm_num [Claim4WeightedRepresentation, claim4WeightedCombination,
+    claim4PairPrime, claim4PairMultiplier, claim4PairWeight,
+    Fin.sum_univ_two, Nat.ModEq] at h1
 
 /-- For coordinates `5`, `7`, and `11`, the standard triple weights have the
 concrete inverse multipliers `3`, `6`, and `6`. -/
@@ -76,5 +87,31 @@ example :
     (p := 5) (q := 7) (r := 11)
     (by norm_num) (by norm_num) (by norm_num)
     (by norm_num) (by norm_num) (by norm_num)
+
+/-- The pair density endpoint is directly reachable without asking the
+caller for a representation assumption. -/
+example : True := by
+  rcases claim4_pair_crt_density
+      (p := 5) (q := 7) (start := 8) (len := 5)
+      (excluded := fun _ : Fin 2 => ∅)
+      (hp := by norm_num) (hq := by norm_num) (hpq := by norm_num)
+      (hlenp := by norm_num) (hlenq := by norm_num)
+      (hbudget := by norm_num [Fin.sum_univ_two]) with
+    ⟨c, hc, z, hz, hallowed, hrep⟩
+  trivial
+
+/-- The triple density endpoint is likewise reachable from concrete
+pairwise-coprime primes and an exclusion budget alone. -/
+example : True := by
+  rcases claim4_triple_crt_density
+      (p := 5) (q := 7) (r := 11) (start := 8) (len := 5)
+      (excluded := fun _ : Fin 3 => ∅)
+      (hp := by norm_num) (hq := by norm_num) (hr := by norm_num)
+      (hpq := by norm_num) (hpr := by norm_num) (hqr := by norm_num)
+      (hlenp := by norm_num) (hlenq := by norm_num)
+      (hlenr := by norm_num)
+      (hbudget := by norm_num [Fin.sum_univ_three]) with
+    ⟨c, hc, z, hz, hallowed, hrep⟩
+  trivial
 
 end Erdos678
