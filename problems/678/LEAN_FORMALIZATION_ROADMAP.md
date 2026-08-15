@@ -2,9 +2,9 @@
 
 **Status:** ACTIVE — canonical execution roadmap  
 **Mode:** reconstruction and independent Lean reimplementation of Cambie (2024), not independent mathematical discovery  
-**Code-state basis:** `f9f6c068fc199a6639a12befadfda126dd99764c`  
+**Code-state basis:** `0a6151977c4d27449c2e2fecbe64b716c7ae4818`  
 **Canonical CI status:** GREEN  
-**Verified run:** `31853105621`  
+**Verified run:** `31854637490`  
 **Current phase:** Phase D — CRT combinatorial engine  
 **Current target:** prove the weighted representation contract for Cambie's actual CRT basis  
 **Expansion gate:** OPEN for the CRT-basis producer only; residue application, quantitative, and prime-density phases remain closed
@@ -70,7 +70,7 @@ Consolidation established:
 - finite-product valuation;
 - a green checkpoint at run `31827146122`.
 
-The consolidation checkpoint is historical; the present credited code state is green at run `31853105621`.
+The consolidation checkpoint is historical; the present credited pull-request head is green at run `31854637490`.
 
 ---
 
@@ -226,7 +226,9 @@ Translate the selected coordinate coefficients and weighted representatives into
 
 Prove the quantitative representative bounds and `y > x + k` required by the application.
 
-Checkpoint evidence for D1a–D1c: commit `f9f6c068fc199a6639a12befadfda126dd99764c`, run `31853105621`; `mk_all --check` reported no update, all six modules were reached, and the 8735-job canonical build succeeded.
+Theorem-code checkpoint for D1a–D1c: commit `f9f6c068fc199a6639a12befadfda126dd99764c`, run `31853105621`.
+
+Exact-head gate: commit `0a6151977c4d27449c2e2fecbe64b716c7ae4818`, run `31854637490`; `mk_all --check` reported no update, all six modules were reached, the 8735-job build succeeded, and GitHub `.lake` cache restore/save were skipped to avoid the post-build disk exhaustion recorded in run `31853895481`.
 
 ---
 

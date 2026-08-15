@@ -51,7 +51,7 @@ The failures were recorded before reference reconstruction and remain part of pr
 
 ## Verified checkpoint
 
-Canonical run `31853105621` passed the generated import-graph check and the full Lean build at code commit `f9f6c068fc199a6639a12befadfda126dd99764c`. It reached all six Claim 4 implementation and regression modules and completed 8735 jobs.
+Canonical run `31854637490` passed the generated import-graph check and the full Lean build at pull-request head `0a6151977c4d27449c2e2fecbe64b716c7ae4818`. It reached all six Claim 4 implementation and regression modules and completed 8735 jobs. The workflow retains Mathlib's cache but skips GitHub's `.lake` archive, resolving the post-build disk exhaustion seen in run `31853895481`.
 
 The verified boundary is deliberate:
 

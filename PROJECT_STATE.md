@@ -2,8 +2,8 @@
 
 > **Operational checkpoint synchronized on 2026-08-15.**
 >
-> Verified Lean code-state basis: commit `f9f6c068fc199a6639a12befadfda126dd99764c`.
-> Canonical pull-request CI run for that code state: `31853105621` — **SUCCESS**.
+> Verified pull-request head basis: commit `0a6151977c4d27449c2e2fecbe64b716c7ae4818`.
+> Canonical pull-request CI run for that head: `31854637490` — **SUCCESS**.
 > The run passed `lake exe mk_all --check`, reached all six live Claim 4 implementation and regression modules, and completed the canonical `lake build` with 8735 jobs.
 
 This file is the authoritative operational memory checkpoint. It must agree with the reachable Lean graph and the latest credited CI evidence.
@@ -44,8 +44,8 @@ claim4_status: partial-machine-checked-density-modular-and-weighted-interface
 full_erdos678_formalization_status: not-proved
 
 ci_status: green
-canonical_ci_run: 31853105621
-canonical_ci_commit: f9f6c068fc199a6639a12befadfda126dd99764c
+canonical_ci_run: 31854637490
+canonical_ci_commit: 0a6151977c4d27449c2e2fecbe64b716c7ae4818
 build_graph_audit: mk-all-check-passed
 ci_blocker: none
 next_action: prove the representation contract for the actual CRT basis, then instantiate the admissible residue boxes consumed by Claim 5
@@ -121,6 +121,12 @@ The reachable graph now machine-checks:
 
 The table does **not** certify Cambie's full Claim 4. `Claim4WeightedRepresentation` is an explicit producer contract; the actual CRT basis still has to be defined and proved to satisfy it.
 
+## Claim 4 CI disk incident — RESOLVED
+
+Run `31853895481` reached `No update necessary`, built all six Claim 4 modules, and reported `Build completed successfully (8735 jobs)`. The job then failed while GitHub's cache-save path exhausted the runner disk, so that run is correctly classified as red despite the successful Lean build.
+
+The workflow now keeps `use-mathlib-cache: true` but sets the official `lean-action` input `use-github-cache: false`. In run `31854637490`, both GitHub `.lake` cache restore and save were explicitly skipped, `mk_all --check` passed, all six modules were reached, and the 8735-job build and job conclusion were successful.
+
 ## Current #678 mathematical state
 
 Canonical statement: locked.
@@ -171,4 +177,4 @@ Not yet proved in this repository:
 
 ## Documentation synchronization status
 
-The root README, this checkpoint, the active #678 roadmap, the problem index, the #678 README, the Cambie proof analysis, and the #678 lessons addendum are synchronized with the verified partial-Claim-4 checkpoint. The decision register and agent guide remain current and require no semantic change.
+The root README, this checkpoint, the active #678 roadmap, the problem index, the #678 README, the Cambie proof analysis, and the #678 lessons addendum are synchronized with the verified partial-Claim-4 checkpoint and the resolved CI disk incident. The decision register and agent guide remain current and require no semantic change.

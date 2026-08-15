@@ -248,3 +248,13 @@ reduced the same module to about 56 seconds in run `31852630076`, without changi
 Reusable rule:
 
 > When the remaining goal is already a contradiction between a proved lower bound and a strict upper bound, apply the matching order lemma directly before invoking general arithmetic automation.
+
+## L-678-027 — A successful build can still be a red CI run
+
+Run `31853895481` passed the generated import-graph check, reached every new Claim 4 module, and printed `Build completed successfully (8735 jobs)`. GitHub nevertheless concluded the job with failure because the subsequent `.lake` cache archive exhausted the runner disk while diagnostic output was still being written.
+
+The repair kept Mathlib's artifact cache but set the official `lean-action` input `use-github-cache: false`. Run `31854637490` then explicitly skipped both GitHub `.lake` cache restore and save, retained `mk_all --check` and the full build, and completed successfully.
+
+Reusable rule:
+
+> Credit CI by the job conclusion as well as the mathematical build log. When a post-build cache step exhausts a disposable runner, disable that redundant archive through the action's supported input before adding broad disk-deletion commands or weakening verification.

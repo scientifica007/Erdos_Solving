@@ -6,7 +6,7 @@ The independent construction attempted in our experiment was rejected. The concr
 
 This document records the mathematical structure of Cambie's 2024 proof. It is an analysis/reference document, not a task tracker and not a claim of an independent new proof.
 
-The Claim 4 audit in this document is synchronized with the machine-checked partial implementation at code commit `f9f6c068fc199a6639a12befadfda126dd99764c`, CI run `31853105621`.
+The Claim 4 audit in this document is synchronized with the machine-checked partial implementation at code commit `f9f6c068fc199a6639a12befadfda126dd99764c`. The current exact pull-request head `0a6151977c4d27449c2e2fecbe64b716c7ae4818` passed canonical CI run `31854637490`.
 
 **Canonical execution roadmap:** `LEAN_FORMALIZATION_ROADMAP.md`.
 
