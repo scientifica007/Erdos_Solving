@@ -15,7 +15,7 @@ Let `M(n,k) = lcm{n+1,...,n+k}`. Are there infinitely many `m,n,k ≥ 3` with `m
 - Rejected candidate: `(495,504,8)` — machine-refuted and retained as a negative regression.
 - Current mode: reconstruction of Cambie's proof architecture.
 - Full Claim 5 in this repository: machine-checked under explicit residue hypotheses.
-- Claim 4 in this repository: partially machine-checked; the generic density core, modular specialization, and weighted consumer are live, while the actual CRT-weight representation and application residue boxes remain pending.
+- Claim 4 in this repository: partially machine-checked through the concrete CRT producer; the generic density core, modular specialization, weighted consumer, and the two-/three-prime basis representations are live, while the application residue boxes and their Claim 5 connection remain pending.
 - Full Erdős #678 theorem in this repository: not formalized.
 
 ## Historical independent-attempt failure
@@ -45,24 +45,28 @@ The failures were recorded before reference reconstruction and remain part of pr
 | Claim 4 finite union-bound core | machine-checked with positive and strict-budget negative regressions |
 | Claim 4 modular injectivity and prime-coordinate density | machine-checked with unit and non-unit regressions |
 | Claim 4 weighted consumer under `Claim4WeightedRepresentation` | machine-checked with positive and zero-weight negative regressions |
-| actual CRT-basis representation and application residue boxes | pending |
+| concrete pair/triple CRT-basis producer | machine-checked with positive, full-contract negative, and density-endpoint regressions |
+| application residue boxes and exclusion-cardinality budgets | pending |
 | quantitative finish and prime-density input | pending |
 | full theorem | pending |
 
 ## Verified checkpoint
 
-Canonical run `31854637490` passed the generated import-graph check and the full Lean build at pull-request head `0a6151977c4d27449c2e2fecbe64b716c7ae4818`. It reached all six Claim 4 implementation and regression modules and completed 8735 jobs. The workflow retains Mathlib's cache but skips GitHub's `.lake` archive, resolving the post-build disk exhaustion seen in run `31853895481`.
+Canonical run `31858024749` passed the generated import-graph check and the full Lean build at theorem-and-regression head `12306b5ec393f5521ef2ebaa7ca09c7443e06867`. It reached all eight Claim 4 implementation and regression modules and completed 8737 jobs. The workflow retains Mathlib's cache but skips GitHub's `.lake` archive, preserving the repair for the post-build disk exhaustion seen in run `31853895481`.
 
 The verified boundary is deliberate:
 
 - `claim4_exists_avoiding_coordinate_exclusions` proves the finite strict union-bound engine;
 - `claim4_prime_coordinate_density` proves the modular prime-coordinate specialization from explicit nondivisibility and length assumptions;
 - `claim4_weighted_density_of_representation` transports the accepted coordinate vector to a weighted residue, provided `Claim4WeightedRepresentation` is supplied;
-- no theorem yet proves that Cambie's actual CRT basis weights satisfy that representation contract or that the resulting boxes satisfy the Claim 5 interfaces.
+- `claim4_pair_crt_density` and `claim4_triple_crt_density` construct the actual basis multipliers, prove their representation contracts, and expose density endpoints with no representation assumption left to the caller;
+- no theorem yet defines Cambie's admissible application boxes, proves their exclusion budgets, or shows that the resulting representatives satisfy the Claim 5 interfaces.
+
+The verified producer is specialized to the two- and three-prime bases used in Cambie's construction. A generic arbitrary-finite-family basis theorem is not claimed.
 
 ## Sole next action
 
-Define the actual CRT basis weights and prove `Claim4WeightedRepresentation` for them. Only then instantiate the density theorem with the admissible residue boxes for `x` and `y` and connect them to `Claim5MediumResidues` and `Claim5SmallResidues`.
+Define Cambie's admissible pair/triple residue boxes for `y` and `x`, prove their excluded-cardinality budgets, instantiate the concrete density endpoints, and connect the selected representatives to `Claim5MediumResidues` and `Claim5SmallResidues`.
 
 ## Main references inside this folder
 

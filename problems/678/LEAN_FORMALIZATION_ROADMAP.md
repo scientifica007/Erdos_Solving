@@ -2,12 +2,12 @@
 
 **Status:** ACTIVE — canonical execution roadmap  
 **Mode:** reconstruction and independent Lean reimplementation of Cambie (2024), not independent mathematical discovery  
-**Code-state basis:** `0a6151977c4d27449c2e2fecbe64b716c7ae4818`  
+**Code-state basis:** `12306b5ec393f5521ef2ebaa7ca09c7443e06867`  
 **Canonical CI status:** GREEN  
-**Verified run:** `31854637490`  
+**Verified run:** `31858024749`  
 **Current phase:** Phase D — CRT combinatorial engine  
-**Current target:** prove the weighted representation contract for Cambie's actual CRT basis  
-**Expansion gate:** OPEN for the CRT-basis producer only; residue application, quantitative, and prime-density phases remain closed
+**Current target:** formalize Cambie's pair/triple application residue boxes and their exclusion budgets  
+**Expansion gate:** OPEN for D2 application boxes only; Claim 5 connection, quantitative, and prime-density phases remain closed
 
 This file is the sole operational answer to: **what is the next Lean/formalization task for #678?**
 
@@ -28,8 +28,8 @@ Externally, Erdős #678 is proved. In this repository:
 - the integrated small-prime Claim 5 theorem is machine-checked with reachable boundary regressions;
 - full Claim 5 is machine-checked under explicit medium- and small-prime residue hypotheses;
 - the Claim 4 finite union-bound core, modular injectivity layer, prime-coordinate density theorem, and conditional weighted consumer are machine-checked;
-- Cambie's actual CRT basis has not yet been proved to satisfy the weighted representation contract;
-- the application residue boxes and the full Claim 4 construction are not proved;
+- the concrete two- and three-prime CRT basis weights, inverse multipliers, weighted representation contracts, and density endpoints are machine-checked;
+- the application residue boxes, exclusion-cardinality estimates, and full Claim 4 application are not proved;
 - the full #678 theorem is not formalized.
 
 A source file containing a theorem statement is not evidence that Lean accepted the theorem. Only a successful canonical build of a reachable module grants machine-checked status.
@@ -70,7 +70,7 @@ Consolidation established:
 - finite-product valuation;
 - a green checkpoint at run `31827146122`.
 
-The consolidation checkpoint is historical; the present credited pull-request head is green at run `31854637490`.
+The consolidation checkpoint is historical; the present credited theorem-and-regression head is green at run `31858024749`.
 
 ---
 
@@ -154,13 +154,13 @@ Completed components:
 
 Exit evidence: commit `61431b8881e481a56d06e00d702eabb6b64ae471`, run `31847883886`, `mk_all --check` reported no update, both new modules were reached, and the 8729-job canonical build succeeded.
 
-Boundary: this proves Claim 5 **conditional on the explicit residue interfaces**. It does not prove Claim 4, construct CRT representatives, supply prime-density input, or finish Erdős #678.
+Boundary: this theorem proves Claim 5 **conditional on the explicit residue interfaces**. The later D1d producer now constructs the pair/triple CRT basis, but the application boxes still do not supply those interfaces; prime-density input and Erdős #678 also remain outside this result.
 
 ---
 
 # Phase D — CRT combinatorial engine — CURRENT
 
-## D1 — Claim 4 density theorem — PARTIAL / MACHINE-CHECKED CORE
+## D1 — Claim 4 density theorem and concrete CRT producer — DONE / MACHINE-CHECKED FOR THE TWO-/THREE-PRIME APPLICATIONS
 
 ### D1a — Finite strict union bound — DONE / MACHINE-CHECKED
 
@@ -201,22 +201,48 @@ The last theorem combines the verified coordinate-density theorem with a supplie
 
 This is a **consumer theorem**, not a proof that any particular CRT weights satisfy the contract.
 
-### D1d — Actual CRT-basis producer — CURRENT
+### D1d — Actual pair/triple CRT-basis producer — DONE / MACHINE-CHECKED
 
-Define the squarefree product and basis weights used by Cambie's two-prime and three-prime applications, prove their coordinate congruences, and derive `Claim4WeightedRepresentation` without an unproved assumption.
+`Claim4CRT.lean` now discharges the producer contract for the two concrete arities used by Cambie:
+
+- pair coordinates `p,q`, modulus `p*q`, and weights `q,p`;
+- triple coordinates `p,q,r`, modulus `(p*q)*r`, and weights `q*r,p*r,p*q`;
+- coordinate inverses constructed from the exact coprimality hypotheses;
+- local scaled-coordinate congruences and zero-off-coordinate congruences;
+- pair and triple CRT composition through `Nat.modEq_and_modEq_iff_modEq_mul`;
+- nondivisibility of every constructed multiplier in its own prime coordinate;
+- `Claim4WeightedRepresentation` for both bases;
+- `claim4_pair_crt_density` and `claim4_triple_crt_density`, which internalize the producer and leave no representation assumption for the caller.
+
+`Claim4CRTTests.lean` checks concrete pair and triple representations, existence of bounded nondivisible multipliers, failure of the **full** pair representation contract for a divisible multiplier, and direct reachability of both density endpoints.
+
+The generic arbitrary-finite-family CRT basis is not formalized. This is not credited as a generic proof of the paper's Claim 4 statement; it is the verified producer for the two- and three-prime applications required by the current reconstruction.
+
+Exit evidence:
+
+- pair producer: commit `5ab1ec7ab23ee2ce1be437432e713d6dbd2662a3`, run `31856857400`;
+- pair/triple theorem graph: commit `ee42cef70d1cf7108b68546bf851f19eaf96c2f5`, run `31857628246`;
+- strengthened producer/consumer regressions: commit `12306b5ec393f5521ef2ebaa7ca09c7443e06867`, run `31858024749`.
+
+### D1 implementation incidents — RESOLVED
+
+- run `31856460100` rejected the wrong direction `.mpr`; the local-to-global CRT theorem is used with `.mp`;
+- run `31857253699` exposed a nested proof-block indentation error in the triple composition;
+- neither repair weakened a theorem statement or introduced a new assumption.
+
+## D2 — Application residue boxes — CURRENT
+
+Formalize Cambie's admissible coordinate sets for the relevant primes and instantiate the verified pair/triple density endpoints for the future `y` and `x` representatives.
 
 Exact obligations:
 
-1. the product modulus and pairwise-coprime prime coordinates;
-2. each basis weight is `1` in its own coordinate and `0` in the others, or an equivalent representation theorem;
-3. every target residue receives the required weighted representation;
-4. the selected multiplier representing `1` is nonzero modulo every coordinate prime, supplying the injectivity premise already exposed by D1b.
+1. fix the paper-to-Lean convention translating coefficients in `{1,...,p}` to residues in `Finset.range p`;
+2. define the two-prime admissible coordinate sets used for `y` and the three-prime sets used for `x`;
+3. define their complements/excluded finsets and prove exact or sufficient cardinality bounds;
+4. prove the strict summed exclusion budgets and interval-length bounds required by `claim4_pair_crt_density` and `claim4_triple_crt_density`;
+5. add reachable boundary tests, including a failed equality-budget or malformed-box case.
 
-Exit gate: reachable positive and degeneracy regressions plus an exact-head canonical green run.
-
-## D2 — Application residue boxes — PENDING
-
-Formalize Cambie's admissible coordinate sets for the relevant primes, compute their excluded cardinalities, and instantiate D1 for the future `x` and `y` representatives.
+Exit gate: both application-box instantiations reach the concrete density endpoints in the canonical graph, with a green exact-head run. Do not yet credit the Claim 5 residue interfaces until D3.
 
 ## D3 — Claim 5 interface connection — PENDING
 
@@ -226,9 +252,9 @@ Translate the selected coordinate coefficients and weighted representatives into
 
 Prove the quantitative representative bounds and `y > x + k` required by the application.
 
-Theorem-code checkpoint for D1a–D1c: commit `f9f6c068fc199a6639a12befadfda126dd99764c`, run `31853105621`.
+Historical theorem-code checkpoint for D1a–D1c: commit `f9f6c068fc199a6639a12befadfda126dd99764c`, run `31853105621`.
 
-Exact-head gate: commit `0a6151977c4d27449c2e2fecbe64b716c7ae4818`, run `31854637490`; `mk_all --check` reported no update, all six modules were reached, the 8735-job build succeeded, and GitHub `.lake` cache restore/save were skipped to avoid the post-build disk exhaustion recorded in run `31853895481`.
+D1a–D1d gate: commit `12306b5ec393f5521ef2ebaa7ca09c7443e06867`, run `31858024749`; `mk_all --check` reported no update, all eight Claim 4 modules were reached, the 8737-job build succeeded, and GitHub `.lake` cache restore/save remained skipped to avoid the post-build disk exhaustion recorded in run `31853895481`.
 
 ---
 
@@ -267,12 +293,13 @@ Erdős #678
     ├── D1a: finite union bound ................... MACHINE-CHECKED
     ├── D1b: modular coordinate density .......... MACHINE-CHECKED
     ├── D1c: weighted consumer interface ......... MACHINE-CHECKED
-    └── D1d: actual CRT-basis producer ........... CURRENT
+    ├── D1d: pair/triple CRT-basis producer ...... MACHINE-CHECKED
+    └── D2: application residue boxes ............ CURRENT
 ```
 
 ## Sole next action
 
-Prove `Claim4WeightedRepresentation` for Cambie's actual CRT basis weights. Do not credit full Claim 4 or open the application-residue and quantitative phases until that producer theorem and its regressions pass the canonical gate.
+Define and verify Cambie's pair/triple admissible residue boxes, prove the strict exclusion budgets, and instantiate `claim4_pair_crt_density` and `claim4_triple_crt_density`. Do not credit the Claim 5 interface connection or open the quantitative phase until these application endpoints and their regressions pass the canonical gate.
 
 ## Global audit gates
 

@@ -1,4 +1,6 @@
 import Formalization.Basic
+import Formalization.Erdos678.Claim4CRT
+import Formalization.Erdos678.Claim4CRTTests
 import Formalization.Erdos678.Claim4Density
 import Formalization.Erdos678.Claim4DensityTests
 import Formalization.Erdos678.Claim4Modular
