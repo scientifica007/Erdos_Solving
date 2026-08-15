@@ -23,7 +23,8 @@ theorem claim4PaperCoefficient_modEq (p a : ℕ) :
   by_cases ha : a = 0
   · subst a
     simp [claim4PaperCoefficient, Nat.ModEq]
-  · simp [claim4PaperCoefficient, ha]
+  · simp only [claim4PaperCoefficient, if_neg ha]
+    exact Nat.ModEq.refl a
 
 /-- A canonical residue modulo a positive modulus translates into the closed
 coefficient interval `{1, ..., p}`. -/
@@ -62,6 +63,7 @@ theorem claim4_not_mem_xExcluded_iff
   by_cases hr0 : k % p = 0
   · by_cases ha0 : a = 0
     · simp [claim4XExcluded, claim4PaperCoefficient, hr0, ha0]
+      omega
     · simp [claim4XExcluded, claim4PaperCoefficient, hr0, ha0]
       omega
   · by_cases ha0 : a = 0
@@ -80,8 +82,7 @@ theorem claim4_not_mem_yExcluded_iff
   have hrlt : k % p < p := Nat.mod_lt k hp
   by_cases ha0 : a = 0
   · simp [claim4YExcluded, claim4PaperCoefficient, ha0]
-    omega
-  · simp [claim4YExcluded, claim4PaperCoefficient, ha0, ha]
+  · simp [claim4YExcluded, claim4PaperCoefficient, ha0]
     omega
 
 /-- The `x` box excludes exactly `k mod p` canonical residues. -/
@@ -93,13 +94,12 @@ theorem claim4XExcluded_card
   · simp [claim4XExcluded, hr0]
   · have hzero : 0 ∉ Finset.Ico (p - k % p + 1) p := by
       simp
-      omega
     simp [claim4XExcluded, hr0, hzero, Nat.card_Ico]
     omega
 
 /-- The `y` box excludes exactly `p - (k mod p) - 1` canonical residues. -/
 theorem claim4YExcluded_card
-    {k p : ℕ} (hp : 0 < p) :
+    {k p : ℕ} (_hp : 0 < p) :
     (claim4YExcluded k p).card = p - k % p - 1 := by
   simp [claim4YExcluded, Nat.card_Ico]
 
