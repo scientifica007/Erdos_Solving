@@ -285,3 +285,25 @@ Run `31858024749` checks this boundary in the canonical graph.
 Reusable rule:
 
 > When a conditional theorem gains a concrete producer, add at least one regression that invokes the final consumer without re-supplying the discharged contract, plus a negative regression at the full-contract level.
+
+## L-678-030 — Make the paper's zero-residue convention a named translation
+
+Cambie's coefficient domain is `{1,...,p}`, where the endpoint `p` represents residue zero. The existing Lean density layer uses canonical residues `{0,...,p-1}`. Treating those domains as literally identical would make the `x` and `y` interval endpoints wrong precisely at zero.
+
+`Claim4ApplicationBoxes.lean` therefore introduces `claim4PaperCoefficient`: zero is translated to `p`, every nonzero canonical residue is unchanged, and a separate theorem proves that the translation preserves congruence modulo `p`. The exact exclusion sets and interval-membership equivalences are then stated through this translation.
+
+Reusable rule:
+
+> When a paper chooses noncanonical residue representatives, encode the representative map explicitly and prove congruence preservation before formalizing interval or order constraints on those representatives.
+
+## L-678-031 — Internalize strict density budgets as exact integer search lengths
+
+For the `x` box, the canonical exclusion set has exactly `k mod p` elements. For the `y` box, it has exactly `p - k mod p - 1` elements because the paper endpoint `p` represents allowed residue zero. Defining each pair/triple search length as the sum of these exact cards plus one makes the strict union-bound premise an internal arithmetic fact.
+
+This removes `ε` from the consumer interface without weakening the paper argument. The remaining caller obligations are the prime/coprimality data and the requirement that the exact search length fit inside every coordinate prime. The regressions include a concrete equality-budget failure, so replacing `<` by `≤` cannot pass unnoticed.
+
+Run `31870123794` first exposed only local proof-closure issues in the new module. After repairing those endpoints without changing statements or assumptions, run `31870476963` reached both application modules and completed the full 8739-job build.
+
+Reusable rule:
+
+> At a finite-density application boundary, compute exact exclusion cards and choose `length = total excluded + 1`; keep the coordinate-length inequalities explicit and retain an equality-budget negative regression.

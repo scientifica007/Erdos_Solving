@@ -2,12 +2,12 @@
 
 **Status:** ACTIVE — canonical execution roadmap  
 **Mode:** reconstruction and independent Lean reimplementation of Cambie (2024), not independent mathematical discovery  
-**Code-state basis:** `12306b5ec393f5521ef2ebaa7ca09c7443e06867`  
+**Code-state basis:** `b2a05790b4ae466133e792ca6afa3eae730c0427`  
 **Canonical CI status:** GREEN  
-**Verified run:** `31858024749`  
+**Verified run:** `31870476963`  
 **Current phase:** Phase D — CRT combinatorial engine  
-**Current target:** formalize Cambie's pair/triple application residue boxes and their exclusion budgets  
-**Expansion gate:** OPEN for D2 application boxes only; Claim 5 connection, quantitative, and prime-density phases remain closed
+**Current target:** connect the verified application-box outputs to the two Claim 5 residue interfaces  
+**Expansion gate:** OPEN for D3 interface connection only; quantitative representatives and prime-density phases remain closed
 
 This file is the sole operational answer to: **what is the next Lean/formalization task for #678?**
 
@@ -29,7 +29,8 @@ Externally, Erdős #678 is proved. In this repository:
 - full Claim 5 is machine-checked under explicit medium- and small-prime residue hypotheses;
 - the Claim 4 finite union-bound core, modular injectivity layer, prime-coordinate density theorem, and conditional weighted consumer are machine-checked;
 - the concrete two- and three-prime CRT basis weights, inverse multipliers, weighted representation contracts, and density endpoints are machine-checked;
-- the application residue boxes, exclusion-cardinality estimates, and full Claim 4 application are not proved;
+- the pair/triple application residue boxes, paper/canonical coefficient translation, exact exclusion cardinalities, strict budgets, and application endpoints are machine-checked;
+- the translation of those outputs into the Claim 5 residue interfaces is not proved;
 - the full #678 theorem is not formalized.
 
 A source file containing a theorem statement is not evidence that Lean accepted the theorem. Only a successful canonical build of a reachable module grants machine-checked status.
@@ -70,7 +71,7 @@ Consolidation established:
 - finite-product valuation;
 - a green checkpoint at run `31827146122`.
 
-The consolidation checkpoint is historical; the present credited theorem-and-regression head is green at run `31858024749`.
+The consolidation checkpoint is historical; the present credited theorem-and-regression head is green at run `31870476963`.
 
 ---
 
@@ -154,7 +155,7 @@ Completed components:
 
 Exit evidence: commit `61431b8881e481a56d06e00d702eabb6b64ae471`, run `31847883886`, `mk_all --check` reported no update, both new modules were reached, and the 8729-job canonical build succeeded.
 
-Boundary: this theorem proves Claim 5 **conditional on the explicit residue interfaces**. The later D1d producer now constructs the pair/triple CRT basis, but the application boxes still do not supply those interfaces; prime-density input and Erdős #678 also remain outside this result.
+Boundary: this theorem proves Claim 5 **conditional on the explicit residue interfaces**. The later D1d producer and D2 application boxes now select coefficient data, but D3 has not yet packaged those outputs as the two interfaces; prime-density input and Erdős #678 also remain outside this result.
 
 ---
 
@@ -230,23 +231,40 @@ Exit evidence:
 - run `31857253699` exposed a nested proof-block indentation error in the triple composition;
 - neither repair weakened a theorem statement or introduced a new assumption.
 
-## D2 — Application residue boxes — CURRENT
+## D2 — Application residue boxes — DONE / MACHINE-CHECKED
 
-Formalize Cambie's admissible coordinate sets for the relevant primes and instantiate the verified pair/triple density endpoints for the future `y` and `x` representatives.
+`Claim4ApplicationBoxes.lean` formalizes Cambie's exact coefficient boxes and instantiates the verified pair/triple CRT-density endpoints.
+
+Completed obligations:
+
+1. `claim4PaperCoefficient` translates canonical zero to paper coefficient `p` and preserves the residue modulo `p`;
+2. `claim4XExcluded` and `claim4YExcluded` are the exact canonical complements of the paper intervals;
+3. `claim4XExcluded_card` proves cardinality `k % p`, while `claim4YExcluded_card` proves `p - k % p - 1`;
+4. `claim4PairYSearchLength` and `claim4TripleXSearchLength` are exactly the summed exclusion cards plus one;
+5. `claim4_pair_y_box_density` and `claim4_triple_x_box_density` expose the required coefficient inequalities and weighted congruences with the strict budget internalized;
+6. `Claim4ApplicationBoxesTests.lean` checks the zero-to-`p` endpoint, exact cards, concrete pair/triple instantiations, and failure at equality budget.
+
+Exit evidence: commit `b2a05790b4ae466133e792ca6afa3eae730c0427`, run `31870476963`; `mk_all --check` reported `No update necessary`, both new modules were reached, and the full 8739-job build succeeded.
+
+Boundary: D2 proves the coefficient boxes and obtains weighted representatives. It does not yet prove that the selected data satisfy `Claim5MediumResidues` and `Claim5SmallResidues`, and it does not prove the D4 size/separation conditions.
+
+### D2 implementation incident — RESOLVED
+
+Run `31870123794` exposed four local proof-closure issues: one explicit `Nat.ModEq.refl`, one use of positivity, and two branches already closed by `simp`. Commit `b2a05790b4ae466133e792ca6afa3eae730c0427` repaired those endpoints without changing a definition, theorem statement, or assumption.
+
+## D3 — Claim 5 interface connection — CURRENT
+
+Translate the selected coordinate coefficients and weighted representatives into `Claim5MediumResidues` and `Claim5SmallResidues`.
 
 Exact obligations:
 
-1. fix the paper-to-Lean convention translating coefficients in `{1,...,p}` to residues in `Finset.range p`;
-2. define the two-prime admissible coordinate sets used for `y` and the three-prime sets used for `x`;
-3. define their complements/excluded finsets and prove exact or sufficient cardinality bounds;
-4. prove the strict summed exclusion budgets and interval-length bounds required by `claim4_pair_crt_density` and `claim4_triple_crt_density`;
-5. add reachable boundary tests, including a failed equality-budget or malformed-box case.
+1. audit which D2 output supplies each medium-prime lower/upper coefficient inequality;
+2. derive the required modular congruences for the future `x` and `y` representatives;
+3. combine the pair/triple CRT information with the small-prime modulus used by `Claim5SmallResidues`;
+4. package the result in the existing interfaces without weakening their statements;
+5. add reachable positive and malformed-interface regressions and invoke `claim5_full_identity_of_residues` at the new boundary.
 
-Exit gate: both application-box instantiations reach the concrete density endpoints in the canonical graph, with a green exact-head run. Do not yet credit the Claim 5 residue interfaces until D3.
-
-## D3 — Claim 5 interface connection — PENDING
-
-Translate the selected coordinate coefficients and weighted representatives into `Claim5MediumResidues` and `Claim5SmallResidues`.
+Exit gate: both Claim 5 residue interfaces are constructed from the D2 outputs and consumed by the full Claim 5 theorem in the canonical graph. Do not open D4 until the exact-head run is green.
 
 ## D4 — Representatives and separation — PENDING
 
@@ -255,6 +273,8 @@ Prove the quantitative representative bounds and `y > x + k` required by the app
 Historical theorem-code checkpoint for D1a–D1c: commit `f9f6c068fc199a6639a12befadfda126dd99764c`, run `31853105621`.
 
 D1a–D1d gate: commit `12306b5ec393f5521ef2ebaa7ca09c7443e06867`, run `31858024749`; `mk_all --check` reported no update, all eight Claim 4 modules were reached, the 8737-job build succeeded, and GitHub `.lake` cache restore/save remained skipped to avoid the post-build disk exhaustion recorded in run `31853895481`.
+
+D2 gate: commit `b2a05790b4ae466133e792ca6afa3eae730c0427`, run `31870476963`; `mk_all --check` reported no update, all ten Claim 4 modules were reached, the 8739-job build succeeded, and GitHub `.lake` cache restore/save remained skipped.
 
 ---
 
@@ -294,12 +314,13 @@ Erdős #678
     ├── D1b: modular coordinate density .......... MACHINE-CHECKED
     ├── D1c: weighted consumer interface ......... MACHINE-CHECKED
     ├── D1d: pair/triple CRT-basis producer ...... MACHINE-CHECKED
-    └── D2: application residue boxes ............ CURRENT
+    ├── D2: application residue boxes ............ MACHINE-CHECKED
+    └── D3: Claim 5 interface connection ......... CURRENT
 ```
 
 ## Sole next action
 
-Define and verify Cambie's pair/triple admissible residue boxes, prove the strict exclusion budgets, and instantiate `claim4_pair_crt_density` and `claim4_triple_crt_density`. Do not credit the Claim 5 interface connection or open the quantitative phase until these application endpoints and their regressions pass the canonical gate.
+Translate the verified outputs of `claim4_pair_y_box_density` and `claim4_triple_x_box_density` into `Claim5MediumResidues` and `Claim5SmallResidues`, then exercise `claim5_full_identity_of_residues` across that boundary. Do not credit D4 representative bounds or open the quantitative phase until this connection and its regressions pass the canonical gate.
 
 ## Global audit gates
 
