@@ -26,6 +26,7 @@ jobs:
         with:
           lake-package-directory: formalization
           use-mathlib-cache: true
+          use-github-cache: false
           build: true
           test: false
           mk_all-check: true
