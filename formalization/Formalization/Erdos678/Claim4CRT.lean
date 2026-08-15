@@ -3,14 +3,15 @@ import Mathlib.Data.Int.GCD
 import Mathlib.Data.Nat.ChineseRemainder
 
 /-!
-Concrete CRT-basis producers for Cambie's Claim 4.
+Concrete pair and triple CRT-basis producers for Cambie's Claim 4.
 
 The weighted consumer introduced earlier deliberately required an explicit
-`Claim4WeightedRepresentation` contract.  This file begins discharging that
-contract for the actual CRT basis.  For two coprime coordinates `p` and `q`,
-the weights are `q` and `p`; inverse multipliers are constructed from
-coprimality and the resulting weighted combination represents every residue
-modulo `p * q`.
+`Claim4WeightedRepresentation` contract.  This file discharges that contract
+for the two- and three-coordinate CRT bases used in Cambie's applications.
+For two coordinates the weights are `q` and `p`; for three they are `q*r`,
+`p*r`, and `p*q`.  Coordinate inverses are constructed from coprimality, and
+the resulting weighted combinations represent every residue modulo the
+corresponding product.
 -/
 
 namespace Erdos678

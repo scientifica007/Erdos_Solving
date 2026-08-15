@@ -6,7 +6,7 @@ The independent construction attempted in our experiment was rejected. The concr
 
 This document records the mathematical structure of Cambie's 2024 proof. It is an analysis/reference document, not a task tracker and not a claim of an independent new proof.
 
-The Claim 4 audit in this document is synchronized with the machine-checked partial implementation at code commit `f9f6c068fc199a6639a12befadfda126dd99764c`. The current exact pull-request head `0a6151977c4d27449c2e2fecbe64b716c7ae4818` passed canonical CI run `31854637490`.
+The Claim 4 audit in this document is synchronized through the concrete pair/triple CRT producer at code commit `12306b5ec393f5521ef2ebaa7ca09c7443e06867`. Canonical CI run `31858024749` passed the generated graph check and the full 8737-job build for that theorem-and-regression head.
 
 **Canonical execution roadmap:** `LEAN_FORMALIZATION_ROADMAP.md`.
 
@@ -67,15 +67,16 @@ The coefficient convention `{1,...,pᵢ}` encodes residue zero by `pᵢ`. The Le
 4. Injectivity implies that coordinate `i` rejects at most the number of excluded residues in that coordinate.
 5. The union of all rejected-position sets has cardinality strictly below `n`, so at least one position is accepted in every coordinate.
 
-For the actual CRT basis, the unit obligation should follow by reducing the representation of `1` in each prime coordinate. The present implementation exposes it as the explicit premise `¬ p i ∣ c i`, so the later basis theorem must supply it rather than relying on an informal inference.
+For the actual CRT basis, the unit obligation follows by reducing the inverse congruence in each prime coordinate. The generic modular implementation exposes it as the explicit premise `¬ p i ∣ c i`; the verified pair/triple producers now construct the inverses and discharge that premise rather than relying on an informal inference.
 
 ### Current Lean boundary
 
-The canonical graph now machine-checks three independent layers:
+The canonical graph now machine-checks four layers:
 
 - `claim4_exists_avoiding_coordinate_exclusions`: the generic finite injection plus strict union-bound argument;
 - `claim4_prime_coordinate_density`: the modular specialization for prime coordinates, nondivisible multipliers, and a consecutive interval no longer than each prime;
 - `claim4_weighted_density_of_representation`: the weighted conclusion under the explicit producer contract `Claim4WeightedRepresentation`.
+- `claim4_pair_crt_density` and `claim4_triple_crt_density`: the concrete two-/three-prime producers and density endpoints, with the representation contract and nondivisibility proofs internalized.
 
 The formal theorem uses the sharper integer condition
 
@@ -83,14 +84,16 @@ The formal theorem uses the sharper integer condition
 
 instead of introducing real-valued `ε`. The paper's bound implies this integer condition once the application-specific cardinality estimates are proved.
 
+The concrete definitions now use weights `q,p` for modulus `p*q` and `q*r,p*r,p*q` for modulus `(p*q)*r`. Pairwise coprimality supplies coordinate inverses; local congruences are combined to prove `Claim4WeightedRepresentation`, and the inverse equations also prove that the multipliers are nonzero modulo their coordinate primes. This is machine-checked for exactly the two arities used in the applications.
+
 What is **not** yet proved:
 
-- a concrete definition of Cambie's actual two-prime and three-prime CRT basis weights;
-- `Claim4WeightedRepresentation` for those weights;
-- the application residue boxes and their excluded-cardinality estimates;
-- the translation of the selected representatives into the two Claim 5 residue interfaces.
+- the application residue boxes for the two-prime `y` and three-prime `x` constructions;
+- their excluded-cardinality estimates and strict summed budgets;
+- the translation of the selected representatives into the two Claim 5 residue interfaces;
+- a generic arbitrary-finite-family CRT-basis theorem.
 
-Therefore Claim 4 is only partially formalized and must not yet be classified as complete.
+Therefore the producer boundary is complete for the pair/triple applications, but Claim 4's application in the #678 reconstruction is still only partially formalized and must not yet be classified as complete.
 
 ## 4. Choice of x and y
 
@@ -137,7 +140,7 @@ There is at most one multiple of `p^2` in the relevant intervals. Therefore it i
 
 They occur at most once in either interval, so their contribution to the reciprocal-LCM factors is zero.
 
-The repository now machine-checks this Claim 5 architecture under the two explicit residue interfaces expected from the unfinished Claim 4 producer.
+The repository now machine-checks this Claim 5 architecture under the two explicit residue interfaces that the unfinished Claim 4 **application-box** layer must supply.
 
 ## 6. Final analytic/combinatorial estimate
 
@@ -175,11 +178,12 @@ The mathematical dependency order is:
 3. reciprocal-LCM valuation;
 4. Claim 5 split into the three prime ranges;
 5. Claim 4 finite counting and modular density;
-6. actual CRT-basis representation and residue-box construction for `x` and `y`;
-7. quantitative LCM-ratio estimate;
-8. exact prime-density input;
-9. strong Cambie theorem;
-10. deduction of Erdős #678.
+6. concrete pair/triple CRT-basis representation;
+7. residue-box construction for `x` and `y` and connection to Claim 5;
+8. quantitative LCM-ratio estimate;
+9. exact prime-density input;
+10. strong Cambie theorem;
+11. deduction of Erdős #678.
 
 ## 9. Lessons from our failed attempt
 

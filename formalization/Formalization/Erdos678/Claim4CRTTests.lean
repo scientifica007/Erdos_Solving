@@ -1,7 +1,7 @@
 import Formalization.Erdos678.Claim4CRT
 
 /-!
-Reachable regressions for the concrete pair CRT producer.
+Reachable regressions for the concrete pair and triple CRT producers.
 -/
 
 namespace Erdos678

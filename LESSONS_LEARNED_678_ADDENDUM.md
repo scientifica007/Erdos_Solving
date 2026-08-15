@@ -227,15 +227,17 @@ Reusable rule:
 
 Cambie's Claim 4 starts from weighted combinations that cover every residue modulo the product of the coordinate primes. Because the coefficient domain and the residue space have the same finite cardinality, that coverage also yields uniqueness. It does not remove the need to prove that the concrete weights have the required coordinate behavior or that the coefficient vector representing one is a unit in every prime coordinate.
 
-The Lean decomposition therefore separates three obligations:
+The Lean decomposition therefore separated three obligations:
 
 1. a generic finite counting consumer;
 2. modular injectivity under an explicit coprimality or nondivisibility premise;
-3. a weighted representation contract that the actual CRT basis must later produce.
+3. a weighted representation contract that the actual CRT basis must produce.
+
+The later `Claim4CRT.lean` layer now discharges the third obligation for the concrete pair and triple bases used by Cambie, including the unit/nondivisibility facts. The arbitrary-finite-family generalization remains outside the credited result.
 
 Reusable rule:
 
-> When a paper compresses a finite CRT argument into “coverage”, audit cardinality, uniqueness, coordinate congruences, and unit conditions separately. A conditional consumer theorem is progress, but it is not the missing producer proof.
+> When a paper compresses a finite CRT argument into “coverage”, audit cardinality, uniqueness, coordinate congruences, and unit conditions separately. A conditional consumer theorem is progress, but it does not by itself constitute the producer proof.
 
 ## L-678-026 — Replace broad arithmetic automation with the exact order contradiction
 
@@ -258,3 +260,28 @@ The repair kept Mathlib's artifact cache but set the official `lean-action` inpu
 Reusable rule:
 
 > Credit CI by the job conclusion as well as the mathematical build log. When a post-build cache step exhausts a disposable runner, disable that redundant archive through the action's supported input before adding broad disk-deletion commands or weakening verification.
+
+## L-678-028 — Prove CRT representations coordinatewise, then compose
+
+For the pair basis, the weights are `q,p`; for the triple basis they are `q*r,p*r,p*q`. The robust Lean proof did not expand a global remainder equality. It proved that the intended coordinate contributes `z`, proved that every other coordinate vanishes, and combined the local congruences with `Nat.modEq_and_modEq_iff_modEq_mul`.
+
+Run `31856460100` caught an important API-direction mistake: the theorem states the conjunction of local congruences **iff** the product-modulus congruence, so local-to-global composition uses `.mp`, not `.mpr`. The corrected pair proof passed in run `31856857400`; the nested triple composition passed in run `31857628246`.
+
+Reusable rule:
+
+> For CRT code, isolate the one-coordinate and off-coordinate congruences, audit the direction of the library equivalence, and compose only after every local obligation is explicit.
+
+## L-678-029 — Test across the producer/consumer boundary
+
+Testing only the inverse congruences would not establish that the new producer genuinely feeds the existing weighted-density consumer. The strengthened regression layer therefore includes:
+
+- concrete pair and triple `Claim4WeightedRepresentation` instances;
+- existence of bounded, nondivisible coordinate multipliers;
+- a negative example falsifying the **complete** pair representation contract when one multiplier is divisible by its coordinate prime;
+- direct instantiations of both pair and triple density endpoints with concrete primes and exclusion budgets.
+
+Run `31858024749` checks this boundary in the canonical graph.
+
+Reusable rule:
+
+> When a conditional theorem gains a concrete producer, add at least one regression that invokes the final consumer without re-supplying the discharged contract, plus a negative regression at the full-contract level.
