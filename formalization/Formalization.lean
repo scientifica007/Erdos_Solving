@@ -11,6 +11,8 @@ import Formalization.Erdos678.Claim4Density
 import Formalization.Erdos678.Claim4DensityTests
 import Formalization.Erdos678.Claim4Modular
 import Formalization.Erdos678.Claim4ModularTests
+import Formalization.Erdos678.Claim4PrimeWindows
+import Formalization.Erdos678.Claim4PrimeWindowsTests
 import Formalization.Erdos678.Claim4Scales
 import Formalization.Erdos678.Claim4ScalesTests
 import Formalization.Erdos678.Claim4Weighted
