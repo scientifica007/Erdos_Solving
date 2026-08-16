@@ -7,10 +7,10 @@ import Formalization.Erdos678.Claim4Claim5Interface
 import Formalization.Erdos678.Claim4Claim5InterfaceTests
 import Formalization.Erdos678.Claim4ConstructedInterface
 import Formalization.Erdos678.Claim4ConstructedInterfaceTests
-import Formalization.Erdos678.Claim4DependentPlacement
-import Formalization.Erdos678.Claim4DependentPlacementTests
 import Formalization.Erdos678.Claim4Density
 import Formalization.Erdos678.Claim4DensityTests
+import Formalization.Erdos678.Claim4DependentPlacement
+import Formalization.Erdos678.Claim4DependentPlacementTests
 import Formalization.Erdos678.Claim4Modular
 import Formalization.Erdos678.Claim4ModularTests
 import Formalization.Erdos678.Claim4Placement
