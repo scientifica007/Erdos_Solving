@@ -1,6 +1,6 @@
 # Erdős Problem #678 — Active Cambie Reconstruction
 
-> **Current repository status (2026-08-15): ACTIVE, CI GREEN.**
+> **Current repository status (2026-08-16): ACTIVE, CI GREEN.**
 > The independent attempt was invalidated. The active work is an external-proof reconstruction and independent Lean reimplementation of Cambie (2024). The canonical operational sources are `PROJECT_STATE.md` and `LEAN_FORMALIZATION_ROADMAP.md`.
 
 ## Canonical statement
@@ -14,13 +14,13 @@ Let `M(n,k) = lcm{n+1,...,n+k}`. Are there infinitely many `m,n,k ≥ 3` with `m
 - Valid concrete witness: `M(36,8) > M(47,9)` — machine-checked.
 - Rejected candidate: `(495,504,8)` — machine-refuted and retained as a negative regression.
 - Current mode: reconstruction of Cambie's proof architecture.
-- Full Claim 5 in this repository: machine-checked under explicit residue hypotheses.
-- Claim 4 in this repository: partially machine-checked through the scaled connection to both Claim 5 residue interfaces; actual representatives are modeled as `x = 1 + z*Nx` and `y = z*Ny`, while construction and quantitative control of the scales and representatives remain pending.
+- Full Claim 5: machine-checked under explicit residue hypotheses.
+- Claim 4: machine-checked through the construction of the actual scales, fixed prime-window/search obligations, full-scale factorization, quantitative placement utilities, and a dependent close-and-separated representative endpoint under an explicit room contract.
 - Full Erdős #678 theorem in this repository: not formalized.
 
 ## Historical independent-attempt failure
 
-The project found the correct finite witness `(36,47,8)` but then asserted the false scaling identity
+The project found the valid finite witness `(36,47,8)` but then asserted the false scaling identity
 
 ```text
 M(t*n,k) = t*M(n,k).
@@ -28,7 +28,7 @@ M(t*n,k) = t*M(n,k).
 
 This fails because `M(t*n,k)` is the LCM of `tn+1,...,tn+k`, not of `t(n+1),...,t(n+k)`. A later attempted `Q=P/M` construction also failed because it used the wrong interval for `M(t,k+1)`.
 
-The failures were recorded before reference reconstruction and remain part of project provenance.
+Those failures were recorded before reference reconstruction and remain part of project provenance.
 
 ## Current Lean reconstruction
 
@@ -37,45 +37,49 @@ The failures were recorded before reference reconstruction and remain part of pr
 | length-based intervals and canonical `erdosM` | machine-checked |
 | positive and negative concrete regressions | machine-checked |
 | finite product/LCM valuation core | machine-checked |
-| Claim 5 range `p > k` | machine-checked |
-| Claim 5 range `p ≤ k < p²` | machine-checked |
-| small-prime capped congruence core | machine-checked |
-| integrated small-prime Claim 5 | machine-checked with reachable boundary regressions |
+| all three Claim 5 prime ranges | machine-checked |
 | full Claim 5 assembly | machine-checked under explicit residue hypotheses |
-| Claim 4 finite union-bound core | machine-checked with positive and strict-budget negative regressions |
-| Claim 4 modular injectivity and prime-coordinate density | machine-checked with unit and non-unit regressions |
-| Claim 4 weighted consumer under `Claim4WeightedRepresentation` | machine-checked with positive and zero-weight negative regressions |
-| concrete pair/triple CRT-basis producer | machine-checked with positive, full-contract negative, and density-endpoint regressions |
-| application residue boxes and exclusion-cardinality budgets | machine-checked with coefficient-convention, concrete endpoint, and equality-budget regressions |
-| scaled connection to `Claim5MediumResidues` and `Claim5SmallResidues` | machine-checked under explicit scale-support data; full Claim 5 boundary regression live |
-| quantitative scales, representatives, and separation | current / not yet proved |
-| quantitative finish and prime-density input | pending |
-| full theorem | pending |
+| Claim 4 finite union-bound / modular / weighted layers | machine-checked |
+| concrete pair/triple CRT-basis producer | machine-checked |
+| exact application residue boxes and exclusion budgets | machine-checked |
+| D3 scaled connection to both Claim 5 residue interfaces | machine-checked |
+| general-`k` constructed scales `Nx,Ny` and support/unit facts | machine-checked |
+| prime-window contract and exact five search-length bounds | machine-checked conditionally on explicit prime-window data |
+| full-scale factorization and canonical placement utilities | machine-checked |
+| generic separated representatives + full Claim 5 | machine-checked under explicit separated-window data |
+| dependent `y`-first / moving-`x` endpoint with `x+k<y<x+gap` + full Claim 5 | machine-checked under `Claim4DependentPlacementData` |
+| sharp Cambie target-room theorem | **CURRENT / not yet proved** |
+| formal prime-density existence of the five special primes | pending |
+| quantitative LCM-ratio finish | pending |
+| strong Cambie theorem / full #678 | pending |
 
 ## Verified checkpoint
 
-Canonical run `31872525005` passed the generated import-graph check and the full Lean build at theorem-and-regression head `853a3486af63e86030e5b669266b6e0fe5e16ce8`. It reached all twelve Claim 4 implementation and regression modules and completed 8741 jobs. The workflow retains Mathlib's cache but skips GitHub's `.lake` archive, preserving the repair for the post-build disk exhaustion seen in run `31853895481`.
+Canonical run `31953021835` passed `lake exe mk_all --check` with `No update necessary` and the full Lean build at theorem-and-regression head `f1dba040aeeab6a4736ab8226a186d07fe86c4ed`. The build reached the D4 scale, prime-window, factorization, placement, representative-separation, and dependent-placement modules and completed **8754 jobs**.
 
-The verified boundary is deliberate:
+The current verified boundary is deliberate:
 
-- `claim4_exists_avoiding_coordinate_exclusions` proves the finite strict union-bound engine;
-- `claim4_prime_coordinate_density` proves the modular prime-coordinate specialization from explicit nondivisibility and length assumptions;
-- `claim4_weighted_density_of_representation` transports the accepted coordinate vector to a weighted residue, provided `Claim4WeightedRepresentation` is supplied;
-- `claim4_pair_crt_density` and `claim4_triple_crt_density` construct the actual basis multipliers, prove their representation contracts, and expose density endpoints with no representation assumption left to the caller;
-- `claim4_pair_y_box_density` and `claim4_triple_x_box_density` instantiate those producers with Cambie's exact coefficient boxes and internalized strict exclusion budgets;
-- `claim4_pair_y_scaled_box_density` and `claim4_triple_x_scaled_box_density` apply those boxes to the actual scaled/affine representatives;
-- `claim4_exists_claim5_residue_interfaces_of_scales` packages the special boxes, all fixed medium coordinates, and common small-prime scale data as both Claim 5 residue interfaces;
-- the construction and quantitative bounds for the scales, prime choices, and search intervals remain outside the verified theorem.
+- `claim4XScale` and `claim4YScale` are the actual general-`k` products formed by fixing all non-special coordinates;
+- their required small- and medium-prime divisibility and the five special-prime nondivisibility conditions are proved;
+- `Claim4PrimeWindowData` discharges all five search-length and `k<p²` obligations;
+- exact factorizations relate `Nx,Ny` to the full scale;
+- `claim4_exists_separated_representatives_with_claim5` constructs separated representatives from explicit separated windows;
+- `claim4_exists_close_separated_representatives_with_claim5` is closer to Cambie's actual proof: it chooses `y` first, then searches for `x` in a moving interval below the selected `y`;
+- the moving interval proves `y < x + gap`;
+- the common small-prime scale proves `x + k < y` from `x ≡ 1` and `y ≡ 0`;
+- the same representatives then satisfy both residue interfaces and the complete Claim 5 identity.
 
-The verified producer is specialized to the two- and three-prime bases used in Cambie's construction. A generic arbitrary-finite-family basis theorem is not claimed.
+What remains outside the verified theorem is **not** the CRT producer. It is the proof that Cambie's sharp quantitative target windows satisfy the finite room contract for all sufficiently large `k`, plus the later existence of the five special primes.
+
+The pair/triple producer remains specialized to the two arities actually used by Cambie. No arbitrary-finite-family CRT basis theorem is claimed.
 
 ## Sole next action
 
-Define and verify Cambie's general-`k` scales `Nx,Ny`, discharge the combined producer's divisibility, unit, and search-length premises, and choose intervals yielding the required representative bounds and `y > x + k`. Do not open the analytic finish until this D4 gate is green.
+Formalize division-safe versions of Cambie's target `y` range and closeness gap, reduce `Claim4DependentPlacementData` to width inequalities using the verified scale factorizations and search budgets, and prove those inequalities under explicit sufficiently-large-`k` hypotheses. Keep prime-window **existence** separate for the later prime-density layer. Do not open Phase E until this D4 exit gate is green.
 
 ## Main references inside this folder
 
-- `CAMBIE_PROOF_ANALYSIS.md` — mathematical architecture and exact Claim 4 audit.
+- `CAMBIE_PROOF_ANALYSIS.md` — mathematical architecture and Claim 4 audit.
 - `LEAN_FORMALIZATION_ROADMAP.md` — sole active execution roadmap.
-- `FORMALIZATION_CORRECTION_2026-08-14.md` — exact rejection of the false `(495,504,8)` construction.
+- `FORMALIZATION_CORRECTION_2026-08-14.md` — rejection of the false `(495,504,8)` construction.
 - `LEAN_TEST_PLAN.md` — superseded historical plan; not an execution source.

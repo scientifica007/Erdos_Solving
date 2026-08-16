@@ -2,16 +2,17 @@
 
 **Status:** ACTIVE — canonical execution roadmap  
 **Mode:** reconstruction and independent Lean reimplementation of Cambie (2024), not independent mathematical discovery  
-**Code-state basis:** `853a3486af63e86030e5b669266b6e0fe5e16ce8`  
+**Code-state basis:** `f1dba040aeeab6a4736ab8226a186d07fe86c4ed`  
 **Canonical CI status:** GREEN  
-**Verified run:** `31872525005`  
+**Verified run:** `31953021835`  
+**Verified build:** `mk_all --check` = `No update necessary`; canonical `lake build` = **8754 jobs**  
 **Current phase:** Phase D — CRT combinatorial engine  
-**Current target:** construct and bound the actual scales and separated representatives  
-**Expansion gate:** OPEN for D4 representatives and separation only; analytic and prime-density phases remain closed
+**Current target:** discharge Cambie's sharp dependent-placement room inequalities  
+**Expansion gate:** OPEN for the final D4 room theorem only; Phase E and prime-density closure remain closed
 
 This file is the sole operational answer to: **what is the next Lean/formalization task for #678?**
 
-The mathematical analysis remains in `CAMBIE_PROOF_ANALYSIS.md`. The old `LEAN_TEST_PLAN.md` is `SUPERSEDED` and historical.
+The mathematical analysis remains in `CAMBIE_PROOF_ANALYSIS.md`. `LEAN_TEST_PLAN.md` is superseded and historical.
 
 ---
 
@@ -22,301 +23,219 @@ Externally, Erdős #678 is proved. In this repository:
 - the independent proof attempt was rejected;
 - `M(36,8) > M(47,9)` is machine-checked;
 - `(495,504,8)` is machine-refuted and retained as a negative regression;
-- the arithmetic core is machine-checked;
-- the Claim 5 ranges `p > k` and `p ≤ k < p²` are machine-checked;
-- the capped small-prime congruence core is machine-checked;
-- the integrated small-prime Claim 5 theorem is machine-checked with reachable boundary regressions;
-- full Claim 5 is machine-checked under explicit medium- and small-prime residue hypotheses;
-- the Claim 4 finite union-bound core, modular injectivity layer, prime-coordinate density theorem, and conditional weighted consumer are machine-checked;
-- the concrete two- and three-prime CRT basis weights, inverse multipliers, weighted representation contracts, and density endpoints are machine-checked;
-- the pair/triple application residue boxes, paper/canonical coefficient translation, exact exclusion cardinalities, strict budgets, and application endpoints are machine-checked;
-- the scaled/affine application endpoints and their connection to both Claim 5 residue interfaces are machine-checked under explicit scale-support data;
-- the general-`k` construction and quantitative control of the scales and representatives are not proved;
-- the full #678 theorem is not formalized.
+- the arithmetic core and all three Claim 5 prime ranges are machine-checked;
+- full Claim 5 is machine-checked under explicit medium- and small-prime residue interfaces;
+- the Claim 4 finite-density, modular, weighted, concrete CRT, application-box, and D3 scaled-interface layers are machine-checked;
+- the general-`k` scales `Nx,Ny`, their support/unit conditions, and exact full-scale factorizations are machine-checked;
+- a fixed prime-window contract supplies all five search-length and medium-range obligations;
+- generic placement and a Cambie-style dependent placement theorem are machine-checked;
+- under explicit `Claim4DependentPlacementData`, the live theorem constructs the same representatives `x,y`, proves `x + k < y < x + gap`, and carries them through the complete Claim 5 identity;
+- the **sharp room contract itself is not yet proved for Cambie's target ranges**;
+- prime-density existence of the five special primes is not formalized;
+- the quantitative LCM-ratio finish and full #678 theorem are not formalized.
 
-A source file containing a theorem statement is not evidence that Lean accepted the theorem. Only a successful canonical build of a reachable module grants machine-checked status.
-
----
-
-## 1. Small-prime integration incident — RESOLVED
-
-Commit `ac65fb32` first made the small-prime graph live and exposed two failures. Successive canonical runs then exposed a third inference failure and two test/integration defects.
-
-Resolved items:
-
-- `SmallPrimeWindows.lean`: equality orientation repaired explicitly with symmetry.
-- `SmallPrimeValuation.lean`: natural-subtraction positivity expressed by `Nat.sub_pos_iff_lt` instead of opaque automation.
-- `SmallPrimeSup.lean`: the finset and summand supplied explicitly to `Finset.single_le_sum`.
-- `Formalization.lean`: regenerated in the exact order required by `lake exe mk_all`.
-- `SmallPrimeTests.lean`: tests instantiate the theorem rather than attempting non-reducible direct evaluation of `padicValNat`.
-
-Exit evidence:
-
-- commit `e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf`;
-- run `31845987598`;
-- `mk_all --check`: no update necessary;
-- `SmallPrimeClaim5.lean` and `SmallPrimeTests.lean`: reached;
-- canonical build: success.
-
----
-
-# Phase C — Formalization Consolidation Gate — PASSED HISTORICALLY
-
-Consolidation established:
-
-- a length-based interval API;
-- canonical `erdosM` semantics;
-- explicit positive and negative arithmetic regressions;
-- a concept-oriented Lean tree;
-- one canonical import graph;
-- finite-product valuation;
-- a green checkpoint at run `31827146122`.
-
-The consolidation checkpoint is historical; the present credited theorem-and-regression head is green at run `31872525005`.
+A source file is not evidence that Lean accepted it. Only a successful canonical build of a reachable module grants machine-checked status.
 
 ---
 
 # Phase A — Arithmetic core — PASSED
 
-## A1 — Finite-product and finite-LCM valuations — DONE / MACHINE-CHECKED
+Machine-checked:
 
-For prime `p` and nonzero finite inputs, the graph proves:
-
-```text
-v_p(product) = sum of v_p
-v_p(lcm) = supremum of v_p
-```
-
-## A2 — Reciprocal-LCM factor — DONE / MACHINE-CHECKED
-
-```text
-v_p(product / lcm) = sum of valuations - supremum of valuations
-```
-
-The natural quotient is justified by divisibility before valuation rules are applied.
-
-## A3 — Prime-power counting — DONE / MACHINE-CHECKED
-
-The graph defines prime-power divisibility counts, connects them to `padicValNat`, and proves finite-support vanishing above the valuation supremum.
+- finite-product and finite-LCM valuations;
+- reciprocal-LCM valuation;
+- prime-power counting;
+- equality from prime valuations;
+- exact interval semantics and nonzero bridges.
 
 ---
 
 # Phase B — Cambie Claim 5 — PASSED
 
-## B1 — Prime range `p > k` — DONE / MACHINE-CHECKED
+## B1 — `p > k` — DONE / MACHINE-CHECKED
 
-A block of length at most `p` contains at most one multiple of `p`; hence the product/LCM quotient has zero `p`-adic valuation. The combined theorem for the `x` and `y` blocks passed in run `31832061313`.
+Large primes contribute zero to the reciprocal-LCM valuation.
 
-## B2 — Prime range `p ≤ k < p²` — DONE / MACHINE-CHECKED
+## B2 — `p ≤ k < p²` — DONE / MACHINE-CHECKED
 
-Completed components:
+The medium-prime contribution is controlled by the explicit admissible residue interface.
 
-- exact residue-class counts for the `x` block;
-- exact residue-class counts for the `y` block;
-- uniqueness of a multiple of `p²` in the relevant blocks;
-- reciprocal-LCM valuation as the number of multiples of `p` minus one;
-- `v_p(lcm(1,...,k)) = 1`;
-- assembled medium-prime Claim 5 identity.
+## B3 — small-prime exponent range — DONE / MACHINE-CHECKED
 
-Integrated closing checkpoint: run `31836288385`, commit `25987ea7`.
+The capped small-prime congruence, window, initial-LCM, supremum, and valuation chain is live with boundary regressions.
 
-## B3 — Small-prime exponent range — DONE / MACHINE-CHECKED
+## B4 — full Claim 5 assembly — DONE / MACHINE-CHECKED
 
-Lean-facing parameterization:
-
-```text
-p^e ≤ k < p^(e+1)
-x ≡ 1 (mod p^e)
-y ≡ 0 (mod p^e)
-```
-
-Verified module classification:
-
-| Module | Status |
-|---|---|
-| `SmallPrimeRange.lean` | reachable and machine-checked |
-| `SmallPrimeInitialLCM.lean` | reachable and machine-checked |
-| `SmallPrimeWindows.lean` | repaired, reachable, and machine-checked |
-| `SmallPrimeValuation.lean` | repaired, reachable, and machine-checked |
-| `SmallPrimeSup.lean` | repaired, reachable, and machine-checked |
-| `SmallPrimeClaim5.lean` | reachable and machine-checked |
-| `SmallPrimeTests.lean` | boundary theorem instantiations and a negative congruence regression checked |
-
-Closing checkpoint: run `31845987598`, commit `e5cbd8ea01550ae62b63d4a4c0c58a9621a8f2bf`.
-
-## B4 — Full Claim 5 assembly — DONE / MACHINE-CHECKED
-
-Completed components:
-
-- `Claim5MediumResidues` and `Claim5SmallResidues` expose exactly the data expected from the later CRT layer;
-- `intervalProd_ne_zero_of_mem_ne_zero`, `intervalLCM_ne_zero_of_mem_ne_zero`, and `intervalProd_div_intervalLCM_ne_zero` discharge the extensionality side conditions;
-- `claim5_prime_valuation_of_residues` partitions every prime into the large, medium, or small range and applies the verified theorem;
-- `claim5_full_identity_of_residues` derives the natural-number identity from equality of all prime valuations;
-- `Claim5AssemblyTests.lean` provides a reachable theorem-interface regression at `k = 2`.
-
-Exit evidence: commit `61431b8881e481a56d06e00d702eabb6b64ae471`, run `31847883886`, `mk_all --check` reported no update, both new modules were reached, and the 8729-job canonical build succeeded.
-
-Boundary: this theorem proves Claim 5 **conditional on the explicit residue interfaces**. The later D1d producer and D2 application boxes now select coefficient data, but D3 has not yet packaged those outputs as the two interfaces; prime-density input and Erdős #678 also remain outside this result.
+`claim5_full_identity_of_residues` converts the explicit medium/small residue interfaces into the final natural-number identity.
 
 ---
 
-# Phase D — CRT combinatorial engine — CURRENT
+# Phase C — Formalization consolidation gate — PASSED HISTORICALLY
 
-## D1 — Claim 4 density theorem and concrete CRT producer — DONE / MACHINE-CHECKED FOR THE TWO-/THREE-PRIME APPLICATIONS
+The repository has:
 
-### D1a — Finite strict union bound — DONE / MACHINE-CHECKED
+- a length-safe interval API;
+- one canonical Lean import graph;
+- `mk_all --check` in CI;
+- GitHub Actions as the authoritative reproducible Lean gate;
+- explicit positive and negative regressions;
+- state/roadmap synchronization rules.
 
-`Claim4Density.lean` proves `claim4_exists_avoiding_coordinate_exclusions`: injectivity bounds the rejected positions for each coordinate, `Finset.card_biUnion_le` bounds their union, and a strict total exclusion budget leaves an accepted position.
-
-`Claim4DensityTests.lean` checks:
-
-- a positive case where two singleton exclusions cannot cover five positions;
-- a negative equality-budget case where two exclusions do cover two positions.
-
-### D1b — Modular coordinate injectivity — DONE / MACHINE-CHECKED
-
-`Claim4Modular.lean` proves:
-
-- `interval_mul_mod_injective_of_coprime`;
-- `interval_mul_mod_injective_of_prime`;
-- `claim4_prime_coordinate_density`.
-
-The formal statement uses the exact integer budget
-
-```text
-sum_i |excluded_i| < interval length
-```
-
-instead of introducing a real-valued `epsilon`. This is the proof-consumer form of the paper's inequality `epsilon * sum_i p_i < n`.
-
-`Claim4ModularTests.lean` checks a unit multiplier modulo five and records failure of injectivity for a multiplier divisible by five.
-
-### D1c — Weighted consumer interface — DONE / MACHINE-CHECKED
-
-`Claim4Weighted.lean` defines:
-
-- `claim4WeightedCombination`;
-- `Claim4WeightedRepresentation`;
-- `claim4_weighted_density_of_representation`.
-
-The last theorem combines the verified coordinate-density theorem with a supplied representation contract. Its positive and zero-weight negative regressions are live in `Claim4WeightedTests.lean`.
-
-This is a **consumer theorem**, not a proof that any particular CRT weights satisfy the contract.
-
-### D1d — Actual pair/triple CRT-basis producer — DONE / MACHINE-CHECKED
-
-`Claim4CRT.lean` now discharges the producer contract for the two concrete arities used by Cambie:
-
-- pair coordinates `p,q`, modulus `p*q`, and weights `q,p`;
-- triple coordinates `p,q,r`, modulus `(p*q)*r`, and weights `q*r,p*r,p*q`;
-- coordinate inverses constructed from the exact coprimality hypotheses;
-- local scaled-coordinate congruences and zero-off-coordinate congruences;
-- pair and triple CRT composition through `Nat.modEq_and_modEq_iff_modEq_mul`;
-- nondivisibility of every constructed multiplier in its own prime coordinate;
-- `Claim4WeightedRepresentation` for both bases;
-- `claim4_pair_crt_density` and `claim4_triple_crt_density`, which internalize the producer and leave no representation assumption for the caller.
-
-`Claim4CRTTests.lean` checks concrete pair and triple representations, existence of bounded nondivisible multipliers, failure of the **full** pair representation contract for a divisible multiplier, and direct reachability of both density endpoints.
-
-The generic arbitrary-finite-family CRT basis is not formalized. This is not credited as a generic proof of the paper's Claim 4 statement; it is the verified producer for the two- and three-prime applications required by the current reconstruction.
-
-Exit evidence:
-
-- pair producer: commit `5ab1ec7ab23ee2ce1be437432e713d6dbd2662a3`, run `31856857400`;
-- pair/triple theorem graph: commit `ee42cef70d1cf7108b68546bf851f19eaf96c2f5`, run `31857628246`;
-- strengthened producer/consumer regressions: commit `12306b5ec393f5521ef2ebaa7ca09c7443e06867`, run `31858024749`.
-
-### D1 implementation incidents — RESOLVED
-
-- run `31856460100` rejected the wrong direction `.mpr`; the local-to-global CRT theorem is used with `.mp`;
-- run `31857253699` exposed a nested proof-block indentation error in the triple composition;
-- neither repair weakened a theorem statement or introduced a new assumption.
-
-## D2 — Application residue boxes — DONE / MACHINE-CHECKED
-
-`Claim4ApplicationBoxes.lean` formalizes Cambie's exact coefficient boxes and instantiates the verified pair/triple CRT-density endpoints.
-
-Completed obligations:
-
-1. `claim4PaperCoefficient` translates canonical zero to paper coefficient `p` and preserves the residue modulo `p`;
-2. `claim4XExcluded` and `claim4YExcluded` are the exact canonical complements of the paper intervals;
-3. `claim4XExcluded_card` proves cardinality `k % p`, while `claim4YExcluded_card` proves `p - k % p - 1`;
-4. `claim4PairYSearchLength` and `claim4TripleXSearchLength` are exactly the summed exclusion cards plus one;
-5. `claim4_pair_y_box_density` and `claim4_triple_x_box_density` expose the required coefficient inequalities and weighted congruences with the strict budget internalized;
-6. `Claim4ApplicationBoxesTests.lean` checks the zero-to-`p` endpoint, exact cards, concrete pair/triple instantiations, and failure at equality budget.
-
-Exit evidence: commit `b2a05790b4ae466133e792ca6afa3eae730c0427`, run `31870476963`; `mk_all --check` reported `No update necessary`, both new modules were reached, and the full 8739-job build succeeded.
-
-Boundary: D2 proves the normalized coefficient boxes and weighted representatives. The later D3 layer handles the essential scaling to actual `x,y`; D2 alone must not be cited as the Claim 5 connection and does not prove the D4 size/separation conditions.
-
-### D2 implementation incident — RESOLVED
-
-Run `31870123794` exposed four local proof-closure issues: one explicit `Nat.ModEq.refl`, one use of positivity, and two branches already closed by `simp`. Commit `b2a05790b4ae466133e792ca6afa3eae730c0427` repaired those endpoints without changing a definition, theorem statement, or assumption.
-
-## D3 — Claim 5 interface connection — DONE / MACHINE-CHECKED UNDER EXPLICIT SCALE-SUPPORT DATA
-
-`Claim4Claim5Interface.lean` distinguishes the normalized D2 coordinates from the actual representatives `x = 1 + z*Nx` and `y = z*Ny`, then connects those representatives to both Claim 5 residue interfaces.
-
-Completed obligations:
-
-1. `claim4_modEq_paperCoefficient_mod` turns the paper representative of a canonical remainder into a direct congruence witness;
-2. `interval_one_add_mul_mod_injective_of_prime` proves the affine injectivity needed for `x = 1 + z*Nx`;
-3. `claim4_pair_y_scaled_box_density` and `claim4_triple_x_scaled_box_density` apply the exact D2 exclusions to the actual scaled residues;
-4. `Claim4SmallPrimeScaleData` records common prime-power divisibility, and `claim5SmallResidues_of_scales` derives the unchanged small-prime interface;
-5. `claim5MediumResidues_of_pair_triple_boxes` combines the five special boxes with the fixed other medium coordinates;
-6. `claim4_exists_claim5_residue_interfaces_of_scales` produces both interfaces from prime, unit, search-length, medium-support, and small-support data;
-7. `Claim4Claim5InterfaceTests.lean` checks a nonvacuous small-prime case and a `k = 4` producer that reaches `claim5_full_identity_of_residues`, plus a malformed medium-interface regression.
-
-Exit evidence: commit `853a3486af63e86030e5b669266b6e0fe5e16ce8`, run `31872525005`; `mk_all --check` reported `No update necessary`, both D3 modules were reached, and the full 8741-job build succeeded.
-
-Boundary: the combined theorem assumes explicit data proving which medium primes divide `Nx,Ny`, which small prime powers divide both, that each special prime is a unit for its scale, and that the exact pair/triple search lengths fit. Constructing those scales and proving the quantitative placement of the resulting representatives belongs to D4.
-
-### D3 implementation incident — RESOLVED
-
-Run `31872158679` built the complete D3 theorem module and rejected only two test lines where `norm_num` continued after closing an `interval_cases` branch. Commit `853a3486af63e86030e5b669266b6e0fe5e16ce8` separated the branches without changing any definition, theorem statement, or assumption.
-
-## D4 — Representatives and separation — CURRENT
-
-Construct the actual scales and prime choices, discharge every premise of `claim4_exists_claim5_residue_interfaces_of_scales`, and prove the quantitative representative bounds and `y > x + k` required by Cambie's application.
-
-Exact obligations:
-
-1. define `Nx` and `Ny` from the fixed small-prime powers and all non-special medium primes;
-2. prove their divisibility at fixed coordinates and their nondivisibility at the five special primes;
-3. isolate the prime-window hypotheses for two primes near `k/2` and three near `k` and derive the exact pair/triple search-length inequalities;
-4. choose the `zx,zy` search intervals so the resulting `x,y` lie in Cambie's target ranges;
-5. prove positivity, `x < y`, and `y > x + k`, then feed the verified Claim 5 identity;
-6. retain the prime-density dependency as an explicit later input rather than adding an axiom here.
-
-Exit gate: a reachable theorem constructs quantitatively separated `x,y` satisfying the full Claim 5 identity from a clearly isolated prime-window hypothesis, with a green exact-head run. Do not open Phase E before this gate.
-
-Historical theorem-code checkpoint for D1a–D1c: commit `f9f6c068fc199a6639a12befadfda126dd99764c`, run `31853105621`.
-
-D1a–D1d gate: commit `12306b5ec393f5521ef2ebaa7ca09c7443e06867`, run `31858024749`; `mk_all --check` reported no update, all eight Claim 4 modules were reached, the 8737-job build succeeded, and GitHub `.lake` cache restore/save remained skipped to avoid the post-build disk exhaustion recorded in run `31853895481`.
-
-D2 gate: commit `b2a05790b4ae466133e792ca6afa3eae730c0427`, run `31870476963`; `mk_all --check` reported no update, all ten Claim 4 modules were reached, the 8739-job build succeeded, and GitHub `.lake` cache restore/save remained skipped.
-
-D3 gate: commit `853a3486af63e86030e5b669266b6e0fe5e16ce8`, run `31872525005`; `mk_all --check` reported no update, all twelve Claim 4 modules were reached, the 8741-job build succeeded, and GitHub `.lake` cache restore/save remained skipped.
+The old consolidation checkpoint is historical; the current credited D4 theorem-and-regression head is `f1dba040...`.
 
 ---
 
-# Phase E — Quantitative finish — PENDING
+# Phase D — Claim 4 / CRT combinatorial engine — CURRENT
+
+## D1 — finite density, modular coordinates, weighted CRT — DONE / MACHINE-CHECKED
+
+Machine-checked:
+
+- strict union bound;
+- modular injectivity under nondivisibility;
+- prime-coordinate density;
+- weighted representation consumer;
+- concrete pair/triple CRT basis producers;
+- representation contracts and their positive/negative regressions.
+
+## D2 — application residue boxes — DONE / MACHINE-CHECKED
+
+Machine-checked:
+
+- paper coefficient convention `{1,...,p}` with `p` representing residue zero;
+- exact `x` and `y` exclusion sets;
+- exact excluded cardinalities;
+- pair/triple search lengths equal to total exclusions plus one;
+- two-prime `y` and three-prime `x` application endpoints.
+
+## D3 — scaled Claim 4 → Claim 5 interface — DONE / MACHINE-CHECKED
+
+Machine-checked:
+
+- `y = z*Ny` and `x = 1 + z*Nx`;
+- affine/scaled modular injectivity;
+- fixed other-medium coordinate packaging;
+- `Claim4SmallPrimeScaleData`;
+- derivation of both Claim 5 residue interfaces;
+- a reachable regression crossing into the complete Claim 5 identity.
+
+## D4 — actual scales, representatives, and separation — CURRENT
+
+### D4a — constructed scales — DONE / MACHINE-CHECKED
+
+Definitions: `claim4SmallScale`, `claim4Scale`, `claim4XScale`, `claim4YScale`.
+
+Proved:
+
+- every required small-prime power divides both scales;
+- every non-special medium prime divides the appropriate scale;
+- each special prime is a unit/nondivisor for its free-coordinate scale.
+
+Checkpoint: head `a259da8a...`, run `31947099017`, 8745 jobs.
+
+### D4b — constructed-scale D3 wrapper — DONE / MACHINE-CHECKED
+
+`claim4_exists_claim5_residue_interfaces_of_constructed_scales` automatically discharges D3's scale-support, fixed-coordinate divisibility, and five special-unit premises.
+
+Checkpoint included in `a259da8a...`, run `31947099017`.
+
+### D4c — prime-window contract — DONE / MACHINE-CHECKED
+
+`Claim4PrimeWindowData` isolates:
+
+- two distinct `y` primes in `(k/2, 2k/3]`;
+- three pairwise-distinct `x` primes in a fixed near-`k` window.
+
+From this contract Lean derives:
+
+- `k < p²` for all five primes;
+- all five exact pair/triple search-length bounds.
+
+No prime-density theorem is imported; existence of such primes for all sufficiently large `k` remains a separate later dependency.
+
+Checkpoint: head `eef7d931...`, run `31948527075`, 8747 jobs.
+
+### D4d — factorization and quantitative placement primitives — DONE / MACHINE-CHECKED
+
+Machine-checked:
+
+- `claim4FullScale`;
+- exact factorizations `Nx*(xp*xq*xr)=fullScale` and `Ny*(yp*yq)=fullScale`;
+- positivity of the scales;
+- canonical `claim4SearchStart`;
+- conversion of search membership into lower/upper bounds;
+- `claim4_exists_y_box_in_window` and `claim4_exists_x_box_in_window`.
+
+Checkpoint: head `b0914c87...`, run `31949164598`, 8750 jobs.
+
+### D4e — separated representatives and full Claim 5 consumption — DONE / MACHINE-CHECKED
+
+Two live endpoints now exist.
+
+1. `claim4_exists_separated_representatives_with_claim5`
+   - takes explicit separated numerical windows;
+   - constructs `0 < x < y`;
+   - proves `x+k<y`;
+   - proves both residue interfaces;
+   - invokes the complete Claim 5 identity.
+
+   Checkpoint: head `89f500f7...`, run `31951779394`, 8752 jobs.
+
+2. `claim4_exists_close_separated_representatives_with_claim5`
+   - chooses the actual `y` first;
+   - then places `x` in a moving interval below that selected `y`;
+   - obtains `y < x + gap` from that moving interval;
+   - obtains `x+k<y` from the common-small-scale congruences `x ≡ 1`, `y ≡ 0`;
+   - feeds the same representatives into both Claim 5 residue interfaces and the full Claim 5 identity.
+
+   Checkpoint: head `72432d4b...`, run `31952559027`, 8754 jobs.  
+   Cleanup checkpoint using kernel `decide`: head `f1dba040...`, run `31953021835`, 8754 jobs.
+
+### D4f — sharp Cambie room theorem — CURRENT / LAST D4 OBLIGATION
+
+The remaining object is not another CRT theorem. It is the finite quantitative contract
+
+`Claim4DependentPlacementData k xp xq xr yp yq yLower yUpper gap`.
+
+The exact remaining work is:
+
+1. define division-safe Lean versions of Cambie's target scales:
+   - an absolute `y` range compatible with the paper's `M/(5C)(1+1/k) < y < M/(4C)-k`;
+   - a closeness gap compatible with `M/(5Ck)`;
+2. reduce `y_room` to a bound on the two-prime search-block width using `Ny*(yp*yq)=fullScale`;
+3. reduce the moving `x_room` to a bound on the three-prime search-block width using `Nx*(xp*xq*xr)=fullScale`;
+4. prove the general small-scale gap `claim4SmallScale k` large enough to force `m-1>k`;
+5. discharge those inequalities under explicit sufficiently-large-`k` assumptions;
+6. instantiate the dependent endpoint with those sharp parameters;
+7. add boundary regressions and pass exact-head CI.
+
+### D4 exit gate
+
+D4 is complete only when a reachable theorem supplies the **actual sharp dependent placement data** and invokes the verified close-and-separated Claim 5 endpoint, with exact-head CI green.
+
+Do not mark D4 complete merely because the conditional endpoint exists.
+
+---
+
+# Phase E — Quantitative finish — PENDING / CLOSED
 
 ## E1 — LCM-ratio estimate
 
-Derive the final ratio bound from Claim 5 with every inequality direction checked.
+Formalize the transformation from Claim 5 to `LCM_x / LCM_y = M * product_x / product_y` and the lower bound driven by the verified size/closeness inequalities.
 
-## E2 — Prime-density dependency
+## E2 — prime-density dependency
 
-Identify and isolate the exact theorem used. An explicit unproved hypothesis must remain visibly conditional.
+Formalize or import the theorem producing two suitable primes near `k/2` and three suitable primes near `k` for all sufficiently large `k`.
 
-## E3 — Strong Cambie theorem
+This dependency must remain explicit; do not smuggle it into D4 as an axiom.
 
-Formalize the sufficiently-large-`k` result for arbitrary fixed `C ≥ 1`.
+## E3 — strong Cambie theorem
 
-## E4 — Deduce Erdős #678
+For every fixed `C ≥ 1` and all sufficiently large `k`, construct `x,y` with `0 < x < y`, `y > x+k`, and `LCM_x > C*LCM_y`.
 
-Set `C = 1`, translate `n=x-1`, `m=y-1`, and prove all domain and infinitude conditions.
+## E4 — Erdős #678
+
+Take `C=1` and translate `n=x-1`, `m=y-1`.
 
 ---
 
@@ -324,26 +243,24 @@ Set `C = 1`, translate `n=x-1`, `m=y-1`, and prove all domain and infinitude con
 
 ```text
 Erdős #678
-├── Consolidation gate ........................... PASSED AT CHECKPOINT
+├── Consolidation gate ........................... PASSED
 ├── Arithmetic core .............................. PASSED
 ├── Cambie Claim 5 ............................... PASSED
-│   ├── B1: p > k ................................ MACHINE-CHECKED
-│   ├── B2: p ≤ k < p² .......................... MACHINE-CHECKED
-│   ├── B3: small-prime exponent range ........... MACHINE-CHECKED
-│   └── B4: full Claim 5 assembly ................ MACHINE-CHECKED
 └── Claim 4 / CRT engine .......................... CURRENT
-    ├── D1a: finite union bound ................... MACHINE-CHECKED
-    ├── D1b: modular coordinate density .......... MACHINE-CHECKED
-    ├── D1c: weighted consumer interface ......... MACHINE-CHECKED
-    ├── D1d: pair/triple CRT-basis producer ...... MACHINE-CHECKED
+    ├── D1: finite/modular/weighted CRT .......... MACHINE-CHECKED
     ├── D2: application residue boxes ............ MACHINE-CHECKED
     ├── D3: Claim 5 interface connection ......... MACHINE-CHECKED
-    └── D4: representatives and separation ....... CURRENT
+    ├── D4a: constructed scales .................. MACHINE-CHECKED
+    ├── D4b: constructed-scale wrapper ........... MACHINE-CHECKED
+    ├── D4c: prime-window/search budgets ......... MACHINE-CHECKED
+    ├── D4d: factorization/placement primitives .. MACHINE-CHECKED
+    ├── D4e: close + separated representatives ... MACHINE-CHECKED UNDER ROOM CONTRACT
+    └── D4f: sharp Cambie room theorem ............ CURRENT
 ```
 
 ## Sole next action
 
-Define and verify the actual scales `Nx,Ny`, discharge the combined scaled producer's divisibility/unit/search-length premises, and choose search intervals yielding Cambie's representative bounds and `y > x + k`. Do not open the analytic finish until this D4 theorem and its boundary regressions pass the canonical gate.
+Prove `Claim4DependentPlacementData` for Cambie's actual target windows from the current scale factorization, search-length bounds, and explicit sufficiently-large-`k` inequalities. Keep special-prime **existence** as the separate prime-density dependency. Do not open Phase E until the D4f theorem and its regressions pass canonical exact-head CI.
 
 ## Global audit gates
 
