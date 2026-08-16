@@ -11,6 +11,8 @@ import Formalization.Erdos678.Claim4Density
 import Formalization.Erdos678.Claim4DensityTests
 import Formalization.Erdos678.Claim4DependentPlacement
 import Formalization.Erdos678.Claim4DependentPlacementTests
+import Formalization.Erdos678.Claim4FullScaleLCM
+import Formalization.Erdos678.Claim4FullScaleLCMTests
 import Formalization.Erdos678.Claim4Modular
 import Formalization.Erdos678.Claim4ModularTests
 import Formalization.Erdos678.Claim4Placement
