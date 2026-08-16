@@ -4,6 +4,8 @@ import Formalization.Erdos678.Claim4ApplicationBoxesTests
 import Formalization.Erdos678.Claim4CRT
 import Formalization.Erdos678.Claim4CRTTests
 import Formalization.Erdos678.Claim4CambieLargeK
+import Formalization.Erdos678.Claim4CambieLargeKEventually
+import Formalization.Erdos678.Claim4CambieLargeKEventuallyTests
 import Formalization.Erdos678.Claim4CambieLargeKTests
 import Formalization.Erdos678.Claim4CambieRoom
 import Formalization.Erdos678.Claim4CambieRoomTests
