@@ -42,6 +42,7 @@ example :
 /-- Falling to the half boundary is not admitted by the `y` window. -/
 example : ¬ Claim4PrimeWindowData 10 11 13 17 5 7 := by
   intro h
-  omega
+  have hhalf : 10 < 2 * 5 := h.yp_above_half
+  norm_num at hhalf
 
 end Erdos678
