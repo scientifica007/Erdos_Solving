@@ -29,6 +29,8 @@ import Formalization.Erdos678.Claim4Placement
 import Formalization.Erdos678.Claim4PlacementTests
 import Formalization.Erdos678.Claim4PrimeWindows
 import Formalization.Erdos678.Claim4PrimeWindowsTests
+import Formalization.Erdos678.Claim4RelativePrimePNT
+import Formalization.Erdos678.Claim4RelativePrimePNTTests
 import Formalization.Erdos678.Claim4RelativePrimeProvider
 import Formalization.Erdos678.Claim4RelativePrimeProviderTests
 import Formalization.Erdos678.Claim4RepresentativeSeparation
