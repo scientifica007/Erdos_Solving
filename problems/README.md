@@ -15,7 +15,7 @@ This directory contains local research records for nine selected Erdős problems
 | 275 | completed successful blind cycle and historical comparison | `275/comparison.md` |
 | 303 | blind attempt incomplete; reference comparison completed | `303/comparison.md` |
 | 447 | contaminated benchmark; not an active blind challenge | `447/README.md` |
-| 678 | active Cambie reconstruction in Lean; Claim 5 and the D4 mathematical gate are machine-checked through the sharp representative endpoint under explicit large-`k` and sharp-prime-window data; synchronized documentation is under exact-head CI; E1 LCM-ratio work follows if green; sharp-prime existence remains E2 | `678/LEAN_FORMALIZATION_ROADMAP.md` |
+| 678 | active Cambie reconstruction in Lean; Claim 5 and the complete finite D4 arithmetic/CRT construction are machine-checked through the sharp Cambie representative endpoint; **Phase E1 LCM-ratio algebra is current**; formal existence of the five sharp-window primes remains the separate E2 dependency | `678/LEAN_FORMALIZATION_ROADMAP.md` |
 | 1125 | blind attempt failed; historical reconstruction completed | `1125/comparison/historical-reconstruction.md` |
 
 ## Reading rule
