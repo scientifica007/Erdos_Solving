@@ -85,6 +85,7 @@ theorem claim4_exists_separated_representatives_with_claim5
     simpa [x] using hxbounds0
   have hybounds : yLower < y ∧ y < yUpper := by
     simpa [y] using hybounds0
+  have hsep : xUpper + k ≤ yLower := hwindow.separated_windows
   have hxpos : 0 < x := by
     dsimp [x]
     omega
