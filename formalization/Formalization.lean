@@ -40,6 +40,8 @@ import Formalization.Erdos678.Claim5Assembly
 import Formalization.Erdos678.Claim5AssemblyTests
 import Formalization.Erdos678.Claim5LCMAlgebra
 import Formalization.Erdos678.Claim5LCMAlgebraTests
+import Formalization.Erdos678.Claim5ProductEstimate
+import Formalization.Erdos678.Claim5ProductEstimateTests
 import Formalization.Erdos678.ConcreteTests
 import Formalization.Erdos678.Intervals
 import Formalization.Erdos678.LCMValuation
