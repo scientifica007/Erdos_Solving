@@ -40,22 +40,18 @@ Erdos_Solving = مختبر مفتوح لدراسة عملية البحث الر�
 
 ## الحالة التشغيلية الحالية
 
-> **مزامنة الحالة:** 16 أوت 2026. Phase D متحققة آلياً على الرأس النهائي القابل للوصول `eb5ffebffcb199cc76c83a941da955f4ecfebde5` عبر التشغيل `31963803495` (**8766 jobs**). Phase E1 أُغلقت رياضياً على الرأس `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a` عبر التشغيل `31968714909`، مع `mk_all --check = No update necessary` وبناء كامل من **8770 jobs**. **Phase E2 هي المرحلة التشغيلية الحالية.**
+> **مزامنة الحالة:** 16 أوت 2026. إعادة بناء Erdős #678 عبر Cambie اكتملت رياضياً في Lean على فرع E4. الرأس الرياضي النهائي `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941` اجتاز التشغيل `31976903757` مع `mk_all --check = No update necessary` وبناء كامل من **8806 jobs**. العمل الحالي هو مزامنة التوثيق ومراجعة سلسلة PRs، وليس مرحلة رياضية جديدة.
 
-- المسألة النشطة: **Erdős #678**.
+- المسألة النشطة تشغيلياً: **Erdős #678** في مرحلة الإغلاق والتكامل.
 - نمط العمل: **إعادة بناء برهان Cambie (2024) وإعادة تنفيذه في Lean**، لا محاولة اكتشاف مستقلة عمياء.
-- Claim 5: النطاقات الثلاثة والهوية الطبيعية النهائية متحققة آلياً تحت واجهتي البواقي الصريحتين.
-- Claim 4 / Phase D: **PASSED** حتى theorem sharp Cambie النهائي تحت large-`k` وsharp-prime-window data صريحة.
-- Phase E1: **PASSED / MACHINE-CHECKED**:
-  - exact `intervalLCM ∣ intervalProd` bridge؛
-  - cross-multiplication آمن في `ℕ` لهوية Claim 5؛
-  - نقل product inequality إلى LCM inequality؛
-  - product-ratio estimate من نطاق Cambie والقرب؛
-  - endpoint نهائي `claim4_exists_cambie_lcm_ratio_of_sharp_windows` يثبت
-    `C * intervalLCM y (k+1) < intervalLCM x k` تحت بيانات D4 الصريحة.
-- **E2 الحالي:** formalize/import وجود الأوليات الخمس في الأشرطة الحادة لكل `k` كبير بما يكفي؛ لا يوجد axiom يخفي هذا الاعتماد.
-- E3: theorem Cambie القوي بعد دمج E1 وE2.
-- E4: Erdős #678 عند `C=1` وترجمة فهارس الفترات.
+- Claim 5: **PASSED / MACHINE-CHECKED**.
+- Claim 4 / Phase D: **PASSED / MACHINE-CHECKED**.
+- Phase E1 — quantitative LCM-ratio estimate: **PASSED**.
+- Phase E2 — sharp prime density: **PASSED** باستخدام `AxiomMath/PrimeNumberTheoremAnd` المثبت على revision محدد، بلا prime-density axiom مخصص.
+- Phase E3 — strong eventual Cambie theorem: **PASSED**.
+- Phase E4 — canonical Erdős #678 translation and infinitude: **PASSED**.
+- theorem النهائي `erdos678_unbounded_witnesses` يعطي شاهداً قانونياً فوق كل lower bound على `k`.
+- theorem `erdos678_good_lengths_infinite` يثبت أن مجموعة أطوال الكتل الصالحة لا نهائية.
 
 ## حصيلة التجارب
 
@@ -68,7 +64,7 @@ Erdos_Solving = مختبر مفتوح لدراسة عملية البحث الر�
 | #275 | دورة ناجحة: برهان مستقل مدقق ومجمد، ثم مقارنة تاريخية |
 | #303 | المحاولة العمياء غير مكتملة؛ المقارنة المرجعية مكتملة |
 | #447 | معيار ملوث؛ لا يجوز وصفه بتجربة عمياء نشطة |
-| #678 | Claim 5 وPhase D وPhase E1 machine-checked؛ **E2 sharp prime-density CURRENT**؛ E3/E4 pending |
+| #678 | **إعادة بناء Cambie مكتملة ومتحققة آلياً في Lean على فرع E4**؛ theorem قانوني غير محدود + لا نهائية أطوال جيدة |
 | #1125 | المحاولة العمياء فشلت؛ إعادة البناء التاريخية مكتملة |
 
 ## ترتيب مصادر الحالة
