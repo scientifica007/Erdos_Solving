@@ -47,10 +47,8 @@ theorem claim4_exists_five_strips_of_relative_prime_provider
     dsimp [d]
     simpa [mul_comm] using Nat.div_mul_le_self k q
   have hdpos : 0 < d := by
-    have hone : 1 ≤ k / q := by
-      apply (Nat.le_div_iff_mul_le hq).2
-      simpa using hqk
-    simpa [d] using hone
+    dsimp [d]
+    exact (Nat.one_le_div_iff hq).2 hqk
   have h6d : 6 * d ≤ k := by
     calc
       6 * d ≤ q * d := Nat.mul_le_mul_right d hq_ge_six
