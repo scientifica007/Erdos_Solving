@@ -2,6 +2,7 @@ import Formalization.Erdos678.Claim5ProductEstimate
 
 /-!
 Reachable regressions for the E1b quantitative product estimate.
+The file is kept in the canonical graph so exact-head CI checks the E1b exit.
 -/
 
 namespace Erdos678
