@@ -36,6 +36,17 @@ def claim4CambieYLower (C k : ℕ) : ℕ :=
 def claim4CambieYUpper (C k : ℕ) : ℕ :=
   claim4FullScale k / (4 * C) - k
 
+/-- Cambie's closeness scale is automatically no larger than the lower target
+endpoint.  This is structural, not a large-`k` hypothesis. -/
+theorem claim4CambieGap_le_yLower (C k : ℕ) :
+    claim4CambieGap C k ≤ claim4CambieYLower C k := by
+  unfold claim4CambieGap claim4CambieYLower
+  apply Nat.div_le_div_right
+  calc
+    claim4FullScale k = claim4FullScale k * 1 := by simp
+    _ ≤ claim4FullScale k * (k + 1) := by
+      exact Nat.mul_le_mul_left (claim4FullScale k) (by omega)
+
 /-- Finite arithmetic obligations sufficient for the width-form dependent
 placement contract at Cambie's target scales.
 
@@ -54,6 +65,29 @@ structure Claim4CambieRoomBudgetData
       claim4CambieYUpper C k
   gap_le_yLower : claim4CambieGap C k ≤ claim4CambieYLower C k
   small_scale_gap : k + 2 ≤ claim4SmallScale k
+
+/-- Minimal current D4f contract: the gap/lower-window comparison is omitted
+because it follows from the definitions for every `C,k`. -/
+structure Claim4CambieRoomCoreData
+    (C k xp xq xr yp yq : ℕ) : Prop where
+  y_search_budget :
+    (5 * C * k) * (claim4PairYSearchLength k yp yq + 1) ≤ yp * yq
+  x_search_budget :
+    (5 * C * k) * (claim4TripleXSearchLength k xp xq xr + 2) ≤
+      xp * xq * xr
+  target_window_room :
+    claim4CambieYLower C k + claim4CambieGap C k ≤
+      claim4CambieYUpper C k
+  small_scale_gap : k + 2 ≤ claim4SmallScale k
+
+/-- Promote the reduced core contract to the full budget contract without any
+additional hypothesis. -/
+theorem Claim4CambieRoomCoreData.toBudgetData
+    {C k xp xq xr yp yq : ℕ}
+    (h : Claim4CambieRoomCoreData C k xp xq xr yp yq) :
+    Claim4CambieRoomBudgetData C k xp xq xr yp yq := by
+  exact ⟨h.y_search_budget, h.x_search_budget, h.target_window_room,
+    claim4CambieGap_le_yLower C k, h.small_scale_gap⟩
 
 /-- The sharp two-prime budget bounds the actual `y` search width by Cambie's
 closeness scale. -/
@@ -173,5 +207,22 @@ theorem claim4_exists_cambie_target_representatives_with_claim5
         intervalLCM 1 k * (intervalProd x k / intervalLCM x k) := by
   exact claim4_exists_close_separated_representatives_with_claim5
     hprime (h.toWidthData hC hprime).toDependentPlacementData
+
+/-- Reduced-core version of the D4f endpoint. -/
+theorem claim4_exists_cambie_target_representatives_with_claim5_of_core
+    {C k xp xq xr yp yq : ℕ}
+    (hC : 0 < C)
+    (hprime : Claim4PrimeWindowData k xp xq xr yp yq)
+    (h : Claim4CambieRoomCoreData C k xp xq xr yp yq) :
+    ∃ x y : ℕ,
+      0 < x ∧ 0 < y ∧ x < y ∧ x + k < y ∧
+      y < x + claim4CambieGap C k ∧
+      claim4CambieYLower C k < y ∧ y < claim4CambieYUpper C k ∧
+      Claim5MediumResidues x y k ∧
+      Claim5SmallResidues x y k ∧
+      intervalProd y (k + 1) / intervalLCM y (k + 1) =
+        intervalLCM 1 k * (intervalProd x k / intervalLCM x k) := by
+  exact claim4_exists_cambie_target_representatives_with_claim5
+    hC hprime h.toBudgetData
 
 end Erdos678
