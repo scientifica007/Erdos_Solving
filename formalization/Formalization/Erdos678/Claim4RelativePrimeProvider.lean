@@ -50,7 +50,7 @@ theorem claim4_relative_prime_witness_in_additive_strip
 
 /-- Explicit eventual relative-prime input.  This is the natural-number shape
 that a PNT consequence such as a `prime_between` theorem can discharge. -/
-structure Claim4RelativePrimeProvider (q : ℕ) : Prop where
+structure Claim4RelativePrimeProvider (q : ℕ) where
   threshold : ℕ
   prime_after :
     ∀ n : ℕ, threshold ≤ n →
