@@ -28,6 +28,8 @@ import Formalization.Erdos678.Claim4RoomReductionTests
 import Formalization.Erdos678.Claim4ScaleFactorization
 import Formalization.Erdos678.Claim4Scales
 import Formalization.Erdos678.Claim4ScalesTests
+import Formalization.Erdos678.Claim4SmallScaleGap
+import Formalization.Erdos678.Claim4SmallScaleGapTests
 import Formalization.Erdos678.Claim4Weighted
 import Formalization.Erdos678.Claim4WeightedTests
 import Formalization.Erdos678.Claim5Assembly
