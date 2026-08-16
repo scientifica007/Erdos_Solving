@@ -56,7 +56,7 @@ example :
       have hbasele : xBaseUpper ≤ y := by
         exact Nat.le_of_lt (by simpa [yLower] using hyLower)
       simpa [xBaseUpper] using hbasele
-    · native_decide
+    · decide
   rcases claim4_exists_close_separated_representatives_with_claim5
       hprime hplace with
     ⟨x, y, hxpos, hypos, hxy, hgap, hclose,
