@@ -1,4 +1,4 @@
-import Formalization.Erdos678.Claim4CambieRoom
+import Formalization.Erdos678.Claim4ScaleFactorization
 
 /-!
 A uniform lower bound for Cambie's common small-prime scale.
