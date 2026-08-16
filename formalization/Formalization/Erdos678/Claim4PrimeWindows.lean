@@ -154,18 +154,21 @@ theorem Claim4PrimeWindowData.xp_above_half
     {k xp xq xr yp yq : ℕ}
     (h : Claim4PrimeWindowData k xp xq xr yp yq) :
     k < 2 * xp := by
+  have hnear := h.xp_near_k
   omega
 
- theorem Claim4PrimeWindowData.xq_above_half
+theorem Claim4PrimeWindowData.xq_above_half
     {k xp xq xr yp yq : ℕ}
     (h : Claim4PrimeWindowData k xp xq xr yp yq) :
     k < 2 * xq := by
+  have hnear := h.xq_near_k
   omega
 
- theorem Claim4PrimeWindowData.xr_above_half
+theorem Claim4PrimeWindowData.xr_above_half
     {k xp xq xr yp yq : ℕ}
     (h : Claim4PrimeWindowData k xp xq xr yp yq) :
     k < 2 * xr := by
+  have hnear := h.xr_near_k
   omega
 
 /-- All five primes selected by the window contract are automatically in the
