@@ -1,7 +1,8 @@
 import Formalization.Erdos678.Claim5LCMAlgebra
 
 /-!
-Reachable regressions for the E1 cancellation-safe LCM algebra.
+Reachable positive and zero-boundary regressions for the E1 cancellation-safe
+LCM algebra.
 -/
 
 namespace Erdos678
