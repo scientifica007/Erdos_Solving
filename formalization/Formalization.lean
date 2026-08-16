@@ -38,6 +38,8 @@ import Formalization.Erdos678.Claim4Weighted
 import Formalization.Erdos678.Claim4WeightedTests
 import Formalization.Erdos678.Claim5Assembly
 import Formalization.Erdos678.Claim5AssemblyTests
+import Formalization.Erdos678.Claim5LCMAlgebra
+import Formalization.Erdos678.Claim5LCMAlgebraTests
 import Formalization.Erdos678.ConcreteTests
 import Formalization.Erdos678.Intervals
 import Formalization.Erdos678.LCMValuation
