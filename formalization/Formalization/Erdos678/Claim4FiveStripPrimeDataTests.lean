@@ -2,6 +2,7 @@ import Formalization.Erdos678.Claim4FiveStripPrimeData
 
 /-!
 Reachable regressions for the five-disjoint-strip E2 adapter.
+This file remains in the canonical graph so exact-head CI checks E2c.
 -/
 
 namespace Erdos678
