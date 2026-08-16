@@ -28,7 +28,7 @@ theorem intervalProd_eq_prod_range (start len : ℕ) :
   rw [Finset.prod_image]
   · simp
   · intro a ha b hb hab
-    omega
+    exact Nat.add_left_cancel hab
 
 /-- Append the final factor of a consecutive interval product. -/
 theorem intervalProd_succ (start len : ℕ) :
