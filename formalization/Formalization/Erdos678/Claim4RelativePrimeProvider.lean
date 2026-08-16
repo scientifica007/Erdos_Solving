@@ -43,7 +43,9 @@ theorem claim4_relative_prime_witness_in_additive_strip
         (q + 1) * n = q * n + n := by ring
         _ < q * n + q * (k / q + 1) := Nat.add_lt_add_left hnnext _
         _ = q * (n + k / q + 1) := by ring
-    exact (not_lt_of_ge (hcross.trans_le hmul)) hupper
+    have hnot : ¬ q * p < (q + 1) * n :=
+      not_lt_of_ge (Nat.le_of_lt (hcross.trans_le hmul))
+    exact hnot hupper
   exact ⟨hnp, hpupper⟩
 
 /-- Explicit eventual relative-prime input.  This is the natural-number shape
