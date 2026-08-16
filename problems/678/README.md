@@ -1,111 +1,114 @@
-# Erdős Problem #678 — Active Cambie Reconstruction
+# Erdős Problem #678 — Machine-Checked Cambie Reconstruction
 
-> **Current repository status (2026-08-16): ACTIVE — Phase E2.**
-> The independent attempt was invalidated. The active work is an external-proof reconstruction and independent Lean reimplementation of Cambie (2024). Phase D / Claim 4 and Phase E1 / the quantitative LCM-ratio estimate have passed their mathematical gates. The canonical operational sources are `PROJECT_STATE.md` and `LEAN_FORMALIZATION_ROADMAP.md`.
+> **Current repository status (2026-08-16): COMPLETE / MACHINE-CHECKED on the E4 branch.**
+> The earlier independent attempt remains rejected. The completed result is an external-proof reconstruction and independent Lean reimplementation of Cambie (2024). The canonical operational sources are `PROJECT_STATE.md` and `LEAN_FORMALIZATION_ROADMAP.md`.
 
 ## Canonical statement
 
 Let `M(n,k) = lcm{n+1,...,n+k}`. Are there infinitely many `m,n,k ≥ 3` with `m ≥ n+k` such that `M(n,k) > M(m,k+1)`?
 
+The repository now proves this conclusion in Lean.
+
+## Final formal theorem
+
+`Erdos678Final.lean` contains:
+
+- `erdos678_unbounded_witnesses`: for every lower bound `B : ℕ`, there exist `n,m,k` such that
+  - `B ≤ k`,
+  - `3 ≤ n`, `3 ≤ m`, `3 ≤ k`,
+  - `n + k ≤ m`, and
+  - `erdosM m (k+1) < erdosM n k`;
+- `erdos678_good_lengths_infinite`: the set of block lengths `k` admitting such canonical witnesses is infinite.
+
+Thus the formalized conclusion is stronger than merely recording infinitely many unnamed triples: valid witnesses occur at unbounded block lengths.
+
+Final E4 mathematical checkpoint:
+
+- head `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`;
+- canonical run `31976903757` — **SUCCESS**;
+- `lake exe mk_all --check` = `No update necessary`;
+- full `lake build` = **8806 jobs**;
+- the build reaches `Claim4RelativePrimePNT`, `CambieStrongTheorem`, `Erdos678Final`, their regression modules, and the top-level `Formalization` target.
+
 ## Exact project classification
 
 - External problem status: proved.
+- Repository reconstruction status: **proved / machine-checked on the E4 branch**.
 - Independent proof attempt in this repository: rejected.
 - Valid concrete witness: `M(36,8) > M(47,9)` — machine-checked.
 - Rejected candidate: `(495,504,8)` — machine-refuted and retained as a negative regression.
-- Current mode: reconstruction of Cambie's proof architecture.
-- Full Claim 5: machine-checked under explicit residue hypotheses.
-- Claim 4 / Phase D: **PASSED**, through the sharp Cambie dependent-placement endpoint under explicit large-`k` and sharp-prime-window data.
-- Phase E1 — quantitative LCM-ratio estimate: **PASSED / MACHINE-CHECKED**.
-- Current formalization phase: **Phase E2 — sharp prime-density existence**.
-- Full Erdős #678 theorem in this repository: not formalized.
+- Full Claim 5: machine-checked.
+- Claim 4 / Phase D: passed.
+- Phase E1 quantitative LCM-ratio estimate: passed.
+- Phase E2 prime-density existence: passed using pinned PNT+.
+- Phase E3 strong eventual Cambie theorem: passed.
+- Phase E4 canonical index translation and infinitude: passed.
 
-## Historical independent-attempt failure
-
-The project found the valid finite witness `(36,47,8)` but then asserted the false scaling identity
-
-```text
-M(t*n,k) = t*M(n,k).
-```
-
-This fails because `M(t*n,k)` is the LCM of `tn+1,...,tn+k`, not of `t(n+1),...,t(n+k)`. A later attempted `Q=P/M` construction also failed because it used the wrong interval for `M(t,k+1)`.
-
-Those failures were recorded before reference reconstruction and remain part of project provenance.
-
-## Current Lean reconstruction
+## Proof architecture now live in Lean
 
 | Layer | Status |
 |---|---|
 | length-based intervals and canonical `erdosM` | machine-checked |
 | positive and negative concrete regressions | machine-checked |
 | finite product/LCM valuation core | machine-checked |
-| all three Claim 5 prime ranges | machine-checked |
-| full Claim 5 assembly | machine-checked under explicit residue hypotheses |
-| Claim 4 finite union-bound / modular / weighted layers | machine-checked |
-| concrete pair/triple CRT-basis producer | machine-checked |
-| exact application residue boxes and exclusion budgets | machine-checked |
-| D3 scaled connection to both Claim 5 residue interfaces | machine-checked |
-| general-`k` constructed scales `Nx,Ny` and support/unit facts | machine-checked |
-| broad prime-window contract and exact five basic search-length bounds | machine-checked conditionally on explicit prime-window data |
-| full-scale factorization, `fullScale = lcm(1,...,k)`, and canonical placement | machine-checked |
-| dependent `y`-first / moving-`x` endpoint with `x+k<y<x+gap` + full Claim 5 | machine-checked |
-| division-safe Cambie `gap`, `yLower`, `yUpper` | machine-checked |
-| general `k≥9` small-scale gap | machine-checked |
-| explicit large-`k` target-window room | machine-checked |
-| `C`-dependent sharp prime strips → exact two search budgets | machine-checked |
-| final D4 sharp representative endpoint + full Claim 5 | machine-checked under explicit large-`k` and sharp-prime-window data |
-| E1a exact divisibility / cross-multiplication / LCM inequality transfer | machine-checked |
-| E1b product estimate from target range and closeness | machine-checked |
-| E1c final sharp-window representative → strict LCM comparison | machine-checked |
-| formal prime-density existence of the five special primes | **CURRENT / E2** |
-| strong Cambie theorem / full #678 | pending / E3–E4 |
+| all three Claim 5 prime ranges + assembly | machine-checked |
+| Claim 4 finite density / modular / weighted CRT | machine-checked |
+| pair/triple CRT producers and exact application boxes | machine-checked |
+| constructed scales, full-scale factorization, dependent placement | machine-checked |
+| Cambie target window and sharp search budgets | machine-checked |
+| E1 cancellation-safe product/LCM estimate | machine-checked |
+| E2 five-strip relative-prime adapter | machine-checked |
+| E2 PNT `prime_between` → relative-prime provider | machine-checked |
+| E3 elementary large-`k` growth threshold | machine-checked |
+| E3 strong eventual Cambie comparison | machine-checked |
+| E4 `k<x` recovery and canonical `n=x-1, m=y-1` translation | machine-checked |
+| unbounded canonical witnesses and infinitely many good lengths | machine-checked |
 
-## Verified D4 and E1 checkpoints
+## Prime-density dependency
 
-D4 final reachable gate: canonical run `31963803495` passed `lake exe mk_all --check` with `No update necessary` and the full Lean build at head `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, completing **8766 jobs**.
+No opaque prime-density hypothesis is left in the theorem.
 
-E1a gate: run `31963812320` passed on head `36b91df00a7a25d20a635256a8533a7d9030714d`, with `No update necessary` and **8768 jobs**.
+The analytic input is the pinned package
 
-E1 mathematical exit: run `31968714909` passed on head `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, with `No update necessary` and a full build of **8770 jobs**. The reachable graph builds both `Claim5ProductEstimate` and its regressions.
+`AxiomMath/PrimeNumberTheoremAnd`
 
-The E1 endpoint is
+at revision
 
-`claim4_exists_cambie_lcm_ratio_of_sharp_windows`.
+`2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
 
-Given explicit `Claim4CambieLargeKData C k` and `Claim4CambieSharpPrimeWindowData C k s xp xq xr yp yq`, it constructs `x,y` with
+Its kernel-checked `prime_between` consequence is converted into the natural-number `Claim4RelativePrimeProvider`, then into five disjoint additive prime strips with denominator `320*C`.
 
-- `0 < x`, `0 < y`, `x < y`;
-- `x + k < y`;
-- `C * intervalLCM y (k+1) < intervalLCM x k`.
+E2 exit: head `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856`, **8800 jobs**.
 
-The proof remains cancellation-safe in `ℕ`: it first turns Claim 5 into a cross-multiplied equality using exact divisibility, proves the product inequality from Cambie's verified range/closeness bounds, then transfers that inequality to the LCMs.
+## Strong Cambie layer
 
-## Exact remaining boundary
+The remaining large-`k` condition is discharged independently using the fourth binomial coefficient. The explicit coarse threshold is
 
-This repository still does **not** assert the formal existence of the five sharp-window primes for every sufficiently large `k`.
+`claim4CambieLargeKThreshold C = max 9 (3840*C + 3)`.
 
-The frozen D4 contract `Claim4CambieSharpPrimeWindowData` requires one slack `s`, two y-primes just above `k/2`, three x-primes just below `k`, broad-window conditions, pairwise distinctness, and `40*C*(s+1) ≤ k`.
+The theorem `cambie_lcm_ratio_eventually` combines this elementary growth threshold with the PNT threshold.
 
-No axiom was introduced to hide this analytic input. This is now the sole active **E2** dependency. After E2, E3 will combine it with the passed E1 endpoint, and E4 will specialize `C=1` and translate interval starts to the canonical problem variables.
+E3 exit: head `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891`, **8804 jobs**.
 
-The pair/triple CRT producer remains specialized to the two arities actually used by Cambie. No arbitrary-finite-family CRT basis theorem is claimed.
+## Historical independent-attempt failure
 
-## Sole next action — E2
+The project first found the valid finite witness `(36,47,8)` but later asserted the false scaling identity
 
-Audit the pinned Mathlib revision for formal prime-counting/PNT/short-interval theorems and select the smallest result sufficient to construct `Claim4CambieSharpPrimeWindowData` for every fixed positive `C` and all sufficiently large `k`.
+```text
+M(t*n,k) = t*M(n,k).
+```
 
-The E2 work order is:
+This is false because `M(t*n,k)` is the LCM of `tn+1,...,tn+k`, not of `t(n+1),...,t(n+k)`. A subsequent `Q=P/M` construction also used the wrong interval for `M(t,k+1)`.
 
-1. identify the strongest usable formal prime-density theorem already available in the pinned graph;
-2. derive the exact natural-number strip inequalities required by D4 without weakening or changing the existing constants merely to fit the library;
-3. choose a common slack `s` satisfying `40*C*(s+1) ≤ k`;
-4. construct two distinct y-primes and three distinct x-primes and discharge all `Claim4PrimeWindowData` fields;
-5. expose a reachable sufficiently-large-`k` constructor for `Claim4CambieSharpPrimeWindowData`;
-6. add threshold/boundary regressions and exact-head CI.
+Those failures remain recorded as provenance and are not reclassified by the successful Cambie reconstruction.
+
+## Current next action
+
+No mathematical phase remains open. Synchronize documentation on the E4 PR, obtain a final green CI for that documentation head, then review/integrate the stacked PR chain. Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
 
 ## Main references inside this folder
 
 - `CAMBIE_PROOF_ANALYSIS.md` — mathematical architecture and Claim 4 audit.
-- `LEAN_FORMALIZATION_ROADMAP.md` — sole active execution roadmap.
-- `FORMALIZATION_CORRECTION_2026-08-14.md` — rejection of the false `(495,504,8)` construction.
+- `LEAN_FORMALIZATION_ROADMAP.md` — canonical execution roadmap, now closed.
+- `FORMALIZATION_CORRECTION_2026-08-14.md` — rejection of the false earlier construction.
 - `LEAN_TEST_PLAN.md` — superseded historical plan; not an execution source.
