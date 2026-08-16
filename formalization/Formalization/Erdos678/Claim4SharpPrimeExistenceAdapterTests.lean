@@ -2,6 +2,7 @@ import Formalization.Erdos678.Claim4SharpPrimeExistenceAdapter
 
 /-!
 Reachable regressions for the E2 narrow-prime arithmetic adapter.
+This file remains in the canonical graph so exact-head CI checks the adapter.
 -/
 
 namespace Erdos678
