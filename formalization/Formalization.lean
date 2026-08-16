@@ -1,9 +1,13 @@
 import Formalization.Basic
+import Formalization.Erdos678.CambieStrongTheorem
+import Formalization.Erdos678.CambieStrongTheoremTests
 import Formalization.Erdos678.Claim4ApplicationBoxes
 import Formalization.Erdos678.Claim4ApplicationBoxesTests
 import Formalization.Erdos678.Claim4CRT
 import Formalization.Erdos678.Claim4CRTTests
 import Formalization.Erdos678.Claim4CambieLargeK
+import Formalization.Erdos678.Claim4CambieLargeKEventually
+import Formalization.Erdos678.Claim4CambieLargeKEventuallyTests
 import Formalization.Erdos678.Claim4CambieLargeKTests
 import Formalization.Erdos678.Claim4CambieRoom
 import Formalization.Erdos678.Claim4CambieRoomTests
