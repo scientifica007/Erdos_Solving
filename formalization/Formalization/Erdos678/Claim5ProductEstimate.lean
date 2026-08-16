@@ -26,8 +26,7 @@ theorem intervalProd_eq_prod_range (start len : ℕ) :
     intervalProd start len = ∏ i ∈ Finset.range len, (start + i) := by
   unfold intervalProd intervalFinset
   rw [Finset.prod_image]
-  intro a ha b hb hab
-  omega
+  simp
 
 /-- Append the final factor of a consecutive interval product. -/
 theorem intervalProd_succ (start len : ℕ) :
@@ -57,7 +56,7 @@ theorem succ_pow_lt_three_mul_pow
       (((k + 1 : ℕ) : ℝ) / (k : ℝ)) =
         1 + (k : ℝ)⁻¹ := by
     field_simp [hkR0]
-    ring
+    norm_num
   have hratio :
       ((((k + 1 : ℕ) : ℝ) / (k : ℝ)) ^ k) < 3 := by
     rw [hbase]
@@ -268,12 +267,13 @@ theorem claim4_exists_cambie_lcm_ratio_of_sharp_windows
     ∃ x y : ℕ,
       0 < x ∧ 0 < y ∧ x < y ∧ x + k < y ∧
       C * intervalLCM y (k + 1) < intervalLCM x k := by
+  have hk : 0 < k := lt_of_lt_of_le (by norm_num : 0 < 9) hlarge.nine_le
   rcases claim4_exists_cambie_target_representatives_with_claim5_of_sharp_windows
       hlarge hsharp with
     ⟨x, y, hx, hy, hxy, hsep, hclose, hylower, hyupper,
       hmedium, hsmall, hclaim5⟩
   refine ⟨x, y, hx, hy, hxy, hsep, ?_⟩
   exact claim5_lcm_lt_of_cambie_bounds
-    hlarge.C_pos (by omega) hx hy hylower hclose hyupper hclaim5
+    hlarge.C_pos hk hx hy hylower hclose hyupper hclaim5
 
 end Erdos678
