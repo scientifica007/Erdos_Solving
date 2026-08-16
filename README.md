@@ -40,25 +40,22 @@ Erdos_Solving = مختبر مفتوح لدراسة عملية البحث الر�
 
 ## الحالة التشغيلية الحالية
 
-> **مزامنة الحالة:** 16 أوت 2026. بوابة D4 الرياضية اجتازت التشغيل `31959479154` على الالتزام `0696e6474ebaf6deec2303f38c862842da3b28e2`، وبوابة مزامنة وثائق الخروج اجتازت التشغيل `31960707971` على الرأس `c1bbe17bc0cac263850b0a7f0fdb6076eaf9d893`. كلا التشغيلين أعادا `mk_all --check = No update necessary` وبناءً كاملاً من **8766 jobs**. **Phase E1 هي المرحلة التشغيلية الحالية.**
+> **مزامنة الحالة:** 16 أوت 2026. Phase D متحققة آلياً على الرأس النهائي القابل للوصول `eb5ffebffcb199cc76c83a941da955f4ecfebde5` عبر التشغيل `31963803495` (**8766 jobs**). Phase E1 أُغلقت رياضياً على الرأس `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a` عبر التشغيل `31968714909`، مع `mk_all --check = No update necessary` وبناء كامل من **8770 jobs**. **Phase E2 هي المرحلة التشغيلية الحالية.**
 
 - المسألة النشطة: **Erdős #678**.
 - نمط العمل: **إعادة بناء برهان Cambie (2024) وإعادة تنفيذه في Lean**، لا محاولة اكتشاف مستقلة عمياء.
 - Claim 5: النطاقات الثلاثة والهوية الطبيعية النهائية متحققة آلياً تحت واجهتي البواقي الصريحتين.
-- Claim 4 / Phase D: **PASSED** حتى theorem sharp Cambie النهائي:
-  - المقاييس الفعلية `Nx,Ny` ودعمها ووحداتها؛
-  - `claim4FullScale = lcm(1,...,k)` وfactorizations الدقيقة؛
-  - اختيار `y` ثم `x` في نافذة متحركة وإثبات `x+k<y<x+gap`؛
-  - صيغ Cambie الفعلية `gap`, `yLower`, `yUpper` بصياغة `Nat.div`؛
-  - الفجوة العامة للمقياس الصغير لكل `k≥9`؛
-  - عقدة large-`k` صريحة؛
-  - عقدة أوليات حادة تعتمد على `C` وتنتج ميزانيتي البحث؛
-  - theorem النهائي الذي يبني ممثلين داخل نطاق Cambie الفعلي ويحملهم إلى هوية Claim 5 الكاملة.
-- **وجود الأوليات الخمس داخل الأشرطة الحادة لكل `k` كبير لم يُثبت بعد**؛ يبقى dependency صريحاً في **E2** ولا يُفترض axiomatically.
-- **E1 الحالي:** اشتقاق تقدير نسبة الـLCM من Claim 5 والحدود الكمية المتحققة، مع عزل divisibility/cancellation في `ℕ` قبل أي تبسيط للقسمة.
-- E2: prime-density للأشرطة الحادة.
-- E3: theorem Cambie القوي.
-- E4: Erdős #678 عند `C=1`.
+- Claim 4 / Phase D: **PASSED** حتى theorem sharp Cambie النهائي تحت large-`k` وsharp-prime-window data صريحة.
+- Phase E1: **PASSED / MACHINE-CHECKED**:
+  - exact `intervalLCM ∣ intervalProd` bridge؛
+  - cross-multiplication آمن في `ℕ` لهوية Claim 5؛
+  - نقل product inequality إلى LCM inequality؛
+  - product-ratio estimate من نطاق Cambie والقرب؛
+  - endpoint نهائي `claim4_exists_cambie_lcm_ratio_of_sharp_windows` يثبت
+    `C * intervalLCM y (k+1) < intervalLCM x k` تحت بيانات D4 الصريحة.
+- **E2 الحالي:** formalize/import وجود الأوليات الخمس في الأشرطة الحادة لكل `k` كبير بما يكفي؛ لا يوجد axiom يخفي هذا الاعتماد.
+- E3: theorem Cambie القوي بعد دمج E1 وE2.
+- E4: Erdős #678 عند `C=1` وترجمة فهارس الفترات.
 
 ## حصيلة التجارب
 
@@ -71,7 +68,7 @@ Erdos_Solving = مختبر مفتوح لدراسة عملية البحث الر�
 | #275 | دورة ناجحة: برهان مستقل مدقق ومجمد، ثم مقارنة تاريخية |
 | #303 | المحاولة العمياء غير مكتملة؛ المقارنة المرجعية مكتملة |
 | #447 | معيار ملوث؛ لا يجوز وصفه بتجربة عمياء نشطة |
-| #678 | Claim 5 وPhase D متحققتان حتى sharp Cambie representatives تحت large-`k` وsharp-prime-window data صريحة؛ **E1 LCM-ratio algebra CURRENT**؛ prime-density يبقى E2 |
+| #678 | Claim 5 وPhase D وPhase E1 machine-checked؛ **E2 sharp prime-density CURRENT**؛ E3/E4 pending |
 | #1125 | المحاولة العمياء فشلت؛ إعادة البناء التاريخية مكتملة |
 
 ## ترتيب مصادر الحالة
