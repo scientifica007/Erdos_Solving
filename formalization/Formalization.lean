@@ -7,6 +7,8 @@ import Formalization.Erdos678.Claim4CambieLargeK
 import Formalization.Erdos678.Claim4CambieLargeKTests
 import Formalization.Erdos678.Claim4CambieRoom
 import Formalization.Erdos678.Claim4CambieRoomTests
+import Formalization.Erdos678.Claim4CambieSharpPrimeWindow
+import Formalization.Erdos678.Claim4CambieSharpPrimeWindowTests
 import Formalization.Erdos678.Claim4Claim5Interface
 import Formalization.Erdos678.Claim4Claim5InterfaceTests
 import Formalization.Erdos678.Claim4ConstructedInterface
