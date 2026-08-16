@@ -19,6 +19,8 @@ import Formalization.Erdos678.Claim4PrimeWindows
 import Formalization.Erdos678.Claim4PrimeWindowsTests
 import Formalization.Erdos678.Claim4RepresentativeSeparation
 import Formalization.Erdos678.Claim4RepresentativeSeparationTests
+import Formalization.Erdos678.Claim4RoomReduction
+import Formalization.Erdos678.Claim4RoomReductionTests
 import Formalization.Erdos678.Claim4ScaleFactorization
 import Formalization.Erdos678.Claim4Scales
 import Formalization.Erdos678.Claim4ScalesTests
