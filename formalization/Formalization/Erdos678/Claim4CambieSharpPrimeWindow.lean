@@ -43,6 +43,8 @@ theorem Claim4CambieSharpPrimeWindowData.y_search_length_le_two_slack
     mod_eq_sub_of_le_of_lt_two_mul h.base.yp_le_k h.base.yp_above_half
   have hyqmod : k % yq = k - yq :=
     mod_eq_sub_of_le_of_lt_two_mul h.base.yq_le_k h.base.yq_above_half
+  have hypclose := h.yp_close
+  have hyqclose := h.yq_close
   rw [claim4PairYSearchLength, hypmod, hyqmod]
   omega
 
@@ -58,6 +60,9 @@ theorem Claim4CambieSharpPrimeWindowData.x_search_length_le_three_slack
     mod_eq_sub_of_le_of_lt_two_mul h.base.xq_le_k h.base.xq_above_half
   have hxrmod : k % xr = k - xr :=
     mod_eq_sub_of_le_of_lt_two_mul h.base.xr_le_k h.base.xr_above_half
+  have hxpclose := h.xp_close
+  have hxqclose := h.xq_close
+  have hxrclose := h.xr_close
   rw [claim4TripleXSearchLength, hxpmod, hxqmod, hxrmod]
   omega
 
