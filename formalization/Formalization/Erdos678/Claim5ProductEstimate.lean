@@ -26,7 +26,9 @@ theorem intervalProd_eq_prod_range (start len : ℕ) :
     intervalProd start len = ∏ i ∈ Finset.range len, (start + i) := by
   unfold intervalProd intervalFinset
   rw [Finset.prod_image]
-  simp
+  · simp
+  · intro a ha b hb hab
+    omega
 
 /-- Append the final factor of a consecutive interval product. -/
 theorem intervalProd_succ (start len : ℕ) :
