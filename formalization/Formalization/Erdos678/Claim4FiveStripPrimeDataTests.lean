@@ -16,8 +16,10 @@ example :
 contract with slack `s = 4d = 40`. -/
 example :
     Claim4CambieSharpPrimeWindowData 1 2000 40 1993 1987 1973 1009 1013 := by
-  apply Claim4CambieFiveStripPrimeData.toSharpPrimeWindowData (by norm_num)
-  constructor <;> norm_num
+  have h :
+      Claim4CambieFiveStripPrimeData 1 2000 10 1993 1987 1973 1009 1013 := by
+    constructor <;> norm_num
+  simpa using h.toSharpPrimeWindowData (by norm_num)
 
 /-- Generic reachability of the five-strip interface into the completed E1
 endpoint. -/
