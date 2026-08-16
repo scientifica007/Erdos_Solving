@@ -3,6 +3,8 @@ import Formalization.Erdos678.Claim4RelativePrimePNT
 /-!
 Reachable E2e regressions: the imported PNT consequence must construct the
 relative-prime provider and eliminate the analytic input from the LCM endpoint.
+These checks also keep the corrected five-strip bridge reachable under the
+canonical full build.
 -/
 
 namespace Erdos678
