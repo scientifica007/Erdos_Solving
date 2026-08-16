@@ -22,8 +22,14 @@ interval presentation. -/
 theorem intervalFinset_one_eq_Icc (k : ℕ) :
     intervalFinset 1 k = Finset.Icc 1 k := by
   ext n
-  simp [intervalFinset]
-  omega
+  simp only [intervalFinset, Finset.mem_image, Finset.mem_range, Finset.mem_Icc]
+  constructor
+  · rintro ⟨i, hi, rfl⟩
+    omega
+  · rintro ⟨hn1, hnk⟩
+    refine ⟨n - 1, ?_, ?_⟩
+    · omega
+    · omega
 
 /-- The repository's initial interval LCM agrees with Mathlib's `lcmUpto`. -/
 theorem intervalLCM_one_eq_lcmUpto (k : ℕ) :
