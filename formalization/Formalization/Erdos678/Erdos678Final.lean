@@ -57,7 +57,8 @@ theorem claim4_exists_cambie_lcm_ratio_with_large_start_of_sharp_windows
     ∃ x y : ℕ,
       k < x ∧ x < y ∧ x + k < y ∧
       C * intervalLCM y (k + 1) < intervalLCM x k := by
-  have hk : 0 < k := by omega
+  have hk : 0 < k :=
+    lt_of_lt_of_le (by norm_num : 0 < 9) hlarge.nine_le
   rcases claim4_exists_cambie_target_representatives_with_claim5_of_sharp_windows
       hlarge hsharp with
     ⟨x, y, hx, hy, hxy, hsep, hclose, hylower, hyupper,
