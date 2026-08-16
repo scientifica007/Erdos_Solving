@@ -6,9 +6,9 @@
 **Canonical CI status:** GREEN at the D4 mathematical exit head  
 **Verified run:** `31959479154`  
 **Verified build:** `mk_all --check` = `No update necessary`; canonical `lake build` = **8766 jobs**  
-**Current phase:** Phase E — quantitative finish  
+**Current phase:** Phase E — quantitative finish, pending exact-head confirmation of this documentation synchronization  
 **Current target:** E1 — derive the LCM-ratio estimate from Claim 5 and the sharp representative bounds  
-**Expansion gate:** Phase E open after exact-head CI confirms this documentation synchronization
+**Expansion gate:** E1 work may begin only after exact-head CI confirms this synchronized documentation head
 
 This file is the sole operational answer to: **what is the next Lean/formalization task for #678?**
 
@@ -188,17 +188,17 @@ D4f checkpoints:
 - general small-scale gap: head `6386278d...`, run `31957062773`, 8762 jobs;
 - D4 exit head: `0696e6474ebaf6deec2303f38c862842da3b28e2`, run `31959479154`, `mk_all --check = No update necessary`, **8766 jobs**.
 
-### D4 exit gate — PASSED
+### D4 exit gate — PASSED MATHEMATICALLY; DOCUMENTATION HEAD RECHECK PENDING
 
-The reachable final D4 theorem supplies the actual sharp dependent-placement arithmetic from explicit sufficiently-large-`k` and sharp-prime-strip data, then invokes the verified close-and-separated Claim 5 endpoint. Exact-head CI is green.
+The reachable final D4 theorem supplies the actual sharp dependent-placement arithmetic from explicit sufficiently-large-`k` and sharp-prime-strip data, then invokes the verified close-and-separated Claim 5 endpoint. The exact mathematical head is green.
 
 **Boundary:** this does not prove that the five primes exist in those strips for every sufficiently large `k`. That analytic existence statement is intentionally Phase E2, not an axiom inside D4.
 
 ---
 
-# Phase E — Quantitative finish — CURRENT
+# Phase E — Quantitative finish — NEXT AFTER DOCUMENTATION CI
 
-## E1 — LCM-ratio estimate — CURRENT / SOLE NEXT ACTION
+## E1 — LCM-ratio estimate — SOLE NEXT ACTION
 
 Formalize the exact natural-number algebra from Claim 5 to Cambie's LCM comparison.
 
@@ -242,15 +242,15 @@ Erdős #678
 ├── Consolidation gate ........................... PASSED
 ├── Arithmetic core .............................. PASSED
 ├── Cambie Claim 5 ............................... PASSED
-├── Claim 4 / CRT engine .......................... PASSED
+├── Claim 4 / CRT engine .......................... PASSED MATHEMATICALLY
 │   ├── D1: finite/modular/weighted CRT .......... MACHINE-CHECKED
 │   ├── D2: application residue boxes ............ MACHINE-CHECKED
 │   ├── D3: Claim 5 interface connection ......... MACHINE-CHECKED
 │   ├── D4a-d: scales/factorization/placement ..... MACHINE-CHECKED
 │   ├── D4e: dependent representatives ........... MACHINE-CHECKED
 │   └── D4f: sharp Cambie room .................... MACHINE-CHECKED
-└── Quantitative finish ........................... CURRENT
-    ├── E1: LCM-ratio estimate .................... CURRENT
+└── Quantitative finish ........................... NEXT AFTER DOC CI
+    ├── E1: LCM-ratio estimate .................... NEXT
     ├── E2: sharp prime-density existence ......... PENDING
     ├── E3: strong Cambie theorem ................. PENDING
     └── E4: Erdős #678 ............................ PENDING
@@ -258,7 +258,7 @@ Erdős #678
 
 ## Sole next action
 
-Begin E1. Isolate the exact cancellation/divisibility lemmas needed to transform `claim5_full_identity_of_residues` into the quantitative LCM comparison, then prove the paper-compatible lower bound using the already verified sharp bounds on `x` and `y`. Keep E2 prime-density existence separate.
+First pass exact-head CI on this synchronized documentation head. Then begin E1: isolate the exact cancellation/divisibility lemmas needed to transform `claim5_full_identity_of_residues` into the quantitative LCM comparison, and prove the paper-compatible lower bound using the already verified sharp bounds on `x` and `y`. Keep E2 prime-density existence separate.
 
 ## Global audit gates
 
