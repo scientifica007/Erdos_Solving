@@ -57,6 +57,8 @@ import Formalization.Erdos678.Claim5LCMAlgebraTests
 import Formalization.Erdos678.Claim5ProductEstimate
 import Formalization.Erdos678.Claim5ProductEstimateTests
 import Formalization.Erdos678.ConcreteTests
+import Formalization.Erdos678.Erdos678Final
+import Formalization.Erdos678.Erdos678FinalTests
 import Formalization.Erdos678.Intervals
 import Formalization.Erdos678.LCMValuation
 import Formalization.Erdos678.LargePrimeRange
