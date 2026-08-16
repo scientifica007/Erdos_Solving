@@ -43,6 +43,10 @@ theorem Claim4CambieSharpPrimeWindowData.y_search_length_le_two_slack
     mod_eq_sub_of_le_of_lt_two_mul h.base.yp_le_k h.base.yp_above_half
   have hyqmod : k % yq = k - yq :=
     mod_eq_sub_of_le_of_lt_two_mul h.base.yq_le_k h.base.yq_above_half
+  have hyple := h.base.yp_le_k
+  have hyqle := h.base.yq_le_k
+  have hypabove := h.base.yp_above_half
+  have hyqabove := h.base.yq_above_half
   have hypclose := h.yp_close
   have hyqclose := h.yq_close
   rw [claim4PairYSearchLength, hypmod, hyqmod]
