@@ -14,5 +14,10 @@ name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.33.0"
 
+[[require]]
+name = "PrimeNumberTheoremAnd"
+git = "https://github.com/AxiomMath/PrimeNumberTheoremAnd.git"
+rev = "main"
+
 [[lean_lib]]
 name = "Formalization"
