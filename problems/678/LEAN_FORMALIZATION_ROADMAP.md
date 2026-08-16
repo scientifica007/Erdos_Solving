@@ -1,14 +1,13 @@
 # Erdős Problem #678 — Canonical Lean Formalization Roadmap
 
-**Status:** ACTIVE — canonical execution roadmap  
+**Status:** COMPLETE / MACHINE-CHECKED on the E4 branch  
 **Mode:** reconstruction and independent Lean reimplementation of Cambie (2024), not independent mathematical discovery  
 **D4 final reachable gate:** `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, run `31963803495` — SUCCESS, **8766 jobs**  
-**E1a gate:** `36b91df00a7a25d20a635256a8533a7d9030714d`, run `31963812320` — SUCCESS, **8768 jobs**  
-**E1 mathematical exit:** `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909` — SUCCESS  
-**Verified E1 exit:** `mk_all --check` = `No update necessary`; canonical `lake build` = **8770 jobs**  
-**Current phase:** Phase E — quantitative finish  
-**Current target:** **E2 — sharp prime-density existence**  
-**Expansion gate:** OPEN for E2; E3/E4 remain closed until the prime-existence dependency is formalized
+**E1 mathematical exit:** `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909` — SUCCESS, **8770 jobs**  
+**E2 prime-density exit:** `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856` — SUCCESS, **8800 jobs**  
+**E3 strong Cambie exit:** `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891` — SUCCESS, **8804 jobs**  
+**E4 / full #678 mathematical exit:** `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757` — SUCCESS, `No update necessary`, **8806 jobs**  
+**Current task:** documentation synchronization and stacked-PR review only; no mathematical phase remains open.
 
 This file is the sole operational answer to: **what is the next Lean/formalization task for #678?**
 
@@ -20,177 +19,95 @@ The mathematical analysis remains in `CAMBIE_PROOF_ANALYSIS.md`. `LEAN_TEST_PLAN
 
 Externally, Erdős #678 is proved. In this repository:
 
-- the independent proof attempt was rejected;
+- the earlier independent proof attempt remains rejected;
 - `M(36,8) > M(47,9)` is machine-checked;
 - `(495,504,8)` is machine-refuted and retained as a negative regression;
-- the arithmetic core and all three Claim 5 prime ranges are machine-checked;
-- full Claim 5 is machine-checked under explicit medium- and small-prime residue interfaces;
-- the complete finite Claim 4 / CRT engine through sharp Cambie dependent placement is machine-checked;
-- the complete E1 cancellation-safe LCM algebra and quantitative product estimate are machine-checked;
-- under explicit large-`k` and sharp-prime-window data, the repository now constructs `x,y` with `x+k<y` and proves
-  `C * intervalLCM y (k+1) < intervalLCM x k`;
-- **existence of the five sharp-window primes for every sufficiently large `k` is not formalized** and is the sole current E2 obligation;
-- the strong Cambie theorem and full #678 theorem remain open in the repository.
+- the arithmetic core, Claim 5, Claim 4 / CRT engine, quantitative LCM estimate, prime-density bridge, strong Cambie theorem, final canonical index translation, and infinite-family theorem are all machine-checked on the E4 branch;
+- the analytic input is the pinned `AxiomMath/PrimeNumberTheoremAnd` revision `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`, used through its kernel-checked `prime_between` consequence;
+- no custom prime-density axiom and no `sorry` is introduced.
 
-A source file is not evidence that Lean accepted it. Only a successful canonical build of a reachable module grants machine-checked status.
+A source file is not evidence that Lean accepted it. The credited status above comes from canonical reachable builds.
 
 ---
 
 # Phase A — Arithmetic core — PASSED
 
-Machine-checked finite-product/LCM valuations, reciprocal-LCM valuation, prime-power counting, equality from prime valuations, and exact interval/nonzero bridges.
-
----
+Machine-checked finite-product/LCM valuations, reciprocal-LCM valuation, prime-power counting, equality from prime valuations, and interval/nonzero bridges.
 
 # Phase B — Cambie Claim 5 — PASSED
 
-## B1 — `p > k` — DONE / MACHINE-CHECKED
+All large-, medium-, and small-prime ranges are machine-checked, together with the assembled natural-number Claim 5 identity under the explicit residue interfaces produced downstream by Claim 4.
 
-Large primes contribute zero to the reciprocal-LCM valuation.
+# Phase C — Consolidation gate — PASSED
 
-## B2 — `p ≤ k < p²` — DONE / MACHINE-CHECKED
-
-The medium-prime contribution is controlled by the explicit admissible residue interface.
-
-## B3 — `p² ≤ k` — DONE / MACHINE-CHECKED
-
-The capped small-prime congruence/window/initial-LCM/supremum/valuation chain is live with boundary regressions.
-
-## B4 — full Claim 5 assembly — DONE / MACHINE-CHECKED
-
-`claim5_full_identity_of_residues` converts explicit medium/small residue interfaces into the final natural-number identity.
-
----
-
-# Phase C — Formalization consolidation gate — PASSED HISTORICALLY
-
-The repository has a length-safe interval API, one canonical import graph, `mk_all --check` in CI, explicit positive/negative regressions, and synchronized operational state rules.
-
----
+Length-safe interval API, canonical import graph, `mk_all --check`, and positive/negative regressions are live.
 
 # Phase D — Claim 4 / CRT combinatorial engine — PASSED
 
-## D1–D3 — finite density, application boxes, scaled Claim 4 → Claim 5 — DONE
+Machine-checked components include finite density, weighted CRT, pair/triple CRT producers, exact residue boxes/search lengths, constructed scales, full-scale factorization, dependent placement, Cambie target window, sharp prime-window budgets, and the final sharp representative endpoint with full Claim 5.
 
-Machine-checked strict union bound, modular injectivity, weighted CRT, concrete pair/triple producers, exact residue boxes/search lengths, scaled/affine representatives, and both Claim 5 residue interfaces.
-
-## D4 — actual scales, placement, separation, and sharp room — DONE
-
-Machine-checked:
-
-- `claim4SmallScale`, `claim4Scale`, `claim4XScale`, `claim4YScale` with support/unit obligations;
-- `Claim4PrimeWindowData`;
-- `claim4FullScale k = intervalLCM 1 k` and exact x/y factorizations;
-- canonical and dependent placement, including `x+k<y<x+gap`;
-- division-safe Cambie values
-  - `gap = M/(5*C*k)`,
-  - `yLower = M*(k+1)/(5*C*k)`,
-  - `yUpper = M/(4*C)-k`;
-- `claim4SmallScale_gap_of_nine_le : 9 ≤ k → k+2 ≤ claim4SmallScale k`;
-- `Claim4CambieLargeKData`, using `C>0`, `9≤k`, and `20*C*k^2*(k+1) ≤ 2^k`;
-- `Claim4CambieSharpPrimeWindowData`, with a slack `s`, two y-primes just above `k/2`, three x-primes just below `k`, and `40*C*(s+1) ≤ k`;
-- exact derivation of both sharp search budgets;
-- `claim4_exists_cambie_target_representatives_with_claim5_of_sharp_windows`;
-- closed regressions including `C=1, k=1000, s=23`, x-primes `977,983,991`, y-primes `503,509`.
-
-Key checkpoints:
-
-- D4a/b: `a259da8a...`, run `31947099017`, 8745 jobs;
-- D4c: `eef7d931...`, run `31948527075`, 8747 jobs;
-- D4d: `b0914c87...`, run `31949164598`, 8750 jobs;
-- D4e dependent endpoint: `72432d4b...`, run `31952559027`, 8754 jobs;
-- D4f room reduction: `0e9ff533...`, run `31956361984`, 8760 jobs;
-- D4f small-scale gap: `6386278d...`, run `31957062773`, 8762 jobs;
-- D4 mathematical exit: `0696e647...`, run `31959479154`, 8766 jobs;
-- D4 final reachable repair: `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, run `31963803495`, 8766 jobs.
-
-### D4 exit gate — PASSED
-
-The final reachable D4 theorem supplies sharp dependent-placement arithmetic from explicit large-`k` and sharp-prime-strip data and invokes the verified Claim 5 endpoint.
-
-**Boundary:** D4 does not prove that the five special primes exist in those strips for all sufficiently large `k`. That analytic existence theorem is E2.
+Final reachable D4 checkpoint: `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, run `31963803495`, **8766 jobs**.
 
 ---
 
-# Phase E — Quantitative finish — CURRENT
+# Phase E — Quantitative finish — PASSED
 
-## E1 — LCM-ratio estimate — PASSED / MACHINE-CHECKED
-
-### E1a — cancellation-safe algebra — DONE
+## E1 — cancellation-safe LCM-ratio estimate — PASSED
 
 Machine-checked:
 
-1. `intervalLCM_dvd_intervalProd`;
-2. `claim5_cross_multiplication`, using exact divisibility and `Nat.div_mul_cancel` rather than field-style cancellation;
-3. `claim5_lcm_lt_of_product_lt` reducing the LCM comparison to
-   `C * Prod_y < M * Prod_x` under explicit nonzero hypotheses;
-4. positive and zero-boundary regressions.
+- exact interval-LCM divisibility into the interval product;
+- cancellation-safe Claim 5 cross multiplication;
+- strict product-to-LCM inequality transfer;
+- interval-product recursion;
+- `(k+1)^k < 3*k^k`;
+- product comparison from Cambie's lower target, closeness, and upper target;
+- `claim4_exists_cambie_lcm_ratio_of_sharp_windows`.
 
-Checkpoint: `36b91df00a7a25d20a635256a8533a7d9030714d`, run `31963812320`, `No update necessary`, **8768 jobs**.
+Exit: `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909`, **8770 jobs**.
 
-### E1b — product-ratio estimate — DONE
+## E2 — sharp prime-density existence — PASSED
 
-Machine-checked:
+E2 was resolved without changing D4/E1 constants:
 
-- `intervalProd_eq_prod_range` and `intervalProd_succ`;
-- positive-start nonzero interval bridge;
-- `succ_pow_lt_three_mul_pow : 0 < k → (k+1)^k < 3*k^k`;
-- `claim4CambieGap_mul_succ_le_yLower`;
-- from `yLower<y<x+gap`, the prefix comparison
-  `intervalProd y k < 3 * intervalProd x k`;
-- from `y<yUpper`, the remaining factor-4 room;
-- `claim4_cambie_product_lt_fullScale` and `claim4_cambie_product_lt_initialLCM`.
+1. `Claim4CambieFiveStripPrimeData` packages three disjoint near-`k` strips and two disjoint just-above-`k/2` strips.
+2. `Claim4RelativePrimeProvider q` isolates the exact eventual multiplicative prime interval needed.
+3. The provider is converted to the five additive strips with denominator `q = 320*C`.
+4. `claim4RelativePrimeProviderOfPNT` derives the provider from the imported `prime_between` theorem in pinned PNT+.
+5. `claim4_exists_cambie_lcm_ratio_eventually_of_pnt` removes the explicit prime-density hypothesis from the LCM endpoint.
 
-### E1c — D4 representative endpoint → LCM comparison — DONE
+Key checkpoints:
 
-`claim5_lcm_lt_of_cambie_bounds` combines the E1a transfer with the E1b product estimate.
+- E2c five-strip arithmetic: `81cf4b2303a4a93bf30d2fcb322b810c754530f3`, run `31972724132`, **8774 jobs**;
+- provider→five-strips: `14c9e5e8df00de4e129d142e472b3c9d91fd1c00`, run `31975082883`, **8778 jobs**;
+- E2 exit: `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856`, **8800 jobs**.
 
-Final E1 endpoint:
+## E3 — strong Cambie theorem — PASSED
 
-`claim4_exists_cambie_lcm_ratio_of_sharp_windows`
+`claim4CambieLargeKData_of_threshold` discharges the remaining elementary growth condition above
 
-Under explicit `Claim4CambieLargeKData` and `Claim4CambieSharpPrimeWindowData`, it produces `x,y` satisfying positivity, order, separation, and
+`claim4CambieLargeKThreshold C = max 9 (3840*C + 3)`
 
-`C * intervalLCM y (k+1) < intervalLCM x k`.
+using the fourth binomial coefficient and `Nat.choose_le_two_pow`.
 
-E1 mathematical exit: `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909` — SUCCESS, `No update necessary`, **8770 jobs**.
+`cambie_lcm_ratio_eventually` combines this threshold with E2's PNT threshold, proving the strong eventual LCM comparison for every fixed positive `C`.
 
-## E2 — sharp prime-density existence — CURRENT / SOLE NEXT ACTION
+- E3a growth checkpoint: `58b870511588e6f9100443d2250024031bfaa3fd`, run `31974295910`, **8776 jobs**;
+- E3 exit: `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891`, **8804 jobs**.
 
-Formalize or import a theorem producing, for every fixed positive `C` and all sufficiently large `k`, data satisfying `Claim4CambieSharpPrimeWindowData`.
+## E4 — canonical Erdős #678 theorem — PASSED
 
-The exact already-frozen D4 contract requires a single slack `s` and five distinct primes such that:
+`Erdos678Final.lean` performs the off-by-one-safe translation from interval starts to the canonical variables:
 
-- each x-prime lies in the broad D4 range and satisfies `k ≤ p+s`;
-- each y-prime lies in the broad D4 half-window and satisfies `2*p ≤ k+s`;
-- all five primes are pairwise distinct as required by `Claim4PrimeWindowData`;
-- `40*C*(s+1) ≤ k`.
+- `claim4_cambie_k_lt_x_of_bounds` recovers `k < x` from existing verified bounds, ensuring `n = x-1 ≥ 3`;
+- the large-start fact is preserved through sharp-window, five-strip, provider, and PNT endpoints;
+- `cambie_lcm_ratio_eventually_with_large_start` specializes the strong construction with enough start information;
+- `erdos678_unbounded_witnesses` proves that for every lower bound `B`, there exist `n,m,k` with
+  `B ≤ k`, `3 ≤ n,m,k`, `n+k ≤ m`, and
+  `erdosM m (k+1) < erdosM n k`;
+- `erdos678_good_lengths_infinite` proves the set of such valid block lengths is infinite.
 
-### E2a — library audit — CURRENT FIRST CHECKPOINT
-
-Inspect the pinned Mathlib revision for formal PNT / prime-counting / short-interval results. Identify the smallest existing theorem that can produce arbitrarily many primes in relative neighborhoods of `k` and `k/2`, or document precisely which analytic theorem must be added/imported.
-
-No new axiom or opaque “prime density hypothesis” may be introduced merely to advance the status.
-
-### E2b — arithmetic adapter — PENDING
-
-Convert the selected analytic theorem into the exact natural-number strip inequalities and a common slack `s` satisfying `40*C*(s+1) ≤ k`.
-
-### E2c — five-prime constructor — PENDING
-
-Package two y-primes and three x-primes into `Claim4CambieSharpPrimeWindowData`, with distinctness and all broad-window obligations discharged.
-
-### E2 exit gate
-
-A reachable theorem must have the shape: for fixed positive `C`, there exists a threshold such that every larger `k` admits `s,xp,xq,xr,yp,yq` satisfying `Claim4CambieSharpPrimeWindowData C k s xp xq xr yp yq`.
-
-## E3 — strong Cambie theorem — PENDING
-
-Combine the E2 constructor with `Claim4CambieLargeKData` and the passed E1 endpoint for every fixed positive `C` and all sufficiently large `k`.
-
-## E4 — Erdős #678 — PENDING
-
-Take `C=1` and translate interval starts to the canonical problem variables.
+E4 mathematical exit: `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757`, `No update necessary`, **8806 jobs**.
 
 ---
 
@@ -200,21 +117,17 @@ Take `C=1` and translate interval starts to the canonical problem variables.
 Erdős #678
 ├── Arithmetic core .............................. PASSED
 ├── Cambie Claim 5 ............................... PASSED
-├── Claim 4 / CRT engine .......................... PASSED
-│   └── D4 sharp Cambie placement ................. MACHINE-CHECKED
-└── Quantitative finish ........................... CURRENT
-    ├── E1 cancellation-safe LCM ratio ............ PASSED / MACHINE-CHECKED
-    ├── E2 sharp prime-density existence .......... CURRENT
-    │   ├── E2a library audit ...................... CURRENT
-    │   ├── E2b arithmetic adapter ................ PENDING
-    │   └── E2c five-prime constructor ............ PENDING
-    ├── E3 strong Cambie theorem .................. PENDING
-    └── E4 Erdős #678 ............................. PENDING
+├── Claim 4 / CRT engine ......................... PASSED
+└── Quantitative finish .......................... PASSED
+    ├── E1 LCM-ratio estimate .................... PASSED
+    ├── E2 sharp prime-density existence ......... PASSED
+    ├── E3 strong Cambie theorem ................. PASSED
+    └── E4 canonical #678 + infinitude ........... PASSED
 ```
 
 ## Sole next action
 
-Audit the pinned formal library for a prime-density/PNT theorem sufficient to produce the exact five-prime sharp-window contract. Do not alter the already machine-checked D4/E1 constants to fit a weaker theorem, and do not introduce an uncredited analytic axiom.
+Synchronize all status documentation on the E4 PR, obtain one final green canonical CI for that documentation head, then perform stacked-PR review/integration. Do not reopen the mathematical proof unless a concrete regression is found.
 
 ## Global audit gates
 
@@ -223,5 +136,5 @@ Audit the pinned formal library for a prime-density/PNT theorem sufficient to pr
 - no guessed scaling or translation identity;
 - no hidden `sorry`, new axiom, or uncredited assumption;
 - a new module must be imported before a green run can validate it;
-- CI success is credited only to the exact reachable statements;
+- CI success is credited only to reachable statements;
 - discovery, reconstruction, and formal verification remain distinct classifications.
