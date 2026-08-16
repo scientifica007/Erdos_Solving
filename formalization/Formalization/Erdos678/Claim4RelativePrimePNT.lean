@@ -47,12 +47,12 @@ noncomputable def claim4RelativePrimeProviderOfPNT (q : ℕ) (hq : 0 < q) :
   obtain ⟨p, hp, hnp, hpupper⟩ := ha (n : ℝ) han
   refine ⟨p, hp, ?_, ?_⟩
   · have hscaled : (q : ℝ) * (n : ℝ) < (q : ℝ) * (p : ℝ) :=
-      (mul_lt_mul_left hqR).2 hnp
+      mul_lt_mul_of_pos_left hnp hqR
     exact_mod_cast hscaled
   · have hscaled :
         (q : ℝ) * (p : ℝ) <
           (q : ℝ) * ((1 + (1 : ℝ) / (q : ℝ)) * (n : ℝ)) :=
-      (mul_lt_mul_left hqR).2 hpupper
+      mul_lt_mul_of_pos_left hpupper hqR
     have hright :
         (q : ℝ) * ((1 + (1 : ℝ) / (q : ℝ)) * (n : ℝ)) =
           ((q : ℝ) + 1) * (n : ℝ) := by
