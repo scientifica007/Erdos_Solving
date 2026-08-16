@@ -32,6 +32,8 @@ import Formalization.Erdos678.Claim4RoomReductionTests
 import Formalization.Erdos678.Claim4ScaleFactorization
 import Formalization.Erdos678.Claim4Scales
 import Formalization.Erdos678.Claim4ScalesTests
+import Formalization.Erdos678.Claim4SharpPrimeExistenceAdapter
+import Formalization.Erdos678.Claim4SharpPrimeExistenceAdapterTests
 import Formalization.Erdos678.Claim4SmallScaleGap
 import Formalization.Erdos678.Claim4SmallScaleGapTests
 import Formalization.Erdos678.Claim4Weighted
