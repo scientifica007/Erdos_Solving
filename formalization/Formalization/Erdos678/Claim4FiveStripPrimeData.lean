@@ -61,27 +61,39 @@ theorem Claim4CambieFiveStripPrimeData.toNarrowPrimeData
     {C k d xp xq xr yp yq : ℕ}
     (h : Claim4CambieFiveStripPrimeData C k d xp xq xr yp yq) :
     Claim4CambieNarrowPrimeData C k (4 * d) xp xq xr yp yq := by
+  have hxq_upper := h.xq_upper
+  have hxr_upper := h.xr_upper
+  have hyq_lower := h.yq_lower
   have hxq_le_k : xq ≤ k := by omega
   have hxr_le_k : xr ≤ k := by omega
   have hyq_above : k < 2 * yq := by omega
 
+  have hxp_lower := h.xp_lower
+  have hxq_lower := h.xq_lower
+  have hxr_lower := h.xr_lower
+  have hyp_upper := h.yp_upper
+  have hyq_upper := h.yq_upper
   have hxp_close : k ≤ xp + 4 * d := by omega
   have hxq_close : k ≤ xq + 4 * d := by omega
   have hxr_close : k ≤ xr + 4 * d := by omega
   have hyp_close : 2 * yp ≤ k + 4 * d := by omega
-  have hyq_close : 2 * yq ≤ k + 4 * d := h.yq_upper
+  have hyq_close : 2 * yq ≤ k + 4 * d := hyq_upper
 
   have hxp_ne_xq : xp ≠ xq := by
-    have hlt : xq < xp := by omega
+    have hlt : xq < xp := by
+      omega
     exact ne_of_gt hlt
   have hxp_ne_xr : xp ≠ xr := by
-    have hlt : xr < xp := by omega
+    have hlt : xr < xp := by
+      omega
     exact ne_of_gt hlt
   have hxq_ne_xr : xq ≠ xr := by
-    have hlt : xr < xq := by omega
+    have hlt : xr < xq := by
+      omega
     exact ne_of_gt hlt
   have hyp_ne_yq : yp ≠ yq := by
-    have hlt : yp < yq := by omega
+    have hlt : yp < yq := by
+      omega
     exact ne_of_lt hlt
 
   have hslackLinear : 4 * d + 1 ≤ 4 * (d + 1) := by omega
