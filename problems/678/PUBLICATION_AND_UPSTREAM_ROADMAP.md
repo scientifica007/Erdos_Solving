@@ -7,7 +7,7 @@ Maximize defensible external value from #678 without reopening the mathematics o
 Two distinct contribution tracks remain:
 
 1. **formal verification / proof engineering:** an independently engineered Lean reconstruction of Cambie's proof with executable differential verification against the Aristotle/Alexeev formalization;
-2. **AI-assisted scientific production:** a longitudinal, auditable case study of failure rejection, reconstruction, provenance control, metric design, reproducibility, and scientific claim calibration.
+2. **AI-assisted scientific production:** a longitudinal, auditable case study of failure rejection, reconstruction, provenance control, metric design, reproducibility, statement fidelity, and scientific claim calibration.
 
 Cambie's theorem is known mathematics. We do not claim a new solution, independent new mathematical proof, or formalization priority.
 
@@ -21,63 +21,25 @@ Possible subtitle:
 
 **Differential verification, direct PNT short-interval interfaces, and regression-oriented proof engineering**
 
-The analytic boundary remains a concrete technical differentiator: our development uses `prime_between -> Claim4RelativePrimeProvider`; the public comparator routes through a `pi_alt`/prime-counting layer. S2 measures consequences rather than assuming superiority from source layout.
-
 ## S0/S1 — CLOSED
 
-S1 run `32028006457` established common-environment differential verification. Exact-head/post-merge integration closed through PR #22 and closure PR #27. S1 closure commit `7aff8d8d8680e90b34be64650c68c0fc778749fc` passed run `32045885504` with exact provenance, `No update necessary`, and 8808 jobs.
+S1 established common-environment differential verification against the pinned Aristotle/Alexeev source. Exact-head/post-merge integration and closure are verified.
 
 ## S2 — ACTIVE
 
-### S2a — dependency surface — CLOSED
+### S2a — dependency surface — CLOSED / CLOSURE VERIFIED
 
-S2a established a control, not a ranking: dependency-surface metrics are **boundary-sensitive** because PNT+ is an external Lake dependency internally but repository-local source in the comparator tree. Raw module/file/frontier counts therefore mix proof decomposition, packaging, and ownership.
+S2a established a control, not a ranking: dependency-surface metrics are boundary-sensitive because PNT+ lies on different repository ownership boundaries in the two artifacts. Raw file/module counts mix proof decomposition, packaging, and ownership.
 
-S2a closed through PR #28 and closure PR #29. Closure merge `c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5` passed run `32050862725`, job `95449629511`, with matching `verified_commit`, `No update necessary`, and 8808 jobs.
+### S2b — controlled build behavior — CLOSED / CLOSURE VERIFIED
 
-### S2b — controlled build behavior — CLOSED
+The credited six-replicate run `32053575928` found no stable wall-clock winner under the pinned common environment. Resource profiles differed materially, but the result is execution-profile evidence rather than universal speed or architecture superiority. A green pilot was excluded in full when predeclared runner-version provenance was missing; the apparatus was made fail-closed and the experiment rerun.
 
-The credited six-replicate run `32053575928` used the same pinned Lean 4.33 / Mathlib / PNT+ environment and alternating execution order. Its cold wall medians were `159.575 s` internal versus `156.280 s` comparator, but paired differences changed sign and ranged `-10.68..+11.73 s`; therefore there is **no stable wall-clock winner**.
+### S2c — repair locality — CLOSED / CLOSURE VERIFIED
 
-Resource profiles differed materially: median total CPU `241.155 s` versus `486.475 s`, max RSS `7,183,766` versus `7,828,930 KiB`, with the internal layout using much more system CPU and the comparator much more user CPU. This is pinned-environment execution-profile evidence, not universal speed or architecture superiority.
+S2c froze three matched declaration-rename mutations before harness creation and observation. All six artifact×mutation observations produced the expected unresolved-symbol break and all six legal identifier-only repairs returned green with zero third-party/dependency edits.
 
-The first six-job pilot remains excluded because required runner-version provenance was missing even though computation was green. The apparatus was made fail-closed and the whole experiment rerun.
-
-PR #30 integrated the substantive evidence; closure PR #31 merged as `cc55073fceddb51e3fa2c1854f797fe989523985` and that exact merge passed run `32060186755`, job `95479480527`, with `No update necessary` and 8808 jobs.
-
-### S2c — repair locality — COMPLETE / INTEGRATED / POST-MERGE VERIFIED
-
-Protocol: `S2_REPAIR_LOCALITY_PROTOCOL.md`.
-
-Frozen manifest: `S2_REPAIR_LOCALITY_MUTATIONS.yaml`.
-
-Result: `S2_REPAIR_LOCALITY_BASELINE.md/.json`.
-
-#### Prospective design
-
-The protocol and three matched mutations were frozen at commit `a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1` **before the harness was created and before any observation**. The experiment measures declaration-name/API reference blast radius only; statement and proof-body changes are forbidden, no aliases are allowed, repair is exact downstream identifier substitution, and third-party edits must remain zero.
-
-Matched logical layers:
-
-- R1 analytic-input closure: `claim4RelativePrimeProviderOfPNT` ↔ `density_proof`;
-- R2 eventual construction: `claim4_exists_cambie_lcm_ratio_eventually_of_pnt` ↔ `exists_xy_for_large_k`;
-- R3 strong public endpoint: `cambie_lcm_ratio_eventually_with_large_start_real` ↔ `main_theorem_given_pnt`.
-
-These are matched by logical role, not textual proposition identity. That limitation is retained explicitly.
-
-#### Execution and artifact integrity
-
-- frozen internal baseline: `cc55073fceddb51e3fa2c1854f797fe989523985`;
-- apparatus commit: `00d340d3ccdc13418615b6526e9b736d9f9e03e7`;
-- run `32062501296`, job `95486770197` — **SUCCESS**;
-- comparator `6f906fef432892db5c910c48ad1a3728dd42cdac`, blob `f2331e8bcc71bc36cce7724a0c54fafd8d64d480`;
-- artifact ID `9299556049`;
-- artifact SHA-256 `0369ec66c689572307660765b0c84cd86b6339f4f4d26a788c560ca11f7b7f4b`;
-- independent downloaded-ZIP SHA-256 recomputation: **exact match**.
-
-All six artifact×mutation cases produced the expected unresolved-symbol failure and all six legal identifier-only repairs returned green. Third-party/dependency touches were zero. All three internal repairs passed `lake exe mk_all --check` with `No update necessary` and full **8808-job** builds.
-
-#### Raw result
+The result was deliberately retained as **mixed/interface-dependent**:
 
 | layer | internal repaired refs | comparator repaired refs |
 |---|---:|---:|
@@ -85,38 +47,50 @@ All six artifact×mutation cases produced the expected unresolved-symbol failure
 | R2 eventual construction | 2 = 1 production + 1 verification | 1 production |
 | R3 strong endpoint | 2 verification, 0 production | 3 production |
 
-The finding is **mixed and interface-layer dependent**:
+No uniform repair-locality or maintainability advantage is supported.
 
-- R1/R2 expose more static downstream references internally, partly through deliberate dedicated tests;
-- R3 reverses at the production layer: the internal normalized strong endpoint has zero production downstream consumers, while the comparator endpoint has three;
-- raw totals (`7` internal vs `5` comparator) are not a maintainability ranking;
-- separating production and verification references changes the picture: internal totals `3` production + `4` verification, comparator `5` production under the frozen classification.
+PR #32 integrated the substantive evidence. Closure PR #33 final head `3439b58f1e05e2cb21ee1c9374857eb3b4197163` passed run `32070637072`, job `95512851767`, then merged as `47b85a2f2f5be6e6e4ede2b600723b8616aeeee4`. That exact merge passed post-merge run `32071325525`, job `95514986697`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**. S2c is fully closed.
 
-**Defensible S2c conclusion:** for these three predeclared matched interfaces, API/reference repair locality depends on logical layer and consumer class. **No uniform repair-locality advantage is observed.**
+### S2d — semantic/index mutation resistance — PREDECLARED / NOT EXECUTED
 
-This is scientifically valuable negative/mixed evidence because it rejects a tempting inference from the modular source layout to general maintainability superiority.
+#### Research question
 
-S2c still does not measure human repair time, cognitive effort, semantic robustness, proof complexity, or upgrade robustness.
+When small, type-correct semantic/index perturbations are injected at matched logical interfaces, where is the first observable rejection in each artifact? If a changed statement remains true, can it survive all machine checks and thereby expose the distinction between proof correctness and statement fidelity?
 
-#### Integration evidence
+#### Historical anchor
 
-PR #32 final head `7471370081dece8ac99ec3888636d7d9cc0fa78f` passed canonical exact-head run `32065778293`, job `95497421954`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
+The motivating failure is the retained 2026-08-14 interval-index error: the attempted construction treated `M(t,k+1)` as the block `[t,t+k]` rather than the canonical `[t+1,t+k+1]`. The project later introduced a length-based interval API, independent concrete regressions, statement bridges, and an explicit off-by-one-safe final translation.
 
-PR #32 merged as `bf54f5eb16e477d1b41b336e68ce82a729c98912`. The exact merge commit passed post-merge run `32067478680`, job `95502840936`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**. The substantive S2c evidence is integrated and machine-verified.
+#### Frozen mutation set
 
-### S2c documentation closure — CURRENT GATE
+The protocol and machine-readable manifest are:
 
-The remaining S2c work is bookkeeping under `DEC-008`: synchronize state, README, roadmap, and evidence ledger with the verified PR #32 integration above; pass exact-head canonical CI on this documentation-only closure; merge; then verify the resulting exact `main` commit.
+- `S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md`;
+- `S2_SEMANTIC_INDEX_MUTATIONS.yaml`.
 
-### S2d — semantic/index mutation resistance — NEXT AFTER S2c CLOSURE
+Exactly three matched mutation pairs are predeclared:
 
-S2d will replay controlled semantic/index perturbations inspired by the historical off-by-one failure and measure the earliest rejection layer. It must be prospectively specified before observing any mutation outcome.
+1. **I1 canonical start shift left one** — shift the same-length canonical block from `n+1..n+k` to `n..n+k-1` at the primitive interval convention. This is the closest controlled replay of the historical error.
+2. **I2 long block drops final term** — change the strong theorem's `k+1`-term long block to `k` terms with the same start.
+3. **I3 strengthened separation control** — change `n+k≤m` to `n+(k+1)≤m` at matched canonical endpoints. This is deliberately a possible semantic-survival control, because a changed but still true theorem may pass verification.
 
-S2d remains blocked until this S2c documentation closure:
+Each mutation is applied independently to a pristine baseline. No repair phase is allowed. The outcome is either first semantic rejection at a predeclared logical stratum or survival through canonical verification.
 
-1. passes exact-head canonical CI on its final PR head;
-2. merges;
-3. passes post-merge canonical verification on the resulting exact `main` commit.
+Internal rejection strata are frozen as:
+
+`L0 mutation source` → `L1 concrete semantic oracle` → `L2 local endpoint regression` → `L3 statement bridge` → `L4 mk_all` → `L5 full canonical build`.
+
+The comparator remains monolithic: the full pinned source is compiled and the first error line/enclosing declaration is recorded. Synthetic splitting is forbidden.
+
+#### Predeclaration gate
+
+At this checkpoint:
+
+- S2d harness: **not created**;
+- mutations executed: **0/6**;
+- outcomes observed: **none**.
+
+The predeclaration-only PR must first pass exact-head canonical CI, merge, and pass exact-main post-merge verification. Only then may an apparatus branch be created and the six frozen observations executed.
 
 ### S2e — upgrade robustness — PLANNED
 
@@ -132,19 +106,16 @@ Candidate title:
 
 **From Failed Conjecture to Machine-Checked Reconstruction: A Long-Horizon AI-Assisted Formalization Case Study of Erdős #678**
 
-The case does **not** show AI discovering #678. Its value is the observable process record: false generalization, machine rejection, retained negative knowledge, reconstruction mode, interface decomposition, pinned dependency closure, side-condition recovery, state/build synchronization, differential verification, verification-credit correction, infrastructure/proof-failure classification, public-artifact closure, metric-boundary validation, prospective experiment definition, and preservation of mixed/null comparative results.
+The case does **not** show AI discovering #678. Its value is the externally auditable process record.
 
-S2 now contributes three concrete methodology episodes:
+S2 now contributes four methodology episodes:
 
-- **S2a:** a metric can be reproducible yet scientifically misleading if ownership/dependency boundaries make its proxy incomparable;
-- **S2b:** a workflow can be computationally green yet scientifically inadmissible when a predeclared provenance field is missing; the full pilot was discarded and rerun;
-- **S2c:** a predeclared comparison can yield a mixed result that contradicts a simple architectural story; the mutation set was not redesigned after observation, and the mixed result is retained.
+- **S2a:** a metric can be reproducible yet scientifically misleading when ownership/dependency boundaries make the proxy incomparable;
+- **S2b:** a workflow can be computationally green yet scientifically inadmissible when a predeclared provenance field is missing;
+- **S2c:** a predeclared comparison can yield a mixed result that contradicts a simple architectural story, and that result must be retained;
+- **S2d design:** machine checking can reject semantic drift at different layers, but a changed-yet-true target may survive, so statement fidelity is a separate control from proof validity.
 
 These are externally auditable process/evidence episodes and do not require publishing hidden chain-of-thought.
-
-### S4 empirical extension
-
-After S2 stabilizes, derive a machine-readable episode dataset and annotate observable failure/intervention classes, restart/state controls, negative-memory effects, tool/model identities, cost/time, and human interventions. Do not publish hidden model chain-of-thought.
 
 ## Track C — upstream/community contribution
 
@@ -159,11 +130,11 @@ The comparator remains an immutable external fetch rather than vendored material
 
 ## Claim ladder
 
-**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; direct `prime_between` boundary; machine-checked statement bridges; unchanged public-comparator compilation; matching selected standard-axiom footprint; public Apache-2.0 artifact; S1 differential verification; S2a boundary-sensitive structural baseline; S2b six-replicate resource baseline with no stable wall-time winner; S2c prospectively defined six-observation API/reference repair-locality baseline with zero third-party touches, a mixed interface-dependent result, and exact-head/post-merge verified integration.
+**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; direct `prime_between` boundary; machine-checked statement bridges; common-environment differential verification; closure-verified S2a structural control; closure-verified S2b resource baseline; closure-verified S2c repair-locality baseline with a mixed interface-dependent result.
 
-**Supported interpretation:** independent formal replication has differential-verification value; execution provenance and metric-boundary auditing are scientifically relevant; resource profiles differ under the S2b environment; S2c provides no uniform repair-locality winner and demonstrates that consumer class/interface layer materially affects static API repair blast radius.
+**Predeclared but not yet evidenced:** S2d semantic/index rejection-depth behavior. No S2d outcome may be claimed until the frozen experiment is executed and integrated.
 
-**Still requires later evidence:** general maintainability, human repair effort, earlier semantic-drift rejection, upgrade robustness, causal explanations for S2b resource differences, causal benefit of state protocols.
+**Still requires later evidence:** general maintainability, human repair effort, general semantic robustness, upgrade robustness, causal explanations for S2b resource differences, causal benefit of state protocols.
 
 **Unsupported:** new solution, new independent mathematical proof, first Lean formalization, general architecture superiority, universal speed advantage, general maintainability superiority, autonomous AI authorship percentage.
 
@@ -174,8 +145,8 @@ The comparator remains an immutable external fetch rather than vendored material
 - **S2:** ACTIVE.
   - **S2a:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
   - **S2b:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
-  - **S2c:** COMPLETE / INTEGRATED / POST-MERGE VERIFIED; DOCUMENTATION CLOSURE IN PROGRESS.
-  - **S2d:** NOT STARTED; next only after S2c documentation closure verification.
+  - **S2c:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
+  - **S2d:** PREDECLARED / NOT EXECUTED / PENDING PREDECLARATION INTEGRATION.
   - **S2e:** NOT STARTED.
   - **S2f:** NOT STARTED.
 - **S3:** NOT STARTED.
@@ -184,7 +155,7 @@ The comparator remains an immutable external fetch rather than vendored material
 
 ## Repository governance follow-up
 
-The repository is Public and Apache-2.0 licensed. No ruleset was detected immediately after public transition. Protect `main` before accepting outside contributions so normal integration requires PR + Lean Verification and force pushes/deletions are blocked.
+The repository is Public and Apache-2.0 licensed. Protect `main` before accepting outside contributions so normal integration requires PR + Lean Verification and force pushes/deletions are blocked.
 
 ## Stop condition
 
