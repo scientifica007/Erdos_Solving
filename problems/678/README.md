@@ -1,13 +1,13 @@
 # Erdős Problem #678 — Machine-Checked Cambie Reconstruction
 
-> **Current repository status (2026-08-16): COMPLETE / MACHINE-CHECKED on the E4 branch.**
+> **Current repository status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED INTO `main`.**
 > The earlier independent attempt remains rejected. The completed result is an external-proof reconstruction and independent Lean reimplementation of Cambie (2024). The canonical operational sources are `PROJECT_STATE.md` and `LEAN_FORMALIZATION_ROADMAP.md`.
 
 ## Canonical statement
 
 Let `M(n,k) = lcm{n+1,...,n+k}`. Are there infinitely many `m,n,k ≥ 3` with `m ≥ n+k` such that `M(n,k) > M(m,k+1)`?
 
-The repository now proves this conclusion in Lean.
+The repository proves this conclusion in Lean.
 
 ## Final formal theorem
 
@@ -22,18 +22,31 @@ The repository now proves this conclusion in Lean.
 
 Thus the formalized conclusion is stronger than merely recording infinitely many unnamed triples: valid witnesses occur at unbounded block lengths.
 
+## Verification and integration checkpoints
+
 Final E4 mathematical checkpoint:
 
 - head `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`;
 - canonical run `31976903757` — **SUCCESS**;
 - `lake exe mk_all --check` = `No update necessary`;
-- full `lake build` = **8806 jobs**;
-- the build reaches `Claim4RelativePrimePNT`, `CambieStrongTheorem`, `Erdos678Final`, their regression modules, and the top-level `Formalization` target.
+- full `lake build` = **8806 jobs**.
+
+Final synchronized E4 head:
+
+- head `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`;
+- canonical run `31977861568` — **SUCCESS**;
+- full build = **8806 jobs**.
+
+Integration:
+
+- PR #17 merged into `main` on 2026-08-17;
+- merge commit `8fd1b20541ac7782f52429db3a2cc4c887547372`;
+- post-merge Lean Verification run `32011189766` was started on that exact merge commit and must be checked for its final conclusion before archival credit.
 
 ## Exact project classification
 
 - External problem status: proved.
-- Repository reconstruction status: **proved / machine-checked on the E4 branch**.
+- Repository reconstruction status: **proved / machine-checked / integrated into `main`**.
 - Independent proof attempt in this repository: rejected.
 - Valid concrete witness: `M(36,8) > M(47,9)` — machine-checked.
 - Rejected candidate: `(495,504,8)` — machine-refuted and retained as a negative regression.
@@ -43,8 +56,9 @@ Final E4 mathematical checkpoint:
 - Phase E2 prime-density existence: passed using pinned PNT+.
 - Phase E3 strong eventual Cambie theorem: passed.
 - Phase E4 canonical index translation and infinitude: passed.
+- Integration into `main`: passed through PR #17.
 
-## Proof architecture now live in Lean
+## Proof architecture live in Lean
 
 | Layer | Status |
 |---|---|
@@ -104,11 +118,11 @@ Those failures remain recorded as provenance and are not reclassified by the suc
 
 ## Current next action
 
-No mathematical phase remains open. Synchronize documentation on the E4 PR, obtain a final green CI for that documentation head, then review/integrate the stacked PR chain. Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
+No mathematical phase remains open and integration is complete. Confirm the post-merge `main` CI. If green, archive #678 as a completed benchmark and move project attention to the next selected problem. Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
 
 ## Main references inside this folder
 
 - `CAMBIE_PROOF_ANALYSIS.md` — mathematical architecture and Claim 4 audit.
-- `LEAN_FORMALIZATION_ROADMAP.md` — canonical execution roadmap, now closed.
+- `LEAN_FORMALIZATION_ROADMAP.md` — canonical execution roadmap, now closed and integrated.
 - `FORMALIZATION_CORRECTION_2026-08-14.md` — rejection of the false earlier construction.
 - `LEAN_TEST_PLAN.md` — superseded historical plan; not an execution source.
