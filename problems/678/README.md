@@ -2,7 +2,7 @@
 
 > **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 differential-verification experiment SUCCESS; persistent-artifact integration PENDING. Public-release preflight is complete; the repository is still private at this checkpoint and awaits the owner-selected project license plus the user's intended public-visibility switch.**
+> **Scientific-evaluation status: S1 differential-verification experiment SUCCESS; persistent-artifact integration PENDING. Public-release preflight is complete; Apache License 2.0 has been selected and committed for project-owned material. The repository is still private at this checkpoint and awaits the user's intended public-visibility switch.**
 >
 > The earlier independent attempt remains rejected. The successful result is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
@@ -113,9 +113,10 @@ Before the visibility switch the project has:
 - verified Apache-2.0 repository metadata for Mathlib, PNT+, and Formal Conjectures;
 - retained the `plby/lean-proofs` comparator as an immutable external fetch rather than vendoring it because no repository license metadata was detected by the audit;
 - created root `THIRD_PARTY_NOTICES.md`;
+- selected and committed **Apache License 2.0** in root `LICENSE` for project-owned material, unless otherwise noted;
 - documented the audit and its limitations in `PUBLIC_RELEASE_AUDIT_2026-08-17.md`.
 
-The repository itself has no selected root license yet. That is the remaining owner decision before/with public visibility.
+The project-license decision is therefore closed. Third-party material remains governed by its own licenses/notices and the non-vendoring boundary documented in `THIRD_PARTY_NOTICES.md`.
 
 ## Current S1 integration gate
 
@@ -156,6 +157,7 @@ No claim of new mathematics follows from either track.
 - `CAMBIE_PROOF_ANALYSIS.md`
 - `FORMALIZATION_CORRECTION_2026-08-14.md`
 - `LEAN_FORMALIZATION_ROADMAP.md`
+- root `LICENSE`
 - root `THIRD_PARTY_NOTICES.md`
 
 ## Historical failed independent route
