@@ -25,6 +25,10 @@ The audit inspected, to the extent exposed by the connected GitHub interfaces:
 
 This is **not** a cryptographic proof that no secret ever existed in every unreachable Git object, deleted object, attachment, cache, artifact, or every line of every historical Actions log. If any credential is independently suspected to have been committed historically, the correct response is to revoke/rotate it regardless of this audit.
 
+The connected GitHub integration did not permit enumeration of the complete commit history/commit-object metadata during this preflight, so the audit could not independently certify that every historical commit author used a GitHub `noreply` address. The owner should understand that Git commit author/committer metadata becomes public with repository history. If personal email exposure is a concern, inspect representative/history commits in the GitHub UI before the visibility switch.
+
+Repository rulesets also could not be enumerated while the repository is private on the current GitHub Free state: the GitHub API reported that this feature requires GitHub Pro or a public repository. Therefore branch/ruleset protection is explicitly a **post-transition review item**, not assumed to be configured by this audit.
+
 ---
 
 ## 2. Secret and sensitive-data findings
@@ -127,6 +131,8 @@ Normative public state remains:
 
 No branch deletion is required for correctness, but the repository owner should understand that the branch history itself becomes publicly inspectable.
 
+Git author/committer metadata is also part of public history. Full historical email-metadata enumeration was not available through the connected integration, so this remains a manual privacy check if the owner has ever committed with a personal email address that should not be public.
+
 ---
 
 ## 6. GitHub Actions / public-fork safety posture
@@ -143,7 +149,7 @@ For public operation:
 
 This makes the current workflow materially safer for untrusted fork PRs than the historical default-checkout configuration.
 
-After the repository becomes public, repository Actions settings and branch/ruleset protections should be reviewed in the GitHub UI before accepting external contributions.
+Ruleset/protection enumeration is not currently available for this private Free repository. After the repository becomes public, repository Actions settings and branch/ruleset protections must be reviewed before accepting external contributions.
 
 ---
 
@@ -168,15 +174,16 @@ While the repository remains private, GitHub-hosted Actions are currently blocke
 The controlled transition is:
 
 1. **Owner license decision:** choose a license for project-owned material and commit it, preferably before changing visibility.
-2. User changes `scientifica007/Erdos_Solving` from private to public.
-3. Verify repository metadata reports public visibility.
-4. Review GitHub Actions permissions/settings and branch/ruleset protections after the visibility transition.
-5. Trigger/observe a new canonical Lean Verification run on the **actual final PR #22 head** using the hardened workflow.
-6. Inspect the logged `verified_commit` and require it to equal the PR head being credited.
-7. Merge PR #22 only if the canonical gate is green.
-8. Run and verify the canonical workflow on the resulting `main` merge commit.
-9. Mark S1 integrated/closed only after the post-merge check succeeds.
-10. Do not start S2 before S1 closes; do not start another Erdős problem without explicit authorization.
+2. Optional privacy check if relevant: inspect Git commit author emails in GitHub UI/history if personal-email exposure is a concern.
+3. User changes `scientifica007/Erdos_Solving` from private to public.
+4. Verify repository metadata reports public visibility.
+5. Review GitHub Actions permissions/settings and create/verify branch/ruleset protections after the visibility transition.
+6. Trigger/observe a new canonical Lean Verification run on the **actual final PR #22 head** using the hardened workflow.
+7. Inspect the logged `verified_commit` and require it to equal the PR head being credited.
+8. Merge PR #22 only if the canonical gate is green.
+9. Run and verify the canonical workflow on the resulting `main` merge commit.
+10. Mark S1 integrated/closed only after the post-merge check succeeds.
+11. Do not start S2 before S1 closes; do not start another Erdős problem without explicit authorization.
 
 ---
 
@@ -184,7 +191,7 @@ The controlled transition is:
 
 ### Security/privacy preflight
 
-**PASS WITH STATED AUDIT LIMITATIONS.** No known credential or private-key blocker was found on the inspected current/indexed and representative-log surfaces; workflow hardening and preventive ignores have been committed.
+**PASS WITH STATED AUDIT LIMITATIONS.** No known credential or private-key blocker was found on the inspected current/indexed and representative-log surfaces; workflow hardening and preventive ignores have been committed. Full historical commit-author-email enumeration was unavailable through the integration and remains a manual check only if relevant to the owner.
 
 ### Scientific attribution preflight
 
@@ -198,6 +205,10 @@ The controlled transition is:
 
 **OWNER DECISION REQUIRED.** No root project license has yet been selected.
 
+### GitHub protections preflight
+
+**POST-TRANSITION REVIEW REQUIRED.** Current private-Free rulesets cannot be enumerated/managed through the audited API path; public visibility should be followed immediately by ruleset/branch-protection review.
+
 ### Overall
 
-**READY FOR PUBLIC VISIBILITY AFTER/WITH THE PROJECT-LICENSE DECISION, followed immediately by post-transition GitHub-settings review and a fresh exact-head CI gate for PR #22.**
+**READY FOR PUBLIC VISIBILITY AFTER/WITH THE PROJECT-LICENSE DECISION, followed immediately by post-transition GitHub-settings/protection review and a fresh exact-head CI gate for PR #22.**
