@@ -27,6 +27,15 @@ internal_artifact:
     - Formalization.Erdos678.cambie_lcm_ratio_eventually_with_large_start
     - Formalization.Erdos678.erdos678_unbounded_witnesses
     - Formalization.Erdos678.erdos678_good_lengths_infinite
+  semantic_comparison_bridge:
+    module: Formalization.Erdos678.SemanticBridge
+    predicate: Formalization.Erdos678.validPairsAt
+    theorems:
+      - Formalization.Erdos678.validPairsAt_eventually_nonempty
+      - Formalization.Erdos678.validPairsAt_unbounded_lengths
+      - Formalization.Erdos678.validPairsAt_good_lengths_infinite
+    status: internal-one-sided-bridge-implemented-awaiting-exact-head-ci
+    comparator_side_common_environment: pending
   architecture_metrics:
     directory: formalization/Formalization/Erdos678
     lean_files: 78
@@ -159,6 +168,7 @@ allowed_external_claims:
   - machine-checked canonical Erdős #678 endpoint
   - direct prime_between-to-relative-prime-provider PNT interface
   - modular regression-heavy alternative proof architecture
+  - executable internal semantic bridge to the public-style pair-set formulation
   - differential-verification candidate against the Aristotle/Alexeev artifact
   - longitudinal AI-assisted scientific-production case study
 
@@ -179,7 +189,7 @@ forbidden_or_unsupported_claims:
 
 missing_publication_grade_measurements:
   - common-environment build of both formalizations
-  - normalized statement bridge between both artifacts
+  - comparator-side bridge to the canonical validPairsAt semantics
   - matched axiom audit in one environment
   - cold-and-warm build time and resource measurements
   - dependency graph comparison
