@@ -1,0 +1,105 @@
+name: Erdős #678 Differential Reproducibility
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/erdos678-comparison.yml"
+      - "formalization/Formalization/Erdos678/ExternalStatementBridge.lean"
+      - "formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean"
+      - "formalization/lakefile.toml"
+      - "formalization/lake-manifest.json"
+      - "formalization/lean-toolchain"
+      - "problems/678/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos678-comparison-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  COMPARATOR_REPOSITORY: plby/lean-proofs
+  COMPARATOR_SHA: 6f906fef432892db5c910c48ad1a3728dd42cdac
+  OUR_PNT_SHA: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+  COMPARATOR_PNT_CONSEQUENCES_BLOB: 167d52c19bdba66c37fa766415c3bd73105376b0
+
+jobs:
+  dual-build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout this formalization at the tested head
+        uses: actions/checkout@v4
+        with:
+          path: ours
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+
+      - name: Checkout public comparator at pinned commit
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.COMPARATOR_REPOSITORY }}
+          ref: ${{ env.COMPARATOR_SHA }}
+          path: comparator
+          fetch-depth: 1
+
+      - name: Verify source pins and common Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUR_SHA="$(git -C ours rev-parse HEAD)"
+          COMPARATOR_ACTUAL="$(git -C comparator rev-parse HEAD)"
+          test "$COMPARATOR_ACTUAL" = "$COMPARATOR_SHA"
+          OUR_TOOLCHAIN="$(tr -d '\r\n' < ours/formalization/lean-toolchain)"
+          COMPARATOR_TOOLCHAIN="$(tr -d '\r\n' < comparator/src/latest/lean-toolchain)"
+          test "$OUR_TOOLCHAIN" = "$COMPARATOR_TOOLCHAIN"
+          printf 'our_sha=%s\n' "$OUR_SHA"
+          printf 'comparator_sha=%s\n' "$COMPARATOR_ACTUAL"
+          printf 'shared_toolchain=%s\n' "$OUR_TOOLCHAIN"
+
+      - name: Build our normalized external endpoint
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: ours/formalization
+          use-mathlib-cache: true
+          use-github-cache: false
+          build: true
+          build-args: Formalization.Erdos678.ExternalStatementBridgeTests
+          test: false
+          mk_all-check: false
+
+      - name: Verify our PNT dependency provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          PNT_DIR="ours/formalization/.lake/packages/PrimeNumberTheoremAnd"
+          PNT_ACTUAL="$(git -C "$PNT_DIR" rev-parse HEAD)"
+          test "$PNT_ACTUAL" = "$OUR_PNT_SHA"
+          OUR_PNT_BLOB="$(git -C "$PNT_DIR" hash-object PrimeNumberTheoremAnd/Consequences.lean)"
+          grep -q 'theorem prime_between' "$PNT_DIR/PrimeNumberTheoremAnd/Consequences.lean"
+          printf 'our_pnt_sha=%s\n' "$PNT_ACTUAL"
+          printf 'our_pnt_consequences_blob=%s\n' "$OUR_PNT_BLOB"
+
+      - name: Verify comparator PNT provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          PNT_FILE="comparator/src/latest/PrimeNumberTheoremAnd/Consequences.lean"
+          COMPARATOR_PNT_BLOB="$(git -C comparator hash-object src/latest/PrimeNumberTheoremAnd/Consequences.lean)"
+          test "$COMPARATOR_PNT_BLOB" = "$COMPARATOR_PNT_CONSEQUENCES_BLOB"
+          grep -q 'theorem prime_between' "$PNT_FILE"
+          printf 'comparator_pnt_consequences_blob=%s\n' "$COMPARATOR_PNT_BLOB"
+
+      - name: Build public comparator endpoint
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: comparator/src/latest
+          use-mathlib-cache: true
+          use-github-cache: false
+          build: true
+          build-args: ErdosProblems.Erdos678
+          test: false
+          mk_all-check: false
