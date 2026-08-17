@@ -1,4 +1,4 @@
-schema_version: 5
+schema_version: 6
 snapshot_date: 2026-08-17
 scope: erdos-678-only
 
@@ -15,96 +15,49 @@ internal_artifact:
   repository: scientifica007/Erdos_Solving
   visibility: public
   license: Apache-2.0
-  license_main_commit: 87cf560451ef5aa4714069d52a3851c1f8547f70
   mathematical_merge_commit: 8fd1b20541ac7782f52429db3a2cc4c887547372
   s1_merge_commit: 358cd541ff81a2b59611b7addfc90ae17e03b36f
+  s1_closure_merge_commit: 7aff8d8d8680e90b34be64650c68c0fc778749fc
   lean_version: 4.33.0
   mathlib_version: v4.33.0
   pnt_dependency:
     repository: AxiomMath/PrimeNumberTheoremAnd
     revision: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
     consumed_theorem: prime_between
-    project_adapter: Formalization.Erdos678.Claim4RelativePrimePNT.claim4RelativePrimeProviderOfPNT
-  final_endpoints:
-    - Formalization.Erdos678.cambie_lcm_ratio_eventually_with_large_start
-    - Formalization.Erdos678.erdos678_unbounded_witnesses
-    - Formalization.Erdos678.erdos678_good_lengths_infinite
-  s1_comparison_endpoints:
-    - Formalization.Erdos678.intervalFinset_succ_eq_Ioc
-    - Formalization.Erdos678.erdosM_eq_Ioc_lcm
-    - Formalization.Erdos678.erdos678_formalConjectures_eventual_nonempty
-    - Formalization.Erdos678.erdos678_valid_pair_lengths_unbounded
-    - Formalization.Erdos678.erdos678_valid_pair_good_lengths_infinite
-    - Formalization.Erdos678.cambie_lcm_ratio_eventually_with_large_start_real
 
 s1_differential_verification:
   status: complete-integrated-postmerge-verified
-  protocol: problems/678/DIFFERENTIAL_VERIFICATION_PROTOCOL.md
-  narrative_result: problems/678/S1_DIFFERENTIAL_VERIFICATION_RESULT.md
-  machine_evidence: problems/678/DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml
-  reproduction_script: problems/678/experiments/run_public_comparator_common_env.sh
-
   scientific_experiment:
     run: 32028006457
     job: 95381414710
-    event: push
     exact_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
     result: success
-    canonical_import_check: no-update-necessary
     canonical_build_jobs: 8808
-    environment:
-      runner: Ubuntu-24.04
-      lean: 4.33.0
-      mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
-      pnt_revision: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
-
   exact_head_integration_gate:
     pr: 22
     head: 1c6bea992033390ac4364033fafcd221694baf4c
     run: 32043807200
-    job: 95427648473
     result: success
-    checked_out_commit: 1c6bea992033390ac4364033fafcd221694baf4c
-    verified_commit: 1c6bea992033390ac4364033fafcd221694baf4c
     commit_match: true
     import_check: no-update-necessary
     build_jobs: 8808
-
-  merge:
-    pr: 22
-    commit: 358cd541ff81a2b59611b7addfc90ae17e03b36f
-
+  merge_commit: 358cd541ff81a2b59611b7addfc90ae17e03b36f
   postmerge_verification:
     run: 32044314748
     final_attempt: 2
     job: 95429173912
     result: success
-    checked_out_commit: 358cd541ff81a2b59611b7addfc90ae17e03b36f
-    verified_commit: 358cd541ff81a2b59611b7addfc90ae17e03b36f
     commit_match: true
-    lean: 4.33.0
-    pnt_revision: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
-    mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
     import_check: no-update-necessary
     build_jobs: 8808
-    selected_axiom_footprint: [propext, Classical.choice, Quot.sound]
-
-  postmerge_attempt_1:
-    result: failure
-    classification: transient-infrastructure-failure
-    proof_failure: false
-    earliest_failed_layer: lean-toolchain-download
-    observed_error: HTTP-502-from-releases.lean-lang.org
-    repository_changed_before_retry: false
-
-  verified_findings:
-    - canonical interval semantics formally aligned with Finset.Ioc public convention
-    - Formal-Conjectures-style eventual nonempty statement derived internally
-    - admissible block lengths exposed through unbounded and infinite endpoints
-    - natural-factor strong theorem lifted to every real C >= 1
-    - pinned public comparator source compiled unchanged in internal pinned environment
-    - matched selected-endpoint axiom footprint equals propext/Classical.choice/Quot.sound
-    - exact-head PR and post-merge main verification both have literal checkout provenance
+  closure:
+    pr: 27
+    merge_commit: 7aff8d8d8680e90b34be64650c68c0fc778749fc
+    postmerge_run: 32045885504
+    result: success
+    commit_match: true
+    import_check: no-update-necessary
+    build_jobs: 8808
 
 external_comparator:
   repository: plby/lean-proofs
@@ -113,8 +66,70 @@ external_comparator:
   commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
   file: src/latest/ErdosProblems/Erdos678.lean
   blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
-  compiled_unchanged_in_internal_environment: true
   redistribution_boundary: immutable-external-fetch-non-vendored-license-not-detected
+
+s2:
+  status: active
+  current_substage: S2a-dependency-surface
+
+  s2a_dependency_surface:
+    status: executed-success-pending-pr-integration
+    protocol: problems/678/S2_DEPENDENCY_SURFACE_PROTOCOL.md
+    analyzer: problems/678/experiments/s2_dependency_surface.py
+    baseline_markdown: problems/678/S2_DEPENDENCY_SURFACE_BASELINE.md
+    baseline_json: problems/678/S2_DEPENDENCY_SURFACE_BASELINE.json
+    metric_scope: module-import-structure-not-proof-complexity
+    experiment:
+      workflow: Erdos 678 S2a Dependency Surface
+      commit: 4685fca552ae4a0270dfa3823d46fde48efa5ade
+      run: 32047324807
+      job: 95438118197
+      result: success
+      identity_validation: pass
+      artifact_id: 9293347138
+      artifact_digest: sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd
+    comparator_identity:
+      commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+      entry_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+    internal_metrics:
+      entry_module: Formalization.Erdos678.Erdos678Final
+      direct_entry_imports: 4
+      reachable_local_modules: 46
+      local_import_edges: 58
+      max_local_import_depth: 33
+      local_leaf_modules: 3
+      external_frontier_modules: 14
+      external_frontier_families: [Mathlib, PrimeNumberTheoremAnd]
+      artifact_owned_modules: 46
+      artifact_owned_source_lines: 5546
+      artifact_owned_declaration_commands: 237
+      third_party_repository_local_modules: 0
+    comparator_metrics:
+      entry_module: ErdosProblems.Erdos678
+      direct_entry_imports: 2
+      reachable_local_modules: 10
+      local_import_edges: 10
+      max_local_import_depth: 4
+      local_leaf_modules: 4
+      external_frontier_modules: 27
+      external_frontier_families: [Batteries, Mathlib]
+      artifact_owned_modules: 1
+      artifact_owned_source_lines: 2546
+      artifact_owned_declaration_commands: 108
+      third_party_repository_local_modules: 9
+      third_party_repository_local_source_lines: 6943
+      third_party_repository_local_declaration_commands: 381
+    verified_finding:
+      - dependency-surface counts are boundary-sensitive because the same PNT dependency is external through Lake internally but repository-local source in the comparator
+      - raw module/file/frontier counts conflate proof decomposition, dependency packaging, and ownership unless normalized
+    interpretation_limits:
+      - no architecture-superiority claim
+      - no direct lower-coupling claim from external-frontier counts
+      - no proof-complexity interpretation from module or line counts
+      - build speed, repair locality, mutation resistance, and upgrade robustness remain unmeasured
+    infrastructure_observation:
+      checkout_action_node20_warning: true
+      classification: non-blocking-environment-maintenance-observation
 
 verification_credit_audit:
   status: corrected-and-validated
@@ -123,31 +138,21 @@ verification_credit_audit:
     metadata_pr_head: 610d525145a8129d345a1d3ce6a6b41809e3d1f8
     actual_checkout: 5983f901358d8f82d85a425369d429cfa9475f96
     classification: successful-integration-tree-verification
-  hardened_workflow:
-    explicit_pr_head_checkout: true
-    records_git_rev_parse_head: true
-    permissions: contents-read
-    persist_credentials: false
-    directly_used_external_actions_pinned_by_sha: true
 
 public_artifact:
   visibility: public
   license: Apache-2.0
-  billing_blocker: resolved-by-public-transition
   rulesets_detected_at_transition: false
   governance_followup: configure-main-protection-before-accepting-outside-contributions
 
 allowed_external_claims:
   - independent Lean reimplementation of Cambie's proof
-  - machine-checked canonical Erdős #678 endpoint
-  - direct prime_between-to-relative-prime-provider PNT interface
-  - modular regression-heavy alternative proof architecture
   - executed common-environment differential verification against pinned Aristotle/Alexeev source
-  - machine-checked normalization to public/Formal-Conjectures statement semantics
-  - real-factor C >= 1 bridge matching public strong-theorem parameter domain
+  - machine-checked statement normalization and real-factor bridge
   - matched selected-endpoint standard-axiom footprint under one pinned environment
-  - exact-head and post-merge integration provenance for the public S1 artifact
-  - longitudinal AI-assisted scientific-production case study including verification-credit and infrastructure-failure classification
+  - exact-head and post-merge S1 integration provenance
+  - reproducible S2a module/import structural baseline under explicit ownership and packaging boundaries
+  - dependency-surface metrics are boundary-sensitive under the observed PNT packaging difference
 
 claims_requiring_new_experiments:
   - easier maintenance than the public comparator
@@ -155,23 +160,22 @@ claims_requiring_new_experiments:
   - lower dependency coupling in practice
   - earlier semantic-drift detection in controlled tests
   - smaller repair blast radius
-  - state protocol causally improves agent restart performance
   - faster or more resource-efficient proof architecture
+  - causal benefit of state protocols
 
 forbidden_or_unsupported_claims:
   - new solution of Erdős #678
   - new independent mathematical proof of Erdős #678
   - first Lean formalization of Erdős #678
-  - first unconditional PNT-backed Lean formalization of Erdős #678
+  - general superiority of our architecture
   - autonomous AI authorship percentage
-  - inferred token count or cost from git history
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S2-metric-and-mutation-suite
-  status: not-started
-  prerequisite: this S1-closure synchronization PR passes canonical CI and integrates cleanly
-  allowed_scope: archived-erdos-678-only
+  stage: S2a-integration
+  status: pending
+  requirement: canonical exact-head Lean Verification on final S2a PR head, merge, then post-merge main verification
+  next_after_close: S2b-controlled-build-behavior
 
 privacy_and_reproducibility:
   repository_visibility: public
