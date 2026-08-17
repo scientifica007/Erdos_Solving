@@ -39,8 +39,8 @@ The contribution is an independent Lean reimplementation with:
 ### Required experiments before submission
 
 1. Port the public `plby/lean-proofs` #678 artifact and our artifact to a **common Lean/Mathlib/PNT+ version**.
-2. Define a canonical common #678 predicate.
-3. Prove bridge theorems from both artifacts to that predicate.
+2. **Internal side complete:** define a canonical common #678 pair-set predicate. `Formalization.Erdos678.SemanticBridge` now provides `validPairsAt`.
+3. **Internal side complete:** prove our artifact implies the public-style eventual-nonempty formulation, unbounded valid lengths, and infinite good lengths. The external comparator still needs to be imported/ported into the same environment before a two-sided bridge can be claimed.
 4. Run `#print axioms` on matched endpoints.
 5. Generate direct/transitive dependency graphs.
 6. Measure cold/warm build time and resource use on the same machine.
@@ -143,12 +143,13 @@ Before proposing it upstream, measure whether it actually simplifies the public 
 
 ### C2. Statement-semantics bridge
 
-Create a compact formal module proving relations among:
+**Internal implementation now exists** in `Formalization.Erdos678.SemanticBridge` and is included in the canonical build graph. It formalizes:
 
 - eventual nonempty valid-pair sets;
 - unbounded valid block lengths;
-- infinite valid triples;
-- non-infinitude of valid pairs at a fixed `k` reading.
+- infinite valid good-length sets.
+
+The next comparison step is to place the public comparator in the same environment and prove two-sided compatibility to the same predicate. A future extension may also package infinite valid triples and the fixed-`k` non-infinitude reading if that adds upstream value rather than duplicating the public artifact unnecessarily.
 
 This can help Formal Conjectures and future benchmark consumers avoid reintroducing statement ambiguity.
 
@@ -208,6 +209,7 @@ External communication should use a claim ladder so evidence and rhetoric stay a
 - Our independent Lean reconstruction builds successfully.
 - Our reconstruction uses `prime_between` directly at its PNT boundary.
 - Our artifact has a modular, regression-heavy architecture.
+- Our artifact now has an executable semantic bridge to the public-style eventual/nonempty formulation.
 
 ### Level 1 — supported interpretation
 
@@ -235,29 +237,32 @@ External communication should use a claim ladder so evidence and rhetoric stay a
 
 ## Concrete deliverables from the current archive
 
-The following are now available inside `problems/678/`:
+The following are now available inside `problems/678/` or the #678 formalization tree:
 
 1. `SCIENTIFIC_COMPARATIVE_STUDY.md` — formal/mathematical positioning and testable comparison hypotheses.
 2. `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md` — AI-process case study, failure taxonomy, research questions, threats to validity, and experimental extensions.
 3. this roadmap — separation of publication, empirical, and upstream tracks.
-4. existing `CAMBIE_PROOF_ANALYSIS.md` — detailed mathematical architecture.
-5. existing `FORMALIZATION_CORRECTION_2026-08-14.md` — concrete failed-path correction evidence.
-6. existing `LEAN_FORMALIZATION_ROADMAP.md` — longitudinal execution state.
-7. root `LESSONS_LEARNED_678_ADDENDUM.md` — reusable lessons and final postmortem.
+4. `Formalization.Erdos678.SemanticBridge` — executable canonical pair-set semantics and one-sided bridge theorems from our artifact.
+5. `CAMBIE_PROOF_ANALYSIS.md` — detailed mathematical architecture.
+6. `FORMALIZATION_CORRECTION_2026-08-14.md` — concrete failed-path correction evidence.
+7. `LEAN_FORMALIZATION_ROADMAP.md` — longitudinal execution state.
+8. root `LESSONS_LEARNED_678_ADDENDUM.md` — reusable lessons and final postmortem.
 
-Together these form the initial scientific dossier.
+Together these form the initial scientific dossier plus the first executable differential-verification component.
 
 ---
 
 ## Recommended sequencing
 
-### Stage S0 — dossier freeze
+### Stage S0 — dossier freeze ✅
 
-Freeze this comparative dossier against exact internal and external commits.
+The comparative dossier is frozen against explicit internal and external commits.
 
-### Stage S1 — common-environment differential verification
+### Stage S1 — common-environment differential verification — **in progress**
 
-This is the highest-priority technical experiment because it converts "two proofs exist" into a formally comparable pair.
+Internal canonical semantics and one-sided bridge: implemented in `SemanticBridge.lean`.
+
+Remaining S1 work: place the public comparator in a compatible pinned environment, prove/validate the comparator side against the same semantics, and run matched axiom/dependency checks.
 
 ### Stage S2 — metric and mutation suite
 
