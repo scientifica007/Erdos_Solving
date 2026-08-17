@@ -1,0 +1,399 @@
+{
+  "comparator": {
+    "blob": "f2331e8bcc71bc36cce7724a0c54fafd8d64d480",
+    "commit": "6f906fef432892db5c910c48ad1a3728dd42cdac",
+    "source_sha256": "186a651174c7f8f7ef1e7d7d86f262ff51889a55c6767ca116b08a009fe8a4db"
+  },
+  "comparator_baseline_compile": {
+    "exit": 0,
+    "wall_seconds_metadata_only": 155.418925974
+  },
+  "environment": {
+    "cpu_count": 4,
+    "image_os": "ubuntu24",
+    "image_version": "20260810.271.1",
+    "lean": "4.33.0",
+    "mathlib_input": "v4.33.0",
+    "mathlib_resolved": "db584cd6d46c92f209a44c0f1c829460d327499d",
+    "pnt_revision": "2667e414c38e5a5dc9aa1946f16f13001e5cd3ed",
+    "runner_arch": "X64",
+    "runner_name": "GitHub Actions 1000000648",
+    "runner_os": "Linux"
+  },
+  "experiment_commit": "00d340d3ccdc13418615b6526e9b736d9f9e03e7",
+  "hidden_chain_of_thought_required": false,
+  "internal_baseline": "cc55073fceddb51e3fa2c1854f797fe989523985",
+  "internal_baseline_compile": {
+    "build_completed_8808_jobs": true,
+    "exit": 0,
+    "wall_seconds_metadata_only": 249.47272189600005
+  },
+  "interpretation_scope": "predeclared-symbol-api-reference-repair-locality-only",
+  "mutation_count": 3,
+  "observation_count": 6,
+  "observations": [
+    {
+      "all_repairs_pure_identifier_substitutions": true,
+      "artifact": "internal",
+      "canonical": {
+        "full_build_completed_8808_jobs": true,
+        "full_build_exit": 0,
+        "full_build_wall_seconds_metadata_only": 31.962014041999964,
+        "mk_all_exit": 0,
+        "mk_all_no_update_necessary": true
+      },
+      "changed_production_reference_lines": 2,
+      "changed_verification_reference_lines": 1,
+      "declaration": {
+        "line": 20,
+        "new": "s2c_claim4RelativePrimeProviderOfPNT",
+        "old": "claim4RelativePrimeProviderOfPNT",
+        "path": "formalization/Formalization/Erdos678/Claim4RelativePrimePNT.lean"
+      },
+      "distinct_production_files_or_modules_repaired": 2,
+      "distinct_verification_files_or_modules_repaired": 1,
+      "downstream_reference_sites_before": [
+        {
+          "line": 78,
+          "ownership": "production_project_owned",
+          "path": "formalization/Formalization/Erdos678/Claim4RelativePrimePNT.lean"
+        },
+        {
+          "line": 11,
+          "ownership": "verification_project_owned",
+          "path": "formalization/Formalization/Erdos678/Claim4RelativePrimePNTTests.lean"
+        },
+        {
+          "line": 112,
+          "ownership": "production_project_owned",
+          "path": "formalization/Formalization/Erdos678/Erdos678Final.lean"
+        }
+      ],
+      "downstream_reference_sites_repaired": 3,
+      "final_canonical_verification_success": true,
+      "first_error": "error: Formalization/Erdos678/Claim4RelativePrimePNT.lean:78:4: Unknown identifier `claim4RelativePrimeProviderOfPNT`",
+      "logical_role": "external-prime-distribution-to-project-local-analytic-interface",
+      "mutated_compile_exit": 1,
+      "mutated_compile_wall_seconds_metadata_only": 0.7779268620000208,
+      "mutation_id": "R1-analytic-closure",
+      "mutation_observable": true,
+      "production_files_or_modules_repaired": [
+        "formalization/Formalization/Erdos678/Claim4RelativePrimePNT.lean",
+        "formalization/Formalization/Erdos678/Erdos678Final.lean"
+      ],
+      "repair_sites": [
+        {
+          "line": 78,
+          "ownership": "production_project_owned",
+          "path": "formalization/Formalization/Erdos678/Claim4RelativePrimePNT.lean"
+        },
+        {
+          "line": 11,
+          "ownership": "verification_project_owned",
+          "path": "formalization/Formalization/Erdos678/Claim4RelativePrimePNTTests.lean"
+        },
+        {
+          "line": 112,
+          "ownership": "production_project_owned",
+          "path": "formalization/Formalization/Erdos678/Erdos678Final.lean"
+        }
+      ],
+      "repaired_compile_success": true,
+      "third_party_dependency_files_touched": 0,
+      "total_project_owned_reference_repair_lines": 3,
+      "unresolved_old_symbol_diagnostic_count": 1,
+      "verification_files_or_modules_repaired": [
+        "formalization/Formalization/Erdos678/Claim4RelativePrimePNTTests.lean"
+      ]
+    },
+    {
+      "all_repairs_pure_identifier_substitutions": true,
+      "artifact": "comparator",
+      "changed_production_reference_lines": 1,
+      "changed_verification_reference_lines": 0,
+      "declaration": {
+        "line": 2111,
+        "new": "s2c_density_proof",
+        "old": "density_proof",
+        "path": "src/latest/ErdosProblems/Erdos678.lean"
+      },
+      "distinct_production_files_or_modules_repaired": 1,
+      "distinct_verification_files_or_modules_repaired": 0,
+      "downstream_reference_sites_before": [
+        {
+          "line": 2449,
+          "ownership": "production_project_owned",
+          "path": "src/latest/ErdosProblems/Erdos678.lean"
+        }
+      ],
+      "downstream_reference_sites_repaired": 1,
+      "final_canonical_verification_success": true,
+      "first_error": "/home/runner/work/Erdos_Solving/Erdos_Solving/problems/678/experiments/out/s2c-00d340d3ccdc13418615b6526e9b736d9f9e03e7/Erdos678Comparator.lean:2449:28: error(lean.unknownIdentifier): Unknown identifier `density_proof`",
+      "logical_role": "external-prime-distribution-to-project-local-analytic-interface",
+      "mutated_compile_exit": 1,
+      "mutated_compile_wall_seconds_metadata_only": 2.350976272999972,
+      "mutation_id": "R1-analytic-closure",
+      "mutation_observable": true,
+      "production_files_or_modules_repaired": [
+        "src/latest/ErdosProblems/Erdos678.lean"
+      ],
+      "repair_sites": [
+        {
+          "line": 2449,
+          "ownership": "production_project_owned",
+          "path": "src/latest/ErdosProblems/Erdos678.lean"
+        }
+      ],
+      "repaired_compile_success": true,
+      "repaired_compile_wall_seconds_metadata_only": 150.37079100999998,
+      "third_party_dependency_files_touched": 0,
+      "total_project_owned_reference_repair_lines": 1,
+      "unresolved_old_symbol_diagnostic_count": 1,
+      "verification_files_or_modules_repaired": []
+    },
+    {
+      "all_repairs_pure_identifier_substitutions": true,
+      "artifact": "internal",
+      "canonical": {
+        "full_build_completed_8808_jobs": true,
+        "full_build_exit": 0,
+        "full_build_wall_seconds_metadata_only": 26.634943166000085,
+        "mk_all_exit": 0,
+        "mk_all_no_update_necessary": true
+      },
+      "changed_production_reference_lines": 1,
+      "changed_verification_reference_lines": 1,
+      "declaration": {
+        "line": 68,
+        "new": "s2c_claim4_exists_cambie_lcm_ratio_eventually_of_pnt",
+        "old": "claim4_exists_cambie_lcm_ratio_eventually_of_pnt",
+        "path": "formalization/Formalization/Erdos678/Claim4RelativePrimePNT.lean"
+      },
+      "distinct_production_files_or_modules_repaired": 1,
+      "distinct_verification_files_or_modules_repaired": 1,
+      "downstream_reference_sites_before": [
+        {
+          "line": 25,
+          "ownership": "production_project_owned",
+          "path": "formalization/Formalization/Erdos678/CambieStrongTheorem.lean"
+        },
+        {
+          "line": 18,
+          "ownership": "verification_project_owned",
+          "path": "formalization/Formalization/Erdos678/Claim4RelativePrimePNTTests.lean"
+        }
+      ],
+      "downstream_reference_sites_repaired": 2,
+      "final_canonical_verification_success": true,
+      "first_error": "error: Formalization/Erdos678/CambieStrongTheorem.lean:25:25: Unknown identifier `claim4_exists_cambie_lcm_ratio_eventually_of_pnt`",
+      "logical_role": "sufficiently-large-k-witness-construction-consumed-by-final-theorem-layer",
+      "mutated_compile_exit": 1,
+      "mutated_compile_wall_seconds_metadata_only": 0.932049125999989,
+      "mutation_id": "R2-eventual-construction",
+      "mutation_observable": true,
+      "production_files_or_modules_repaired": [
+        "formalization/Formalization/Erdos678/CambieStrongTheorem.lean"
+      ],
+      "repair_sites": [
+        {
+          "line": 25,
+          "ownership": "production_project_owned",
+          "path": "formalization/Formalization/Erdos678/CambieStrongTheorem.lean"
+        },
+        {
+          "line": 18,
+          "ownership": "verification_project_owned",
+          "path": "formalization/Formalization/Erdos678/Claim4RelativePrimePNTTests.lean"
+        }
+      ],
+      "repaired_compile_success": true,
+      "third_party_dependency_files_touched": 0,
+      "total_project_owned_reference_repair_lines": 2,
+      "unresolved_old_symbol_diagnostic_count": 2,
+      "verification_files_or_modules_repaired": [
+        "formalization/Formalization/Erdos678/Claim4RelativePrimePNTTests.lean"
+      ]
+    },
+    {
+      "all_repairs_pure_identifier_substitutions": true,
+      "artifact": "comparator",
+      "changed_production_reference_lines": 1,
+      "changed_verification_reference_lines": 0,
+      "declaration": {
+        "line": 1952,
+        "new": "s2c_exists_xy_for_large_k",
+        "old": "exists_xy_for_large_k",
+        "path": "src/latest/ErdosProblems/Erdos678.lean"
+      },
+      "distinct_production_files_or_modules_repaired": 1,
+      "distinct_verification_files_or_modules_repaired": 0,
+      "downstream_reference_sites_before": [
+        {
+          "line": 2011,
+          "ownership": "production_project_owned",
+          "path": "src/latest/ErdosProblems/Erdos678.lean"
+        }
+      ],
+      "downstream_reference_sites_repaired": 1,
+      "final_canonical_verification_success": true,
+      "first_error": "/home/runner/work/Erdos_Solving/Erdos_Solving/problems/678/experiments/out/s2c-00d340d3ccdc13418615b6526e9b736d9f9e03e7/Erdos678Comparator.lean:2011:22: error(lean.unknownIdentifier): Unknown identifier `exists_xy_for_large_k`",
+      "logical_role": "sufficiently-large-k-witness-construction-consumed-by-final-theorem-layer",
+      "mutated_compile_exit": 1,
+      "mutated_compile_wall_seconds_metadata_only": 2.7541408400000162,
+      "mutation_id": "R2-eventual-construction",
+      "mutation_observable": true,
+      "production_files_or_modules_repaired": [
+        "src/latest/ErdosProblems/Erdos678.lean"
+      ],
+      "repair_sites": [
+        {
+          "line": 2011,
+          "ownership": "production_project_owned",
+          "path": "src/latest/ErdosProblems/Erdos678.lean"
+        }
+      ],
+      "repaired_compile_success": true,
+      "repaired_compile_wall_seconds_metadata_only": 148.59273653700002,
+      "third_party_dependency_files_touched": 0,
+      "total_project_owned_reference_repair_lines": 1,
+      "unresolved_old_symbol_diagnostic_count": 1,
+      "verification_files_or_modules_repaired": []
+    },
+    {
+      "all_repairs_pure_identifier_substitutions": true,
+      "artifact": "internal",
+      "canonical": {
+        "full_build_completed_8808_jobs": true,
+        "full_build_exit": 0,
+        "full_build_wall_seconds_metadata_only": 12.184896653999886,
+        "mk_all_exit": 0,
+        "mk_all_no_update_necessary": true
+      },
+      "changed_production_reference_lines": 0,
+      "changed_verification_reference_lines": 2,
+      "declaration": {
+        "line": 106,
+        "new": "s2c_cambie_lcm_ratio_eventually_with_large_start_real",
+        "old": "cambie_lcm_ratio_eventually_with_large_start_real",
+        "path": "formalization/Formalization/Erdos678/ExternalStatementBridge.lean"
+      },
+      "distinct_production_files_or_modules_repaired": 0,
+      "distinct_verification_files_or_modules_repaired": 1,
+      "downstream_reference_sites_before": [
+        {
+          "line": 31,
+          "ownership": "verification_project_owned",
+          "path": "formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean"
+        },
+        {
+          "line": 38,
+          "ownership": "verification_project_owned",
+          "path": "formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean"
+        }
+      ],
+      "downstream_reference_sites_repaired": 2,
+      "final_canonical_verification_success": true,
+      "first_error": "error: Formalization/Erdos678/ExternalStatementBridgeTests.lean:31:8: Unknown identifier `cambie_lcm_ratio_eventually_with_large_start_real`",
+      "logical_role": "unconditional-real-factor-strong-endpoint-with-downstream-consumers",
+      "mutated_compile_exit": 1,
+      "mutated_compile_wall_seconds_metadata_only": 0.33910403500007136,
+      "mutation_id": "R3-strong-public-endpoint",
+      "mutation_observable": true,
+      "production_files_or_modules_repaired": [],
+      "repair_sites": [
+        {
+          "line": 31,
+          "ownership": "verification_project_owned",
+          "path": "formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean"
+        },
+        {
+          "line": 38,
+          "ownership": "verification_project_owned",
+          "path": "formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean"
+        }
+      ],
+      "repaired_compile_success": true,
+      "third_party_dependency_files_touched": 0,
+      "total_project_owned_reference_repair_lines": 2,
+      "unresolved_old_symbol_diagnostic_count": 2,
+      "verification_files_or_modules_repaired": [
+        "formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean"
+      ]
+    },
+    {
+      "all_repairs_pure_identifier_substitutions": true,
+      "artifact": "comparator",
+      "changed_production_reference_lines": 3,
+      "changed_verification_reference_lines": 0,
+      "declaration": {
+        "line": 2447,
+        "new": "s2c_main_theorem_given_pnt",
+        "old": "main_theorem_given_pnt",
+        "path": "src/latest/ErdosProblems/Erdos678.lean"
+      },
+      "distinct_production_files_or_modules_repaired": 1,
+      "distinct_verification_files_or_modules_repaired": 0,
+      "downstream_reference_sites_before": [
+        {
+          "line": 2461,
+          "ownership": "production_project_owned",
+          "path": "src/latest/ErdosProblems/Erdos678.lean"
+        },
+        {
+          "line": 2469,
+          "ownership": "production_project_owned",
+          "path": "src/latest/ErdosProblems/Erdos678.lean"
+        },
+        {
+          "line": 2514,
+          "ownership": "production_project_owned",
+          "path": "src/latest/ErdosProblems/Erdos678.lean"
+        }
+      ],
+      "downstream_reference_sites_repaired": 3,
+      "final_canonical_verification_success": true,
+      "first_error": "/home/runner/work/Erdos_Solving/Erdos_Solving/problems/678/experiments/out/s2c-00d340d3ccdc13418615b6526e9b736d9f9e03e7/Erdos678Comparator.lean:2461:8: error(lean.unknownIdentifier): Unknown identifier `main_theorem_given_pnt`",
+      "logical_role": "unconditional-real-factor-strong-endpoint-with-downstream-consumers",
+      "mutated_compile_exit": 1,
+      "mutated_compile_wall_seconds_metadata_only": 2.3436413000000247,
+      "mutation_id": "R3-strong-public-endpoint",
+      "mutation_observable": true,
+      "production_files_or_modules_repaired": [
+        "src/latest/ErdosProblems/Erdos678.lean"
+      ],
+      "repair_sites": [
+        {
+          "line": 2461,
+          "ownership": "production_project_owned",
+          "path": "src/latest/ErdosProblems/Erdos678.lean"
+        },
+        {
+          "line": 2469,
+          "ownership": "production_project_owned",
+          "path": "src/latest/ErdosProblems/Erdos678.lean"
+        },
+        {
+          "line": 2514,
+          "ownership": "production_project_owned",
+          "path": "src/latest/ErdosProblems/Erdos678.lean"
+        }
+      ],
+      "repaired_compile_success": true,
+      "repaired_compile_wall_seconds_metadata_only": 149.9452203659999,
+      "third_party_dependency_files_touched": 0,
+      "total_project_owned_reference_repair_lines": 3,
+      "unresolved_old_symbol_diagnostic_count": 3,
+      "verification_files_or_modules_repaired": []
+    }
+  ],
+  "predeclaration_commit": "a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1",
+  "predeclared_file_sha256": {
+    "problems/678/S2_REPAIR_LOCALITY_MUTATIONS.yaml": "d6b45699793620b4af5b817c654214a4ec8281081ee156242c489686876efc5d",
+    "problems/678/S2_REPAIR_LOCALITY_PROTOCOL.md": "51b5d7e5c2ea76a8009a9cf8515c022c4d5082f08af085be7fb166873bb7e996"
+  },
+  "schema_version": 1,
+  "stage": "S2c-repair-locality",
+  "status": "executed-success",
+  "third_party_dependency_files_touched_total": 0,
+  "timing_is_repair_cost_metric": false
+}
