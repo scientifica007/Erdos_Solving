@@ -1,4 +1,4 @@
-schema_version: 6
+schema_version: 7
 snapshot_date: 2026-08-17
 scope: erdos-678-only
 
@@ -18,6 +18,7 @@ internal_artifact:
   mathematical_merge_commit: 8fd1b20541ac7782f52429db3a2cc4c887547372
   s1_merge_commit: 358cd541ff81a2b59611b7addfc90ae17e03b36f
   s1_closure_merge_commit: 7aff8d8d8680e90b34be64650c68c0fc778749fc
+  s2a_merge_commit: 37deb850f894d32863970aca6b07e876f89e813d
   lean_version: 4.33.0
   mathlib_version: v4.33.0
   pnt_dependency:
@@ -70,10 +71,10 @@ external_comparator:
 
 s2:
   status: active
-  current_substage: S2a-dependency-surface
+  current_substage: S2a-closed-awaiting-S2b-start
 
   s2a_dependency_surface:
-    status: executed-success-pending-pr-integration
+    status: complete-integrated-postmerge-verified
     protocol: problems/678/S2_DEPENDENCY_SURFACE_PROTOCOL.md
     analyzer: problems/678/experiments/s2_dependency_surface.py
     baseline_markdown: problems/678/S2_DEPENDENCY_SURFACE_BASELINE.md
@@ -91,6 +92,21 @@ s2:
     comparator_identity:
       commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
       entry_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+    integration:
+      pr: 28
+      exact_head: 3d4e35c15eb07938dfcb3fb5de29e8d51f1e767e
+      exact_head_run: 32047808010
+      exact_head_result: success
+      exact_head_commit_match: true
+      exact_head_import_check: no-update-necessary
+      exact_head_build_jobs: 8808
+      merge_commit: 37deb850f894d32863970aca6b07e876f89e813d
+      postmerge_run: 32048513043
+      postmerge_job: 95441935353
+      postmerge_result: success
+      postmerge_commit_match: true
+      postmerge_import_check: no-update-necessary
+      postmerge_build_jobs: 8808
     internal_metrics:
       entry_module: Formalization.Erdos678.Erdos678Final
       direct_entry_imports: 4
@@ -131,6 +147,19 @@ s2:
       checkout_action_node20_warning: true
       classification: non-blocking-environment-maintenance-observation
 
+  s2b_controlled_build_behavior:
+    status: not-started
+    required_controls:
+      - fixed internal and comparator identities
+      - fixed runner image and Lean/Mathlib/PNT identities
+      - explicit cold versus warm cache semantics
+      - repeated runs and predeclared aggregation
+      - phase-separated setup versus artifact compilation
+      - ownership-aware attribution of repository-local PNT support
+      - network/setup time excluded from or separately reported from build timing
+      - explicit failure/retry classification
+      - machine-readable result artifact
+
 verification_credit_audit:
   status: corrected-and-validated
   historical_example:
@@ -151,7 +180,7 @@ allowed_external_claims:
   - machine-checked statement normalization and real-factor bridge
   - matched selected-endpoint standard-axiom footprint under one pinned environment
   - exact-head and post-merge S1 integration provenance
-  - reproducible S2a module/import structural baseline under explicit ownership and packaging boundaries
+  - reproducible fully integrated S2a module/import structural baseline under explicit ownership and packaging boundaries
   - dependency-surface metrics are boundary-sensitive under the observed PNT packaging difference
 
 claims_requiring_new_experiments:
@@ -172,9 +201,9 @@ forbidden_or_unsupported_claims:
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S2a-integration
+  stage: S2a-closure-document-integration
   status: pending
-  requirement: canonical exact-head Lean Verification on final S2a PR head, merge, then post-merge main verification
+  requirement: canonical exact-head Lean Verification on this documentation-only closure PR, merge, then post-merge main verification
   next_after_close: S2b-controlled-build-behavior
 
 privacy_and_reproducibility:
