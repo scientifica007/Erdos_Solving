@@ -2,9 +2,9 @@
 
 ## Status
 
-**Preflight complete for a repository visibility change, subject to one owner decision: the license for project-owned material.**
+**Preflight complete for a repository visibility change. The owner-selected project license is Apache License 2.0 and is committed at root `LICENSE`.**
 
-The repository remains private at this checkpoint. The user has explicitly authorized preparation for public visibility, but the visibility switch itself has not been executed by this audit.
+The repository remains private at this checkpoint. The user has explicitly authorized preparation for public visibility and intends the public transition, but the visibility switch itself has not been executed by this audit.
 
 This audit is scoped to publication/readiness of the archived Erdős #678 work and the repository surfaces that will become public with it. It does not authorize work on another Erdős problem; `DEC-012` remains in force.
 
@@ -104,13 +104,11 @@ Verified repository metadata at this audit includes:
 
 The public comparator is therefore **not vendored**. The S1 reproduction model fetches its immutable external commit/blob ephemerally, validates identity, compiles it unchanged, and does not persist the comparator source in this project.
 
-### Remaining owner decision
+### Project-owned license decision — CLOSED
 
-This repository itself currently has no declared project license.
+The repository owner selected **Apache License 2.0** for project-owned material. The full license text is committed at root `LICENSE`; project-owned code, documentation, and other repository material use that license unless a file or third-party notice states otherwise.
 
-Public visibility without a project license is technically possible, but it leaves reuse rights for project-owned material unclear. For a scientific artifact intended for reuse and reproduction, the strong recommendation is to choose and commit an explicit root license before, or immediately with, the visibility transition.
-
-The audit does not choose that license on the owner's behalf.
+This does not override any third-party license or attribution boundary. `THIRD_PARTY_NOTICES.md` remains the provenance boundary for dependencies/comparison inputs, and the unlicensed comparator remains external/non-vendored.
 
 ---
 
@@ -163,7 +161,7 @@ via run `32028006457`, job `95381414710`.
 
 That run established the common-environment differential-verification findings recorded in the evidence ledger.
 
-The persistent PR #22 branch has subsequently accumulated documentation, semantic consolidation, CI provenance correction, and public-release hardening. Its **final current head must receive a new corrected canonical verification run before merge**.
+The persistent PR #22 branch has subsequently accumulated documentation, semantic consolidation, CI provenance correction, public-release hardening, and Apache-2.0 project licensing. Its **final current head must receive a new corrected canonical verification run before merge**.
 
 While the repository remains private, GitHub-hosted Actions are currently blocked by the account billing/spending condition. The user's chosen resolution is to make the repository public rather than weaken the verification gate.
 
@@ -173,7 +171,7 @@ While the repository remains private, GitHub-hosted Actions are currently blocke
 
 The controlled transition is:
 
-1. **Owner license decision:** choose a license for project-owned material and commit it, preferably before changing visibility.
+1. **Project license — COMPLETE:** Apache License 2.0 is committed at root `LICENSE`.
 2. Optional privacy check if relevant: inspect Git commit author emails in GitHub UI/history if personal-email exposure is a concern.
 3. User changes `scientifica007/Erdos_Solving` from private to public.
 4. Verify repository metadata reports public visibility.
@@ -203,7 +201,7 @@ The controlled transition is:
 
 ### Project-owned licensing preflight
 
-**OWNER DECISION REQUIRED.** No root project license has yet been selected.
+**PASS — APACHE-2.0 SELECTED AND COMMITTED.** Root `LICENSE` now carries the Apache License 2.0 text for project-owned material unless otherwise noted.
 
 ### GitHub protections preflight
 
@@ -211,4 +209,4 @@ The controlled transition is:
 
 ### Overall
 
-**READY FOR PUBLIC VISIBILITY AFTER/WITH THE PROJECT-LICENSE DECISION, followed immediately by post-transition GitHub-settings/protection review and a fresh exact-head CI gate for PR #22.**
+**GO FOR USER-PERFORMED PUBLIC VISIBILITY SWITCH**, subject only to the stated optional personal-email privacy check if relevant. Immediately after the switch, review GitHub settings/protections and require a fresh exact-head CI gate for PR #22 before merge.
