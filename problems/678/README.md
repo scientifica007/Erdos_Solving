@@ -143,7 +143,8 @@ Canonical dossier:
 
 - `SCIENTIFIC_COMPARATIVE_STUDY.md` — external comparison, claim boundaries, quantitative architecture, testable hypotheses, and candidate upstream contributions;
 - `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md` — longitudinal AI-for-science case study, failure taxonomy, research questions, threats to validity, and prospective experiments;
-- `PUBLICATION_AND_UPSTREAM_ROADMAP.md` — staged plan for common-environment comparison, upstream work, empirical extensions, and publication decisions.
+- `PUBLICATION_AND_UPSTREAM_ROADMAP.md` — staged plan for common-environment comparison, upstream work, empirical extensions, and publication decisions;
+- `SCIENTIFIC_EVIDENCE_LEDGER.yaml` — machine-readable frozen provenance, metrics, comparison anchors, claim limits, and missing measurements.
 
 These documents do not reopen the mathematics and do not authorize transition to another Erdős problem.
 
@@ -160,6 +161,7 @@ Scientific comparison, reproducibility analysis, and publication/upstream work o
 - `SCIENTIFIC_COMPARATIVE_STUDY.md` — comparative scientific positioning against Cambie, Aristotle/Alexeev, Formal Conjectures, and current AI-for-math work.
 - `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md` — #678 as an auditable long-horizon AI-assisted scientific-production case.
 - `PUBLICATION_AND_UPSTREAM_ROADMAP.md` — evidence gates and sequencing for external outputs.
+- `SCIENTIFIC_EVIDENCE_LEDGER.yaml` — machine-readable evidence and claim ledger for future papers/upstream work.
 - `CAMBIE_PROOF_ANALYSIS.md` — mathematical architecture and Claim 4 audit; contains historical development-status passages and is not the current operational state source.
 - `LEAN_FORMALIZATION_ROADMAP.md` — canonical execution roadmap, now closed, integrated, verified, and archived.
 - `FORMALIZATION_CORRECTION_2026-08-14.md` — rejection of the false earlier construction.
