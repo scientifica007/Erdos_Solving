@@ -68,6 +68,8 @@ import Formalization.Erdos678.MediumPrimeValuation
 import Formalization.Erdos678.MediumPrimeWindows
 import Formalization.Erdos678.ProductValuation
 import Formalization.Erdos678.ReciprocalLCMValuation
+import Formalization.Erdos678.SemanticBridge
+import Formalization.Erdos678.SemanticBridgeTests
 import Formalization.Erdos678.SmallPrimeClaim5
 import Formalization.Erdos678.SmallPrimeInitialLCM
 import Formalization.Erdos678.SmallPrimeRange
