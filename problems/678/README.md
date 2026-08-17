@@ -2,7 +2,7 @@
 
 > **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 COMPLETE / VERIFIED. S2 ACTIVE. S2a dependency-surface baseline EXECUTED / SUCCESS, pending canonical PR integration.**
+> **Scientific-evaluation status: S1 COMPLETE / VERIFIED. S2 ACTIVE. S2a dependency-surface baseline COMPLETE / INTEGRATED / POST-MERGE VERIFIED. S2b NOT STARTED.**
 >
 > The successful route is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. It is neither a new mathematical proof nor the first Lean formalization. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
@@ -29,7 +29,7 @@ Run `32028006457` built the internal canonical graph with **8808 jobs** and comp
 
 PR #22 and closure PR #27 both passed exact-head/post-merge canonical verification. S1 closure main commit `7aff8d8d8680e90b34be64650c68c0fc778749fc` passed run `32045885504` with exact provenance, `No update necessary`, and 8808 jobs.
 
-## S2a — dependency surface — EXECUTED
+## S2a — dependency surface — CLOSED
 
 Protocol: `S2_DEPENDENCY_SURFACE_PROTOCOL.md`.
 
@@ -39,12 +39,23 @@ Durable result: `S2_DEPENDENCY_SURFACE_BASELINE.md` and `S2_DEPENDENCY_SURFACE_B
 
 Executed identity:
 
-- internal commit: `4685fca552ae4a0270dfa3823d46fde48efa5ade`;
-- run: `32047324807`;
-- job: `95438118197`;
+- internal experiment commit: `4685fca552ae4a0270dfa3823d46fde48efa5ade`;
+- experiment run: `32047324807`;
+- experiment job: `95438118197`;
 - comparator commit: `6f906fef432892db5c910c48ad1a3728dd42cdac`;
 - comparator blob: `f2331e8bcc71bc36cce7724a0c54fafd8d64d480`;
 - generated artifact digest: `sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd`.
+
+Integration identity:
+
+- PR: `#28`;
+- exact PR head: `3d4e35c15eb07938dfcb3fb5de29e8d51f1e767e`;
+- canonical exact-head run: `32047808010` — **SUCCESS**;
+- merge commit: `37deb850f894d32863970aca6b07e876f89e813d`;
+- post-merge run: `32048513043` — **SUCCESS**;
+- execution provenance: `verified_commit=37deb850f894d32863970aca6b07e876f89e813d`;
+- import graph check: `No update necessary`;
+- canonical build: **8808 jobs**.
 
 Canonical-result baseline:
 
@@ -73,9 +84,9 @@ Consequently:
 
 Later S2 experiments must use matched interface mutations, explicit cache/package state, and ownership-aware failure classification.
 
-### Integration gate
+## S2b — controlled build behavior — NEXT
 
-The S2a experiment itself succeeded, but the baseline is not an integrated checkpoint until the current branch passes canonical exact-head Lean Verification, merges to `main`, and the merge commit passes post-merge verification. **S2b does not start before that.**
+S2b has not started. After this documentation-only S2a closure PR passes canonical exact-head CI, merges, and `main` verifies, S2b will measure controlled cold/warm build behavior with fixed runner/toolchain identities, explicit cache state, repeated runs, and separate attribution of artifact-owned versus dependency-support work. Historical wall-clock times are not accepted as controlled evidence.
 
 ## AI-for-science relevance
 

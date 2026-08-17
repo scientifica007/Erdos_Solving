@@ -22,7 +22,9 @@ PR #22 أغلقت artifact S1، وPR #27 أغلقت synchronization الحاكم
 
 ### S2 — ACTIVE على #678 فقط
 
-**S2a — dependency-surface baseline** نُفذت بنجاح في run `32047324807`, job `95438118197`, على exact experiment commit `4685fca552ae4a0270dfa3823d46fde48efa5ade`. الـworkflow تحقق من comparator commit/blob الثابتين وأنتج artifact evidence digest `sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd`.
+**S2a — dependency-surface baseline: COMPLETE / INTEGRATED / POST-MERGE VERIFIED.** التجربة الأساسية نُفذت بنجاح في run `32047324807`, job `95438118197`, على exact experiment commit `4685fca552ae4a0270dfa3823d46fde48efa5ade`. الـworkflow تحقق من comparator commit/blob الثابتين وأنتج artifact evidence digest `sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd`.
+
+PR #28 اجتازت canonical exact-head run `32047808010` على `3d4e35c15eb07938dfcb3fb5de29e8d51f1e767e`، ثم دُمجت كـ`37deb850f894d32863970aca6b07e876f89e813d`. هذا الـmerge commit نفسه اجتاز post-merge run `32048513043` مع `verified_commit` مطابق، و`No update necessary`، وبناء كامل من **8808 jobs**.
 
 الـbaseline البنيوية:
 
@@ -40,7 +42,7 @@ PR #22 أغلقت artifact S1، وPR #27 أغلقت synchronization الحاكم
 
 المنهج في `problems/678/S2_DEPENDENCY_SURFACE_PROTOCOL.md`، والنتيجة في `S2_DEPENDENCY_SURFACE_BASELINE.md/.json`، والأداة القابلة لإعادة التشغيل في `experiments/s2_dependency_surface.py`.
 
-S2a لم تصبح checkpoint مدمجة بعد: يجب أن تمر branch/PR الحالية عبر canonical exact-head Lean Verification ثم post-merge verification. **S2b لا تبدأ قبل ذلك.**
+**S2b — controlled build behavior: NOT STARTED.** تبدأ فقط بعد دمج PR الإغلاق التوثيقية لـS2a والتحقق من `main`، ثم تقيس cold/warm build behavior تحت runner/toolchain/cache identities ثابتة وبفصل واضح بين artifact-owned code وthird-party support.
 
 ### Public artifact
 
