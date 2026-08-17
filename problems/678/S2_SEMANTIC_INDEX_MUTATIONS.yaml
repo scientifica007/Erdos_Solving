@@ -1,0 +1,190 @@
+schema_version: 1
+stage: S2d
+status: predeclared-not-executed
+scope: erdos-678-only
+predeclaration_date: 2026-08-17
+
+baselines:
+  internal:
+    repository: scientifica007/Erdos_Solving
+    commit: 47b85a2f2f5be6e6e4ede2b600723b8616aeeee4
+    lean: 4.33.0
+    mathlib_input: v4.33.0
+    mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
+    pnt: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+    canonical_build_target: Formalization
+  comparator:
+    repository: plby/lean-proofs
+    commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+    source: src/latest/ErdosProblems/Erdos678.lean
+    blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+    delivery: ephemeral-fetch-non-vendored
+
+historical_failure:
+  document: problems/678/FORMALIZATION_CORRECTION_2026-08-14.md
+  semantic_error: shifted-k-plus-one-block-left-by-one
+  correct_block: "[t+1,t+k+1]"
+  rejected_block: "[t,t+k]"
+
+rules:
+  pristine_reset_between_observations: true
+  proof_repairs_allowed: false
+  mutation_redesign_after_observation: false
+  mutation_source_files_per_observation: 1
+  non_mutation_source_files_touched_required: 0
+  dependency_source_edits_allowed: false
+  retain_surviving_mutations: true
+
+mutations:
+  - id: I1-canonical-start-left-shift
+    family: interval-start-index
+    semantic_change: same-length-canonical-block-shifted-left-one
+    role: primitive-canonical-interval-semantics
+    historical_replay: closest
+    internal:
+      file: formalization/Formalization/Erdos678/Intervals.lean
+      declaration: erdosM
+      original: "intervalLCM (n + 1) k"
+      replacement: "intervalLCM n k"
+      required_occurrences: 1
+      source_stage: L0_mutation_source_elaboration
+      staged_checks:
+        - Formalization.Erdos678.Intervals
+        - Formalization.Erdos678.ConcreteTests
+        - Formalization.Erdos678.Erdos678FinalTests
+        - Formalization.Erdos678.ExternalStatementBridge
+        - Formalization.Erdos678.ExternalStatementBridgeTests
+        - mk_all_check
+        - full_formalization_build
+    comparator:
+      file: src/latest/ErdosProblems/Erdos678.lean
+      declaration: lcmInterval
+      original: "(Finset.Ioc n (n + k)).lcm id"
+      replacement: "(Finset.Ico n (n + k)).lcm id"
+      required_occurrences: 1
+      verification: full_pinned_source_compile
+      rejection_locator: first-error-line-and-enclosing-declaration
+
+  - id: I2-long-block-drop-final-term
+    family: interval-length-index
+    semantic_change: long-block-k-plus-one-terms-to-k-terms-same-start
+    role: strong-cambie-endpoint
+    historical_replay: adjacent-index-family
+    internal:
+      file: formalization/Formalization/Erdos678/Erdos678Final.lean
+      declaration: cambie_lcm_ratio_eventually_with_large_start
+      statement_scope_only: true
+      original: "C * intervalLCM y (k + 1) < intervalLCM x k := by"
+      replacement: "C * intervalLCM y k < intervalLCM x k := by"
+      required_occurrences: 1
+      source_stage: L0_mutation_source_elaboration
+      staged_checks:
+        - Formalization.Erdos678.Erdos678Final
+        - Formalization.Erdos678.Erdos678FinalTests
+        - Formalization.Erdos678.ExternalStatementBridge
+        - Formalization.Erdos678.ExternalStatementBridgeTests
+        - mk_all_check
+        - full_formalization_build
+    comparator:
+      file: src/latest/ErdosProblems/Erdos678.lean
+      declaration: MainTheoremStatement
+      statement_scope_only: true
+      original: "lcm_real (Finset.Icc x (x + k - 1)) > C * lcm_real (Finset.Icc y (y + k))"
+      replacement: "lcm_real (Finset.Icc x (x + k - 1)) > C * lcm_real (Finset.Icc y (y + k - 1))"
+      required_occurrences: 1
+      verification: full_pinned_source_compile
+      rejection_locator: first-error-line-and-enclosing-declaration
+
+  - id: I3-strengthen-canonical-separation-one
+    family: separation-index
+    semantic_change: n-plus-k-le-m-to-n-plus-k-plus-one-le-m
+    role: canonical-unbounded-or-infinitude-endpoint
+    historical_replay: semantic-survival-control
+    expected_use: distinguish-proof-checking-from-statement-fidelity
+    internal:
+      file: formalization/Formalization/Erdos678/Erdos678Final.lean
+      declaration: erdos678_unbounded_witnesses
+      statement_scope_only: true
+      original: "B ≤ k ∧ 3 ≤ n ∧ 3 ≤ m ∧ 3 ≤ k ∧ n + k ≤ m ∧"
+      replacement: "B ≤ k ∧ 3 ≤ n ∧ 3 ≤ m ∧ 3 ≤ k ∧ n + (k + 1) ≤ m ∧"
+      required_occurrences: 1
+      source_stage: L0_mutation_source_elaboration
+      staged_checks:
+        - Formalization.Erdos678.Erdos678Final
+        - Formalization.Erdos678.Erdos678FinalTests
+        - Formalization.Erdos678.ExternalStatementBridge
+        - Formalization.Erdos678.ExternalStatementBridgeTests
+        - mk_all_check
+        - full_formalization_build
+    comparator:
+      file: src/latest/ErdosProblems/Erdos678.lean
+      declaration: erdos_678_kmn_infinite
+      statement_scope_only: true
+      original: "{(k, m, n) | 3 ≤ k ∧ n + k ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite"
+      replacement: "{(k, m, n) | 3 ≤ k ∧ n + (k + 1) ≤ m ∧ lcmInterval m (k + 1) < lcmInterval n k}.Infinite"
+      required_occurrences: 1
+      verification: full_pinned_source_compile
+      rejection_locator: first-error-line-and-enclosing-declaration
+
+rejection_strata:
+  internal:
+    L0_mutation_source_elaboration: mutated-definition-or-theorem-module
+    L1_concrete_semantic_oracle: independent-concrete-regression
+    L2_local_endpoint_regression: nearest-endpoint-test-module
+    L3_statement_bridge: external-statement-normalization-and-tests
+    L4_canonical_import_graph: lake-exe-mk_all-check
+    L5_full_canonical_build: full-Formalization-build
+  comparator:
+    method: first-error-line-and-enclosing-declaration-in-monolithic-source
+    logical_classes:
+      - primitive_definition
+      - local_lemma_or_regression
+      - strong_theorem
+      - canonical_corollary
+      - whole_artifact_completion
+
+primary_outcomes:
+  - semantic_rejection
+  - semantic_mutation_survived
+  - apparatus_failure
+  - infrastructure_failure
+  - non_comparable
+
+required_result_fields:
+  - baseline_identity_valid
+  - mutation_occurrence_valid
+  - mutated_source_digest
+  - files_touched
+  - first_rejection_stratum
+  - first_failing_module_or_declaration
+  - first_diagnostic_line
+  - normalized_diagnostic_class
+  - staged_checks_passed
+  - concrete_oracle_rejected
+  - statement_bridge_rejected
+  - mk_all_rejected
+  - full_canonical_build_rejected
+  - semantic_mutation_survived_canonical_verification
+  - runner_version
+  - runner_image
+  - raw_log_paths
+
+interpretation_limits:
+  - not-general-semantic-robustness
+  - not-general-maintainability
+  - not-human-debugging-time
+  - not-proof-complexity
+  - not-architecture-superiority
+  - not-upgrade-robustness
+
+execution_gate:
+  harness_creation_before_predeclaration_integration: forbidden
+  mutation_execution_before_predeclaration_integration: forbidden
+  required_before_execution:
+    - exact-head-canonical-ci-green
+    - predeclaration-pr-merged
+    - exact-main-postmerge-verification-green
+
+transition_gate:
+  decision: DEC-012
+  another_erdos_problem_authorized: false
