@@ -1,10 +1,11 @@
-name: Erdős #678 Differential Reproducibility
+name: "Erdős #678 Differential Reproducibility"
 
 on:
   pull_request:
     branches: ["main"]
     paths:
       - ".github/workflows/erdos678-comparison.yml"
+      - ".github/workflows/lean.yml"
       - "formalization/Formalization/Erdos678/ExternalStatementBridge.lean"
       - "formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean"
       - "formalization/lakefile.toml"
@@ -15,6 +16,7 @@ on:
 
 permissions:
   contents: read
+  statuses: write
 
 concurrency:
   group: erdos678-comparison-${{ github.workflow }}-${{ github.ref }}
@@ -47,6 +49,7 @@ jobs:
           fetch-depth: 1
 
       - name: Verify source pins and common Lean toolchain
+        id: pins
         shell: bash
         run: |
           set -euo pipefail
@@ -59,6 +62,7 @@ jobs:
           printf 'our_sha=%s\n' "$OUR_SHA"
           printf 'comparator_sha=%s\n' "$COMPARATOR_ACTUAL"
           printf 'shared_toolchain=%s\n' "$OUR_TOOLCHAIN"
+          printf 'our_sha=%s\n' "$OUR_SHA" >> "$GITHUB_OUTPUT"
 
       - name: Build our normalized external endpoint
         uses: leanprover/lean-action@v1
@@ -103,3 +107,19 @@ jobs:
           build-args: ErdosProblems.Erdos678
           test: false
           mk_all-check: false
+
+      - name: Publish differential reproducibility status
+        if: ${{ always() && steps.pins.outputs.our_sha != '' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const ok = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: '${{ steps.pins.outputs.our_sha }}',
+              state: ok ? 'success' : 'failure',
+              context: 'erdos678/differential-reproducibility',
+              description: ok ? 'Pinned dual-build reproduced' : 'Pinned dual-build failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            });
