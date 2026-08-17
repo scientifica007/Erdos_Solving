@@ -24,7 +24,7 @@ S1 أنجزت executable differential verification مقابل formalization Aris
 
 **S2b — controlled build behavior: COMPLETE / CLOSED.** الجولة المعتمدة run `32053575928` نجحت في 6/6 paired replicates تحت نفس Lean/Mathlib/PNT+ والـrunner image. لا يوجد wall-clock winner ثابت: cold medians `159.575 s` داخليًا مقابل `156.280 s` للمقارن، والفروق الزوجية تتغير إشارتها بين `-10.68` و`+11.73 s`. لكن resource profile مختلف: median total CPU `241.155 s` مقابل `486.475 s`، وmax RSS `7,183,766` مقابل `7,828,930 KiB`. هذه execution-profile evidence وليست ادعاء تفوق عام. PR #30 والـclosure PR #31 اجتازتا exact-head/post-merge verification؛ آخر closure merge هو `cc55073fceddb51e3fa2c1854f797fe989523985` وrun `32060186755` نجحت بـ`No update necessary` و8808 jobs.
 
-**S2c — repair locality: EXECUTED / ARTIFACT VALIDATED / PENDING PR INTEGRATION.**
+**S2c — repair locality: COMPLETE / INTEGRATED / POST-MERGE VERIFIED; DOCUMENTATION CLOSURE IN PROGRESS.**
 
 قبل أي observation جُمّد البروتوكول والـmutation manifest في commit `a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1`. ثم نُفذت ثلاث matched declaration-rename mutations غير دلالية عند طبقات R1 analytic closure وR2 eventual construction وR3 strong endpoint في run `32062501296`, job `95486770197`, apparatus commit `00d340d3ccdc13418615b6526e9b736d9f9e03e7`.
 
@@ -46,7 +46,9 @@ S1 أنجزت executable differential verification مقابل formalization Aris
 
 الـartifact ID `9299556049`، وSHA-256 المبلغ من GitHub والمعاد حسابه بعد التنزيل هو نفسه: `0369ec66c689572307660765b0c84cd86b6339f4f4d26a788c560ca11f7b7f4b`. التفاصيل في `problems/678/S2_REPAIR_LOCALITY_BASELINE.md/.json`.
 
-**S2d — semantic/index mutation resistance: NOT STARTED.** لن تبدأ قبل دمج S2c والتحقق من `main`.
+PR #32 final head `7471370081dece8ac99ec3888636d7d9cc0fa78f` اجتاز canonical run `32065778293` مع `No update necessary` وبناء **8808 jobs**، ثم دُمج كـ`bf54f5eb16e477d1b41b336e68ce82a729c98912`. نفس merge commit اجتاز post-merge run `32067478680`, job `95502840936`, مع exact `verified_commit`, `No update necessary`, و**8808 jobs**.
+
+**S2d — semantic/index mutation resistance: NOT STARTED.** سيبقى محجوبًا حتى يمر إغلاق S2c التوثيقي الحالي عبر exact-head CI والدمج والتحقق بعد الدمج.
 
 ### Public artifact
 
