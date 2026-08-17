@@ -22,7 +22,7 @@ S1 أنجزت independent formal replication / executable differential verificat
 
 **S2a — dependency surface: COMPLETE / VERIFIED / CLOSED.** النتيجة الحاكمة هي أن raw module/file metrics حساسة لتعريف dependency/ownership boundary؛ لذلك لا يجوز تحويل `46 modules vs 1 artifact module` إلى حكم على proof complexity أو architecture quality.
 
-**S2b — controlled build behavior: EXECUTED / VALIDATED / PENDING PR INTEGRATION.** البروتوكول في `problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md`، والأداة في `problems/678/experiments/s2_build_behavior.py`، والـbaseline في `S2_BUILD_BEHAVIOR_BASELINE.md/.json`.
+**S2b — controlled build behavior: COMPLETE / INTEGRATED / POST-MERGE VERIFIED.** البروتوكول في `problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md`، والأداة في `problems/678/experiments/s2_build_behavior.py`، والـbaseline في `S2_BUILD_BEHAVIOR_BASELINE.md/.json`.
 
 الجولة التجريبية الأولى run `32052134207` استُبعدت **كاملة** رغم نجاح 6/6 jobs لأن `runner_version` لم يكن مسجلًا في result evidence، وهو شرط provenance محدد مسبقًا. بعد إصلاح apparatus لتفشل مغلقة عند غياب الهوية، run `32053575928` على exact apparatus commit `c2ef703c954e462096162a3b4a59a5e0f8d48488` نجحت في **6/6 replicates، بلا retries أو exclusions**. كل النتائج تحمل runner `2.336.0`, image `ubuntu24/20260810.271.1`, Lean 4.33.0، ونفس Mathlib/PNT+/comparator pins.
 
@@ -41,7 +41,9 @@ S1 أنجزت independent formal replication / executable differential verificat
 
 Warm rebuild medians (`4.42 s` مقابل `4.34 s`) هي no-change incremental checks وليست compilation-speed measurements.
 
-**S2c — repair locality: NOT STARTED.** لن تبدأ قبل أن يمر S2b عبر PR exact-head CI ثم merge ثم post-merge verification على `main`.
+PR #30 اجتازت exact-head run `32055813783` على `e52e85d9b328a9cbc2349a6b61e23187dcc72fb5`، ثم دُمجت كـ`c9900f9e2590f3101fc24f3f894f43b6fcf4e03c`. هذا الـmerge commit نفسه اجتاز post-merge run `32058421851` مع `No update necessary` وبناء كامل من **8808 jobs**.
+
+**S2c — repair locality: NOT STARTED.** الخطوة التالية بعد إغلاق توثيق S2b هي predeclare matched bounded mutations وrepair metrics قبل تنفيذ أي إصلاح مقارن.
 
 ### Public artifact
 
