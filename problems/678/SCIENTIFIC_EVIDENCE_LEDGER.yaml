@@ -1,4 +1,4 @@
-schema_version: 9
+schema_version: 10
 snapshot_date: 2026-08-17
 scope: erdos-678-only
 
@@ -56,7 +56,7 @@ s1_differential_verification:
 
 s2:
   status: active
-  current_substage: S2b-integration
+  current_substage: S2b-closure
 
   s2a_dependency_surface:
     status: complete-integrated-postmerge-verified-closure-verified
@@ -111,7 +111,7 @@ s2:
       - no proof-complexity interpretation from module/file/line counts
 
   s2b_controlled_build_behavior:
-    status: executed-success-validated-pending-pr-integration
+    status: complete-integrated-postmerge-verified
     protocol: problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md
     runner: problems/678/experiments/s2_build_behavior.py
     aggregator: problems/678/experiments/s2_build_behavior_aggregate.py
@@ -213,6 +213,19 @@ s2:
       - no maintainability or repair-locality inference
       - no extrapolation to other toolchain/cache/machine regimes
 
+    integration:
+      pr: 30
+      exact_head: e52e85d9b328a9cbc2349a6b61e23187dcc72fb5
+      exact_head_run: 32055813783
+      exact_head_result: success
+      merge_commit: c9900f9e2590f3101fc24f3f894f43b6fcf4e03c
+      postmerge_run: 32058421851
+      postmerge_job: 95473817638
+      postmerge_result: success
+      postmerge_commit_match: true
+      postmerge_import_check: no-update-necessary
+      postmerge_build_jobs: 8808
+
 verification_credit_audit:
   status: corrected-and-validated
   historical_example:
@@ -234,6 +247,7 @@ allowed_external_claims:
   - reproducible closure-verified S2a boundary-sensitive dependency baseline
   - six-replicate S2b common-environment build/resource baseline with no stable wall-time winner
   - materially different measured CPU-system-user and peak-memory profiles under the recorded S2b environment
+  - S2b exact-head and post-merge canonical verification on the integrated evidence artifact
   - green computation and scientifically admissible measurement are separate gates as demonstrated by the excluded S2b pilot
 
 claims_requiring_new_experiments:
@@ -254,10 +268,10 @@ forbidden_or_unsupported_claims:
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S2b-pr-integration
+  stage: S2b-closure-sync
   status: pending
-  requirement: canonical exact-head Lean Verification on final S2b PR head; merge only if green; verify resulting main commit
-  next_after_close: S2c-repair-locality
+  requirement: exact-head canonical Lean Verification on this documentation-only closure; merge only if green; verify resulting main commit
+  next_after_close: S2c-repair-locality-predeclaration
 
 privacy_and_reproducibility:
   repository_visibility: public
