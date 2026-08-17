@@ -1,4 +1,4 @@
-schema_version: 7
+schema_version: 8
 snapshot_date: 2026-08-17
 scope: erdos-678-only
 
@@ -19,6 +19,7 @@ internal_artifact:
   s1_merge_commit: 358cd541ff81a2b59611b7addfc90ae17e03b36f
   s1_closure_merge_commit: 7aff8d8d8680e90b34be64650c68c0fc778749fc
   s2a_merge_commit: 37deb850f894d32863970aca6b07e876f89e813d
+  s2a_closure_merge_commit: c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5
   lean_version: 4.33.0
   mathlib_version: v4.33.0
   pnt_dependency:
@@ -71,10 +72,10 @@ external_comparator:
 
 s2:
   status: active
-  current_substage: S2a-closed-awaiting-S2b-start
+  current_substage: S2b-controlled-build-behavior
 
   s2a_dependency_surface:
-    status: complete-integrated-postmerge-verified
+    status: complete-integrated-postmerge-verified-closure-verified
     protocol: problems/678/S2_DEPENDENCY_SURFACE_PROTOCOL.md
     analyzer: problems/678/experiments/s2_dependency_surface.py
     baseline_markdown: problems/678/S2_DEPENDENCY_SURFACE_BASELINE.md
@@ -103,6 +104,18 @@ s2:
       merge_commit: 37deb850f894d32863970aca6b07e876f89e813d
       postmerge_run: 32048513043
       postmerge_job: 95441935353
+      postmerge_result: success
+      postmerge_commit_match: true
+      postmerge_import_check: no-update-necessary
+      postmerge_build_jobs: 8808
+    closure:
+      pr: 29
+      exact_head: 0a1d1cf84c87c5a3b40d6a118e733cda5807a4a7
+      exact_head_run: 32050225638
+      exact_head_result: success
+      merge_commit: c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5
+      postmerge_run: 32050862725
+      postmerge_job: 95449629511
       postmerge_result: success
       postmerge_commit_match: true
       postmerge_import_check: no-update-necessary
@@ -142,23 +155,58 @@ s2:
       - no architecture-superiority claim
       - no direct lower-coupling claim from external-frontier counts
       - no proof-complexity interpretation from module or line counts
-      - build speed, repair locality, mutation resistance, and upgrade robustness remain unmeasured
-    infrastructure_observation:
-      checkout_action_node20_warning: true
-      classification: non-blocking-environment-maintenance-observation
 
   s2b_controlled_build_behavior:
-    status: not-started
-    required_controls:
-      - fixed internal and comparator identities
-      - fixed runner image and Lean/Mathlib/PNT identities
-      - explicit cold versus warm cache semantics
-      - repeated runs and predeclared aggregation
-      - phase-separated setup versus artifact compilation
-      - ownership-aware attribution of repository-local PNT support
-      - network/setup time excluded from or separately reported from build timing
-      - explicit failure/retry classification
-      - machine-readable result artifact
+    status: active-protocol-defined-experiment-pending
+    protocol: problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md
+    runner: problems/678/experiments/s2_build_behavior.py
+    metric_scope: artifact-owned-cold-and-warm-lake-build-behavior-common-environment
+    identities:
+      comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+      comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+      internal_target: Formalization.Erdos678.Erdos678Final
+      comparator_temporary_target: Formalization.Erdos678Benchmark.Comparator
+      lean: 4.33.0
+      mathlib: v4.33.0
+      pnt: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+      runner_label: ubuntu-24.04
+    design:
+      paired_fresh_runner_replicates: 6
+      order_sequence:
+        - internal-first
+        - comparator-first
+        - internal-first
+        - comparator-first
+        - internal-first
+        - comparator-first
+      setup_timing: excluded-and-recorded-separately
+      cold_definition: artifact-owned-build-outputs-removed-dependencies-prepared
+      warm_definition: immediate-unchanged-identical-target-repeat
+      retain_all_observations: true
+      silent_outlier_exclusion: forbidden
+      infrastructure_retry: allowed-only-with-explicit-classification
+      build_failure_retry: forbidden-without-diagnosis
+    metrics:
+      - wall_seconds
+      - user_seconds
+      - sys_seconds
+      - max_rss_kib
+      - exit_code
+      - lake_built_progress_lines
+    aggregation:
+      - median
+      - minimum
+      - maximum
+      - MAD
+      - IQR
+      - paired-descriptive-difference
+      - paired-descriptive-ratio
+    interpretation_limits:
+      - warm is no-change incremental behavior not compilation speed
+      - descriptive hosted-runner evidence only
+      - no general architecture-superiority claim
+      - no maintainability or repair-locality inference
+      - no extrapolation to other toolchain/cache/machine regimes
 
 verification_credit_audit:
   status: corrected-and-validated
@@ -180,7 +228,7 @@ allowed_external_claims:
   - machine-checked statement normalization and real-factor bridge
   - matched selected-endpoint standard-axiom footprint under one pinned environment
   - exact-head and post-merge S1 integration provenance
-  - reproducible fully integrated S2a module/import structural baseline under explicit ownership and packaging boundaries
+  - reproducible integrated and closure-verified S2a module/import structural baseline under explicit ownership and packaging boundaries
   - dependency-surface metrics are boundary-sensitive under the observed PNT packaging difference
 
 claims_requiring_new_experiments:
@@ -201,10 +249,10 @@ forbidden_or_unsupported_claims:
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S2a-closure-document-integration
+  stage: S2b-controlled-build-behavior-execution
   status: pending
-  requirement: canonical exact-head Lean Verification on this documentation-only closure PR, merge, then post-merge main verification
-  next_after_close: S2b-controlled-build-behavior
+  requirement: execute all six predeclared paired replicates on the stable apparatus commit; validate identities and artifacts; consolidate without silent exclusions
+  next_after_close: S2c-repair-locality
 
 privacy_and_reproducibility:
   repository_visibility: public
