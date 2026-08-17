@@ -1,0 +1,130 @@
+schema_version: 1
+stage: S2c-repair-locality
+status: predeclared-not-executed
+predeclared_date: 2026-08-17
+scope: erdos-678-only
+
+baselines:
+  internal:
+    repository: scientifica007/Erdos_Solving
+    commit: cc55073fceddb51e3fa2c1854f797fe989523985
+    lean: 4.33.0
+    mathlib_input: v4.33.0
+    mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
+    pnt_revision: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+    canonical_target: Formalization
+  comparator:
+    repository: plby/lean-proofs
+    commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+    path: src/latest/ErdosProblems/Erdos678.lean
+    blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+    compile_environment: internal-pinned-lake-environment
+
+mutation_contract:
+  kind: declaration-identifier-rename-without-alias
+  semantic_change_allowed: false
+  declaration_proposition_change_allowed: false
+  proof_body_change_allowed: false
+  downstream_repair: exact-old-identifier-to-predeclared-new-identifier-only
+  third_party_edits_allowed: false
+  reset_to_baseline_between_mutations: true
+
+mutations:
+  - id: R1-analytic-closure
+    logical_role: external-prime-distribution-to-project-local-analytic-interface
+    internal:
+      file: formalization/Formalization/Erdos678/Claim4RelativePrimePNT.lean
+      old: claim4RelativePrimeProviderOfPNT
+      new: s2c_claim4RelativePrimeProviderOfPNT
+      declaration_kind: noncomputable-def
+    comparator:
+      file: src/latest/ErdosProblems/Erdos678.lean
+      old: density_proof
+      new: s2c_density_proof
+      declaration_kind: theorem
+    comparability_note: >-
+      Both close the external prime-distribution input for downstream Cambie
+      construction, but the internal interface returns a relative-prime provider
+      while the comparator returns its DensityHypothesis. Match is by logical
+      layer, not proposition syntax.
+
+  - id: R2-eventual-construction
+    logical_role: sufficiently-large-k-witness-construction-consumed-by-final-theorem-layer
+    internal:
+      file: formalization/Formalization/Erdos678/Claim4RelativePrimePNT.lean
+      old: claim4_exists_cambie_lcm_ratio_eventually_of_pnt
+      new: s2c_claim4_exists_cambie_lcm_ratio_eventually_of_pnt
+      declaration_kind: theorem
+    comparator:
+      file: src/latest/ErdosProblems/Erdos678.lean
+      old: exists_xy_for_large_k
+      new: s2c_exists_xy_for_large_k
+      declaration_kind: lemma
+    comparability_note: >-
+      Both expose the large-k existence/construction layer consumed by the final
+      strong-theorem proof. Statements differ in packaging and intermediate
+      predicates; this is retained as an interpretation limitation.
+
+  - id: R3-strong-public-endpoint
+    logical_role: unconditional-real-factor-strong-endpoint-with-downstream-consumers
+    internal:
+      file: formalization/Formalization/Erdos678/ExternalStatementBridge.lean
+      old: cambie_lcm_ratio_eventually_with_large_start_real
+      new: s2c_cambie_lcm_ratio_eventually_with_large_start_real
+      declaration_kind: theorem
+    comparator:
+      file: src/latest/ErdosProblems/Erdos678.lean
+      old: main_theorem_given_pnt
+      new: s2c_main_theorem_given_pnt
+      declaration_kind: theorem
+    comparability_note: >-
+      Both are unconditional strong endpoints above PNT discharge and have real
+      factor C >= 1 semantics. The internal endpoint is a statement-normalized
+      bridge while the comparator endpoint is native to its monolithic source.
+
+ownership_classes:
+  production_project_owned:
+    internal_glob: formalization/Formalization/Erdos678/*.lean excluding *Tests.lean
+    comparator: pinned Erdos678.lean
+  verification_project_owned:
+    internal_glob: formalization/Formalization/Erdos678/*Tests.lean
+    comparator: audit/check commands inside pinned Erdos678.lean are reported separately when identifiable
+  third_party_or_dependency:
+    edits_must_equal: 0
+  experiment_harness:
+    excluded_from_repair_counts: true
+
+primary_metrics:
+  - mutation_expected_failure
+  - first_failing_project_owned_file_or_module
+  - downstream_reference_sites_repaired
+  - distinct_production_files_or_modules_repaired
+  - distinct_verification_files_or_modules_repaired
+  - changed_production_reference_lines
+  - changed_verification_reference_lines
+  - total_project_owned_reference_repair_lines
+  - third_party_dependency_files_touched
+  - repaired_compile_success
+  - final_canonical_verification_success
+
+exclusion_rules:
+  performance_selected_exclusion: forbidden
+  unexpected_no_reference: retain-as-mutation_not_observable
+  apparatus_defect_after_execution: exclude-or-mark-exploratory-whole-affected-run-and-rerun-full-corrected-set
+  forbidden_edit: invalidate-mutation-replicate
+
+interpretation_limits:
+  - not-general-maintainability
+  - not-human-repair-time
+  - not-semantic-robustness
+  - not-proof-complexity
+  - not-upgrade-robustness
+  - not-architecture-superiority
+
+next_gate:
+  execute_only_after_this_manifest-is-committed
+  s2d_blocked_until: S2c-integrated-exact-head-and-postmerge-verified
+
+transition_gate:
+  decision: DEC-012
+  new_erdos_problem_authorized: false

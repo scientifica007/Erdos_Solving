@@ -2,18 +2,18 @@
 
 > **Operational checkpoint synchronized on 2026-08-17.**
 >
-> **Erdős #678 mathematics, S1, S2a, and S2b are closed, integrated, and post-merge machine-verified. S2c repair-locality has not started.**
+> **Erdős #678 mathematics, S1, S2a, and S2b are closed and machine-verified. S2c repair-locality has executed successfully under a frozen predeclared mutation set; its result artifact is validated and awaits PR integration.**
 >
 > **No other Erdős problem may be selected, activated, resumed, researched, or formalized without explicit user authorization (`DEC-012`).**
 
-This is the authoritative restart checkpoint. Verification credit belongs only to artifacts and commits actually executed.
+This is the authoritative restart checkpoint. Verification and experimental credit belong only to artifacts and commits actually executed.
 
 ## Current state
 
 ```yaml
 current_problem: 678
 current_phase: archived
-current_stage: scientific-evaluation-s2b-closure
+current_stage: scientific-evaluation-s2c-repair-locality-integration
 proof_frozen: true
 repository_visibility: public
 project_license: Apache-2.0
@@ -25,55 +25,53 @@ s1_closure_postmerge_run: 32045885504
 
 s2_status: active
 s2a_status: complete-integrated-postmerge-verified-closure-verified
-s2a_experiment_run: 32047324807
-s2a_merge_commit: 37deb850f894d32863970aca6b07e876f89e813d
 s2a_closure_merge_commit: c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5
 s2a_closure_postmerge_run: 32050862725
 s2a_primary_finding: dependency-surface-counts-are-boundary-sensitive
 
-s2b_status: complete-integrated-postmerge-verified
-s2b_protocol: problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md
-s2b_runner: problems/678/experiments/s2_build_behavior.py
-s2b_aggregator: problems/678/experiments/s2_build_behavior_aggregate.py
-s2b_baseline_markdown: problems/678/S2_BUILD_BEHAVIOR_BASELINE.md
-s2b_baseline_json: problems/678/S2_BUILD_BEHAVIOR_BASELINE.json
-s2b_pilot_status: excluded-whole-run-predeclared-provenance-invariant-failure
-s2b_pilot_run: 32052134207
-s2b_pilot_apparatus: a349010e295afa52d040feacbb2d02d5c081c548
+s2b_status: complete-integrated-postmerge-verified-closure-verified
 s2b_credited_run: 32053575928
 s2b_apparatus_commit: c2ef703c954e462096162a3b4a59a5e0f8d48488
-s2b_replicates: 6
-s2b_replicates_success: 6
-s2b_retries: 0
-s2b_exclusions: 0
-s2b_runner_version: 2.336.0
-s2b_runner_image: ubuntu24-20260810.271.1
-s2b_internal_cold_wall_median_s: 159.575
-s2b_comparator_cold_wall_median_s: 156.280
-s2b_paired_cold_wall_median_difference_s: 4.06
-s2b_paired_cold_wall_difference_range_s: [-10.68, 11.73]
 s2b_wall_clock_conclusion: no-stable-winner-in-six-paired-runs
-s2b_internal_cold_user_cpu_median_s: 176.105
-s2b_comparator_cold_user_cpu_median_s: 480.580
-s2b_internal_cold_system_cpu_median_s: 64.840
-s2b_comparator_cold_system_cpu_median_s: 5.990
-s2b_internal_cold_total_cpu_median_s: 241.155
-s2b_comparator_cold_total_cpu_median_s: 486.475
-s2b_paired_total_cpu_median_ratio_internal_over_comparator: 0.502837
-s2b_internal_cold_max_rss_median_kib: 7183766
-s2b_comparator_cold_max_rss_median_kib: 7828930
 s2b_resource_conclusion: similar-wall-time-but-materially-different-cpu-and-memory-profile-under-pinned-common-environment
-s2b_pr: 30
-s2b_exact_head: e52e85d9b328a9cbc2349a6b61e23187dcc72fb5
-s2b_exact_head_ci_run: 32055813783
-s2b_merge_commit: c9900f9e2590f3101fc24f3f894f43b6fcf4e03c
-s2b_postmerge_ci_run: 32058421851
-s2b_postmerge_job: 95473817638
-s2b_postmerge_commit_match: true
-s2b_postmerge_import_check: no-update-necessary
-s2b_postmerge_build_jobs: 8808
+s2b_closure_pr: 31
+s2b_closure_merge_commit: cc55073fceddb51e3fa2c1854f797fe989523985
+s2b_closure_postmerge_ci_run: 32060186755
+s2b_closure_postmerge_job: 95479480527
+s2b_closure_postmerge_commit_match: true
+s2b_closure_postmerge_import_check: no-update-necessary
+s2b_closure_postmerge_build_jobs: 8808
 
-s2c_status: not-started
+s2c_status: executed-success-artifact-validated-pending-pr-integration
+s2c_protocol: problems/678/S2_REPAIR_LOCALITY_PROTOCOL.md
+s2c_mutation_manifest: problems/678/S2_REPAIR_LOCALITY_MUTATIONS.yaml
+s2c_baseline_markdown: problems/678/S2_REPAIR_LOCALITY_BASELINE.md
+s2c_baseline_json: problems/678/S2_REPAIR_LOCALITY_BASELINE.json
+s2c_internal_baseline: cc55073fceddb51e3fa2c1854f797fe989523985
+s2c_predeclaration_commit: a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1
+s2c_experiment_commit: 00d340d3ccdc13418615b6526e9b736d9f9e03e7
+s2c_run: 32062501296
+s2c_job: 95486770197
+s2c_artifact_id: 9299556049
+s2c_artifact_digest: sha256:0369ec66c689572307660765b0c84cd86b6339f4f4d26a788c560ca11f7b7f4b
+s2c_artifact_digest_local_revalidation: pass
+s2c_comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+s2c_comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+s2c_mutation_kind: declaration-identifier-rename-without-alias
+s2c_mutation_count: 3
+s2c_observation_count: 6
+s2c_observable_breaks: 6
+s2c_legal_repairs_green: 6
+s2c_third_party_dependency_files_touched: 0
+s2c_internal_repaired_reference_counts: [3, 2, 2]
+s2c_comparator_repaired_reference_counts: [1, 1, 3]
+s2c_internal_production_reference_counts: [2, 1, 0]
+s2c_internal_verification_reference_counts: [1, 1, 2]
+s2c_comparator_production_reference_counts: [1, 1, 3]
+s2c_primary_finding: repair-blast-radius-is-mixed-and-interface-layer-dependent-no-uniform-advantage
+s2c_scope: symbol-api-reference-repair-locality-not-general-maintainability
+s2c_internal_canonical_reverification: all-three-mk-all-no-update-and-8808-job-build-success
+
 s2d_status: not-started
 s2e_status: not-started
 s2f_status: not-started
@@ -81,7 +79,7 @@ s3_status: not-started
 s4_status: not-started
 s5_status: not-started
 user_transition_gate: explicit-authorization-required-for-another-erdos-problem
-next_action: exact-head verify and merge this documentation-only S2b closure; verify main; then predeclare S2c matched repair-locality mutations and success metrics before execution
+next_action: synchronize S2c evidence; open the S2c PR; require canonical exact-head Lean Verification; merge only if green; verify main; only then start S2d semantic/index mutation predeclaration
 ```
 
 ## Governing rules
@@ -90,37 +88,50 @@ next_action: exact-head verify and merge this documentation-only S2b closure; ve
 - `DEC-012`: completion/evaluation of #678 never authorizes another Erdős problem.
 - `lake exe mk_all --check` plus the full reachable Lean build define canonical machine verification.
 - Infrastructure failures and proof failures are classified separately.
-- Documentation/state synchronization is itself an integration gate (`DEC-008`).
+- Documentation/state synchronization is an integration gate (`DEC-008`).
 - S2 metrics are descriptive evidence with explicit scope; no general architecture-superiority claim is allowed.
+- A predeclared experiment that produces a mixed/null result is preserved rather than redesigned after observation.
 
 ## Closed checkpoints
 
 ### Mathematics / S1
 
-#678 is a machine-checked reconstruction of Cambie (2024), classified as an independent Lean reimplementation rather than new mathematics or first formalization. S1 executable differential verification closed through PR #22 and closure PR #27; `main` passed run `32045885504` with exact provenance, `No update necessary`, and 8808 jobs.
+#678 is a machine-checked reconstruction of Cambie (2024), classified as an independent Lean reimplementation rather than new mathematics or first formalization. S1 differential verification and closure are complete.
 
 ### S2a
 
-S2a dependency-surface evidence closed through PR #28 and closure PR #29. The final closure merge `c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5` passed run `32050862725`, job `95449629511`, with matching `verified_commit`, `No update necessary`, and 8808 jobs.
+S2a dependency-surface evidence and closure are complete. Its binding control is that raw module/file/frontier counts mix decomposition, packaging, and ownership because PNT+ lies on different repository boundaries in the two source trees.
 
-Its scientific control remains binding: PNT+ lies on different repository boundaries in the two source trees, so raw module/file/frontier counts mix decomposition, packaging, and ownership.
+### S2b
 
-### S2b — controlled build behavior — CLOSED
+S2b controlled build/resource evidence and its documentation closure are complete. The credited run `32053575928` supports no stable wall-clock winner while recording materially different user/system CPU and peak-memory profiles. Closure PR #31 merged as `cc55073fceddb51e3fa2c1854f797fe989523985`, and that exact merge passed post-merge run `32060186755`, job `95479480527`, with matching `verified_commit`, `No update necessary`, and 8808 jobs.
 
-The protocol predeclared six fresh paired `ubuntu-24.04` runner replicates with alternating order, common Lean/Mathlib/PNT+ environment, dependency preparation outside timing, artifact-owned cold cleanup, immediate warm repeat, and robust summaries.
+## S2c — repair locality — EXECUTED / VALIDATED
 
-The first green pilot (`32052134207`) is **not credited** because every result omitted the predeclared runner-version provenance field. The entire pilot was excluded before timing interpretation; no performance-selected exclusion occurred.
+The mutation protocol and manifest were frozen at `a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1` before the harness and before observations. The apparatus commit is `00d340d3ccdc13418615b6526e9b736d9f9e03e7`; run `32062501296`, job `95486770197`, completed successfully.
 
-After making provenance fail-closed, run `32053575928` on exact apparatus commit `c2ef703c954e462096162a3b4a59a5e0f8d48488` completed 6/6 jobs successfully with no retries/exclusions. All six downloaded artifact digests matched GitHub and all `result.json` files recorded runner `2.336.0`, image `ubuntu24/20260810.271.1`, Lean 4.33.0, the exact Mathlib/PNT+ pins, exact comparator commit/blob, and zero build exit codes.
+The uploaded artifact `9299556049` has GitHub SHA-256 `0369ec66c689572307660765b0c84cd86b6339f4f4d26a788c560ca11f7b7f4b`; an independent post-run download produced the same SHA-256. Its exact `result.json` is persisted as `S2_REPAIR_LOCALITY_BASELINE.json`.
 
-Cold wall time does **not** show a stable winner: paired differences change sign and range from `-10.68` to `+11.73 s`; medians are `159.575 s` internal versus `156.280 s` comparator. Median cold user CPU is `176.105 s` versus `480.580 s`; system CPU `64.840 s` versus `5.990 s`; total CPU `241.155 s` versus `486.475 s`; max RSS `7,183,766 KiB` versus `7,828,930 KiB`. These are descriptive common-environment execution-profile results, not a universal speed or architecture-superiority claim.
+All six artifact×mutation observations produced the expected unknown-identifier break and all six legal identifier-only repairs returned green. Third-party/dependency touches were zero. Each internal repaired mutation additionally returned `mk_all = No update necessary` and a successful full build of 8808 jobs.
 
-PR #30 passed exact-head canonical run `32055813783` on `e52e85d9b328a9cbc2349a6b61e23187dcc72fb5`, merged as `c9900f9e2590f3101fc24f3f894f43b6fcf4e03c`, and the exact merge commit passed post-merge run `32058421851`, job `95473817638`. The run recorded `verified_commit=c9900f9e...`, `No update necessary`, and `Build completed successfully (8808 jobs)`.
+Raw repair-reference counts by layer:
+
+| layer | internal | comparator |
+|---|---:|---:|
+| R1 analytic closure | 3 (2 production + 1 verification) | 1 production |
+| R2 eventual construction | 2 (1 production + 1 verification) | 1 production |
+| R3 strong endpoint | 2 verification, **0 production** | 3 production |
+
+The result is deliberately recorded as **mixed**. R1/R2 expose more static references internally, while R3 reverses at the production layer. Therefore S2c does not support a uniform repair-locality or maintainability advantage for either artifact. It establishes only that reference blast radius depends on interface layer and on whether verification consumers are separated from production consumers.
+
+This mixed result is scientifically useful because it blocks a tempting inference from modular source layout to general maintainability superiority.
 
 ## Required restart sequence
 
 1. Treat mathematics, S1, S2a, and S2b as closed and machine-verified.
-2. Complete this documentation-only S2b closure through exact-head CI, merge, and `main` verification.
-3. Only then start S2c by predeclaring matched repair-locality mutations and metrics before observing repair behavior.
-4. Continue all scientific work only on archived #678.
-5. **Do not start another Erdős problem without explicit user authorization.**
+2. Treat the S2c protocol/manifest as frozen and the run/artifact above as the executed result.
+3. Complete S2c state/roadmap/evidence synchronization and PR integration.
+4. Require exact-head canonical CI, merge only if green, then verify the resulting `main` commit.
+5. Do not start S2d until S2c integration/closure is verified.
+6. Continue all scientific work only on archived #678.
+7. **Do not start another Erdős problem without explicit user authorization.**

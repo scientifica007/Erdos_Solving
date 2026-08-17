@@ -2,7 +2,7 @@
 
 > **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b COMPLETE / INTEGRATED / POST-MERGE VERIFIED. S2c NOT STARTED.**
+> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b CLOSED. S2c EXECUTED / ARTIFACT VALIDATED / PENDING PR INTEGRATION. S2d NOT STARTED.**
 >
 > The successful route is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. It is neither a new mathematical proof nor the first Lean formalization. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
@@ -26,77 +26,98 @@ Run `32028006457` built the internal canonical graph and compiled the pinned pub
 
 ## S2a — dependency surface — CLOSED
 
-S2a produced `S2_DEPENDENCY_SURFACE_BASELINE.md/.json` and established the control that raw module/file/frontier counts are **boundary-sensitive**. Internally PNT+ is an external Lake dependency; the comparator repository physically contains nine reachable PNT+ modules. Raw repository counts therefore mix proof decomposition, packaging, and ownership.
+S2a produced `S2_DEPENDENCY_SURFACE_BASELINE.md/.json` and established that raw module/file/frontier counts are **boundary-sensitive**. Internally PNT+ is an external Lake dependency; the comparator repository physically contains nine reachable PNT+ modules. Raw repository counts therefore mix proof decomposition, packaging, and ownership.
 
 S2a closed through PR #28 and closure PR #29. Final closure merge `c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5` passed run `32050862725`, job `95449629511`, with matching `verified_commit`, `No update necessary`, and 8808 jobs.
 
-## S2b — controlled build behavior — CLOSED / VERIFIED
+## S2b — controlled build behavior — CLOSED
 
-Protocol: `S2_BUILD_BEHAVIOR_PROTOCOL.md`.
+The credited six-replicate run is `32053575928`, apparatus `c2ef703c954e462096162a3b4a59a5e0f8d48488`. Its core result is **no stable wall-clock winner** under the pinned common environment: cold medians are `159.575 s` internal versus `156.280 s` comparator, with paired differences spanning `-10.68..+11.73 s`. Resource profiles nevertheless differ materially: total CPU medians `241.155 s` versus `486.475 s`, and max RSS `7,183,766` versus `7,828,930 KiB`.
 
-Measurement runner: `experiments/s2_build_behavior.py`.
+The first six-job pilot is excluded in full because required runner-version provenance was missing; the apparatus was made fail-closed and all six observations were rerun. PR #30 and closure PR #31 completed the integration. Final closure merge `cc55073fceddb51e3fa2c1854f797fe989523985` passed run `32060186755`, job `95479480527`, with matching `verified_commit`, `No update necessary`, and 8808 jobs.
 
-Strict aggregator: `experiments/s2_build_behavior_aggregate.py`.
+Full protocol/result: `S2_BUILD_BEHAVIOR_PROTOCOL.md` and `S2_BUILD_BEHAVIOR_BASELINE.md/.json`.
 
-Baseline: `S2_BUILD_BEHAVIOR_BASELINE.md/.json`.
+## S2c — repair locality — EXECUTED / VALIDATED
 
-### Provenance discipline
+### Scope
 
-Pilot run `32052134207` on apparatus `a349010e295afa52d040feacbb2d02d5c081c548` completed 6/6 jobs but is **excluded in full** because `runner_version` was missing from every result, violating a predeclared provenance invariant. No timing-based selection occurred.
+S2c deliberately measures only **symbol/API reference-repair locality**, not general maintainability. It uses semantics-preserving declaration-name breaks: theorem propositions and proof bodies stay unchanged; no alias is added; legal repair is exact downstream identifier substitution only.
 
-The corrected apparatus fails closed on missing runner/image identity. Credited run `32053575928` on exact apparatus commit `c2ef703c954e462096162a3b4a59a5e0f8d48488` completed **6/6 paired replicates successfully, with zero retries and zero exclusions**. Every artifact records:
+The protocol and mutation manifest were frozen at `a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1` before the harness existed and before observations. The frozen files are:
 
-- Lean `4.33.0`;
-- Mathlib `v4.33.0` / resolved `db584cd6d46c92f209a44c0f1c829460d327499d`;
-- PNT+ `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`;
-- comparator commit/blob `6f906fef...` / `f2331e8b...`;
-- runner `2.336.0`;
-- image `ubuntu24/20260810.271.1`;
-- CPU count 4;
-- zero cold/warm build exit codes.
+- `S2_REPAIR_LOCALITY_PROTOCOL.md`;
+- `S2_REPAIR_LOCALITY_MUTATIONS.yaml`.
 
-All six downloaded artifact ZIP digests matched GitHub.
+### Matched logical layers
 
-### Wall-clock result
+| ID | logical role | internal | comparator |
+|---|---|---|---|
+| R1 | analytic-input closure | `claim4RelativePrimeProviderOfPNT` | `density_proof` |
+| R2 | eventual large-k construction | `claim4_exists_cambie_lcm_ratio_eventually_of_pnt` | `exists_xy_for_large_k` |
+| R3 | strong public endpoint | `cambie_lcm_ratio_eventually_with_large_start_real` | `main_theorem_given_pnt` |
 
-| rep | order | internal cold | comparator cold | Δ internal−comparator |
-|---:|---|---:|---:|---:|
-| 1 | internal-first | 160.80 s | 162.34 s | -1.54 s |
-| 2 | comparator-first | 161.59 s | 151.93 s | +9.66 s |
-| 3 | internal-first | 157.11 s | 165.81 s | -8.70 s |
-| 4 | comparator-first | 149.56 s | 160.24 s | -10.68 s |
-| 5 | internal-first | 158.35 s | 146.62 s | +11.73 s |
-| 6 | comparator-first | 162.45 s | 152.32 s | +10.13 s |
+The match is by logical layer, not by textual proposition identity; this remains an interpretation limitation.
 
-Cold medians are `159.575 s` internal versus `156.280 s` comparator. Paired differences change sign and range from `-10.68` to `+11.73 s`; therefore **S2b does not establish a stable wall-clock winner**. Warm medians are `4.42 s` versus `4.34 s`, but warm is an unchanged incremental/no-op check, not compilation speed.
+### Execution provenance
 
-### Resource-profile result
+- frozen internal baseline: `cc55073fceddb51e3fa2c1854f797fe989523985`;
+- experiment apparatus: `00d340d3ccdc13418615b6526e9b736d9f9e03e7`;
+- run: `32062501296` — **SUCCESS**;
+- job: `95486770197` — **SUCCESS**;
+- comparator: `6f906fef432892db5c910c48ad1a3728dd42cdac`;
+- comparator blob: `f2331e8bcc71bc36cce7724a0c54fafd8d64d480`;
+- artifact ID: `9299556049`;
+- artifact SHA-256: `0369ec66c689572307660765b0c84cd86b6339f4f4d26a788c560ca11f7b7f4b`;
+- independent post-run ZIP SHA-256 recomputation: **match**.
 
-| cold metric | internal median | comparator median |
-|---|---:|---:|
-| user CPU | 176.105 s | 480.580 s |
-| system CPU | 64.840 s | 5.990 s |
-| total CPU | 241.155 s | 486.475 s |
-| max RSS | 7,183,766 KiB | 7,828,930 KiB |
-| Lake `Built` lines | 46 | 1 |
+All six artifact×mutation cases first produced an unresolved-symbol failure and then returned to green after legal identifier-only repair. Third-party/dependency edits: **0**. Each internal repaired mutation additionally passed `lake exe mk_all --check` with `No update necessary` and a full **8808-job** build.
 
-The directions are consistent across all six runs: internal user CPU is about `34–39%` of comparator user CPU; internal RSS about `91.7–91.8%` of comparator; internal system CPU is about `10.5–11.1×` comparator. The paired median total-CPU ratio internal/comparator is `0.503`.
+### Raw repair blast radius
 
-**Defensible conclusion:** under this exact common environment, wall time is similar/noisy but the two proof layouts exhibit materially different CPU-system/user and peak-memory profiles. A causal explanation in terms of modular process/file overhead versus monolithic elaboration is plausible but remains an inference, not an S2b result.
+| mutation | internal | comparator |
+|---|---|---|
+| R1 | 3 refs: 2 production + 1 verification | 1 production ref |
+| R2 | 2 refs: 1 production + 1 verification | 1 production ref |
+| R3 | 2 verification refs; **0 production refs** | 3 production refs |
 
-S2b does not establish general speed superiority, proof complexity, maintainability, repair locality, semantic-mutation resistance, or upgrade robustness.
+Exact internal sites:
 
-### Integration evidence
+- R1: `Claim4RelativePrimePNT.lean:78`, `Erdos678Final.lean:112`, `Claim4RelativePrimePNTTests.lean:11`;
+- R2: `CambieStrongTheorem.lean:25`, `Claim4RelativePrimePNTTests.lean:18`;
+- R3: `ExternalStatementBridgeTests.lean:31,38` only.
 
-PR #30 exact head `e52e85d9b328a9cbc2349a6b61e23187dcc72fb5` passed canonical run `32055813783`. It merged as `c9900f9e2590f3101fc24f3f894f43b6fcf4e03c`, and that exact `main` commit passed run `32058421851`, job `95473817638`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
+Exact comparator downstream sites:
+
+- R1: `Erdos678.lean:2449`;
+- R2: `Erdos678.lean:2011`;
+- R3: `Erdos678.lean:2461,2469,2514`.
+
+### Scientific conclusion
+
+The result is **mixed and interface-layer dependent**. R1/R2 have more static downstream references internally, partly because dedicated verification modules deliberately reference the API. R3 reverses at the production layer: the internal normalized endpoint has zero production consumer after declaration, while the comparator endpoint has three production consumers.
+
+Therefore S2c does **not** establish that either architecture has uniformly smaller repair blast radius. Raw totals (`7` internal versus `5` comparator) are bookkeeping only, not a maintainability ranking. Production/verification separation matters: across these three mutations internal production references total `3` and verification references `4`; comparator production references total `5` under the predeclared classification.
+
+The defensible result is:
+
+> **API/reference repair locality varies by logical interface and by consumer class; no uniform repair-locality advantage is observed in the three predeclared matched mutations.**
+
+Detailed validated evidence is in `S2_REPAIR_LOCALITY_BASELINE.md/.json`.
 
 ## AI-for-science relevance
 
-S2a showed that a reproducible metric can still be scientifically invalid when its boundary is wrong. S2b adds a second empirical control lesson: a green computation can still be inadmissible measurement if required provenance is missing. The pilot was discarded despite 6/6 computational success, apparatus provenance was made fail-closed, and only then were all six replicates rerun and credited.
+The process now contains three controlled methodology episodes:
 
-## Next gate — S2c repair locality
+1. S2a: reproducible metrics can be scientifically misleading when dependency/ownership boundaries are wrong.
+2. S2b: a green computation can still be inadmissible scientific evidence when predeclared provenance is missing.
+3. S2c: a predeclared experiment can return a mixed result that resists a simple architectural narrative; the correct action is to retain the mixed result rather than redesign the metric after observation.
 
-S2c has **not started**. It may begin only after this documentation-only S2b closure sync passes exact-head canonical CI, merges, and `main` verifies. Its first artifact must predeclare matched bounded mutations, success criteria, project-owned/dependency attribution, repair-surface metrics, non-comparability rules, and machine-readable evidence before any repair observations are collected.
+These episodes are externally auditable from commits, protocols, CI runs, artifacts, and corrections; hidden chain-of-thought is unnecessary.
+
+## Next gate — S2d semantic/index mutation resistance
+
+S2d has **not started**. First S2c must be synchronized, opened as a PR, pass exact-head canonical Lean Verification, merge, and pass post-merge verification on the exact `main` commit. Only then may S2d define its semantic/index mutation protocol prospectively.
 
 ## Public artifact
 

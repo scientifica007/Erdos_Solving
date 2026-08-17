@@ -1,4 +1,4 @@
-schema_version: 10
+schema_version: 11
 snapshot_date: 2026-08-17
 scope: erdos-678-only
 
@@ -53,15 +53,16 @@ s1_differential_verification:
     commit_match: true
     import_check: no-update-necessary
     build_jobs: 8808
+  selected_axiom_footprint_both_artifacts: [propext, Classical.choice, Quot.sound]
+  result: common-environment-differential-verification-success
 
 s2:
   status: active
-  current_substage: S2b-closure
+  current_substage: S2c-integration
 
   s2a_dependency_surface:
     status: complete-integrated-postmerge-verified-closure-verified
     protocol: problems/678/S2_DEPENDENCY_SURFACE_PROTOCOL.md
-    analyzer: problems/678/experiments/s2_dependency_surface.py
     baseline_markdown: problems/678/S2_DEPENDENCY_SURFACE_BASELINE.md
     baseline_json: problems/678/S2_DEPENDENCY_SURFACE_BASELINE.json
     experiment:
@@ -93,15 +94,11 @@ s2:
         reachable_local_modules: 46
         local_import_edges: 58
         max_local_depth: 33
-        external_frontier_modules: 14
-        artifact_owned_modules: 46
         artifact_owned_source_lines: 5546
       comparator:
         reachable_local_modules: 10
         local_import_edges: 10
         max_local_depth: 4
-        external_frontier_modules: 27
-        artifact_owned_modules: 1
         artifact_owned_source_lines: 2546
         third_party_repository_local_modules: 9
         third_party_repository_local_source_lines: 6943
@@ -111,120 +108,183 @@ s2:
       - no proof-complexity interpretation from module/file/line counts
 
   s2b_controlled_build_behavior:
-    status: complete-integrated-postmerge-verified
+    status: complete-integrated-postmerge-verified-closure-verified
     protocol: problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md
     runner: problems/678/experiments/s2_build_behavior.py
     aggregator: problems/678/experiments/s2_build_behavior_aggregate.py
     baseline_markdown: problems/678/S2_BUILD_BEHAVIOR_BASELINE.md
     baseline_json: problems/678/S2_BUILD_BEHAVIOR_BASELINE.json
-    metric_scope: artifact-owned-cold-and-warm-lake-build-behavior-common-environment
-
     excluded_pilot:
       apparatus_commit: a349010e295afa52d040feacbb2d02d5c081c548
       run: 32052134207
-      matrix_jobs_success: 6
-      matrix_jobs_total: 6
+      jobs_success: 6
       exclusion_scope: entire-run
-      reason: runner-version-missing-from-result-evidence
-      timing_values_credited: false
+      reason: runner-version-missing-from-predeclared-result-provenance
       performance_selected_exclusion: false
-      corrective_action: make-runner-and-image-provenance-fail-closed-and-rerun-all-six
-
     credited_experiment:
       apparatus_commit: c2ef703c954e462096162a3b4a59a5e0f8d48488
       run: 32053575928
       result: success
-      replicates_planned: 6
-      replicates_successful: 6
+      replicates: 6
       retries: 0
       exclusions: 0
-      order_sequence:
-        - internal-first
-        - comparator-first
-        - internal-first
-        - comparator-first
-        - internal-first
-        - comparator-first
-      environment:
-        runner_version: 2.336.0
-        runner_image_os: ubuntu24
-        runner_image_version: 20260810.271.1
-        cpu_count: 4
-        lean: 4.33.0
-        mathlib_input: v4.33.0
-        mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
-        pnt: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
-        comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
-        comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
-      artifacts:
-        - {replicate: 1, job: 95458495483, artifact_id: 9296089666, digest: sha256:0ae4abb0a926d87e0ee934c38e3781bdd1acf662aa886f94056749d9c688868d}
-        - {replicate: 2, job: 95458495190, artifact_id: 9296073673, digest: sha256:30ef2e618283d3164113931ddab48a3e2c5a4d642f9f90413b903a4bb25e55a3}
-        - {replicate: 3, job: 95458495351, artifact_id: 9295948207, digest: sha256:39460c4c00e49f2c3cb3f5e7b02ac4bf6871dc3aa734ad9f8fdad4ccd48b868c}
-        - {replicate: 4, job: 95458495136, artifact_id: 9296067771, digest: sha256:d078a33dd396edf08b685eaa192a66c8d43159268fa3ddf76797c41a17c5b41c}
-        - {replicate: 5, job: 95458495633, artifact_id: 9295931091, digest: sha256:fab91859fd85623c1f703c0999bc1a881101553e92799428c9e0952e30ad0997}
-        - {replicate: 6, job: 95458495066, artifact_id: 9295940038, digest: sha256:bd64b13cb21451a8c7a5bf54235579db6720b044ace51af0bda38387ba81321e}
+      runner_version: 2.336.0
+      runner_image: ubuntu24/20260810.271.1
       artifact_digest_validation: pass-all-six
       result_identity_validation: pass-all-six
       build_exit_validation: pass-all-cold-warm
-
-    cold_wall_seconds:
-      internal: [160.80, 161.59, 157.11, 149.56, 158.35, 162.45]
-      comparator: [162.34, 151.93, 165.81, 160.24, 146.62, 152.32]
-      paired_internal_minus_comparator: [-1.54, 9.66, -8.70, -10.68, 11.73, 10.13]
-      internal_median: 159.575
-      comparator_median: 156.280
-      paired_median_difference: 4.06
-      paired_median_ratio_internal_over_comparator: 1.027048
-      finding: no-stable-wall-clock-winner
-
-    warm_wall_seconds:
-      internal_median: 4.420
-      comparator_median: 4.340
-      interpretation: no-change-incremental-check-not-compilation-speed
-
-    cold_resource_medians:
-      internal_user_cpu_s: 176.105
-      comparator_user_cpu_s: 480.580
-      internal_system_cpu_s: 64.840
-      comparator_system_cpu_s: 5.990
-      internal_total_cpu_s: 241.155
-      comparator_total_cpu_s: 486.475
+    wall_result:
+      internal_cold_median_s: 159.575
+      comparator_cold_median_s: 156.280
+      paired_difference_range_s: [-10.68, 11.73]
+      paired_median_difference_s: 4.06
+      conclusion: no-stable-wall-clock-winner
+    resource_result:
+      internal_user_cpu_median_s: 176.105
+      comparator_user_cpu_median_s: 480.580
+      internal_system_cpu_median_s: 64.840
+      comparator_system_cpu_median_s: 5.990
+      internal_total_cpu_median_s: 241.155
+      comparator_total_cpu_median_s: 486.475
       paired_median_total_cpu_ratio_internal_over_comparator: 0.502837
-      internal_max_rss_kib: 7183766
-      comparator_max_rss_kib: 7828930
-      internal_built_progress_lines: 46
-      comparator_built_progress_lines: 1
-
-    resource_direction_consistency:
-      user_cpu_internal_over_comparator_ratio_range: [0.341, 0.388]
-      max_rss_internal_over_comparator_ratio_range: [0.917, 0.918]
-      system_cpu_internal_over_comparator_ratio_range: [10.5, 11.1]
-
-    finding:
-      - wall-clock ordering is unstable across the six paired runs
-      - the two proof layouts show materially different user/system CPU and peak-memory profiles under one pinned common environment
-      - internal total CPU is descriptively about half the comparator under this experiment while internal system CPU is much higher
-    causal_interpretation_status: inference-only-not-established
-    causal_hypothesis: modular process-and-file overhead versus monolithic elaboration cost
-    interpretation_limits:
-      - descriptive hosted-runner evidence only
-      - no general architecture-superiority claim
-      - no universal speed claim
-      - no maintainability or repair-locality inference
-      - no extrapolation to other toolchain/cache/machine regimes
-
+      internal_max_rss_median_kib: 7183766
+      comparator_max_rss_median_kib: 7828930
+      conclusion: materially-different-cpu-user-system-and-memory-profile-under-pinned-common-environment
     integration:
       pr: 30
       exact_head: e52e85d9b328a9cbc2349a6b61e23187dcc72fb5
       exact_head_run: 32055813783
-      exact_head_result: success
       merge_commit: c9900f9e2590f3101fc24f3f894f43b6fcf4e03c
       postmerge_run: 32058421851
       postmerge_job: 95473817638
       postmerge_result: success
-      postmerge_commit_match: true
-      postmerge_import_check: no-update-necessary
-      postmerge_build_jobs: 8808
+    closure:
+      pr: 31
+      exact_head: 594ea7adb59a291d28a320e8d4c88fe4579312f6
+      exact_head_run: 32059445520
+      merge_commit: cc55073fceddb51e3fa2c1854f797fe989523985
+      postmerge_run: 32060186755
+      postmerge_job: 95479480527
+      result: success
+      commit_match: true
+      import_check: no-update-necessary
+      build_jobs: 8808
+    limits:
+      - no general speed superiority
+      - no maintainability inference
+      - no causal claim for modular-versus-monolithic resource difference
+
+  s2c_repair_locality:
+    status: executed-success-artifact-validated-pending-pr-integration
+    protocol: problems/678/S2_REPAIR_LOCALITY_PROTOCOL.md
+    mutation_manifest: problems/678/S2_REPAIR_LOCALITY_MUTATIONS.yaml
+    baseline_markdown: problems/678/S2_REPAIR_LOCALITY_BASELINE.md
+    baseline_json: problems/678/S2_REPAIR_LOCALITY_BASELINE.json
+    scope: predeclared-symbol-api-reference-repair-locality-only
+    mutation_contract:
+      kind: declaration-identifier-rename-without-alias
+      proposition_changes: forbidden
+      proof_body_changes: forbidden
+      legal_repair: exact-downstream-old-identifier-to-new-identifier-substitution
+      third_party_edits: forbidden
+    provenance:
+      internal_baseline: cc55073fceddb51e3fa2c1854f797fe989523985
+      predeclaration_commit: a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1
+      experiment_commit: 00d340d3ccdc13418615b6526e9b736d9f9e03e7
+      run: 32062501296
+      job: 95486770197
+      artifact_id: 9299556049
+      artifact_size_bytes: 89822
+      artifact_digest: sha256:0369ec66c689572307660765b0c84cd86b6339f4f4d26a788c560ca11f7b7f4b
+      independently_downloaded_artifact_digest_match: true
+      runner_version: 2.336.0
+      runner_image: ubuntu24/20260810.271.1
+      lean: 4.33.0
+      mathlib_input: v4.33.0
+      mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
+      pnt: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+      comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+      comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+      comparator_source_sha256: 186a651174c7f8f7ef1e7d7d86f262ff51889a55c6767ca116b08a009fe8a4db
+    validations:
+      internal_baseline_green: true
+      internal_baseline_build_jobs: 8808
+      comparator_baseline_green: true
+      observation_count: 6
+      observable_breaks: 6
+      legal_repairs_green: 6
+      third_party_dependency_files_touched_total: 0
+      internal_repairs_mk_all_no_update: 3
+      internal_repairs_full_8808_job_build_success: 3
+      all_repairs_pure_identifier_substitution: true
+    mutations:
+      R1-analytic-closure:
+        internal:
+          repaired_refs: 3
+          production_refs: 2
+          verification_refs: 1
+          production_modules: 2
+          verification_modules: 1
+          repair_sites:
+            - formalization/Formalization/Erdos678/Claim4RelativePrimePNT.lean:78
+            - formalization/Formalization/Erdos678/Erdos678Final.lean:112
+            - formalization/Formalization/Erdos678/Claim4RelativePrimePNTTests.lean:11
+        comparator:
+          repaired_refs: 1
+          production_refs: 1
+          repair_sites: [src/latest/ErdosProblems/Erdos678.lean:2449]
+      R2-eventual-construction:
+        internal:
+          repaired_refs: 2
+          production_refs: 1
+          verification_refs: 1
+          production_modules: 1
+          verification_modules: 1
+          repair_sites:
+            - formalization/Formalization/Erdos678/CambieStrongTheorem.lean:25
+            - formalization/Formalization/Erdos678/Claim4RelativePrimePNTTests.lean:18
+        comparator:
+          repaired_refs: 1
+          production_refs: 1
+          repair_sites: [src/latest/ErdosProblems/Erdos678.lean:2011]
+      R3-strong-public-endpoint:
+        internal:
+          repaired_refs: 2
+          production_refs: 0
+          verification_refs: 2
+          production_modules: 0
+          verification_modules: 1
+          repair_sites:
+            - formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean:31
+            - formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean:38
+        comparator:
+          repaired_refs: 3
+          production_refs: 3
+          repair_sites:
+            - src/latest/ErdosProblems/Erdos678.lean:2461
+            - src/latest/ErdosProblems/Erdos678.lean:2469
+            - src/latest/ErdosProblems/Erdos678.lean:2514
+    bookkeeping_totals:
+      internal_repaired_refs: 7
+      internal_production_refs: 3
+      internal_verification_refs: 4
+      comparator_repaired_refs: 5
+      comparator_production_refs: 5
+      warning: totals-are-not-maintainability-ranking
+    finding:
+      - repair-reference blast radius is mixed and interface-layer dependent
+      - R1 and R2 have broader static reference surfaces internally
+      - R3 reverses at the production layer: zero internal production consumers versus three comparator production consumers
+      - verification consumers materially affect the internal reference surface
+      - no uniform repair-locality advantage is observed
+    interpretation_limits:
+      - not general maintainability
+      - not human repair time or cognitive effort
+      - not semantic robustness
+      - not proof complexity
+      - not upgrade robustness
+      - not architecture superiority
+      - timing fields are apparatus metadata and not repair-cost metrics
 
 verification_credit_audit:
   status: corrected-and-validated
@@ -244,15 +304,17 @@ allowed_external_claims:
   - independent Lean reimplementation of Cambie's proof
   - executed common-environment differential verification against pinned Aristotle/Alexeev source
   - machine-checked statement normalization and real-factor bridge
-  - reproducible closure-verified S2a boundary-sensitive dependency baseline
-  - six-replicate S2b common-environment build/resource baseline with no stable wall-time winner
+  - closure-verified S2a boundary-sensitive dependency baseline
+  - closure-verified S2b six-replicate resource baseline with no stable wall-time winner
   - materially different measured CPU-system-user and peak-memory profiles under the recorded S2b environment
-  - S2b exact-head and post-merge canonical verification on the integrated evidence artifact
+  - predeclared S2c six-observation API/reference repair-locality experiment with zero third-party touches
+  - S2c mixed interface-dependent repair result with no uniform repair-locality winner
   - green computation and scientifically admissible measurement are separate gates as demonstrated by the excluded S2b pilot
+  - preservation of mixed/null comparative evidence rather than post-observation metric redesign
 
 claims_requiring_new_experiments:
-  - easier maintenance than the public comparator
-  - smaller repair blast radius
+  - general maintainability superiority
+  - human repair-time advantage
   - earlier semantic-drift detection
   - better upgrade robustness
   - causal explanation of S2b resource-profile differences
@@ -264,14 +326,15 @@ forbidden_or_unsupported_claims:
   - first Lean formalization of Erdős #678
   - general superiority of our architecture
   - universal speed advantage
+  - uniform repair-locality advantage
   - autonomous AI authorship percentage
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S2b-closure-sync
+  stage: S2c-integration
   status: pending
-  requirement: exact-head canonical Lean Verification on this documentation-only closure; merge only if green; verify resulting main commit
-  next_after_close: S2c-repair-locality-predeclaration
+  requirement: canonical exact-head Lean Verification on final S2c PR head; merge only if green; verify exact resulting main commit
+  next_after_close: S2d-semantic-index-mutation-predeclaration
 
 privacy_and_reproducibility:
   repository_visibility: public
@@ -279,7 +342,7 @@ privacy_and_reproducibility:
   publish_hidden_chain_of_thought: false
   process_data_policy: >-
     Publish externally observable hypotheses, actions, artifacts, commits, CI results,
-    corrections, and human intervention categories; do not publish hidden model chain-of-thought.
+    corrections, mixed/null results, and human intervention categories; do not publish hidden model chain-of-thought.
 
 transition_gate:
   decision: DEC-012
