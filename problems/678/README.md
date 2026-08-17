@@ -2,7 +2,7 @@
 
 > **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b EXECUTED / VALIDATED / PENDING PR INTEGRATION. S2c NOT STARTED.**
+> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b COMPLETE / INTEGRATED / POST-MERGE VERIFIED. S2c NOT STARTED.**
 >
 > The successful route is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. It is neither a new mathematical proof nor the first Lean formalization. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
@@ -30,7 +30,7 @@ S2a produced `S2_DEPENDENCY_SURFACE_BASELINE.md/.json` and established the contr
 
 S2a closed through PR #28 and closure PR #29. Final closure merge `c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5` passed run `32050862725`, job `95449629511`, with matching `verified_commit`, `No update necessary`, and 8808 jobs.
 
-## S2b — controlled build behavior — EXECUTED / VALIDATED
+## S2b — controlled build behavior — CLOSED / VERIFIED
 
 Protocol: `S2_BUILD_BEHAVIOR_PROTOCOL.md`.
 
@@ -86,13 +86,17 @@ The directions are consistent across all six runs: internal user CPU is about `3
 
 S2b does not establish general speed superiority, proof complexity, maintainability, repair locality, semantic-mutation resistance, or upgrade robustness.
 
+### Integration evidence
+
+PR #30 exact head `e52e85d9b328a9cbc2349a6b61e23187dcc72fb5` passed canonical run `32055813783`. It merged as `c9900f9e2590f3101fc24f3f894f43b6fcf4e03c`, and that exact `main` commit passed run `32058421851`, job `95473817638`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
+
 ## AI-for-science relevance
 
 S2a showed that a reproducible metric can still be scientifically invalid when its boundary is wrong. S2b adds a second empirical control lesson: a green computation can still be inadmissible measurement if required provenance is missing. The pilot was discarded despite 6/6 computational success, apparatus provenance was made fail-closed, and only then were all six replicates rerun and credited.
 
-## Next gate
+## Next gate — S2c repair locality
 
-S2b is **executed/validated but not integrated**. This branch must pass canonical exact-head Lean Verification, merge, and pass post-merge verification on `main`. Only then may S2c repair-locality experiments begin.
+S2c has **not started**. It may begin only after this documentation-only S2b closure sync passes exact-head canonical CI, merges, and `main` verifies. Its first artifact must predeclare matched bounded mutations, success criteria, project-owned/dependency attribution, repair-surface metrics, non-comparability rules, and machine-readable evidence before any repair observations are collected.
 
 ## Public artifact
 
