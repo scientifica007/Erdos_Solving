@@ -2,20 +2,17 @@
 
 > **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 COMPLETE / VERIFIED. S2 ACTIVE. S2a COMPLETE / INTEGRATED / POST-MERGE + CLOSURE VERIFIED. S2b ACTIVE / PROTOCOL DEFINED / EXPERIMENT PENDING.**
+> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b EXECUTED / VALIDATED / PENDING PR INTEGRATION. S2c NOT STARTED.**
 >
 > The successful route is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. It is neither a new mathematical proof nor the first Lean formalization. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
 ## Canonical result
 
-Let `M(n,k) = lcm{n+1,...,n+k}`. The final Lean graph includes `erdos678_unbounded_witnesses`, `erdos678_good_lengths_infinite`, and the stronger preceding Cambie construction.
-
-The analytic dependency is pinned to `AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`, consumed through the machine-checked `prime_between` theorem. No custom prime-density axiom remains in the credited theorem.
+Let `M(n,k) = lcm{n+1,...,n+k}`. The final Lean graph includes `erdos678_unbounded_witnesses`, `erdos678_good_lengths_infinite`, and the stronger preceding Cambie construction. The analytic dependency is pinned to `AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed` and consumes machine-checked `prime_between`.
 
 ## Scientific classification
 
 - mathematical author/result: Stijn Cambie / known solution;
-- independent mathematical attempt: rejected;
 - project mode: external-proof reconstruction;
 - formal artifact: independent Lean reimplementation;
 - new mathematical proof claim: **no**;
@@ -25,81 +22,81 @@ The analytic dependency is pinned to `AxiomMath/PrimeNumberTheoremAnd@2667e414c3
 
 ## S1 — CLOSED
 
-Run `32028006457` built the internal canonical graph with **8808 jobs** and compiled `plby/lean-proofs@6f906fef432892db5c910c48ad1a3728dd42cdac` `Erdos678.lean` unchanged inside this repository's Lean 4.33 / Mathlib / PNT+ environment. Machine bridges align interval semantics, Formal-Conjectures-style eventual existence, unbounded/infinite lengths, and real-factor `C ≥ 1` semantics.
-
-PR #22 and closure PR #27 both passed exact-head/post-merge canonical verification. S1 closure main commit `7aff8d8d8680e90b34be64650c68c0fc778749fc` passed run `32045885504` with exact provenance, `No update necessary`, and 8808 jobs.
+Run `32028006457` built the internal canonical graph and compiled the pinned public comparator unchanged inside this repository's Lean 4.33 / Mathlib / PNT+ environment. PR #22 and closure PR #27 completed exact-head and post-merge verification; S1 closure commit `7aff8d8d8680e90b34be64650c68c0fc778749fc` passed run `32045885504` with `No update necessary` and 8808 jobs.
 
 ## S2a — dependency surface — CLOSED
 
-Protocol: `S2_DEPENDENCY_SURFACE_PROTOCOL.md`.
+S2a produced `S2_DEPENDENCY_SURFACE_BASELINE.md/.json` and established the control that raw module/file/frontier counts are **boundary-sensitive**. Internally PNT+ is an external Lake dependency; the comparator repository physically contains nine reachable PNT+ modules. Raw repository counts therefore mix proof decomposition, packaging, and ownership.
 
-Analyzer: `experiments/s2_dependency_surface.py`.
+S2a closed through PR #28 and closure PR #29. Final closure merge `c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5` passed run `32050862725`, job `95449629511`, with matching `verified_commit`, `No update necessary`, and 8808 jobs.
 
-Durable result: `S2_DEPENDENCY_SURFACE_BASELINE.md` and `S2_DEPENDENCY_SURFACE_BASELINE.json`.
-
-Executed identity:
-
-- internal experiment commit: `4685fca552ae4a0270dfa3823d46fde48efa5ade`;
-- experiment run/job: `32047324807` / `95438118197` — **SUCCESS**;
-- comparator commit/blob: `6f906fef432892db5c910c48ad1a3728dd42cdac` / `f2331e8bcc71bc36cce7724a0c54fafd8d64d480`;
-- generated artifact digest: `sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd`.
-
-Integration identity:
-
-- PR #28 exact head `3d4e35c15eb07938dfcb3fb5de29e8d51f1e767e` passed run `32047808010`;
-- merge `37deb850f894d32863970aca6b07e876f89e813d` passed post-merge run `32048513043`;
-- closure PR #29 exact head `0a1d1cf84c87c5a3b40d6a118e733cda5807a4a7` passed run `32050225638`;
-- closure merge `c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5` passed run `32050862725`, job `95449629511`;
-- final closure provenance: `verified_commit=c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5`, `No update necessary`, **8808 jobs**.
-
-Canonical-result baseline:
-
-| Structural metric | Erdos_Solving | Public comparator |
-|---|---:|---:|
-| reachable local modules | 46 | 10 |
-| local import edges | 58 | 10 |
-| max local import depth | 33 | 4 |
-| external-frontier modules | 14 | 27 |
-| artifact-owned modules | 46 | 1 |
-| artifact-owned source lines | 5546 | 2546 |
-| third-party repository-local support modules | 0 | 9 |
-| third-party repository-local support source lines | 0 | 6943 |
-
-### S2a interpretation
-
-The principal finding is **boundary sensitivity**: module/file/frontier counts can measure packaging and ownership choices as well as proof decomposition. Internally PNT+ is an external Lake dependency; the comparator repository physically contains nine reachable PNT+ modules. Raw counts are not proof-complexity or architecture-quality rankings.
-
-## S2b — controlled build behavior — ACTIVE
+## S2b — controlled build behavior — EXECUTED / VALIDATED
 
 Protocol: `S2_BUILD_BEHAVIOR_PROTOCOL.md`.
 
 Measurement runner: `experiments/s2_build_behavior.py`.
 
-The experiment is predeclared before timing:
+Strict aggregator: `experiments/s2_build_behavior_aggregate.py`.
 
-- six independent fresh `ubuntu-24.04` paired-runner replicates;
-- alternating order: internal-first / comparator-first;
-- one common Lean 4.33 / Mathlib v4.33 / PNT+ pinned Lake environment;
-- comparator commit/blob validated before measurement and source copied byte-for-byte only into runner-local temporary workspace;
-- dependency/network/toolchain/cache preparation excluded from artifact timing;
-- **cold** = artifact-owned generated outputs removed while dependencies remain prepared;
-- **warm** = unchanged immediate repeat of the identical target;
-- metrics: wall time, user CPU, system CPU, maximum RSS, exit status, and Lake `Built` progress observations;
-- all observations retained; only predeclared infrastructure failures may be retried/excluded with classification.
+Baseline: `S2_BUILD_BEHAVIOR_BASELINE.md/.json`.
 
-Internal target: `Formalization.Erdos678.Erdos678Final`.
+### Provenance discipline
 
-Comparator target in the common environment: `Formalization.Erdos678Benchmark.Comparator` generated at runtime from the exact public comparator blob.
+Pilot run `32052134207` on apparatus `a349010e295afa52d040feacbb2d02d5c081c548` completed 6/6 jobs but is **excluded in full** because `runner_version` was missing from every result, violating a predeclared provenance invariant. No timing-based selection occurred.
 
-S2b has **not yet produced credited timing evidence**. No speed/efficiency/architecture claim is allowed before all six replicates are validated and consolidated.
+The corrected apparatus fails closed on missing runner/image identity. Credited run `32053575928` on exact apparatus commit `c2ef703c954e462096162a3b4a59a5e0f8d48488` completed **6/6 paired replicates successfully, with zero retries and zero exclusions**. Every artifact records:
+
+- Lean `4.33.0`;
+- Mathlib `v4.33.0` / resolved `db584cd6d46c92f209a44c0f1c829460d327499d`;
+- PNT+ `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`;
+- comparator commit/blob `6f906fef...` / `f2331e8b...`;
+- runner `2.336.0`;
+- image `ubuntu24/20260810.271.1`;
+- CPU count 4;
+- zero cold/warm build exit codes.
+
+All six downloaded artifact ZIP digests matched GitHub.
+
+### Wall-clock result
+
+| rep | order | internal cold | comparator cold | Δ internal−comparator |
+|---:|---|---:|---:|---:|
+| 1 | internal-first | 160.80 s | 162.34 s | -1.54 s |
+| 2 | comparator-first | 161.59 s | 151.93 s | +9.66 s |
+| 3 | internal-first | 157.11 s | 165.81 s | -8.70 s |
+| 4 | comparator-first | 149.56 s | 160.24 s | -10.68 s |
+| 5 | internal-first | 158.35 s | 146.62 s | +11.73 s |
+| 6 | comparator-first | 162.45 s | 152.32 s | +10.13 s |
+
+Cold medians are `159.575 s` internal versus `156.280 s` comparator. Paired differences change sign and range from `-10.68` to `+11.73 s`; therefore **S2b does not establish a stable wall-clock winner**. Warm medians are `4.42 s` versus `4.34 s`, but warm is an unchanged incremental/no-op check, not compilation speed.
+
+### Resource-profile result
+
+| cold metric | internal median | comparator median |
+|---|---:|---:|
+| user CPU | 176.105 s | 480.580 s |
+| system CPU | 64.840 s | 5.990 s |
+| total CPU | 241.155 s | 486.475 s |
+| max RSS | 7,183,766 KiB | 7,828,930 KiB |
+| Lake `Built` lines | 46 | 1 |
+
+The directions are consistent across all six runs: internal user CPU is about `34–39%` of comparator user CPU; internal RSS about `91.7–91.8%` of comparator; internal system CPU is about `10.5–11.1×` comparator. The paired median total-CPU ratio internal/comparator is `0.503`.
+
+**Defensible conclusion:** under this exact common environment, wall time is similar/noisy but the two proof layouts exhibit materially different CPU-system/user and peak-memory profiles. A causal explanation in terms of modular process/file overhead versus monolithic elaboration is plausible but remains an inference, not an S2b result.
+
+S2b does not establish general speed superiority, proof complexity, maintainability, repair locality, semantic-mutation resistance, or upgrade robustness.
 
 ## AI-for-science relevance
 
-S2a established that a metric can be perfectly reproducible yet scientifically invalid if the automated system measures an unexamined boundary. S2b operationalizes the correction: environment setup, source ownership, cache state, order effects, replicate policy, and interpretation limits are fixed **before** observing timings.
+S2a showed that a reproducible metric can still be scientifically invalid when its boundary is wrong. S2b adds a second empirical control lesson: a green computation can still be inadmissible measurement if required provenance is missing. The pilot was discarded despite 6/6 computational success, apparatus provenance was made fail-closed, and only then were all six replicates rerun and credited.
+
+## Next gate
+
+S2b is **executed/validated but not integrated**. This branch must pass canonical exact-head Lean Verification, merge, and pass post-merge verification on `main`. Only then may S2c repair-locality experiments begin.
 
 ## Public artifact
 
-The repository is Public and project-owned material is Apache-2.0. The comparator remains an immutable external fetch and is not vendored. No repository ruleset was detected immediately after public transition; protecting `main` remains a governance task before accepting outside contributions.
+The repository is Public and project-owned material is Apache-2.0. The comparator remains an immutable external fetch and is not vendored.
 
 ## Operational stop rule
 
