@@ -7,7 +7,7 @@ Convert the completed #678 work into the maximum defensible external value witho
 The repository contains two related but separable candidate contributions:
 
 1. **formal verification / proof engineering:** an independently engineered Lean reconstruction of Cambie's proof, now differentially verified against the existing Aristotle/Alexeev formalization;
-2. **AI-assisted scientific production:** a longitudinal, auditable case study covering invalid independent reasoning, formal rejection, reconstruction, dependency closure, interface repair, regression discipline, state management, scientific attribution, and verification-provenance correction.
+2. **AI-assisted scientific production:** a longitudinal, auditable case study covering invalid independent reasoning, formal rejection, reconstruction, dependency closure, interface repair, regression discipline, state management, scientific attribution, verification-provenance correction, and public-release controls.
 
 The mathematical theorem remains known work by Stijn Cambie. We do not claim a new solution, a new independent mathematical proof, or formalization priority.
 
@@ -29,6 +29,7 @@ The project now has executable evidence that:
 
 - our length-based `erdosM` semantics are machine-bridged to the public `Finset.Ioc n (n+k)` convention;
 - our theorem derives the Formal-Conjectures-style eventual-nonempty endpoint;
+- our valid-pair semantics expose unbounded and infinitely many admissible block lengths;
 - our positive-natural multiplicative-factor theorem is machine-lifted to every real `C ≥ 1`, matching the public strong-theorem parameter domain;
 - the pinned current public Aristotle/Alexeev source `plby/lean-proofs@6f906fef432892db5c910c48ad1a3728dd42cdac` compiles **unchanged** in this repository's pinned Lean 4.33 / Mathlib / PNT+ environment;
 - selected endpoints from both artifacts expose the same standard axiom footprint: `propext`, `Classical.choice`, `Quot.sound`.
@@ -70,7 +71,7 @@ Do not infer “better architecture” from file count or narrative structure al
 
 Possible subtitle:
 
-**Target fidelity, failure memory, dependency closure, and execution-provenance controls**
+**Target fidelity, failure memory, dependency closure, execution-provenance controls, and public-artifact closure**
 
 ### Core contribution
 
@@ -86,9 +87,10 @@ The case does not show AI discovering #678. It provides an auditable record of a
 - treated canonical build reachability and documentation state as part of verification;
 - performed cross-artifact statement/environment/axiom comparison rather than relying on prose equivalence;
 - later detected **verification-credit drift**: PR metadata had been interpreted more strongly than the actual checkout semantics justified;
-- reclassified that evidence and repaired the workflow to record the commit actually built.
+- reclassified that evidence and repaired the workflow to record the commit actually built;
+- treated public release as a separate scientific closure stage requiring secret hygiene, least-privilege CI, dependency provenance, redistribution boundaries, and an explicit project-license decision.
 
-The verification-credit episode is documented in `CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md` and is a particularly useful process result because it distinguishes a green integration-tree build from literal PR-head verification.
+The verification-credit episode is documented in `CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md` and `AI_CASE_EPISODE_VERIFICATION_CREDIT_DRIFT.md`.
 
 ### Research questions
 
@@ -97,6 +99,7 @@ The verification-credit episode is documented in `CI_VERIFICATION_PROVENANCE_COR
 - Does negative-regression memory reduce repeated invalid reasoning?
 - Do contract-scoped interfaces reduce repair blast radius?
 - How often do CI metadata labels diverge from the execution provenance needed for scientific credit?
+- Which controls are needed to transform a private machine-checked development into a safely reusable public research artifact?
 - How should attribution change when a project switches from discovery to external-proof reconstruction?
 
 ### S4 empirical extension required for a strong AI-for-science paper
@@ -126,6 +129,7 @@ The repository now contains machine-checked bridges for:
 
 - length-based interval semantics ↔ public `Finset.Ioc` semantics;
 - eventual nonempty valid-pair formulation;
+- unbounded/infinite admissible good-length semantics;
 - positive natural factor ↔ arbitrary real `C ≥ 1` strong theorem.
 
 Potential upstream value is a compact statement-normalization layer that makes variant readings explicit and prevents recurrence of the fixed-`k`/varying-`k` ambiguity.
@@ -150,9 +154,9 @@ Before public comparison or upstream patch submission:
 
 ---
 
-## Shared reproducibility package
+## Shared reproducibility and public-artifact package
 
-A future public artifact should include:
+The public artifact should include:
 
 - immutable repository commit/release;
 - exact Lean toolchain and Mathlib revision;
@@ -163,12 +167,15 @@ A future public artifact should include:
 - `DIFFERENTIAL_VERIFICATION_PROTOCOL.md`;
 - `DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml`;
 - `experiments/run_public_comparator_common_env.sh`;
+- `PUBLIC_RELEASE_AUDIT_2026-08-17.md`;
+- root `THIRD_PARTY_NOTICES.md`;
+- project-owned root license selected by the repository owner;
 - dependency/metric/mutation results once S2 exists;
 - machine-readable process-event data once S4 exists;
 - provenance and limitations statements;
-- licenses for all redistributed material.
+- licenses/notices for all redistributed material.
 
-The repository is private. **Do not change visibility or publish a snapshot without explicit user authorization.**
+The user has explicitly authorized preparation for and intends a public visibility transition. At the current checkpoint the repository is still private, and the project-owned root license remains an owner decision. No public release is considered scientifically closed until the post-transition exact-head PR check and post-merge `main` verification succeed.
 
 ---
 
@@ -183,6 +190,7 @@ The repository is private. **Do not change visibility or publish a snapshot with
 - Our artifact has a modular, regression-heavy architecture.
 - our interval semantics are machine-bridged to the public convention;
 - our Formal Conjectures eventual-nonempty reading is machine-derived;
+- admissible good lengths have explicit unbounded/infinite semantic endpoints;
 - our strong theorem is machine-lifted to every real `C ≥ 1`;
 - the pinned public comparator source compiled unchanged in our pinned environment;
 - selected endpoints on both sides had matching standard axiom footprints in that environment.
@@ -192,7 +200,8 @@ The repository is private. **Do not change visibility or publish a snapshot with
 - the second implementation has differential-verification value;
 - the process record is a useful long-horizon AI-assisted formalization case;
 - the `prime_between` adapter is a plausible upstream component;
-- the verification-credit correction is an empirical example of why execution logs should dominate metadata labels for commit-level proof credit.
+- the verification-credit correction is an empirical example of why execution logs should dominate metadata labels for commit-level proof credit;
+- the public-release preflight is an auditable example of treating security/provenance/licensing as scientific artifact closure rather than post-hoc administration.
 
 ### Level 2 — requires controlled experiments
 
@@ -221,17 +230,21 @@ The scientific dossier now contains:
 
 1. `SCIENTIFIC_COMPARATIVE_STUDY.md`;
 2. `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md`;
-3. this roadmap;
-4. `SCIENTIFIC_EVIDENCE_LEDGER.yaml`;
-5. `DIFFERENTIAL_VERIFICATION_PROTOCOL.md`;
-6. `S1_DIFFERENTIAL_VERIFICATION_RESULT.md`;
-7. `DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml`;
-8. `CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md`;
-9. `experiments/run_public_comparator_common_env.sh`;
-10. `CAMBIE_PROOF_ANALYSIS.md`;
-11. `FORMALIZATION_CORRECTION_2026-08-14.md`;
-12. `LEAN_FORMALIZATION_ROADMAP.md`;
-13. root `LESSONS_LEARNED_678_ADDENDUM.md`.
+3. `AI_CASE_EPISODE_VERIFICATION_CREDIT_DRIFT.md`;
+4. this roadmap;
+5. `SCIENTIFIC_EVIDENCE_LEDGER.yaml`;
+6. `DIFFERENTIAL_VERIFICATION_PROTOCOL.md`;
+7. `S1_DIFFERENTIAL_VERIFICATION_RESULT.md`;
+8. `DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml`;
+9. `CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md`;
+10. `PUBLICATION_READINESS_LICENSE_AUDIT.md`;
+11. `PUBLIC_RELEASE_AUDIT_2026-08-17.md`;
+12. `experiments/run_public_comparator_common_env.sh`;
+13. `CAMBIE_PROOF_ANALYSIS.md`;
+14. `FORMALIZATION_CORRECTION_2026-08-14.md`;
+15. `LEAN_FORMALIZATION_ROADMAP.md`;
+16. root `LESSONS_LEARNED_678_ADDENDUM.md`;
+17. root `THIRD_PARTY_NOTICES.md`.
 
 ---
 
@@ -241,19 +254,21 @@ The scientific dossier now contains:
 
 Initial scientific positioning and comparison anchors are frozen.
 
-### S1 — common-environment differential verification — EXPERIMENT COMPLETE / INTEGRATION PENDING
+### S1 — common-environment differential verification — EXPERIMENT COMPLETE / PUBLIC-TRANSITION INTEGRATION PENDING
 
 **Scientific experiment complete:** run `32028006457` successfully built the internal bridge/canonical graph and compiled the pinned current public comparator source unchanged in the same pinned environment, with matched selected-endpoint axiom footprints.
 
-**Persistent-artifact integration pending:** the active S1 branch also repairs canonical PR checkout provenance so literal PR-head credit requires explicit checkout and logged `git rev-parse HEAD`.
+**Persistent-artifact integration pending:** the active S1 branch includes semantic consolidation, execution-provenance correction, public-CI hardening, third-party notices, and the public-release preflight.
 
-New GitHub Actions jobs are currently unable to start because GitHub reports an account billing/spending-limit condition. This is an infrastructure blocker, not a Lean/proof failure.
+While the repository remains private, new GitHub Actions jobs cannot start because of the account billing/spending condition. The user has chosen public visibility as the intended resolution rather than weakening the verification gate.
 
 S1 closes only when:
 
-1. the billing/spending condition is resolved;
-2. the persistent final S1 branch passes the corrected commit-explicit canonical PR gate;
-3. the merged `main` head passes post-merge verification.
+1. the repository owner chooses the project-owned root license;
+2. the user changes the repository to public;
+3. GitHub Actions/branch protections are reviewed after the transition;
+4. the actual final S1 PR head passes the corrected commit-explicit canonical gate;
+5. the merged `main` head passes post-merge verification.
 
 ### S2 — metric and mutation suite — NOT STARTED
 
