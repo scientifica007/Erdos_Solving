@@ -45,7 +45,7 @@ The first six-job pilot remains excluded because required runner-version provena
 
 PR #30 integrated the substantive evidence; closure PR #31 merged as `cc55073fceddb51e3fa2c1854f797fe989523985` and that exact merge passed run `32060186755`, job `95479480527`, with `No update necessary` and 8808 jobs.
 
-### S2c — repair locality — EXECUTED / VALIDATED / PENDING INTEGRATION
+### S2c — repair locality — COMPLETE / INTEGRATED / POST-MERGE VERIFIED
 
 Protocol: `S2_REPAIR_LOCALITY_PROTOCOL.md`.
 
@@ -98,17 +98,25 @@ This is scientifically valuable negative/mixed evidence because it rejects a tem
 
 S2c still does not measure human repair time, cognitive effort, semantic robustness, proof complexity, or upgrade robustness.
 
-### S2d — semantic/index mutation resistance — NEXT AFTER S2c INTEGRATION
+#### Integration evidence
+
+PR #32 final head `7471370081dece8ac99ec3888636d7d9cc0fa78f` passed canonical exact-head run `32065778293`, job `95497421954`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
+
+PR #32 merged as `bf54f5eb16e477d1b41b336e68ce82a729c98912`. The exact merge commit passed post-merge run `32067478680`, job `95502840936`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**. The substantive S2c evidence is integrated and machine-verified.
+
+### S2c documentation closure — CURRENT GATE
+
+The remaining S2c work is bookkeeping under `DEC-008`: synchronize state, README, roadmap, and evidence ledger with the verified PR #32 integration above; pass exact-head canonical CI on this documentation-only closure; merge; then verify the resulting exact `main` commit.
+
+### S2d — semantic/index mutation resistance — NEXT AFTER S2c CLOSURE
 
 S2d will replay controlled semantic/index perturbations inspired by the historical off-by-one failure and measure the earliest rejection layer. It must be prospectively specified before observing any mutation outcome.
 
-S2d is blocked until S2c:
+S2d remains blocked until this S2c documentation closure:
 
-1. completes state/evidence synchronization;
-2. passes exact-head canonical CI on its final PR head;
-3. merges;
-4. passes post-merge canonical verification on the resulting exact `main` commit;
-5. closes its integration state.
+1. passes exact-head canonical CI on its final PR head;
+2. merges;
+3. passes post-merge canonical verification on the resulting exact `main` commit.
 
 ### S2e — upgrade robustness — PLANNED
 
@@ -151,11 +159,11 @@ The comparator remains an immutable external fetch rather than vendored material
 
 ## Claim ladder
 
-**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; direct `prime_between` boundary; machine-checked statement bridges; unchanged public-comparator compilation; matching selected standard-axiom footprint; public Apache-2.0 artifact; S1 differential verification; S2a boundary-sensitive structural baseline; S2b six-replicate resource baseline with no stable wall-time winner; S2c prospectively defined six-observation API/reference repair-locality baseline with zero third-party touches and a mixed interface-dependent result.
+**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; direct `prime_between` boundary; machine-checked statement bridges; unchanged public-comparator compilation; matching selected standard-axiom footprint; public Apache-2.0 artifact; S1 differential verification; S2a boundary-sensitive structural baseline; S2b six-replicate resource baseline with no stable wall-time winner; S2c prospectively defined six-observation API/reference repair-locality baseline with zero third-party touches, a mixed interface-dependent result, and exact-head/post-merge verified integration.
 
 **Supported interpretation:** independent formal replication has differential-verification value; execution provenance and metric-boundary auditing are scientifically relevant; resource profiles differ under the S2b environment; S2c provides no uniform repair-locality winner and demonstrates that consumer class/interface layer materially affects static API repair blast radius.
 
-**Still requires later evidence:** general maintainability, human repair effort, earlier semantic-drift rejection, upgrade robustness, causal explanations for S2b resource differences, causal benefit of project state protocols.
+**Still requires later evidence:** general maintainability, human repair effort, earlier semantic-drift rejection, upgrade robustness, causal explanations for S2b resource differences, causal benefit of state protocols.
 
 **Unsupported:** new solution, new independent mathematical proof, first Lean formalization, general architecture superiority, universal speed advantage, general maintainability superiority, autonomous AI authorship percentage.
 
@@ -166,8 +174,8 @@ The comparator remains an immutable external fetch rather than vendored material
 - **S2:** ACTIVE.
   - **S2a:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
   - **S2b:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
-  - **S2c:** EXECUTED / ARTIFACT VALIDATED / PENDING PR INTEGRATION.
-  - **S2d:** NOT STARTED; next only after S2c integration/closure.
+  - **S2c:** COMPLETE / INTEGRATED / POST-MERGE VERIFIED; DOCUMENTATION CLOSURE IN PROGRESS.
+  - **S2d:** NOT STARTED; next only after S2c documentation closure verification.
   - **S2e:** NOT STARTED.
   - **S2f:** NOT STARTED.
 - **S3:** NOT STARTED.
