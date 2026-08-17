@@ -51,8 +51,9 @@ current_ci_blocker_is_proof_failure: false
 
 public_visibility_preparation_authorized_by_user: true
 repository_visibility_at_checkpoint: private
-public_release_preflight_status: complete-awaiting-project-license-and-user-visibility-switch
-project_license_status: undecided-owner-decision-required
+public_release_preflight_status: complete-license-closed-awaiting-user-visibility-switch
+project_license_status: apache-2.0-selected-and-committed
+project_license_file: LICENSE
 third_party_notices_status: created
 secret_audit_status: no-known-secret-blocker-on-audited-surfaces-with-stated-limitations
 public_transition_strategy: user-will-change-repository-to-public-to-restore-standard-actions
@@ -62,7 +63,7 @@ s3_status: not-started
 s4_status: not-started
 s5_status: not-started
 user_transition_gate: explicit-authorization-required
-next_action: owner chooses project license; user changes repository visibility to public; verify public GitHub settings; run corrected canonical CI on actual final PR22 head; merge only if green; verify main; close S1 before S2
+next_action: user changes repository visibility to public; verify public GitHub settings/protections; run corrected canonical CI on actual final PR22 head; merge only if green; verify main; close S1 before S2
 ```
 
 ## Governing rules
@@ -163,9 +164,10 @@ Completed before the visibility switch:
 - `THIRD_PARTY_NOTICES.md` records dependency/comparator provenance;
 - Mathlib, PNT+, and Formal Conjectures currently report Apache-2.0;
 - the public comparator remains external/non-vendored because no repository license metadata was detected;
+- the repository owner selected **Apache License 2.0** for project-owned material and the full license text is committed at root `LICENSE`;
 - `problems/678/PUBLIC_RELEASE_AUDIT_2026-08-17.md` records the full preflight and limitations.
 
-The remaining publication decision before/with visibility change is the owner-selected root license for project-owned material.
+The project-license gate is closed. Third-party content remains governed independently by its own licenses/notices; the comparator remains outside the redistributed source boundary.
 
 ### Current blocker / transition
 
@@ -193,6 +195,7 @@ The user intends to change the repository to public. After that transition, the 
 - `problems/678/experiments/run_public_comparator_common_env.sh`
 - `problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml`
 - `problems/678/PUBLICATION_AND_UPSTREAM_ROADMAP.md`
+- `LICENSE`
 - `THIRD_PARTY_NOTICES.md`
 
 ## Required restart sequence
@@ -202,6 +205,6 @@ The user intends to change the repository to public. After that transition, the 
 3. Treat #678 mathematics as frozen/archived.
 4. Do not start S2 until the S1 persistent-artifact integration gate closes.
 5. If the repository is still private and Actions remains billing-blocked, do not infer a proof failure and do not weaken the gate.
-6. Resolve the project-license decision and have the user perform the intended public-visibility switch.
+6. The project-license gate is closed on Apache-2.0; have the user perform the intended public-visibility switch.
 7. After public transition, review GitHub Actions/branch protection settings, run the corrected canonical PR gate, inspect the logged checkout commit, merge only if green, then verify `main`.
 8. **Do not select, activate, resume, research, or formalize another Erdős problem without explicit user authorization.**
