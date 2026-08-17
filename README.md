@@ -20,35 +20,32 @@ S1 أنجزت executable differential verification مقابل formalization Aris
 
 ### S2 — ACTIVE على #678 فقط
 
-**S2a — dependency surface: COMPLETE / CLOSED.** النتيجة الحاكمة: raw module/file metrics حساسة لتعريف dependency/ownership boundary، ولذلك لا يجوز تحويل `46 modules vs 1 artifact module` إلى حكم على proof complexity أو architecture quality.
+**S2a — dependency surface: COMPLETE / CLOSED.** النتيجة الحاكمة: raw module/file metrics حساسة لتعريف dependency/ownership boundary، ولذلك لا يجوز تحويل raw module/file counts إلى حكم على proof complexity أو architecture quality.
 
-**S2b — controlled build behavior: COMPLETE / CLOSED.** الجولة المعتمدة run `32053575928` نجحت في 6/6 paired replicates تحت نفس Lean/Mathlib/PNT+ والـrunner image. لا يوجد wall-clock winner ثابت: cold medians `159.575 s` داخليًا مقابل `156.280 s` للمقارن، والفروق الزوجية تتغير إشارتها بين `-10.68` و`+11.73 s`. لكن resource profile مختلف: median total CPU `241.155 s` مقابل `486.475 s`، وmax RSS `7,183,766` مقابل `7,828,930 KiB`. هذه execution-profile evidence وليست ادعاء تفوق عام. PR #30 والـclosure PR #31 اجتازتا exact-head/post-merge verification؛ آخر closure merge هو `cc55073fceddb51e3fa2c1854f797fe989523985` وrun `32060186755` نجحت بـ`No update necessary` و8808 jobs.
+**S2b — controlled build behavior: COMPLETE / CLOSED.** الجولة المعتمدة run `32053575928` نجحت في 6/6 paired replicates تحت نفس Lean/Mathlib/PNT+ والـrunner image. لا يوجد wall-clock winner ثابت: cold medians `159.575 s` داخليًا مقابل `156.280 s` للمقارن، والفروق الزوجية تتغير إشارتها بين `-10.68` و`+11.73 s`. لكن resource profile مختلف: median total CPU `241.155 s` مقابل `486.475 s`، وmax RSS `7,183,766` مقابل `7,828,930 KiB`. هذه execution-profile evidence وليست ادعاء تفوق عام. S2b أُغلقت بعد PR #30 وclosure PR #31.
 
-**S2c — repair locality: COMPLETE / INTEGRATED / POST-MERGE VERIFIED; DOCUMENTATION CLOSURE IN PROGRESS.**
+**S2c — repair locality: COMPLETE / INTEGRATED / CLOSURE VERIFIED.**
 
 قبل أي observation جُمّد البروتوكول والـmutation manifest في commit `a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1`. ثم نُفذت ثلاث matched declaration-rename mutations غير دلالية عند طبقات R1 analytic closure وR2 eventual construction وR3 strong endpoint في run `32062501296`, job `95486770197`, apparatus commit `00d340d3ccdc13418615b6526e9b736d9f9e03e7`.
 
-كل الحالات الست artifact×mutation:
+كل الحالات الست artifact×mutation أحدثت الكسر المرجعي المتوقع ثم عادت إلى green بعد identifier-only repair، دون لمس أي third-party/dependency file. النتيجة كانت **مختلطة وتعتمد على طبقة الواجهة**: R1/R2 أوسع داخليًا من حيث static references، بينما R3 تنعكس عند production surface. لذلك لا تدعم S2c ادعاء repair-locality أو maintainability superiority لأي طرف.
 
-- أحدثت compile break متوقعًا؛
-- أُصلحت فقط بتبديل downstream identifier references؛
-- عادت إلى green؛
-- لم تلمس أي third-party/dependency file؛
-- وفي الحالات الداخلية الثلاث عاد `mk_all` إلى `No update necessary` والبناء الكامل إلى **8808 jobs**.
+PR #32 دمجت الدليل الموضوعي، ثم closure PR #33 أغلقت المزامنة رسميًا. final head للـclosure كان `3439b58f1e05e2cb21ee1c9374857eb3b4197163` واجتاز run `32070637072`, job `95512851767`. دُمجت closure كـ`47b85a2f2f5be6e6e4ede2b600723b8616aeeee4`، وهذا الـcommit نفسه اجتاز post-merge run `32071325525`, job `95514986697`, مع `verified_commit` مطابق، `No update necessary`، وبناء **8808 jobs**.
 
-| matched layer | internal repaired refs | comparator repaired refs |
-|---|---:|---:|
-| R1 analytic closure | 3 = 2 production + 1 verification | 1 production |
-| R2 eventual construction | 2 = 1 production + 1 verification | 1 production |
-| R3 strong endpoint | 2 verification, **0 production** | 3 production |
+**S2d — semantic/index mutation resistance: PREDECLARED / NOT EXECUTED.**
 
-النتيجة **مختلطة وتعتمد على طبقة الواجهة**: R1/R2 أوسع داخليًا من حيث static references، بينما R3 تنعكس عند production surface. لذلك لا تدعم S2c ادعاء أن أحد التصميمين يمتلك repair locality أفضل بصورة عامة. كما أن مجموع references الخام (`7` داخليًا مقابل `5`) ليس maintainability metric؛ الاختبارات لدينا تضيف API coupling متعمدًا، والمقارن يجمع معظم البرهان في ملف واحد.
+S2d تنطلق من الخطأ التاريخي الذي عامل `M(t,k+1)` كما لو كانت كتلته `[t,t+k]` بدل `[t+1,t+k+1]`. جُمّد تصميم ثلاث perturbations صغيرة، type-correct، ومتكافئة دلاليًا قدر الإمكان بين artifact الداخلي والمقارن:
 
-الـartifact ID `9299556049`، وSHA-256 المبلغ من GitHub والمعاد حسابه بعد التنزيل هو نفسه: `0369ec66c689572307660765b0c84cd86b6339f4f4d26a788c560ca11f7b7f4b`. التفاصيل في `problems/678/S2_REPAIR_LOCALITY_BASELINE.md/.json`.
+1. `I1` — shift لبداية الكتلة القانونية خطوة إلى اليسار مع الحفاظ على الطول؛
+2. `I2` — حذف الحد الأخير من الكتلة الأطول ذات `k+1` حدًا عند strong endpoint؛
+3. `I3` — تشديد شرط الفصل من `n+k≤m` إلى `n+(k+1)≤m` كـsemantic-survival control يختبر الفرق بين proof checking وstatement fidelity.
 
-PR #32 final head `7471370081dece8ac99ec3888636d7d9cc0fa78f` اجتاز canonical run `32065778293` مع `No update necessary` وبناء **8808 jobs**، ثم دُمج كـ`bf54f5eb16e477d1b41b336e68ce82a729c98912`. نفس merge commit اجتاز post-merge run `32067478680`, job `95502840936`, مع exact `verified_commit`, `No update necessary`, و**8808 jobs**.
+البروتوكول والـmanifest هما:
 
-**S2d — semantic/index mutation resistance: NOT STARTED.** سيبقى محجوبًا حتى يمر إغلاق S2c التوثيقي الحالي عبر exact-head CI والدمج والتحقق بعد الدمج.
+- `problems/678/S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md`;
+- `problems/678/S2_SEMANTIC_INDEX_MUTATIONS.yaml`.
+
+**لم يُنشأ harness ولم تُنفذ أي mutation.** لن يسمح البروتوكول بذلك إلا بعد أن تمر predeclaration الحالية عبر exact-head canonical CI، ثم الدمج، ثم post-merge verification على exact `main` commit. بعد ذلك فقط تبدأ الملاحظات الست المجمدة.
 
 ### Public artifact
 
@@ -61,7 +58,8 @@ PR #32 final head `7471370081dece8ac99ec3888636d7d9cc0fa78f` اجتاز canonica
 - `RESEARCH_STATE_PROTOCOL.md` — بوابات المراحل؛
 - `problems/678/PUBLICATION_AND_UPSTREAM_ROADMAP.md` — خارطة القيمة العلمية؛
 - `problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml` — سجل الأدلة؛
-- `problems/678/S2_REPAIR_LOCALITY_PROTOCOL.md` و`S2_REPAIR_LOCALITY_MUTATIONS.yaml` — تعريف S2c المجمد قبل التنفيذ.
+- `problems/678/S2_REPAIR_LOCALITY_PROTOCOL.md` و`S2_REPAIR_LOCALITY_MUTATIONS.yaml` — تعريف S2c؛
+- `problems/678/S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md` و`S2_SEMANTIC_INDEX_MUTATIONS.yaml` — تعريف S2d المجمد قبل التنفيذ.
 
 ## بوابة الانتقال
 
