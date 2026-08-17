@@ -10,14 +10,18 @@
 > - E3 strong Cambie exit: `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891` — **SUCCESS**, **8804 jobs**.
 > - E4 mathematical exit: `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757` — **SUCCESS**, **8806 jobs**.
 > - Final synchronized E4 head: `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`, run `31977861568` — **SUCCESS**, `No update necessary`, **8806 jobs**.
-> - Integration: PR #17 merged into `main` as `8fd1b20541ac7782f52429db3a2cc4c887547372` on 2026-08-17.
-> - Post-merge `main` verification: run `32011189766` — **SUCCESS**, `No update necessary`, full build **8806 jobs**.
+> - Mathematical integration: PR #17 merged into `main` as `8fd1b20541ac7782f52429db3a2cc4c887547372` on 2026-08-17.
+> - Post-merge mathematical verification: run `32011189766` — **SUCCESS**, `No update necessary`, full build **8806 jobs**.
+> - Archival documentation synchronization: PR #18 exact head `4c5a305c8756c5dc0d8e5545825a87d48a438965`, run `32013917788` — **SUCCESS**; merged into `main` as `755c9601816fbbd7e2181a2e56c34f28667ceb67`.
+>
+> **User gate:** per explicit instruction on 2026-08-17, no other Erdős problem may be selected, activated, resumed, researched, or formalized until the user explicitly authorizes the transition.
 
 This file is the authoritative operational restart checkpoint. Mathematical credit comes from exact reachable Lean builds, not from source presence or GitHub metadata alone.
 
 ## Global operating rules
 
 - `DEC-011` supersedes `DEC-004`: `main` is the stable integration branch; substantive work uses a dedicated branch and pull request.
+- `DEC-012` requires explicit user authorization before any transition from archived #678 to another Erdős problem.
 - Do not merge a mathematical change unless canonical Lean CI is green for the credited pull-request head.
 - State documents must agree with the reachable Lean graph and credited CI evidence.
 - Do not treat a file name, source presence, GitHub metadata, or an AI-generated argument as proof by itself.
@@ -31,7 +35,7 @@ This file is the authoritative operational restart checkpoint. Mathematical cred
 ```yaml
 current_problem: 678
 current_phase: archived
-current_stage: complete-integrated-main-verified
+current_stage: complete-integrated-main-verified-awaiting-user-authorization
 current_mode: external-proof-reconstruction
 blind_mode: false
 reference_solution_accessed: true
@@ -43,7 +47,7 @@ independent_attempt_status: rejected
 reference_proof: Cambie-2024
 reference_understanding_status: reconstructed-through-final-index-translation
 
-current_target: select-next-active-benchmark
+current_target: await-explicit-user-authorization-before-any-new-problem
 small_prime_claim5_status: machine-checked
 full_claim5_status: machine-checked
 claim4_status: machine-checked
@@ -57,10 +61,16 @@ main_integration_commit: 8fd1b20541ac7782f52429db3a2cc4c887547372
 main_postmerge_ci_run: 32011189766
 main_postmerge_ci_status: success
 main_postmerge_build_jobs: 8806
+archival_docs_pr: 18
+archival_docs_pr_head: 4c5a305c8756c5dc0d8e5545825a87d48a438965
+archival_docs_pr_ci_run: 32013917788
+archival_docs_pr_ci_status: success
+archival_docs_merge_commit: 755c9601816fbbd7e2181a2e56c34f28667ceb67
 build_graph_audit: mk-all-check-passed-postmerge-main
 ci_blocker: none
 phase_e_gate: closed
-next_action: select the next active benchmark; treat remaining #678 diagnostic PR or branch cleanup as non-blocking hygiene
+user_transition_gate: explicit-authorization-required
+next_action: await explicit user authorization; do not select, activate, resume, research, or formalize another Erdős problem
 ```
 
 ## Trusted machine-checked result for Erdős #678
@@ -82,7 +92,7 @@ Machine-checked components include:
 
 ### E1 — quantitative LCM-ratio estimate — PASSED
 
-The graph proves exact interval-LCM divisibility, cancellation-safe cross multiplication, product comparison, and strict transfer from product inequalities to LCM inequalities.
+The graph proves exact interval-LCM divisibility into the interval product, cancellation-safe cross multiplication, product comparison, and strict transfer from product inequalities to LCM inequalities.
 
 E1 exit: `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909`.
 
@@ -121,9 +131,11 @@ Final synchronized E4 head: `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`, run `319
 
 PR #17, `agent/erdos678-e4-index-translation-20260816` → `main`, was merged on 2026-08-17 as merge commit `8fd1b20541ac7782f52429db3a2cc4c887547372`.
 
-The exact merged `main` commit then passed Lean Verification run `32011189766`: `lake exe mk_all --check` reported `No update necessary`, and the full reachable graph completed successfully in **8806 jobs**. The build reached the PNT bridge, `CambieStrongTheorem`, `Erdos678Final`, its regression module, and the top-level `Formalization` target.
+The exact mathematical merge commit then passed Lean Verification run `32011189766`: `lake exe mk_all --check` reported `No update necessary`, and the full reachable graph completed successfully in **8806 jobs**. The build reached the PNT bridge, `CambieStrongTheorem`, `Erdos678Final`, its regression module, and the top-level `Formalization` target.
 
-The previous stacked checkpoint PRs #7–#12 and #14–#16 were closed after integration because their content is preserved in the merged history. PR #13 is a diagnostic-only compatibility probe and is non-blocking; it was never intended as the integration vehicle.
+PR #18 synchronized the archival documentation only. Its exact head `4c5a305c8756c5dc0d8e5545825a87d48a438965` passed Lean Verification run `32013917788` and was merged into `main` as `755c9601816fbbd7e2181a2e56c34f28667ceb67`.
+
+The previous stacked checkpoint PRs #7–#12 and #14–#16 were closed after integration because their content is preserved in the merged history. PR #13, the diagnostic-only compatibility probe, was also closed after archival cleanup.
 
 **Archival classification:** #678 is complete. There is no remaining mathematical, analytic, CI, or integration gate for this benchmark.
 
@@ -142,7 +154,8 @@ No mathematical layer should be reopened unless a concrete regression is found.
 | E3 strong Cambie exit | `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94` | `31975821891` | SUCCESS, 8804 jobs |
 | E4 mathematical exit | `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941` | `31976903757` | SUCCESS, 8806 jobs |
 | E4 synchronized documentation head | `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f` | `31977861568` | SUCCESS, 8806 jobs |
-| merged `main` | `8fd1b20541ac7782f52429db3a2cc4c887547372` | `32011189766` | SUCCESS, `No update necessary`, 8806 jobs |
+| mathematical merge on `main` | `8fd1b20541ac7782f52429db3a2cc4c887547372` | `32011189766` | SUCCESS, `No update necessary`, 8806 jobs |
+| archival documentation PR #18 | `4c5a305c8756c5dc0d8e5545825a87d48a438965` | `32013917788` | SUCCESS |
 
 Red intermediate runs are diagnostic only and do not supersede later exact-head green checkpoints.
 
@@ -157,12 +170,12 @@ Still deliberately not claimed:
 
 ## Required restart sequence
 
-1. Verify the exact head of `main` and its latest Lean CI conclusion.
-2. Read this file before choosing a new benchmark.
+1. Verify the exact head of `main` and the latest relevant Lean CI evidence.
+2. Read this file before taking any new project action.
 3. Treat #678 as archived; do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
-4. Treat remaining diagnostic PR or branch cleanup as non-mathematical hygiene.
-5. Preserve the pinned PNT+ revision and all positive/negative regressions.
-6. Select the next active benchmark using the repository research-state protocol.
+4. Preserve the pinned PNT+ revision and all positive/negative regressions.
+5. **Stop here unless the user explicitly authorizes moving to another Erdős problem.**
+6. Only after explicit authorization may a new benchmark be selected or resumed under the repository research-state protocol.
 
 ## Completed benchmark outcomes
 
