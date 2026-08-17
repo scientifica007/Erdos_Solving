@@ -2,112 +2,84 @@
 
 ## Purpose
 
-This is an operational publication-readiness audit for the #678 scientific dossier. It records license metadata that affects how a public artifact should be packaged.
+This operational audit records licensing/provenance decisions affecting the public #678 artifact. It is not legal advice.
 
-It is not a legal opinion. Repository owners/maintainers remain responsible for licensing choices and, where needed, obtaining permission or clarification from upstream authors.
+## Current status — 2026-08-17
 
-## Current observations — 2026-08-17
+### Project-owned material — CLOSED
 
-### 1. This repository: `scientifica007/Erdos_Solving`
+The repository owner selected **Apache License 2.0** for project-owned material. The full standard license text is committed at root `LICENSE` and was merged to `main` via license-only PR #26 at
 
-- visibility at this checkpoint: private;
-- user authorization: **public-visibility preparation and intended public transition explicitly authorized**;
-- actual visibility transition: not yet executed at this checkpoint;
-- project-owned license: **Apache License 2.0 (`Apache-2.0`) selected by the repository owner and committed in root `LICENSE`**;
-- scope: project-owned code, documentation, and other repository material are Apache-2.0 unless a file or third-party notice states otherwise.
+`87cf560451ef5aa4714069d52a3851c1f8547f70`.
 
-Publication implication:
+The repository is now public, and GitHub recognizes its license metadata as `Apache-2.0`.
 
-> The project-owned licensing gate is closed. Public release must still preserve third-party licenses/notices and the non-vendoring boundary for material whose redistribution rights are not established.
+Unless a file or third-party notice states otherwise, project-owned code, documentation, configuration, and research artifacts are distributed under Apache-2.0.
 
-### 2. `leanprover-community/mathlib4`
+### Mathlib
 
-GitHub reports:
-
-- license: Apache License 2.0 (`Apache-2.0`).
-
-The successful S1 common-environment experiment resolved Mathlib revision:
+`leanprover-community/mathlib4` reports Apache-2.0. The successful S1 experiment resolved Mathlib revision
 
 `db584cd6d46c92f209a44c0f1c829460d327499d`.
 
-Mathlib is consumed as a normal external package dependency and is not vendored by this project.
+Mathlib is consumed as an external dependency and is not vendored by this project.
 
-### 3. `AxiomMath/PrimeNumberTheoremAnd`
+### PrimeNumberTheoremAnd
 
-GitHub reports:
-
-- license: Apache License 2.0 (`Apache-2.0`).
-
-Our formalization consumes this project as a pinned Git dependency rather than copying its source into the #678 modules.
-
-Publication packaging preserves the exact dependency revision:
+`AxiomMath/PrimeNumberTheoremAnd` reports Apache-2.0. The formalization consumes it as a pinned Git dependency at
 
 `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
 
-### 4. `google-deepmind/formal-conjectures`
+### Formal Conjectures
 
-GitHub reports:
+`google-deepmind/formal-conjectures` reports Apache-2.0. The project uses its #678 statement as a reference/normalization target; redistribution of the project is unnecessary for the internal bridge.
 
-- license: Apache License 2.0 (`Apache-2.0`).
-
-Our scientific comparison uses its #678 statement as a reference/normalization target. We do not need to redistribute the project to state or machine-check our internal bridge.
-
-### 5. Public comparator: `plby/lean-proofs`
+### Public comparator: `plby/lean-proofs`
 
 At the audited comparison state:
 
 - visibility: public;
-- GitHub repository license metadata: none detected;
-- no root `LICENSE` file was found by the audit at the pinned comparator state;
-- the #678 source is attributed to Aristotle and Boris Alexeev as formal authors and Stijn Cambie as mathematical author.
+- no repository license metadata was detected;
+- no root `LICENSE` file was found at the audited pin;
+- #678 source is attributed to Aristotle and Boris Alexeev as formal authors and Stijn Cambie as mathematical author.
 
-Publication implication:
+Therefore the comparator remains **external and non-vendored**. The S1 reproduction model fetches an immutable commit/blob ephemerally, verifies identity, compiles it unchanged, and does not persist comparator source in this repository.
 
-> Do not vendor or redistribute the comparator source inside our artifact solely because the repository is public. Keep the current reproduction model—fetch a pinned external commit/blob at experiment time—unless an explicit license or permission to redistribute is established.
+If a future artifact needs a vendored comparator snapshot, first establish applicable redistribution rights or obtain clarification/permission from its maintainers.
 
-The successful S1 experiment fetched the public source ephemerally, verified its commit/blob, compiled it unchanged, and did not persist it in this repository.
+## Public artifact boundary
 
-If a future paper/artifact needs a vendored comparator snapshot, first request licensing/redistribution clarification from the comparator maintainers or otherwise establish the applicable license.
+The current packaging rule is:
 
-## Recommended artifact boundary
+1. distribute project-owned material under Apache-2.0;
+2. preserve third-party notices and independent licenses;
+3. pin external dependencies by immutable revision;
+4. fetch the public comparator ephemerally instead of vendoring it;
+5. verify comparator commit/blob before compilation;
+6. cite mathematical and formal authors explicitly;
+7. maintain root `THIRD_PARTY_NOTICES.md`.
 
-For the first public #678 artifact, use this packaging model:
+This separates reproducibility from redistribution: comparison can be reproducible from immutable external pins without copying source whose redistribution status is unclear.
 
-1. distribute project-owned material under root Apache-2.0 plus normal package-manager dependencies;
-2. pin external repositories by immutable commit/revision;
-3. fetch the public comparator ephemerally in reproduction scripts instead of vendoring it;
-4. verify comparator commit and file blob before compilation;
-5. cite mathematical and formal authors explicitly;
-6. maintain root `THIRD_PARTY_NOTICES.md` describing dependencies and comparison inputs;
-7. preserve file-specific or third-party license notices wherever they apply.
+## Checklist
 
-This keeps reproducibility and redistribution separate: a comparison can be fully reproducible from an external pin without copying third-party source into our artifact.
-
-## License/provenance checklist before public release
-
-- [x] User explicitly authorizes preparation for public release / visibility change.
-- [ ] Repository visibility actually changed to public.
+- [x] User authorized public-release preparation and public transition.
+- [x] Repository visibility changed to public.
 - [x] Project-owned license chosen: Apache-2.0.
-- [x] Root `LICENSE` committed with the Apache License 2.0 text.
-- [x] Project-owned documentation/data use the same Apache-2.0 default unless otherwise noted.
+- [x] Root `LICENSE` committed and merged to `main`.
+- [x] GitHub recognizes repository license as Apache-2.0.
 - [x] `THIRD_PARTY_NOTICES.md` created.
-- [x] Mathlib repository currently reports Apache-2.0.
-- [x] PNT+ repository currently reports Apache-2.0.
+- [x] Mathlib currently reports Apache-2.0.
+- [x] PNT+ currently reports Apache-2.0.
 - [x] Formal Conjectures currently reports Apache-2.0.
-- [x] Public comparator is consumed by immutable pin rather than vendored.
-- [ ] Comparator redistribution rights clarified before any vendoring.
-- [ ] Paper bibliography/provenance credits Cambie, Aristotle, Alexeev, PNT+ authors/maintainers, and relevant benchmark projects appropriately.
-
-## Related public-release audit
-
-See `problems/678/PUBLIC_RELEASE_AUDIT_2026-08-17.md` for the broader secret/workflow/repository-exposure preflight and controlled public-transition sequence.
+- [x] Public comparator remains an immutable external fetch rather than vendored.
+- [ ] Comparator redistribution rights must be clarified before any future vendoring.
+- [ ] Final paper bibliography/provenance must credit Cambie, Aristotle, Alexeev, PNT+ authors/maintainers, and relevant benchmark projects as appropriate.
 
 ## Scientific-process value
 
-This audit is part of the broader AI-assisted-production lesson from #678:
-
-> A research artifact is not publication-ready merely because the theorem is machine-checked. Reproducibility, provenance, licensing, attribution, redistribution boundaries, secret hygiene, and public-CI hardening are separate closure obligations.
+A theorem being machine-checked is not sufficient for publication readiness. Reproducibility, provenance, licensing, attribution, redistribution boundaries, secret hygiene, and CI execution provenance are separate closure obligations.
 
 ## Scope gate
 
-This audit concerns publication readiness of archived #678 only. It does not authorize work on another Erdős problem. `DEC-012` remains in force.
+This audit concerns archived #678 only. It does not authorize work on another Erdős problem. `DEC-012` remains in force.
