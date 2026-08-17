@@ -1,6 +1,6 @@
 # Erdős Problem #678 — Machine-Checked Cambie Reconstruction
 
-> **Current repository status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED INTO `main`.**
+> **Current repository status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 > The earlier independent attempt remains rejected. The completed result is an external-proof reconstruction and independent Lean reimplementation of Cambie (2024). The canonical operational sources are `PROJECT_STATE.md` and `LEAN_FORMALIZATION_ROADMAP.md`.
 
 ## Canonical statement
@@ -35,18 +35,21 @@ Final synchronized E4 head:
 
 - head `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`;
 - canonical run `31977861568` — **SUCCESS**;
+- `lake exe mk_all --check` = `No update necessary`;
 - full build = **8806 jobs**.
 
-Integration:
+Integration and post-merge verification:
 
 - PR #17 merged into `main` on 2026-08-17;
 - merge commit `8fd1b20541ac7782f52429db3a2cc4c887547372`;
-- post-merge Lean Verification run `32011189766` was started on that exact merge commit and must be checked for its final conclusion before archival credit.
+- post-merge Lean Verification run `32011189766` — **SUCCESS**;
+- `lake exe mk_all --check` = `No update necessary`;
+- full `lake build` = **8806 jobs**.
 
 ## Exact project classification
 
 - External problem status: proved.
-- Repository reconstruction status: **proved / machine-checked / integrated into `main`**.
+- Repository reconstruction status: **proved / machine-checked / integrated / post-merge verified / archived**.
 - Independent proof attempt in this repository: rejected.
 - Valid concrete witness: `M(36,8) > M(47,9)` — machine-checked.
 - Rejected candidate: `(495,504,8)` — machine-refuted and retained as a negative regression.
@@ -57,6 +60,7 @@ Integration:
 - Phase E3 strong eventual Cambie theorem: passed.
 - Phase E4 canonical index translation and infinitude: passed.
 - Integration into `main`: passed through PR #17.
+- Post-merge canonical verification: passed through run `32011189766`.
 
 ## Proof architecture live in Lean
 
@@ -82,13 +86,7 @@ Integration:
 
 No opaque prime-density hypothesis is left in the theorem.
 
-The analytic input is the pinned package
-
-`AxiomMath/PrimeNumberTheoremAnd`
-
-at revision
-
-`2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
+The analytic input is the pinned package `AxiomMath/PrimeNumberTheoremAnd` at revision `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
 
 Its kernel-checked `prime_between` consequence is converted into the natural-number `Claim4RelativePrimeProvider`, then into five disjoint additive prime strips with denominator `320*C`.
 
@@ -116,13 +114,15 @@ This is false because `M(t*n,k)` is the LCM of `tn+1,...,tn+k`, not of `t(n+1),.
 
 Those failures remain recorded as provenance and are not reclassified by the successful Cambie reconstruction.
 
-## Current next action
+## Archival disposition
 
-No mathematical phase remains open and integration is complete. Confirm the post-merge `main` CI. If green, archive #678 as a completed benchmark and move project attention to the next selected problem. Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
+No mathematical phase remains open. Integration and post-merge verification are complete. **#678 is archived as a completed benchmark.**
+
+The next project action is to select a new active problem. Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
 
 ## Main references inside this folder
 
 - `CAMBIE_PROOF_ANALYSIS.md` — mathematical architecture and Claim 4 audit.
-- `LEAN_FORMALIZATION_ROADMAP.md` — canonical execution roadmap, now closed and integrated.
+- `LEAN_FORMALIZATION_ROADMAP.md` — canonical execution roadmap, now closed, integrated, verified, and archived.
 - `FORMALIZATION_CORRECTION_2026-08-14.md` — rejection of the false earlier construction.
 - `LEAN_TEST_PLAN.md` — superseded historical plan; not an execution source.
