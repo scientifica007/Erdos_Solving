@@ -1,5 +1,9 @@
 import Formalization.Erdos678.ExternalStatementBridge
 
+/-!
+Regression checks and axiom audits for the Erdős #678 external-statement bridge.
+-/
+
 namespace Erdos678
 
 example : intervalFinset 37 8 = Finset.Ioc 36 44 := by
