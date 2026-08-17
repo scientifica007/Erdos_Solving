@@ -168,14 +168,14 @@ The public artifact should include:
 - `DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml`;
 - `experiments/run_public_comparator_common_env.sh`;
 - `PUBLIC_RELEASE_AUDIT_2026-08-17.md`;
+- root `LICENSE` with **Apache License 2.0** for project-owned material unless otherwise noted;
 - root `THIRD_PARTY_NOTICES.md`;
-- project-owned root license selected by the repository owner;
 - dependency/metric/mutation results once S2 exists;
 - machine-readable process-event data once S4 exists;
 - provenance and limitations statements;
 - licenses/notices for all redistributed material.
 
-The user has explicitly authorized preparation for and intends a public visibility transition. At the current checkpoint the repository is still private, and the project-owned root license remains an owner decision. No public release is considered scientifically closed until the post-transition exact-head PR check and post-merge `main` verification succeed.
+The owner has selected and committed Apache-2.0 for project-owned material. The user has explicitly authorized preparation for and intends a public visibility transition. At the current checkpoint the repository is still private. No public release is considered scientifically closed until the post-transition exact-head PR check and post-merge `main` verification succeed.
 
 ---
 
@@ -244,7 +244,8 @@ The scientific dossier now contains:
 14. `FORMALIZATION_CORRECTION_2026-08-14.md`;
 15. `LEAN_FORMALIZATION_ROADMAP.md`;
 16. root `LESSONS_LEARNED_678_ADDENDUM.md`;
-17. root `THIRD_PARTY_NOTICES.md`.
+17. root `LICENSE`;
+18. root `THIRD_PARTY_NOTICES.md`.
 
 ---
 
@@ -258,17 +259,16 @@ Initial scientific positioning and comparison anchors are frozen.
 
 **Scientific experiment complete:** run `32028006457` successfully built the internal bridge/canonical graph and compiled the pinned current public comparator source unchanged in the same pinned environment, with matched selected-endpoint axiom footprints.
 
-**Persistent-artifact integration pending:** the active S1 branch includes semantic consolidation, execution-provenance correction, public-CI hardening, third-party notices, and the public-release preflight.
+**Persistent-artifact integration pending:** the active S1 branch includes semantic consolidation, execution-provenance correction, public-CI hardening, third-party notices, Apache-2.0 project licensing, and the public-release preflight.
 
 While the repository remains private, new GitHub Actions jobs cannot start because of the account billing/spending condition. The user has chosen public visibility as the intended resolution rather than weakening the verification gate.
 
 S1 closes only when:
 
-1. the repository owner chooses the project-owned root license;
-2. the user changes the repository to public;
-3. GitHub Actions/branch protections are reviewed after the transition;
-4. the actual final S1 PR head passes the corrected commit-explicit canonical gate;
-5. the merged `main` head passes post-merge verification.
+1. the user changes the repository to public;
+2. GitHub Actions/branch protections are reviewed after the transition;
+3. the actual final S1 PR head passes the corrected commit-explicit canonical gate;
+4. the merged `main` head passes post-merge verification.
 
 ### S2 — metric and mutation suite — NOT STARTED
 
