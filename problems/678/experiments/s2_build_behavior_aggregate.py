@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import re
 import statistics
 import sys
 from pathlib import Path
@@ -25,6 +26,7 @@ EXPECTED_LEAN = "4.33.0"
 EXPECTED_PNT = "2667e414c38e5a5dc9aa1946f16f13001e5cd3ed"
 EXPECTED_MATHLIB_INPUT = "v4.33.0"
 EXPECTED_SCOPE = "artifact-owned-cold-and-warm-lake-build-behavior-common-environment"
+RUNNER_VERSION_RE = re.compile(r"\d+\.\d+\.\d+")
 
 
 class AggregateError(RuntimeError):
@@ -47,8 +49,7 @@ def sample_stats(values: list[float]) -> dict[str, float]:
     if len(values) != 6:
         raise AggregateError(f"expected 6 observations, got {len(values)}")
     med = statistics.median(values)
-    abs_dev = [abs(x - med) for x in values]
-    mad = statistics.median(abs_dev)
+    mad = statistics.median(abs(x - med) for x in values)
     q1, _, q3 = statistics.quantiles(values, n=4, method="inclusive")
     return {
         "n": 6,
@@ -79,21 +80,25 @@ def index_measurements(data: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return indexed
 
 
-def validate(results: list[dict[str, Any]]) -> tuple[str, list[dict[str, Any]]]:
+def validate(results: list[dict[str, Any]]) -> tuple[str, list[dict[str, Any]], dict[str, str]]:
     if len(results) != 6:
         raise AggregateError(f"expected exactly six result files, got {len(results)}")
 
     by_rep: dict[int, dict[str, Any]] = {}
     commits: set[str] = set()
+    runner_versions: set[str] = set()
+    image_oses: set[str] = set()
+    image_versions: set[str] = set()
+    mathlib_resolved: set[str] = set()
+
     for data in results:
         rep = int(data["replicate"])
-        if rep in by_rep:
-            raise AggregateError(f"duplicate replicate {rep}")
-        if rep not in EXPECTED_REPLICATES:
-            raise AggregateError(f"unexpected replicate {rep}")
-        if data.get("order_label") != EXPECTED_REPLICATES[rep]:
+        if rep in by_rep or rep not in EXPECTED_REPLICATES:
+            raise AggregateError(f"invalid/duplicate replicate {rep}")
+        expected_label = EXPECTED_REPLICATES[rep]
+        if data.get("order_label") != expected_label:
             raise AggregateError(f"order mismatch for replicate {rep}")
-        expected_order = ["internal", "comparator"] if EXPECTED_REPLICATES[rep] == "internal-first" else ["comparator", "internal"]
+        expected_order = ["internal", "comparator"] if expected_label == "internal-first" else ["comparator", "internal"]
         if data.get("order") != expected_order:
             raise AggregateError(f"artifact order mismatch for replicate {rep}")
 
@@ -109,24 +114,53 @@ def validate(results: list[dict[str, Any]]) -> tuple[str, list[dict[str, Any]]]:
         if env.get("pnt_revision") != EXPECTED_PNT:
             raise AggregateError(f"PNT mismatch in replicate {rep}")
         if env.get("mathlib_input_revision") != EXPECTED_MATHLIB_INPUT:
-            raise AggregateError(f"Mathlib mismatch in replicate {rep}")
+            raise AggregateError(f"Mathlib input mismatch in replicate {rep}")
+
+        runner_version = str(env.get("runner_version", ""))
+        image_os = str(env.get("runner_image_os", ""))
+        image_version = str(env.get("runner_image_version", ""))
+        resolved_mathlib = str(env.get("mathlib_resolved_revision", ""))
+        if not RUNNER_VERSION_RE.fullmatch(runner_version):
+            raise AggregateError(f"missing/invalid runner version in replicate {rep}: {runner_version!r}")
+        if not image_os or image_os == "unknown" or not image_version or image_version == "unknown":
+            raise AggregateError(f"missing runner image identity in replicate {rep}")
+        if not resolved_mathlib or resolved_mathlib == "unknown":
+            raise AggregateError(f"missing resolved Mathlib identity in replicate {rep}")
 
         index_measurements(data)
         commits.add(data["internal_commit"])
+        runner_versions.add(runner_version)
+        image_oses.add(image_os)
+        image_versions.add(image_version)
+        mathlib_resolved.add(resolved_mathlib)
         by_rep[rep] = data
 
     if set(by_rep) != set(EXPECTED_REPLICATES):
         raise AggregateError(f"replicate set mismatch: {sorted(by_rep)}")
     if len(commits) != 1:
         raise AggregateError(f"mixed apparatus commits: {sorted(commits)}")
-    return next(iter(commits)), [by_rep[i] for i in range(1, 7)]
+    if len(runner_versions) != 1:
+        raise AggregateError(f"mixed runner versions: {sorted(runner_versions)}")
+    if len(image_oses) != 1 or len(image_versions) != 1:
+        raise AggregateError(f"mixed runner images: os={sorted(image_oses)} versions={sorted(image_versions)}")
+    if len(mathlib_resolved) != 1:
+        raise AggregateError(f"mixed resolved Mathlib revisions: {sorted(mathlib_resolved)}")
+
+    common_environment = {
+        "runner_version": next(iter(runner_versions)),
+        "runner_image_os": next(iter(image_oses)),
+        "runner_image_version": next(iter(image_versions)),
+        "mathlib_resolved_revision": next(iter(mathlib_resolved)),
+    }
+    return next(iter(commits)), [by_rep[i] for i in range(1, 7)], common_environment
 
 
 def aggregate(results: list[dict[str, Any]]) -> dict[str, Any]:
-    commit, ordered = validate(results)
-    series: dict[str, dict[str, dict[str, list[float]]]] = {
-        a: {c: {m: [] for m in ("wall_seconds", "user_seconds", "sys_seconds", "max_rss_kib", "lake_built_progress_lines")} for c in ("cold", "warm")}
-        for a in ("internal", "comparator")
+    commit, ordered, common_environment = validate(results)
+    metric_names = ("wall_seconds", "user_seconds", "sys_seconds", "max_rss_kib", "lake_built_progress_lines")
+    series = {
+        artifact: {condition: {metric: [] for metric in metric_names} for condition in ("cold", "warm")}
+        for artifact in ("internal", "comparator")
     }
     observations: list[dict[str, Any]] = []
     paired: list[dict[str, float | int]] = []
@@ -137,19 +171,18 @@ def aggregate(results: list[dict[str, Any]]) -> dict[str, Any]:
         rep_record: dict[str, Any] = {
             "replicate": rep,
             "order": data["order_label"],
-            "runner_image_os": data["environment"].get("runner_image_os"),
-            "runner_image_version": data["environment"].get("runner_image_version"),
-            "runner_version": data["environment"].get("runner_version"),
+            "runner_name": data["environment"].get("runner_name"),
             "cpu_count": data["environment"].get("cpu_count"),
             "mem_total_kib": data["environment"].get("mem_total_kib"),
         }
         for artifact in ("internal", "comparator"):
             rep_record[artifact] = {}
             for condition in ("cold", "warm"):
-                m = idx[artifact][condition]
-                rep_record[artifact][condition] = {k: m[k] for k in series[artifact][condition]}
-                for metric in series[artifact][condition]:
-                    series[artifact][condition][metric].append(float(m[metric]))
+                measurement = idx[artifact][condition]
+                rep_record[artifact][condition] = {metric: measurement[metric] for metric in metric_names}
+                for metric in metric_names:
+                    series[artifact][condition][metric].append(float(measurement[metric]))
+
         icold = float(idx["internal"]["cold"]["wall_seconds"])
         ccold = float(idx["comparator"]["cold"]["wall_seconds"])
         paired.append({
@@ -159,20 +192,21 @@ def aggregate(results: list[dict[str, Any]]) -> dict[str, Any]:
         })
         observations.append(rep_record)
 
-    summaries: dict[str, Any] = {}
-    for artifact in ("internal", "comparator"):
-        summaries[artifact] = {}
-        for condition in ("cold", "warm"):
-            summaries[artifact][condition] = {
-                metric: sample_stats(values) for metric, values in series[artifact][condition].items()
-            }
+    summaries = {
+        artifact: {
+            condition: {metric: sample_stats(values) for metric, values in series[artifact][condition].items()}
+            for condition in ("cold", "warm")
+        }
+        for artifact in ("internal", "comparator")
+    }
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "metric_scope": EXPECTED_SCOPE,
         "apparatus_commit": commit,
         "replicate_count": 6,
         "orders": [EXPECTED_REPLICATES[i] for i in range(1, 7)],
+        "common_environment": common_environment,
         "observations": observations,
         "summaries": summaries,
         "paired_cold_wall": paired,
@@ -190,10 +224,12 @@ def f3(value: Any) -> str:
 
 
 def markdown(data: dict[str, Any]) -> str:
+    env = data["common_environment"]
     lines = [
         "# Erdős #678 — S2b controlled build-behavior baseline",
         "",
         f"Apparatus commit: `{data['apparatus_commit']}`",
+        f"Common runner software: `{env['runner_version']}`; image `{env['runner_image_os']}` / `{env['runner_image_version']}`; resolved Mathlib `{env['mathlib_resolved_revision']}`.",
         "",
         "## Six paired observations — wall seconds",
         "",
@@ -215,16 +251,16 @@ def markdown(data: dict[str, Any]) -> str:
     lines += ["", "## Predeclared wall-time summaries", "", "| artifact | condition | median | min | max | MAD | IQR |", "|---|---|---:|---:|---:|---:|---:|"]
     for artifact in ("internal", "comparator"):
         for condition in ("cold", "warm"):
-            s = data["summaries"][artifact][condition]["wall_seconds"]
+            summary = data["summaries"][artifact][condition]["wall_seconds"]
             lines.append(
-                f"| {artifact} | {condition} | {f3(s['median'])} | {f3(s['minimum'])} | {f3(s['maximum'])} | {f3(s['mad'])} | {f3(s['iqr'])} |"
+                f"| {artifact} | {condition} | {f3(summary['median'])} | {f3(summary['minimum'])} | {f3(summary['maximum'])} | {f3(summary['mad'])} | {f3(summary['iqr'])} |"
             )
 
     lines += [
         "",
         "## Interpretation boundary",
         "",
-        "These are descriptive paired observations under one pinned Lean/Mathlib/PNT+ environment on six fresh GitHub-hosted runners. Cold means artifact-owned generated outputs were removed after dependency preparation. Warm means an immediate unchanged rebuild of the same target. Warm time is therefore an incremental/no-change check, not compilation speed.",
+        "These are descriptive paired observations under one pinned Lean/Mathlib/PNT+ environment on six fresh GitHub-hosted runners sharing the recorded runner software/image identity. Cold means artifact-owned generated outputs were removed after dependency preparation. Warm means an immediate unchanged rebuild of the same target; it is therefore an incremental/no-change check, not compilation speed.",
         "",
         "This baseline alone does not establish general architecture superiority, proof complexity, maintainability, repair locality, or robustness across toolchains/machines/cache regimes.",
         "",
@@ -233,11 +269,11 @@ def markdown(data: dict[str, Any]) -> str:
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser()
-    p.add_argument("results", nargs="+", type=Path)
-    p.add_argument("--output-json", required=True, type=Path)
-    p.add_argument("--output-md", required=True, type=Path)
-    return p.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("results", nargs="+", type=Path)
+    parser.add_argument("--output-json", required=True, type=Path)
+    parser.add_argument("--output-md", required=True, type=Path)
+    return parser.parse_args()
 
 
 def main() -> int:
