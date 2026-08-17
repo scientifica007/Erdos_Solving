@@ -1,4 +1,4 @@
-schema_version: 3
+schema_version: 4
 snapshot_date: 2026-08-17
 scope: erdos-678-only
 
@@ -61,7 +61,7 @@ verified_main_history:
 
 s1_differential_verification:
   scientific_experiment_status: success
-  repository_integration_status: pending-ci-infrastructure
+  repository_integration_status: pending-public-transition-and-final-head-ci
   protocol: problems/678/DIFFERENTIAL_VERIFICATION_PROTOCOL.md
   narrative_result: problems/678/S1_DIFFERENTIAL_VERIFICATION_RESULT.md
   machine_evidence: problems/678/DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml
@@ -99,7 +99,7 @@ s1_differential_verification:
     final_authoritative_names:
       - Formalization.Erdos678.erdos678_valid_pair_lengths_unbounded
       - Formalization.Erdos678.erdos678_valid_pair_good_lengths_infinite
-    note: final PR22 head still requires corrected canonical CI after Actions billing is restored
+    note: final PR22 head still requires corrected canonical CI after public transition restores runnable Actions
   limitations:
     - no architecture superiority claim
     - no controlled performance comparison yet
@@ -125,6 +125,11 @@ external_comparator:
     source_header_mathlib_version: v4.33.0
     compiled_unchanged_in_internal_environment: true
     experiment_run: 32028006457
+  license_audit:
+    repository_visibility: public
+    github_repository_license_metadata: none-detected
+    vendored_into_project: false
+    reproduction_boundary: immutable-external-fetch-plus-blob-verification
   imports:
     - Mathlib
     - PrimeNumberTheoremAnd.Consequences
@@ -149,6 +154,7 @@ formal_conjectures:
   comparison_commit: 398958d3964d738886bd24433918c365df4a2aab
   file: FormalConjectures/ErdosProblems/678.lean
   status: research-solved
+  repository_license: Apache-2.0
   linked_formal_proof:
     repository: plby/lean-proofs
     commit: 68da20b96673899166e94638f5a7fffeb7231d35
@@ -159,7 +165,7 @@ formal_conjectures:
   internal_machine_checked_bridge: Formalization.Erdos678.erdos678_formalConjectures_eventual_nonempty
 
 verification_credit_audit:
-  status: correction-recorded-workflow-repaired-awaiting-runnable-ci
+  status: correction-recorded-workflow-hardened-awaiting-final-runnable-ci
   finding: pull-request-head-metadata-does-not-prove-literal-head-checkout
   audited_example:
     run: 32033822601
@@ -169,13 +175,45 @@ verification_credit_audit:
   workflow_repair:
     explicit_pr_head_checkout: true
     records_git_rev_parse_head: true
+    permissions: contents-read
+    persist_credentials: false
+    external_actions_pinned_by_commit_sha: true
   current_actions_blocker:
-    classification: github-billing-or-spending-limit
+    classification: github-billing-or-spending-limit-while-private
     proof_failure: false
     jobs_started: false
     observed_runs:
       - 32036454657
       - 32036454660
+    intended_resolution: user-authorized-public-repository-transition
+
+public_release_preflight:
+  status: complete-awaiting-owner-license-and-user-visibility-switch
+  audit_file: problems/678/PUBLIC_RELEASE_AUDIT_2026-08-17.md
+  license_audit_file: problems/678/PUBLICATION_READINESS_LICENSE_AUDIT.md
+  third_party_notices: THIRD_PARTY_NOTICES.md
+  user_authorized_public_visibility_preparation: true
+  repository_visibility_at_checkpoint: private
+  project_owned_license: undecided
+  current_tree_secret_audit:
+    known_common_credential_blocker_found: false
+    private_key_marker_found: false
+    historical_exhaustiveness_guaranteed: false
+  representative_actions_log_audit:
+    unmasked_credential_observed: false
+    authentication_rendered_masked: true
+  preventive_controls:
+    root_gitignore_added: true
+    workflow_least_privilege: true
+    persisted_checkout_credentials_disabled: true
+    action_dependencies_sha_pinned: true
+  third_party_license_metadata:
+    mathlib4: Apache-2.0
+    PrimeNumberTheoremAnd: Apache-2.0
+    formal_conjectures: Apache-2.0
+    public_comparator: none-detected
+  public_exposure_inventory:
+    note: existing problem directories and retained agent branches will become visible; their mathematics was not activated or audited under DEC-012
 
 regressions:
   positive_witness:
@@ -194,6 +232,7 @@ regressions:
     - interface-information-loss
     - documentation-state-drift
     - verification-credit-drift
+    - public-artifact-release-boundary
 
 allowed_external_claims:
   - independent Lean reimplementation of Cambie's proof
@@ -204,7 +243,7 @@ allowed_external_claims:
   - machine-checked normalization to Formal Conjectures interval/eventual-existence semantics
   - real-factor C >= 1 bridge matching public strong-theorem parameter domain
   - matched selected-endpoint standard-axiom footprint under one pinned environment
-  - longitudinal AI-assisted scientific-production case study including verification-credit correction
+  - longitudinal AI-assisted scientific-production case study including verification-credit correction and public-release preflight
 
 claims_requiring_new_experiments:
   - easier maintenance than the public comparator
@@ -224,14 +263,15 @@ forbidden_or_unsupported_claims:
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S1-integration
-  requirement: corrected commit-explicit canonical PR run and post-merge main verification
-  blocker: GitHub Actions billing/spending limit
+  stage: S1-public-transition-integration
+  requirement: owner project-license decision; user public visibility switch; corrected commit-explicit canonical PR run; post-merge main verification
+  blocker: project-owned license undecided and repository still private with Actions billing/spending blocker
   s2_authorized_to_start_before_s1_integration: false
 
 privacy_and_reproducibility:
-  repository_visibility: private
-  change_visibility_without_explicit_user_authorization: false
+  repository_visibility_at_checkpoint: private
+  public_visibility_preparation_authorized: true
+  public_visibility_switch_executed: false
   publish_hidden_chain_of_thought: false
   process_data_policy: >-
     Publish externally observable hypotheses, actions, artifacts, commits, CI results,
@@ -240,4 +280,4 @@ privacy_and_reproducibility:
 transition_gate:
   decision: DEC-012
   new_erdos_problem_authorized: false
-  allowed_scope: scientific comparison, reproducibility analysis, publication/upstream preparation, and AI-process analysis on archived #678 only
+  allowed_scope: scientific comparison, reproducibility analysis, publication/upstream preparation, public-release preparation, and AI-process analysis on archived #678 only
