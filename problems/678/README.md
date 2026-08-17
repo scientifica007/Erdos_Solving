@@ -2,27 +2,15 @@
 
 > **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 DIFFERENTIAL VERIFICATION COMPLETE / INTEGRATED / POST-MERGE VERIFIED. Repository PUBLIC; project-owned material Apache-2.0.**
+> **Scientific-evaluation status: S1 COMPLETE / INTEGRATED / POST-MERGE VERIFIED. S2 ACTIVE; current substage S2a measures dependency-surface structure.**
 >
 > The successful route is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. It is neither a new mathematical proof nor the first Lean formalization. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
 ## Canonical result
 
-Let
+Let `M(n,k) = lcm{n+1,...,n+k}`. The final Lean graph includes `erdos678_unbounded_witnesses`, `erdos678_good_lengths_infinite`, and the stronger preceding Cambie construction.
 
-`M(n,k) = lcm{n+1,...,n+k}`.
-
-The final Lean graph includes:
-
-- `erdos678_unbounded_witnesses`;
-- `erdos678_good_lengths_infinite`;
-- the stronger preceding Cambie construction.
-
-The analytic dependency is pinned to
-
-`AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`
-
-and the application adapter consumes its machine-checked `prime_between` theorem. No custom prime-density axiom remains in the credited theorem.
+The analytic dependency is pinned to `AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`, and the application adapter consumes its machine-checked `prime_between` theorem. No custom prime-density axiom remains in the credited theorem.
 
 ## Scientific classification
 
@@ -33,83 +21,46 @@ and the application adapter consumes its machine-checked `prime_between` theorem
 - new mathematical proof claim: **no**;
 - first Lean formalization claim: **no**;
 - prior public formalization: Aristotle + Boris Alexeev;
-- machine verification: **yes**;
 - executable differential verification against pinned public artifact: **yes**.
 
-## S1 experiment
+## S1 — CLOSED
 
-Run `32028006457`, job `95381414710`, exact experiment head
+S1 experiment run `32028006457` built the canonical graph with **8808 jobs** and compiled `plby/lean-proofs@6f906fef432892db5c910c48ad1a3728dd42cdac` `Erdos678.lean` unchanged inside this repository's Lean 4.33 / Mathlib / PNT+ environment.
 
-`b1e3fc60f6dc4f125a125121a2abbcf3610ed749`
+Machine-checked bridges align interval semantics, the Formal-Conjectures-style eventual-nonempty reading, unbounded/infinite admissible lengths, and the public real-factor `C ≥ 1` strong-theorem domain. Selected internal/public endpoints exposed `[propext, Classical.choice, Quot.sound]` only.
 
-built the canonical graph with **8808 jobs** and compiled the pinned public comparator source
+PR #22 passed exact-head run `32043807200`, merged as `358cd541ff81a2b59611b7addfc90ae17e03b36f`, and passed post-merge verification in run `32044314748` attempt 2. Closure PR #27 merged as `7aff8d8d8680e90b34be64650c68c0fc778749fc` and passed post-merge run `32045885504` with exact checkout provenance, `No update necessary`, and 8808 jobs.
 
-`plby/lean-proofs@6f906fef432892db5c910c48ad1a3728dd42cdac`
+## S2a — dependency surface — ACTIVE
 
-**unchanged** inside this repository's Lean 4.33 / Mathlib / PNT+ environment.
+S2a asks a narrower question than “which proof is better?”: **what is the reproducible module/import dependency structure of the two already-verified artifacts under explicit source/ownership boundaries?**
 
-Machine-checked comparison bridges establish:
+Protocol: `S2_DEPENDENCY_SURFACE_PROTOCOL.md`.
 
-- `intervalFinset (n+1) k = Finset.Ioc n (n+k)`;
-- exact public half-open interval semantics for `erdosM`;
-- the Formal-Conjectures-style eventual-nonempty statement;
-- unbounded and infinitely many admissible block lengths;
-- extension of the strong theorem to every real `C ≥ 1`, including nonintegral regression `C=3/2`.
+Analyzer: `experiments/s2_dependency_surface.py`.
 
-Selected internal/public endpoints exposed only the standard axiom footprint
+Fixed comparator identity:
 
-`[propext, Classical.choice, Quot.sound]`.
+- repository: `plby/lean-proofs`;
+- commit: `6f906fef432892db5c910c48ad1a3728dd42cdac`;
+- entry blob: `f2331e8bcc71bc36cce7724a0c54fafd8d64d480`.
 
-This is differential-verification evidence, not a priority or superiority claim.
+Canonical-result profile:
 
-## S1 repository integration — CLOSED
+- internal entry: `Formalization.Erdos678.Erdos678Final`;
+- comparator entry: `ErdosProblems.Erdos678`.
 
-The persistent artifact passed repaired exact-head CI on PR #22:
+The analyzer recursively parses Lean imports and records local modules/edges/depth, external frontier, source lines, declaration-command counts, and full auditable edge lists. Crucially it separates `artifact_owned`, `repository_local_support`, and `third_party_repository_local_support`.
 
-- exact head: `1c6bea992033390ac4364033fafcd221694baf4c`;
-- run `32043807200`;
-- job `95427648473`;
-- checkout and `verified_commit`: exact head above;
-- `mk_all`: `No update necessary`;
-- full build: **SUCCESS / 8808 jobs**.
+This prevents a packaging artifact from becoming a scientific conclusion: PNT+ is external through Lake in this project, while the comparator repository physically contains `src/latest/PrimeNumberTheoremAnd/...`.
 
-PR #22 then merged to `main` as
-
-`358cd541ff81a2b59611b7addfc90ae17e03b36f`.
-
-Post-merge run `32044314748` attempt 1 encountered a transient HTTP 502 while downloading Lean and never reached proof checking. It was therefore classified as infrastructure failure, not proof failure. Attempt 2, job `95429173912`, succeeded on the same merge commit:
-
-- `verified_commit=358cd541ff81a2b59611b7addfc90ae17e03b36f`;
-- Lean `4.33.0`;
-- PNT+ exact pin and Mathlib revision resolved as expected;
-- `No update necessary`;
-- **Build completed successfully (8808 jobs).**
-
-S1 is therefore integrated and post-merge verified.
-
-## Verification-provenance lesson
-
-Historical PR run `32033822601` had PR-head metadata `610d525...` but default checkout actually built synthetic integration-tree commit `5983f901...`. The evidence was reclassified rather than discarded or overstated.
-
-The canonical workflow now:
-
-- checks out `${{ github.event.pull_request.head.sha || github.sha }}`;
-- logs `git rev-parse HEAD`;
-- uses `contents: read` only;
-- sets `persist-credentials: false`;
-- pins directly used external Actions by commit SHA.
-
-This episode is documented in `CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md` and `AI_CASE_EPISODE_VERIFICATION_CREDIT_DRIFT.md`.
+**Interpretation limit:** S2a structural counts do not by themselves establish lower coupling, easier maintenance, faster builds, or greater robustness. Those require later S2 controlled experiments.
 
 ## Public artifact
 
-The repository is Public. Apache License 2.0 applies to project-owned material; `THIRD_PARTY_NOTICES.md` records third-party/provenance boundaries. The comparator remains an immutable external fetch and is not vendored because no repository license was detected for it during the audit.
+The repository is Public and project-owned material is Apache-2.0. `THIRD_PARTY_NOTICES.md` records third-party/provenance boundaries. The comparator remains an immutable external fetch and is not vendored because no repository license was detected for it during the audit.
 
-No repository ruleset was detected immediately after the public transition. Protecting `main` in GitHub remains a governance task before accepting external contributions.
-
-## Next scientific stage
-
-After this S1-closure synchronization PR itself is canonically verified and integrated, the #678 roadmap permits **S2 — controlled metric and mutation experiments**. S2 must measure, rather than assume, dependency coupling, build behavior, repair locality, mutation resistance, and upgrade robustness.
+No repository ruleset was detected immediately after public transition. Protecting `main` in GitHub remains a governance task before accepting outside contributions.
 
 ## Operational stop rule
 
