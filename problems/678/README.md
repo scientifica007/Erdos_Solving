@@ -53,6 +53,13 @@ Archival documentation synchronization:
 - Lean Verification run `32013917788` — **SUCCESS**;
 - merged archival documentation commit `755c9601816fbbd7e2181a2e56c34f28667ceb67`.
 
+Final lessons/postmortem integration:
+
+- PR #20 exact head `6fffdc71d2166004fe9e6d412ea3d0b1dd739e53`;
+- exact-head Lean Verification run `32019975193` — **SUCCESS**;
+- merge commit `4596a360257a3f659d2a260b4cb00b22d0ffa94c`;
+- post-merge Lean Verification run `32021192337` — **SUCCESS**.
+
 ## Exact project classification
 
 - External problem status: proved.
@@ -68,6 +75,7 @@ Archival documentation synchronization:
 - Phase E4 canonical index translation and infinitude: passed.
 - Integration into `main`: passed through PR #17.
 - Post-merge canonical verification: passed through run `32011189766`.
+- Final postmortem verification: passed through run `32021192337`.
 - User transition gate: explicit authorization required before any other Erdős problem may become active.
 
 ## Proof architecture live in Lean
@@ -122,15 +130,39 @@ This is false because `M(t*n,k)` is the LCM of `tn+1,...,tn+k`, not of `t(n+1),.
 
 Those failures remain recorded as provenance and are not reclassified by the successful Cambie reconstruction.
 
+## Scientific positioning and external value
+
+The completed artifact is **not** a new solution of #678 and **not** the first Lean formalization. A prior public formalization by Aristotle and Boris Alexeev exists on top of Cambie's mathematics.
+
+The current scientific opportunity is instead to use this independently reconstructed artifact in two ways:
+
+1. **formal differential verification / proof engineering** — compare our modular, regression-heavy architecture and direct `prime_between` PNT interface with the public Aristotle/Alexeev development;
+2. **AI-assisted scientific-production research** — analyze the preserved path from failed independent reasoning to machine-checked reconstruction, including target fidelity, failure retention, externalized state, dependency closure, canonical build verification, and exact-head CI.
+
+Canonical dossier:
+
+- `SCIENTIFIC_COMPARATIVE_STUDY.md` — external comparison, claim boundaries, quantitative architecture, testable hypotheses, and candidate upstream contributions;
+- `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md` — longitudinal AI-for-science case study, failure taxonomy, research questions, threats to validity, and prospective experiments;
+- `PUBLICATION_AND_UPSTREAM_ROADMAP.md` — staged plan for common-environment comparison, upstream work, empirical extensions, and publication decisions;
+- `SCIENTIFIC_EVIDENCE_LEDGER.yaml` — machine-readable frozen provenance, metrics, comparison anchors, claim limits, and missing measurements.
+
+These documents do not reopen the mathematics and do not authorize transition to another Erdős problem.
+
 ## Archival disposition
 
 No mathematical phase remains open. Integration and post-merge verification are complete. **#678 is archived as a completed benchmark.**
+
+Scientific comparison, reproducibility analysis, and publication/upstream work on the already completed #678 artifact are permitted archival follow-up. They must not be misclassified as new mathematical discovery.
 
 **Stop at this checkpoint. Do not select, activate, resume, research, or formalize another Erdős problem until the user explicitly authorizes the transition.** Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
 
 ## Main references inside this folder
 
-- `CAMBIE_PROOF_ANALYSIS.md` — mathematical architecture and Claim 4 audit.
+- `SCIENTIFIC_COMPARATIVE_STUDY.md` — comparative scientific positioning against Cambie, Aristotle/Alexeev, Formal Conjectures, and current AI-for-math work.
+- `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md` — #678 as an auditable long-horizon AI-assisted scientific-production case.
+- `PUBLICATION_AND_UPSTREAM_ROADMAP.md` — evidence gates and sequencing for external outputs.
+- `SCIENTIFIC_EVIDENCE_LEDGER.yaml` — machine-readable evidence and claim ledger for future papers/upstream work.
+- `CAMBIE_PROOF_ANALYSIS.md` — mathematical architecture and Claim 4 audit; contains historical development-status passages and is not the current operational state source.
 - `LEAN_FORMALIZATION_ROADMAP.md` — canonical execution roadmap, now closed, integrated, verified, and archived.
 - `FORMALIZATION_CORRECTION_2026-08-14.md` — rejection of the false earlier construction.
 - `LEAN_TEST_PLAN.md` — superseded historical plan; not an execution source.
