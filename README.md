@@ -1,6 +1,6 @@
 # Erdos_Solving
 
-مستودع بحثي لدراسة مسائل Erdős بمساعدة الذكاء الاصطناعي مع إعطاء الأولوية لصحة المعرفة، وقابلية التدقيق، وإعادة الإنتاج، والفصل الصريح بين الاكتشاف الرياضي وإعادة بناء الأدلة والتحقق الرسمي.
+مستودع بحثي عام لدراسة مسائل Erdős بمساعدة الذكاء الاصطناعي مع إعطاء الأولوية لصحة المعرفة، وقابلية التدقيق، وإعادة الإنتاج، والفصل الصريح بين الاكتشاف الرياضي وإعادة بناء الأدلة والتحقق الرسمي.
 
 ## الهدف
 
@@ -16,7 +16,7 @@
 
 ## الترخيص
 
-المادة المملوكة لهذا المشروع مرخصة بموجب **Apache License 2.0** ما لم يُذكر خلاف ذلك. النص الكامل موجود في `LICENSE`، وتبقى حدود الطرف الثالث والنَّسب العلمي موثقة بصورة مستقلة في `THIRD_PARTY_NOTICES.md` ووثائق #678.
+المادة المملوكة لهذا المشروع مرخصة بموجب **Apache License 2.0** ما لم يُذكر خلاف ذلك. النص الكامل في `LICENSE`. حدود الطرف الثالث والنَّسب العلمي موثقة بصورة مستقلة في `THIRD_PARTY_NOTICES.md` ووثائق المسائل.
 
 ## وثائق التشغيل الأساسية
 
@@ -59,7 +59,7 @@
 
 المستخدم فوّض الاستفادة القصوى من #678 كمادة علمية وكحالة دراسة لإنتاج المادة العلمية بالذكاء الاصطناعي. هذا لا يعيد فتح الرياضيات ولا يسمح بالانتقال إلى benchmark آخر.
 
-Stage S1 نفذت بالفعل تجربة differential verification ناجحة:
+Stage S1 نفذت تجربة differential verification ناجحة:
 
 - run `32028006457`, job `95381414710`؛
 - exact push-triggered experiment head `b1e3fc60f6dc4f125a125121a2abbcf3610ed749`؛
@@ -71,38 +71,23 @@ Stage S1 نفذت بالفعل تجربة differential verification ناجحة:
 
 هذا يبرر وصف العمل بأنه **independent formal replication / differential verification**، لا بأنه حل جديد أو أول formalization.
 
-### CI provenance correction
+### Public transition and CI provenance
 
-مراجعة لاحقة كشفت أن الـPR workflow التاريخي كان يستخدم default `actions/checkout`؛ لذلك run metadata التي تعرض PR `head_sha` لا تكفي وحدها لإثبات أن الـjob بنى الرأس الحرفي. في run `32033822601` بُني synthetic integration-tree commit `5983f901...` رغم أن metadata أشارت إلى PR head `610d525...`.
+المستودع أصبح الآن **Public**. GitHub API أكد `visibility: public` وتعرّف على الرخصة كـ`Apache-2.0`. ملف `LICENSE` موجود على `main`، والـLean Verification workflow ما زال active.
 
-تم توثيق التصحيح في `problems/678/CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md`، وتم تشديد الـworkflow النشط بحيث:
+قبل الانتقال أُنجز public-release preflight شمل secret hygiene، `.gitignore` وقائي، `THIRD_PARTY_NOTICES.md`، وصقل workflow بحيث:
 
 - يcheckout رأس PR الحرفي؛
 - يسجل `git rev-parse HEAD`؛
 - يستخدم `contents: read` فقط؛
-- يعطّل `persist-credentials`؛
+- يعطل `persist-credentials`؛
 - يثبت Actions الخارجية عند commit SHAs.
 
-### Public-release preflight
+التحويل إلى Public أزال الحظر العملي الذي كان يمنع GitHub-hosted Actions أثناء كون المستودع Private. بعد إعادة فتح PR #22 بدأ run `32043331012` فعليًا ووصل إلى canonical Lean build، بخلاف التشغيلات السابقة التي توقفت قبل أي خطوة Lean بسبب billing/spending condition.
 
-بعد تعذر الدفع لـGitHub Actions private usage، اختار مالك المشروع الانتقال المقصود إلى **Public** بدل تخفيف بوابة التحقق. تم تنفيذ preflight قبل تغيير visibility:
+هذا التشغيل تشخيص لعودة الـrunner؛ بعد مزامنة وثائق الحالة سيُطلب run جديد على **الرأس النهائي الفعلي لـPR #22** قبل الدمج.
 
-- لا يوجد known secret/private-key blocker في الأسطح الحالية المفحوصة، مع توثيق حدود هذا النوع من التدقيق؛
-- أضيف `.gitignore` وقائي لملفات الأسرار والمفاتيح وحالة build المحلية؛
-- عُزز workflow ليناسب PRs العامة/forks دون أسرار وبصلاحيات قراءة فقط؛
-- أضيف `THIRD_PARTY_NOTICES.md`؛
-- تم التحقق من Apache-2.0 لـMathlib وPNT+ وFormal Conjectures؛
-- comparator `plby/lean-proofs` يبقى external pinned fetch ولا يُنسخ داخل المشروع لعدم وجود repository license معلنة في التدقيق؛
-- اختار المالك **Apache License 2.0** للمادة المملوكة للمشروع، وأضيف `LICENSE` في الجذر؛
-- سجل preflight الكامل موجود في `problems/678/PUBLIC_RELEASE_AUDIT_2026-08-17.md`.
-
-**المستودع ما يزال Private عند هذا checkpoint.** بند ترخيص المشروع مغلق الآن؛ الخطوة التالية هي التحويل الذي ينفذه المستخدم إلى Public، ثم مراجعة إعدادات GitHub بعد الانتقال.
-
-### Current S1 integration gate
-
-بينما المستودع Private، GitHub Actions الجديدة محجوبة بسبب billing/spending condition؛ المحاولتان `32036454657` و`32036454660` توقفتا قبل أي خطوة Lean، ولذلك هذا **CI infrastructure blocker** وليس proof failure.
-
-بعد التحويل إلى Public يجب تشغيل CI جديد على الرأس الفعلي النهائي لـPR #22 بالـworkflow المشدد، ثم الدمج فقط إذا كان أخضر، ثم post-merge verification على `main`. لا يبدأ S2 قبل ذلك.
+لا توجد repository rulesets مكتشفة في checkpoint ما بعد التحويل، لذا ينبغي إعداد حماية `main` من واجهة GitHub قبل قبول مساهمات خارجية.
 
 ## المساران العلميان لـ#678
 
@@ -130,12 +115,12 @@ Stage S1 نفذت بالفعل تجربة differential verification ناجحة:
 
 ## ترتيب الاستئناف
 
-1. تحقق من رأس `main`، visibility، ومن PR S1 النشط.
+1. تحقق من رأس `main` ومن PR S1 النشط.
 2. اقرأ `PROJECT_STATE.md`.
 3. تعامل مع #678 mathematics على أنها frozen/archived.
-4. ترخيص المشروع مغلق على Apache-2.0؛ نفذ التحويل المقصود إلى Public.
-5. بعد التحويل راجع Actions/branch protections وشغّل exact-head canonical CI لـPR #22.
-6. ادمج فقط إذا نجح CI، ثم تحقق من `main` وأغلق S1؛ لا تبدأ S2 قبل ذلك.
+4. شغّل exact-head canonical CI على الرأس النهائي لـPR #22.
+5. ادمج فقط إذا نجح CI، ثم تحقق من `main` وأغلق S1؛ لا تبدأ S2 قبل ذلك.
+6. اضبط حماية `main`/ruleset من واجهة GitHub للمستودع العام.
 7. **لا تختَر أو تبدأ أو تستأنف أي مسألة Erdős أخرى حتى يعطي المستخدم إذنًا صريحًا وفق `DEC-012`.**
 
 ## المبدأ الحاكم
