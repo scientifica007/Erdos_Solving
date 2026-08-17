@@ -9,9 +9,10 @@
 **E4 mathematical exit:** `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757` — SUCCESS, **8806 jobs**  
 **Final synchronized E4 head:** `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`, run `31977861568` — SUCCESS, `No update necessary`, **8806 jobs**  
 **Integration:** PR #17 merged into `main` as `8fd1b20541ac7782f52429db3a2cc4c887547372` on 2026-08-17  
-**Post-merge verification:** run `32011189766` — SUCCESS, `No update necessary`, **8806 jobs**.
+**Post-merge verification:** run `32011189766` — SUCCESS, `No update necessary`, **8806 jobs**  
+**Archival documentation:** PR #18 exact head `4c5a305c8756c5dc0d8e5545825a87d48a438965`, run `32013917788` — SUCCESS; merged as `755c9601816fbbd7e2181a2e56c34f28667ceb67`.
 
-This roadmap is closed. There is no remaining mathematical, analytic, CI, or integration task for #678. Repository hygiene such as closing a diagnostic-only PR is non-blocking and does not reopen the benchmark.
+This roadmap is closed. There is no remaining mathematical, analytic, CI, or integration task for #678. Per `DEC-012`, the project must remain at this archived checkpoint until the user explicitly authorizes moving to another Erdős problem.
 
 The mathematical analysis remains in `CAMBIE_PROOF_ANALYSIS.md`. `LEAN_TEST_PLAN.md` is superseded and historical.
 
@@ -25,7 +26,7 @@ Externally, Erdős #678 is proved. In this repository:
 - `M(36,8) > M(47,9)` is machine-checked;
 - `(495,504,8)` is machine-refuted and retained as a negative regression;
 - the arithmetic core, Claim 5, Claim 4 / CRT engine, quantitative LCM estimate, prime-density bridge, strong Cambie theorem, final canonical index translation, and infinite-family theorem are machine-checked;
-- the completed graph is integrated into `main` through PR #17 and independently rebuilt on the resulting merge commit;
+- the completed graph is integrated into `main` through PR #17 and independently rebuilt on the resulting mathematical merge commit;
 - the analytic input is the pinned `AxiomMath/PrimeNumberTheoremAnd` revision `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`, used through its kernel-checked `prime_between` consequence;
 - no custom prime-density axiom and no `sorry` is introduced.
 
@@ -102,7 +103,7 @@ using the fourth binomial coefficient and `Nat.choose_le_two_pow`.
 
 `Erdos678Final.lean` performs the off-by-one-safe translation from interval starts to canonical variables:
 
-- `claim4_cambie_k_lt_x_of_bounds` recovers `k < x` from existing verified bounds;
+- `claim4_cambie_k_lt_x_of_bounds` recovers `k < x` from existing verified bounds, ensuring the translated start is valid;
 - the large-start fact is preserved through sharp-window, five-strip, provider, and PNT endpoints;
 - `cambie_lcm_ratio_eventually_with_large_start` supplies the final strong construction;
 - `erdos678_unbounded_witnesses` proves that for every lower bound `B`, there exist `n,m,k` with `B ≤ k`, `3 ≤ n,m,k`, `n+k ≤ m`, and `erdosM m (k+1) < erdosM n k`;
@@ -118,13 +119,15 @@ Final synchronized head: `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`, run `319778
 
 PR #17 (`agent/erdos678-e4-index-translation-20260816` → `main`) was merged as `8fd1b20541ac7782f52429db3a2cc4c887547372`.
 
-Lean Verification run `32011189766` rebuilt that exact merge commit successfully:
+Lean Verification run `32011189766` rebuilt that exact mathematical merge commit successfully:
 
 - `lake exe mk_all --check`: `No update necessary`;
 - full `lake build`: **8806 jobs**;
 - reachable graph includes the PNT bridge, `CambieStrongTheorem`, `Erdos678Final`, its regressions, and the top-level `Formalization` target.
 
-The earlier stacked checkpoint PRs #7–#12 and #14–#16 were closed after integration. PR #13 is diagnostic-only and non-blocking; it was explicitly not intended as the integration vehicle.
+PR #18 synchronized archival documentation only. Its exact head `4c5a305c8756c5dc0d8e5545825a87d48a438965` passed Lean Verification run `32013917788` and was merged as `755c9601816fbbd7e2181a2e56c34f28667ceb67`.
+
+The earlier stacked checkpoint PRs #7–#12 and #14–#16 were closed after integration. PR #13, the diagnostic-only compatibility probe, was also closed after archival cleanup.
 
 ```text
 Erdős #678
@@ -144,7 +147,7 @@ Erdős #678
 
 **#678 is a completed benchmark and is archived.**
 
-The next project action is to select a new active benchmark according to the repository research-state protocol. Do not reopen #678 mathematics unless a concrete regression is found.
+The project must remain at this checkpoint. **Do not select, activate, resume, research, or formalize another Erdős problem until the user explicitly authorizes that transition.** Do not reopen #678 mathematics unless a concrete regression is found.
 
 ## Global audit gates retained for future work
 

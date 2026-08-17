@@ -2,6 +2,7 @@
 
 > **Current repository status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 > The earlier independent attempt remains rejected. The completed result is an external-proof reconstruction and independent Lean reimplementation of Cambie (2024). The canonical operational sources are `PROJECT_STATE.md` and `LEAN_FORMALIZATION_ROADMAP.md`.
+> Per `DEC-012`, the project remains at this archived checkpoint until the user explicitly authorizes moving to another Erdős problem.
 
 ## Canonical statement
 
@@ -41,10 +42,16 @@ Final synchronized E4 head:
 Integration and post-merge verification:
 
 - PR #17 merged into `main` on 2026-08-17;
-- merge commit `8fd1b20541ac7782f52429db3a2cc4c887547372`;
+- mathematical merge commit `8fd1b20541ac7782f52429db3a2cc4c887547372`;
 - post-merge Lean Verification run `32011189766` — **SUCCESS**;
 - `lake exe mk_all --check` = `No update necessary`;
 - full `lake build` = **8806 jobs**.
+
+Archival documentation synchronization:
+
+- PR #18 exact head `4c5a305c8756c5dc0d8e5545825a87d48a438965`;
+- Lean Verification run `32013917788` — **SUCCESS**;
+- merged archival documentation commit `755c9601816fbbd7e2181a2e56c34f28667ceb67`.
 
 ## Exact project classification
 
@@ -61,6 +68,7 @@ Integration and post-merge verification:
 - Phase E4 canonical index translation and infinitude: passed.
 - Integration into `main`: passed through PR #17.
 - Post-merge canonical verification: passed through run `32011189766`.
+- User transition gate: explicit authorization required before any other Erdős problem may become active.
 
 ## Proof architecture live in Lean
 
@@ -118,7 +126,7 @@ Those failures remain recorded as provenance and are not reclassified by the suc
 
 No mathematical phase remains open. Integration and post-merge verification are complete. **#678 is archived as a completed benchmark.**
 
-The next project action is to select a new active problem. Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
+**Stop at this checkpoint. Do not select, activate, resume, research, or formalize another Erdős problem until the user explicitly authorizes the transition.** Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
 
 ## Main references inside this folder
 
