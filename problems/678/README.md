@@ -2,125 +2,113 @@
 
 > **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b CLOSED. S2c CLOSED / CLOSURE VERIFIED. S2d PREDECLARED / NOT EXECUTED.**
+> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b CLOSED. S2c CLOSED / CLOSURE VERIFIED. S2d EXECUTED / ARTIFACT VALIDATED / PENDING PR INTEGRATION.**
 >
 > The successful route is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. It is neither a new mathematical proof nor the first Lean formalization. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
 ## Canonical result
 
-Let `M(n,k) = lcm{n+1,...,n+k}`. The final Lean graph includes `erdos678_unbounded_witnesses`, `erdos678_good_lengths_infinite`, and the stronger preceding Cambie construction. The analytic dependency is pinned to `AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed` and consumes machine-checked `prime_between`.
+Let `M(n,k) = lcm{n+1,...,n+k}`. The final Lean graph includes `erdos678_unbounded_witnesses`, `erdos678_good_lengths_infinite`, and the stronger Cambie construction. The analytic dependency is pinned to `AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
 
-## Scientific classification
+## S1 / S2a / S2b / S2c
 
-- mathematical author/result: Stijn Cambie / known solution;
-- project mode: external-proof reconstruction;
-- formal artifact: independent Lean reimplementation;
-- new mathematical proof claim: **no**;
-- first Lean formalization claim: **no**;
-- prior public formalization: Aristotle + Boris Alexeev;
-- executable differential verification: **yes**.
+- **S1:** common-environment executable differential verification against the pinned Aristotle/Alexeev formalization; closed and machine-verified.
+- **S2a:** dependency-surface metrics are boundary-sensitive; closed.
+- **S2b:** no stable wall-clock winner under the pinned common environment, with materially different CPU/memory profiles; closed. A computationally green pilot was excluded when required provenance was missing.
+- **S2c:** three prospectively frozen API-reference mutations produced a mixed/interface-dependent repair-locality result; no uniform winner; closed through PR #32 + closure PR #33 and exact-main post-merge verification.
 
-## S1 — CLOSED
-
-Run `32028006457` built the internal canonical graph and compiled the pinned public comparator unchanged inside this repository's Lean 4.33 / Mathlib / PNT+ environment. PR #22 and closure PR #27 completed exact-head and post-merge verification.
-
-## S2a — dependency surface — CLOSED
-
-S2a established that raw module/file/frontier counts are **boundary-sensitive** because PNT+ lies on different repository ownership boundaries in the two artifacts. The result is a measurement control, not an architecture ranking.
-
-## S2b — controlled build behavior — CLOSED
-
-The credited run `32053575928` completed six paired replicates. Cold wall time showed no stable winner (`159.575 s` internal versus `156.280 s` comparator median; paired differences changed sign), while CPU and memory profiles differed materially under the pinned common environment. The first green pilot remains excluded because required runner-version provenance was absent. PR #30 and closure PR #31 completed verified integration.
-
-## S2c — repair locality — CLOSED / CLOSURE VERIFIED
-
-S2c prospectively froze three matched declaration-rename mutations before its harness and observations. All six artifact×mutation observations produced the expected unresolved-symbol break and all six legal identifier-only repairs returned green, with zero third-party/dependency edits.
-
-Raw repaired-reference counts were:
-
-| mutation | internal | comparator |
-|---|---:|---:|
-| R1 analytic closure | 3 = 2 production + 1 verification | 1 production |
-| R2 eventual construction | 2 = 1 production + 1 verification | 1 production |
-| R3 strong endpoint | 2 verification, 0 production | 3 production |
-
-The defensible conclusion is **mixed and interface-layer dependent**: no uniform repair-locality or maintainability advantage is observed.
-
-PR #32 integrated the substantive S2c evidence. Documentation closure PR #33 final head `3439b58f1e05e2cb21ee1c9374857eb3b4197163` passed canonical run `32070637072`, job `95512851767`, then merged as `47b85a2f2f5be6e6e4ede2b600723b8616aeeee4`. That exact merge passed post-merge run `32071325525`, job `95514986697`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**. S2c is fully closed.
-
-## S2d — semantic/index mutation resistance — PREDECLARED / NOT EXECUTED
+## S2d — semantic/index mutation resistance — EXECUTED / VALIDATED
 
 ### Historical motivation
 
-The 2026-08-14 correction retained a concrete semantic failure: an attempted construction treated the block for `M(t,k+1)` as `[t,t+k]`, whereas the canonical Erdős convention requires `[t+1,t+k+1]`. This is a one-step interval-index shift, not a type error.
+The retained 2026-08-14 correction records a type-correct semantic indexing error: an attempted construction treated the block for `M(t,k+1)` as `[t,t+k]`, while the canonical convention is `[t+1,t+k+1]`. S2d prospectively replays bounded one-unit semantic/index drift rather than identifier breakage.
 
-The internal artifact now contains multiple controls aimed at this class of drift:
+### Frozen design
 
-- `Intervals.lean` defines a length-based API and explicitly documents the off-by-one hazard;
-- `ConcreteTests.lean` contains independent explicit LCM oracles and preserves the false `(495,504,8)` candidate as a negative regression;
-- `ExternalStatementBridge.lean` proves equivalence between `erdosM` and the `Finset.Ioc` convention;
-- `Erdos678Final.lean` performs the final off-by-one-safe translation.
+The protocol and mutation set were integrated and post-merge verified through PR #34 **before** apparatus creation:
 
-### Frozen research question
+- protocol: `S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md`;
+- manifest: `S2_SEMANTIC_INDEX_MUTATIONS.yaml`;
+- frozen internal source baseline: `47b85a2f2f5be6e6e4ede2b600723b8616aeeee4`;
+- predeclaration final head: `5aaef5a667ee11cc526beae587cf9ab799727f7e`;
+- predeclaration merge: `2db145226bf530f406e734129fd8a451a2ab3899`.
 
-Under small, matched, type-correct index perturbations, **where is the first observable semantic rejection**, and can a changed-but-still-true target survive all machine checks?
+Exactly three matched mutation pairs were frozen:
 
-### Frozen mutations
+1. **I1 — canonical block-start shift left by one.** Same-length block moves from `n+1..n+k` to `n..n+k-1`.
+2. **I2 — long block loses its final term.** The `k+1`-term long block becomes `k` terms with the same start.
+3. **I3 — separation strengthened by one.** `n+k≤m` becomes `n+(k+1)≤m`; this was intentionally allowed to survive if the changed target remained true.
 
-The predeclared set contains exactly three mutation pairs, each applied independently to pristine baselines:
+No repair phase is allowed. Each observation starts from a pristine baseline and records first semantic rejection or complete survival.
 
-1. **I1 — canonical block-start shift left by one.**
-   - Internal: `erdosM n k` changes from `intervalLCM (n+1) k` to `intervalLCM n k`.
-   - Comparator: `lcmInterval n k` changes from `Ioc n (n+k)` to `Ico n (n+k)`.
-   - Both represent the same-length block shifted left by one; this is the closest replay of the historical failure.
+### Excluded first pilot
 
-2. **I2 — long block loses its final term.**
-   - Internal strong endpoint: `intervalLCM y (k+1)` becomes `intervalLCM y k`.
-   - Comparator `MainTheoremStatement`: `Icc y (y+k)` becomes `Icc y (y+k-1)`.
-   - Both remove exactly one final term from the long block.
+Run `32074822049`, job `95525626029`, completed computationally but is excluded **as a whole**. Post-run audit showed an instrumentation error in a primary metric: comparator theorem `main_theorem : MainTheoremStatement` was labeled `local_lemma_or_regression` instead of the frozen `strong_theorem` class.
 
-3. **I3 — separation strengthened by one.**
-   - Canonical condition changes from `n+k≤m` to `n+(k+1)≤m` at matched unbounded/infinitude endpoints.
-   - This is intentionally a **semantic-survival control**. If it remains provable, that is retained as evidence that machine checking can certify a changed but still true statement and therefore cannot replace statement-fidelity controls.
+The run was not relabeled and credited post hoc. Only the classifier was corrected; no mutation, baseline, protocol, proof source, or semantic check changed. All six observations were rerun from pristine baselines.
 
-Full definitions are frozen in:
+### Credited experiment
 
-- `S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md`;
-- `S2_SEMANTIC_INDEX_MUTATIONS.yaml`.
+The credit rule was fixed before the rerun: only the `pull_request`-event workflow checking out the exact PR head is credited.
 
-### Rejection layers
+- apparatus head: `a82ae53b57a9f97844013a9b2e96a9182cee241d`;
+- run: `32076614547`;
+- job: `95531085803`;
+- runner/image: `2.336.0`, `ubuntu24/20260810.271.1`;
+- artifact: `9303987121`;
+- GitHub SHA-256: `29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881`;
+- independently downloaded artifact SHA-256: **exact match**.
 
-For the modular internal artifact, rejection is classified prospectively across:
+The apparatus first revalidated the frozen internal baseline (`mk_all = No update necessary`, full **8808-job** build) and the pinned comparator baseline. It restored pristine source state between observations and again completed the 8808-job graph after the experiment.
 
-`L0 mutation source` → `L1 concrete oracle` → `L2 endpoint regression` → `L3 statement bridge` → `L4 mk_all` → `L5 full canonical build`.
+### Credited outcomes
 
-The comparator remains monolithic; it is compiled as the pinned complete source, and the first error line/enclosing declaration is classified by logical layer. No synthetic splitting is allowed.
+| mutation | artifact | source elaborated? | first rejection | first failing check/declaration |
+|---|---|---:|---|---|
+| I1 start shift | internal | yes | `L1_concrete_semantic_oracle` | `ConcreteTests` |
+| I1 start shift | comparator | yes | local invariant/regression | `lcmInterval_ge_choose` |
+| I2 drop final term | internal | no | `L0_mutation_source_elaboration` | mutated strong endpoint source |
+| I2 drop final term | comparator | yes | strong theorem | `main_theorem` |
+| I3 strengthen separation | internal | no | `L0_mutation_source_elaboration` | mutated canonical endpoint source |
+| I3 strengthen separation | comparator | no | canonical corollary | `erdos_678_kmn_infinite` |
 
-### No repair and no outcome yet
+Aggregate:
 
-S2d contains **no repair phase**. The mutation is applied, staged checks run, and the first rejection—or complete survival—is recorded. No proof edit is allowed after mutation.
+- observations: **6/6**;
+- semantic rejections: **6**;
+- survivors: **0**;
+- proof repairs: **0**;
+- third-party/dependency source touches: **0**.
 
-At this checkpoint:
+### Scientific interpretation
 
-- harness: **not created**;
-- mutations executed: **0/6**;
-- outcomes observed: **none**.
+The strongest defensible conclusion is:
 
-The current predeclaration-only branch must pass exact-head canonical CI, merge, and pass post-merge verification on the exact resulting `main` commit before apparatus creation or execution is permitted.
+> **All three prospectively frozen one-unit semantic/index perturbations were rejected in both artifacts, but the first encoded rejection point depended on the mutation and artifact structure.**
+
+I1 is especially informative internally: the mutated primitive definition `erdosM` still elaborated, and the first rejection came from an **independent concrete numerical oracle**. This is direct evidence that such regression oracles can add statement-fidelity protection beyond local type correctness.
+
+I3, despite being designed as a possible semantic-survival control, did not survive in either artifact. This does not establish that every nearby changed-but-true target would be rejected.
+
+No cross-artifact ordinal ranking is justified. Internal `L0..L5` stages and comparator monolithic declaration classes are structurally different observables. S2d does **not** establish general semantic robustness, architecture superiority, human debugging speed, proof complexity, maintainability, or upgrade robustness.
+
+Validated report: `S2_SEMANTIC_INDEX_BASELINE.md/.json`. Exact raw `result.json` and per-stage logs remain in GitHub Actions artifact `9303987121`.
+
+## Current integration gate
+
+PR #35 contains the apparatus and validated S2d evidence. The final PR head, after evidence synchronization, must pass canonical exact-head Lean Verification. Merge is allowed only if green, and the exact resulting `main` commit must then pass post-merge verification. A documentation-only closure should record those integration facts before S2e begins.
 
 ## AI-for-science relevance
 
-The case now has four methodological layers:
+The process now contains four distinct methodology episodes:
 
-1. S2a: reproducibility does not rescue an invalid proxy boundary.
-2. S2b: green computation does not rescue missing predeclared provenance.
-3. S2c: a predeclared comparison may legitimately yield a mixed result that defeats a simple architecture narrative.
-4. S2d: machine rejection depth and statement fidelity are distinct; a semantic mutation may fail early, fail late, or remain a different but machine-checked theorem.
+1. **S2a:** reproducibility does not rescue a proxy whose ownership/dependency boundary is incomparable.
+2. **S2b:** computational success does not rescue missing predeclared provenance.
+3. **S2c:** a prospective comparison may legitimately yield a mixed result that should be retained.
+4. **S2d:** semantic drift can be rejected by different encoded controls; additionally, a computationally green experiment must still be excluded when its primary rejection classifier is wrong.
 
-## Public artifact
+## Public artifact and stop rule
 
 The repository is Public and project-owned material is Apache-2.0. The comparator remains an immutable external fetch and is not vendored.
-
-## Operational stop rule
 
 #678 mathematics remains frozen/archived. **Do not select, activate, resume, research, or formalize another Erdős problem until the user explicitly authorizes the transition.**
