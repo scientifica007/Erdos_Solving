@@ -13,9 +13,11 @@ classification:
 
 internal_artifact:
   repository: scientifica007/Erdos_Solving
-  scientific_dossier_merge_commit: 0d8287bc5fcc41ed4dc7ea68e5d27cd0091b8d5e
+  visibility: public
+  license: Apache-2.0
+  license_main_commit: 87cf560451ef5aa4714069d52a3851c1f8547f70
   mathematical_merge_commit: 8fd1b20541ac7782f52429db3a2cc4c887547372
-  final_premerge_mathematical_head: eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f
+  scientific_dossier_merge_commit: 0d8287bc5fcc41ed4dc7ea68e5d27cd0091b8d5e
   lean_version: 4.33.0
   mathlib_version: v4.33.0
   pnt_dependency:
@@ -35,18 +37,6 @@ internal_artifact:
     - Formalization.Erdos678.erdos678_valid_pair_lengths_unbounded
     - Formalization.Erdos678.erdos678_valid_pair_good_lengths_infinite
     - Formalization.Erdos678.cambie_lcm_ratio_eventually_with_large_start_real
-  architecture_metrics:
-    archival_baseline:
-      head: 4596a360257a3f659d2a260b4cb00b22d0ffa94c
-      lean_files: 78
-      lines: 7046
-      non_test_files: 47
-      non_test_lines: 5662
-      test_regression_files: 31
-      test_regression_lines: 1384
-    after_s1_bridge_before_final_merge:
-      status: stale-after-consolidation
-      note: rerun line/file metrics after S1 final integration; do not infer from the pre-consolidation count
 
 verified_main_history:
   mathematical_postmerge:
@@ -61,18 +51,16 @@ verified_main_history:
 
 s1_differential_verification:
   scientific_experiment_status: success
-  repository_integration_status: pending-public-transition-and-final-head-ci
+  repository_integration_status: pending-final-public-exact-head-ci
   protocol: problems/678/DIFFERENTIAL_VERIFICATION_PROTOCOL.md
   narrative_result: problems/678/S1_DIFFERENTIAL_VERIFICATION_RESULT.md
   machine_evidence: problems/678/DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml
   reproduction_script: problems/678/experiments/run_public_comparator_common_env.sh
-  ci_provenance_correction: problems/678/CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md
   successful_run:
     id: 32028006457
     job_id: 95381414710
     event: push
     exact_experiment_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
-    checkout_log_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
     result: success
     canonical_import_check: no-update-necessary
     canonical_build_jobs: 8808
@@ -87,19 +75,7 @@ s1_differential_verification:
     - natural-factor strong theorem lifted to every real C >= 1
     - pinned current public comparator source compiled unchanged in internal pinned environment
     - matched selected-endpoint axiom footprint equals propext/Classical.choice/Quot.sound
-    - successful S1 run has exact execution provenance because push checkout log equals experiment head
-  semantic_consolidation_from_pr23:
-    source_pr: 23
-    source_head: ea51d716074961ea1ba573045790532f79855cef
-    source_ci_run: 32034003110
-    source_ci_result: success
-    concepts_consolidated_into_authoritative_s1_bridge:
-      - unbounded block lengths admitting a valid pair
-      - infinitude of block lengths admitting a valid pair
-    final_authoritative_names:
-      - Formalization.Erdos678.erdos678_valid_pair_lengths_unbounded
-      - Formalization.Erdos678.erdos678_valid_pair_good_lengths_infinite
-    note: final PR22 head still requires corrected canonical CI after public transition restores runnable Actions
+    - successful S1 experiment has exact execution provenance because push checkout log equals experiment head
   limitations:
     - no architecture superiority claim
     - no controlled performance comparison yet
@@ -108,15 +84,8 @@ s1_differential_verification:
 
 external_comparator:
   repository: plby/lean-proofs
-  formal_authors:
-    - Aristotle
-    - Boris Alexeev
+  formal_authors: [Aristotle, Boris Alexeev]
   mathematical_author: Stijn Cambie
-  formal_conjectures_historical_pin:
-    commit: 68da20b96673899166e94638f5a7fffeb7231d35
-    file: src/latest/ErdosProblems/Erdos678.lean
-    lean_version: 4.32.0
-    mathlib_version: v4.32.0
   common_environment_pin:
     commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
     file: src/latest/ErdosProblems/Erdos678.lean
@@ -125,48 +94,10 @@ external_comparator:
     source_header_mathlib_version: v4.33.0
     compiled_unchanged_in_internal_environment: true
     experiment_run: 32028006457
-  license_audit:
-    repository_visibility: public
-    github_repository_license_metadata: none-detected
-    vendored_into_project: false
-    reproduction_boundary: immutable-external-fetch-plus-blob-verification
-  imports:
-    - Mathlib
-    - PrimeNumberTheoremAnd.Consequences
-  pnt_boundary:
-    local_theorem: Erdos678.pi_alt
-    implementation: _root_.pi_alt
-  printed_axioms_common_environment:
-    Erdos678.main_theorem_expanded: [propext, Classical.choice, Quot.sound]
-    Erdos678.erdos_678: [propext, Classical.choice, Quot.sound]
-    Erdos678.erdos_678_kmn_infinite: [propext, Classical.choice, Quot.sound]
-    Erdos678.not_erdos_678_fc: [propext, Classical.choice, Quot.sound]
-    Erdos678.not_erdos_678_other: [propext, Classical.choice, Quot.sound]
-
-internal_axiom_audit_common_environment:
-  Erdos678.cambie_lcm_ratio_eventually_with_large_start_real: [propext, Classical.choice, Quot.sound]
-  Erdos678.erdos678_formalConjectures_eventual_nonempty: [propext, Classical.choice, Quot.sound]
-  Erdos678.erdos678_unbounded_witnesses: [propext, Classical.choice, Quot.sound]
-  Erdos678.erdos678_good_lengths_infinite: [propext, Classical.choice, Quot.sound]
-
-formal_conjectures:
-  repository: google-deepmind/formal-conjectures
-  comparison_commit: 398958d3964d738886bd24433918c365df4a2aab
-  file: FormalConjectures/ErdosProblems/678.lean
-  status: research-solved
-  repository_license: Apache-2.0
-  linked_formal_proof:
-    repository: plby/lean-proofs
-    commit: 68da20b96673899166e94638f5a7fffeb7231d35
-  recorded_readings:
-    - eventual-nonempty-pairs
-    - infinitely-many-triples
-    - not-infinitely-many-pairs-for-fixed-k-reading
-  internal_machine_checked_bridge: Formalization.Erdos678.erdos678_formalConjectures_eventual_nonempty
+  redistribution_boundary: immutable-external-fetch-non-vendored-license-not-detected
 
 verification_credit_audit:
-  status: correction-recorded-workflow-hardened-awaiting-final-runnable-ci
-  finding: pull-request-head-metadata-does-not-prove-literal-head-checkout
+  status: correction-recorded-workflow-hardened-awaiting-final-public-ci
   audited_example:
     run: 32033822601
     pr_head_metadata: 610d525145a8129d345a1d3ce6a6b41809e3d1f8
@@ -178,42 +109,22 @@ verification_credit_audit:
     permissions: contents-read
     persist_credentials: false
     external_actions_pinned_by_commit_sha: true
-  current_actions_blocker:
-    classification: github-billing-or-spending-limit-while-private
-    proof_failure: false
-    jobs_started: false
-    observed_runs:
-      - 32036454657
-      - 32036454660
-    intended_resolution: user-authorized-public-repository-transition
 
-public_release_preflight:
-  status: complete-awaiting-owner-license-and-user-visibility-switch
-  audit_file: problems/678/PUBLIC_RELEASE_AUDIT_2026-08-17.md
-  license_audit_file: problems/678/PUBLICATION_READINESS_LICENSE_AUDIT.md
-  third_party_notices: THIRD_PARTY_NOTICES.md
-  user_authorized_public_visibility_preparation: true
-  repository_visibility_at_checkpoint: private
-  project_owned_license: undecided
-  current_tree_secret_audit:
-    known_common_credential_blocker_found: false
-    private_key_marker_found: false
-    historical_exhaustiveness_guaranteed: false
-  representative_actions_log_audit:
-    unmasked_credential_observed: false
-    authentication_rendered_masked: true
-  preventive_controls:
-    root_gitignore_added: true
-    workflow_least_privilege: true
-    persisted_checkout_credentials_disabled: true
-    action_dependencies_sha_pinned: true
-  third_party_license_metadata:
-    mathlib4: Apache-2.0
-    PrimeNumberTheoremAnd: Apache-2.0
-    formal_conjectures: Apache-2.0
-    public_comparator: none-detected
-  public_exposure_inventory:
-    note: existing problem directories and retained agent branches will become visible; their mathematics was not activated or audited under DEC-012
+public_transition:
+  status: complete
+  api_verified_visibility: public
+  api_verified_license: Apache-2.0
+  private_billing_blocker: resolved-by-public-transition
+  diagnostic_run_after_transition:
+    id: 32043331012
+    classification: runner-availability-diagnostic-not-final-integration-credit
+    observed_progress:
+      - setup-success
+      - checkout-success
+      - verified-commit-step-success
+      - canonical-build-started
+  rulesets_detected_immediately_after_transition: false
+  protection_followup: configure-or-verify-main-protection-in-github-ui-before-outside-contributions
 
 regressions:
   positive_witness:
@@ -243,7 +154,7 @@ allowed_external_claims:
   - machine-checked normalization to Formal Conjectures interval/eventual-existence semantics
   - real-factor C >= 1 bridge matching public strong-theorem parameter domain
   - matched selected-endpoint standard-axiom footprint under one pinned environment
-  - longitudinal AI-assisted scientific-production case study including verification-credit correction and public-release preflight
+  - longitudinal AI-assisted scientific-production case study including verification-credit correction and public-release closure
 
 claims_requiring_new_experiments:
   - easier maintenance than the public comparator
@@ -263,15 +174,14 @@ forbidden_or_unsupported_claims:
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S1-public-transition-integration
-  requirement: owner project-license decision; user public visibility switch; corrected commit-explicit canonical PR run; post-merge main verification
-  blocker: project-owned license undecided and repository still private with Actions billing/spending blocker
+  stage: S1-integration
+  requirement: corrected commit-explicit canonical run on actual final PR22 head followed by post-merge main verification
+  blocker: none-infrastructure; awaiting-final-ci
   s2_authorized_to_start_before_s1_integration: false
 
 privacy_and_reproducibility:
-  repository_visibility_at_checkpoint: private
-  public_visibility_preparation_authorized: true
-  public_visibility_switch_executed: false
+  repository_visibility: public
+  project_owned_license: Apache-2.0
   publish_hidden_chain_of_thought: false
   process_data_policy: >-
     Publish externally observable hypotheses, actions, artifacts, commits, CI results,
@@ -280,4 +190,4 @@ privacy_and_reproducibility:
 transition_gate:
   decision: DEC-012
   new_erdos_problem_authorized: false
-  allowed_scope: scientific comparison, reproducibility analysis, publication/upstream preparation, public-release preparation, and AI-process analysis on archived #678 only
+  allowed_scope: scientific comparison, reproducibility analysis, publication/upstream preparation, public-artifact integration, and AI-process analysis on archived #678 only
