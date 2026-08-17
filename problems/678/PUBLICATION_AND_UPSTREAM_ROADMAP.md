@@ -35,7 +35,7 @@ S2a's durable result is `S2_DEPENDENCY_SURFACE_BASELINE.md/.json`. It establishe
 
 S2a closed through PR #28 and closure PR #29. Closure merge `c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5` passed run `32050862725`, job `95449629511`, with matching `verified_commit`, `No update necessary`, and 8808 jobs.
 
-### S2b — controlled build behavior — EXECUTED / VALIDATED / PENDING INTEGRATION
+### S2b — controlled build behavior — CLOSED / VERIFIED
 
 Protocol: `S2_BUILD_BEHAVIOR_PROTOCOL.md`.
 
@@ -91,9 +91,26 @@ Directions are consistent in all six replicates. Internal/comparator user-CPU ra
 
 A causal explanation—modular process/file overhead versus monolithic elaboration cost—is plausible but remains an inference for later work.
 
-### S2c — repair locality — NEXT AFTER S2b INTEGRATION
+#### Integration evidence
+
+PR #30 exact head `e52e85d9b328a9cbc2349a6b61e23187dcc72fb5` passed canonical run `32055813783`. It merged as `c9900f9e2590f3101fc24f3f894f43b6fcf4e03c`; the exact merge commit passed post-merge run `32058421851`, job `95473817638`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
+
+The substantive S2b evidence is therefore integrated and machine-verified. This documentation-only closure synchronization is the final DEC-008 bookkeeping gate before S2c activation.
+
+### S2c — repair locality — NEXT
 
 Apply matched bounded mutations at carefully selected project-owned interfaces and measure the repair surface: touched project-owned modules, declarations, lines, proof obligations, and dependency-support involvement. Predefine mutations and success criteria before observing repair behavior. Do not use S2b timing differences as a proxy for maintenance cost.
+
+S2c must begin with a predeclared protocol that fixes at least:
+
+- the exact internal and comparator commits/blobs used as immutable baselines;
+- mutation families and semantic intent before observing repair effort;
+- a matched mutation contract so both artifacts are perturbed at comparable logical interfaces rather than arbitrary line locations;
+- what counts as a successful repair and what files/modules may be touched;
+- project-owned versus third-party/dependency-support attribution;
+- repair metrics: changed project-owned files/modules, changed lines, declarations/proof obligations touched, build failures encountered, and verification steps;
+- rules for abandoned/non-comparable mutations and failure classification;
+- machine-readable evidence and exact commit provenance.
 
 ### S2d — semantic mutation resistance — PLANNED
 
@@ -139,7 +156,7 @@ The comparator remains an immutable external fetch rather than vendored material
 
 ## Claim ladder
 
-**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; direct `prime_between` boundary; machine-checked statement bridges; unchanged public-comparator compilation; matching selected standard-axiom footprint; public Apache-2.0 artifact; S1 differential verification; S2a boundary-sensitive structural baseline; S2b six-replicate common-environment build/resource baseline.
+**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; direct `prime_between` boundary; machine-checked statement bridges; unchanged public-comparator compilation; matching selected standard-axiom footprint; public Apache-2.0 artifact; S1 differential verification; S2a boundary-sensitive structural baseline; S2b six-replicate common-environment build/resource baseline with exact-head and post-merge verification.
 
 **Supported interpretation:** independent formal replication has differential-verification value; execution provenance and metric-boundary auditing are scientifically relevant; under the recorded S2b environment the artifacts exhibit different CPU/memory profiles without a stable wall-time winner.
 
@@ -153,8 +170,8 @@ The comparator remains an immutable external fetch rather than vendored material
 - **S1:** COMPLETE / VERIFIED.
 - **S2:** ACTIVE.
   - **S2a:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
-  - **S2b:** EXECUTED / VALIDATED / PENDING PR INTEGRATION.
-  - **S2c:** NOT STARTED; next only after S2b merge + post-merge verification.
+  - **S2b:** COMPLETE / INTEGRATED / POST-MERGE VERIFIED; closure synchronization in progress.
+  - **S2c:** NOT STARTED; next after this closure synchronization is integrated and verified.
   - **S2d:** NOT STARTED.
   - **S2e:** NOT STARTED.
   - **S2f:** NOT STARTED.
