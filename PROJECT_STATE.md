@@ -2,189 +2,190 @@
 
 > **Operational checkpoint synchronized on 2026-08-17.**
 >
-> **Erdős Problem #678 is complete, machine-checked, integrated into `main`, post-merge verified, and archived as a completed benchmark.**
+> **Erdős Problem #678 mathematics is complete, machine-checked, integrated into `main`, post-merge verified, and archived. The only authorized active work is scientific evaluation and public-artifact integration of that archived result.**
 >
-> - D4 final reachable repair: `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, run `31963803495` — **SUCCESS**, **8766 jobs**.
-> - E1 mathematical exit: `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909` — **SUCCESS**, **8770 jobs**.
-> - E2 prime-density exit: `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856` — **SUCCESS**, **8800 jobs**.
-> - E3 strong Cambie exit: `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891` — **SUCCESS**, **8804 jobs**.
-> - E4 mathematical exit: `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757` — **SUCCESS**, **8806 jobs**.
-> - Final synchronized E4 head: `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`, run `31977861568` — **SUCCESS**, `No update necessary`, **8806 jobs**.
-> - Mathematical integration: PR #17 merged into `main` as `8fd1b20541ac7782f52429db3a2cc4c887547372` on 2026-08-17.
-> - Post-merge mathematical verification: run `32011189766` — **SUCCESS**, `No update necessary`, full build **8806 jobs**.
-> - Archival documentation synchronization: PR #18 exact head `4c5a305c8756c5dc0d8e5545825a87d48a438965`, run `32013917788` — **SUCCESS**; merged into `main` as `755c9601816fbbd7e2181a2e56c34f28667ceb67`.
->
-> **User gate:** per explicit instruction on 2026-08-17, no other Erdős problem may be selected, activated, resumed, researched, or formalized until the user explicitly authorizes the transition.
+> **No other Erdős problem may be selected, activated, resumed, researched, or formalized without explicit user authorization (`DEC-012`).**
 
-This file is the authoritative operational restart checkpoint. Mathematical credit comes from exact reachable Lean builds, not from source presence or GitHub metadata alone.
+This file is the authoritative restart checkpoint. Proof/CI credit must be tied to the repository tree actually executed, not inferred from file presence or GitHub metadata alone.
 
-## Global operating rules
-
-- `DEC-011` supersedes `DEC-004`: `main` is the stable integration branch; substantive work uses a dedicated branch and pull request.
-- `DEC-012` requires explicit user authorization before any transition from archived #678 to another Erdős problem.
-- Do not merge a mathematical change unless canonical Lean CI is green for the credited pull-request head.
-- State documents must agree with the reachable Lean graph and credited CI evidence.
-- Do not treat a file name, source presence, GitHub metadata, or an AI-generated argument as proof by itself.
-- Distinguish external problem status, project reconstruction, independent discovery, and machine verification.
-- Preserve rejected paths, negative regressions, contamination events, and revoked claims.
-- For interval arguments, endpoints and length remain explicit mathematical data.
-- A Lean module is live only when the canonical aggregator reaches it and the build succeeds.
-
-## Current project
+## Current state
 
 ```yaml
 current_problem: 678
 current_phase: archived
-current_stage: complete-integrated-main-verified-awaiting-user-authorization
+current_stage: scientific-evaluation-s1-public-integration
 current_mode: external-proof-reconstruction
 blind_mode: false
 reference_solution_accessed: true
 proof_frozen: true
 
 external_problem_status: proved
+mathematical_author: Stijn-Cambie
 project_reconstruction_status: proved-machine-checked-integrated-main-verified
+project_formalization_classification: independent-lean-reimplementation
 independent_attempt_status: rejected
-reference_proof: Cambie-2024
-reference_understanding_status: reconstructed-through-final-index-translation
+first_formalization_claim: false
+new_mathematical_proof_claim: false
 
-current_target: await-explicit-user-authorization-before-any-new-problem
-small_prime_claim5_status: machine-checked
-full_claim5_status: machine-checked
-claim4_status: machine-checked
-lcm_ratio_status: machine-checked-eventually-for-every-positive-C
-full_erdos678_formalization_status: proved-machine-checked-integrated-main-verified
+scientific_evaluation_authorized: true
+scientific_evaluation_scope: erdos678-only
+scientific_dossier_main_baseline: 0d8287bc5fcc41ed4dc7ea68e5d27cd0091b8d5e
+current_target: close-s1-public-integration
 
-premerge_canonical_ci_run: 31977861568
-premerge_canonical_ci_commit: eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f
-premerge_canonical_build_jobs: 8806
-main_integration_commit: 8fd1b20541ac7782f52429db3a2cc4c887547372
-main_postmerge_ci_run: 32011189766
-main_postmerge_ci_status: success
-main_postmerge_build_jobs: 8806
-archival_docs_pr: 18
-archival_docs_pr_head: 4c5a305c8756c5dc0d8e5545825a87d48a438965
-archival_docs_pr_ci_run: 32013917788
-archival_docs_pr_ci_status: success
-archival_docs_merge_commit: 755c9601816fbbd7e2181a2e56c34f28667ceb67
-build_graph_audit: mk-all-check-passed-postmerge-main
-ci_blocker: none
-phase_e_gate: closed
+s1_scientific_experiment_status: success
+s1_experiment_run: 32028006457
+s1_experiment_job: 95381414710
+s1_experiment_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
+s1_canonical_build_jobs: 8808
+s1_public_comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+s1_public_comparator_compiled_unchanged_in_internal_environment: true
+s1_matched_axiom_footprint: propext-Classical.choice-Quot.sound
+s1_repository_integration_status: pending-final-public-exact-head-ci
+
+ci_provenance_audit_status: correction-recorded
+historical_pr_checkout_issue: default-pull-request-checkout-may-build-synthetic-merge-ref
+canonical_workflow_repair: explicit-pr-head-checkout-plus-git-rev-parse-head
+public_ci_hardening: contents-read-only-persist-credentials-false-actions-pinned-by-sha
+
+public_visibility_preparation_authorized_by_user: true
+repository_visibility_at_checkpoint: public
+public_transition_verified_by_api: true
+public_transition_effect: github-hosted-actions-runners-start-again
+public_transition_diagnostic_run: 32043331012
+public_transition_diagnostic_run_status_at_sync: in-progress
+private_billing_blocker_status: resolved-by-public-transition
+project_license_status: apache-2.0-selected-and-committed-on-main
+project_license_file: LICENSE
+third_party_notices_status: created
+secret_audit_status: no-known-secret-blocker-on-audited-surfaces-with-stated-limitations
+repository_rulesets_at_public_transition: none-detected
+
+s2_status: not-started
+s3_status: not-started
+s4_status: not-started
+s5_status: not-started
 user_transition_gate: explicit-authorization-required
-next_action: await explicit user authorization; do not select, activate, resume, research, or formalize another Erdős problem
+next_action: complete a fresh corrected canonical CI run on the actual final PR22 head; merge only if green; verify main; close S1 before S2; separately configure main branch/ruleset protection in GitHub UI
 ```
 
-## Trusted machine-checked result for Erdős #678
+## Governing rules
 
-The reachable formal graph proves the complete canonical infinite-family conclusion.
+- `DEC-011`: `main` is the stable integration branch; substantive work uses branch/PR workflow.
+- `DEC-012`: completion of #678 does not authorize work on another problem.
+- A theorem file is live only if reachable from the canonical `Formalization` build graph.
+- `lake exe mk_all --check` and the full Lean build are part of canonical verification.
+- Pull-request verification credit must identify the commit actually checked out. `head_sha` metadata alone is not literal exact-head proof.
+- Infrastructure failures must be separated from proof failures.
+- Mathematical provenance, formal-verification status, scientific novelty, and redistribution rights are independent labels.
+- Rejected paths and negative regressions remain part of the scientific record.
+- State/roadmap/README synchronization is required before advancing a project stage.
+- Public visibility does not relax proof, attribution, provenance, or licensing gates.
 
-### Arithmetic, Claim 5, and Claim 4 / Phase D
+## Mathematical #678 checkpoint — closed
 
-Machine-checked components include:
+The final reachable graph proves the complete canonical conclusion through:
 
-- length-based consecutive intervals and canonical `erdosM`;
-- the valid finite witness `M(36,8) > M(47,9)`;
-- the rejected `(495,504,8)` candidate retained as a negative regression;
-- finite-product, finite-LCM, reciprocal-LCM, and prime-power valuation primitives;
-- Claim 5 in all prime ranges and the assembled natural-number identity;
-- finite density, modular and weighted CRT arguments;
-- pair/triple CRT-basis producers and exact residue boxes;
-- constructed scales, factorizations, dependent placement, target windows, and sharp prime-window budgets.
+- `cambie_lcm_ratio_eventually_with_large_start`;
+- `erdos678_unbounded_witnesses`;
+- `erdos678_good_lengths_infinite`.
 
-### E1 — quantitative LCM-ratio estimate — PASSED
+The project pins
 
-The graph proves exact interval-LCM divisibility into the interval product, cancellation-safe cross multiplication, product comparison, and strict transfer from product inequalities to LCM inequalities.
+`AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`
 
-E1 exit: `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909`.
+and derives the application-specific relative-prime provider directly from its kernel-checked `prime_between` theorem. No custom prime-density axiom remains in the credited theorem.
 
-### E2 — sharp prime density — PASSED
+Key closed checkpoints include:
 
-No opaque prime-existence hypothesis remains. The proof pins `AxiomMath/PrimeNumberTheoremAnd` at revision `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`, derives a natural-number relative-prime provider from its kernel-checked `prime_between` consequence, and converts that provider to the five required additive strips.
-
-E2 exit: `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856`.
-
-No custom prime-density axiom is introduced.
-
-### E3 — strong eventual Cambie theorem — PASSED
-
-The elementary large-`k` condition is discharged with
-
-`claim4CambieLargeKThreshold C = max 9 (3840*C + 3)`
-
-and combined with the PNT threshold in `cambie_lcm_ratio_eventually`.
-
-E3 exit: `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891`.
-
-### E4 — canonical Erdős #678 theorem — PASSED
-
-`Erdos678Final.lean` performs the off-by-one-safe translation from interval starts to canonical variables. In particular:
-
-- `claim4_cambie_k_lt_x_of_bounds` recovers `k < x` from verified bounds;
-- `cambie_lcm_ratio_eventually_with_large_start` retains sufficient start information;
-- `erdos678_unbounded_witnesses` proves that for every `B : ℕ` there exist `n m k` with `B ≤ k`, `3 ≤ n,m,k`, `n+k ≤ m`, and `erdosM m (k+1) < erdosM n k`;
-- `erdos678_good_lengths_infinite` proves that the set of valid block lengths is infinite.
-
-E4 mathematical exit: `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757`.
-
-Final synchronized E4 head: `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`, run `31977861568`.
-
-## Integration and archival state
-
-PR #17, `agent/erdos678-e4-index-translation-20260816` → `main`, was merged on 2026-08-17 as merge commit `8fd1b20541ac7782f52429db3a2cc4c887547372`.
-
-The exact mathematical merge commit then passed Lean Verification run `32011189766`: `lake exe mk_all --check` reported `No update necessary`, and the full reachable graph completed successfully in **8806 jobs**. The build reached the PNT bridge, `CambieStrongTheorem`, `Erdos678Final`, its regression module, and the top-level `Formalization` target.
-
-PR #18 synchronized the archival documentation only. Its exact head `4c5a305c8756c5dc0d8e5545825a87d48a438965` passed Lean Verification run `32013917788` and was merged into `main` as `755c9601816fbbd7e2181a2e56c34f28667ceb67`.
-
-The previous stacked checkpoint PRs #7–#12 and #14–#16 were closed after integration because their content is preserved in the merged history. PR #13, the diagnostic-only compatibility probe, was also closed after archival cleanup.
-
-**Archival classification:** #678 is complete. There is no remaining mathematical, analytic, CI, or integration gate for this benchmark.
-
-No mathematical layer should be reopened unless a concrete regression is found.
-
-## Verification chronology
-
-| Substep | Exact head | Canonical run | Result |
+| Stage | Commit | Run | Result |
 |---|---|---:|---|
-| D4 final reachable repair | `eb5ffebffcb199cc76c83a941da955f4ecfebde5` | `31963803495` | SUCCESS, 8766 jobs |
-| E1 mathematical exit | `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a` | `31968714909` | SUCCESS, 8770 jobs |
-| E2c five-strip arithmetic | `81cf4b2303a4a93bf30d2fcb322b810c754530f3` | `31972724132` | SUCCESS, 8774 jobs |
-| E3a elementary growth | `58b870511588e6f9100443d2250024031bfaa3fd` | `31974295910` | SUCCESS, 8776 jobs |
-| E2d provider→five-strips | `14c9e5e8df00de4e129d142e472b3c9d91fd1c00` | `31975082883` | SUCCESS, 8778 jobs |
-| E2 PNT exit | `6d06401bd2ee3aca116fd4ac592bf14d5e43694c` | `31975809856` | SUCCESS, 8800 jobs |
-| E3 strong Cambie exit | `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94` | `31975821891` | SUCCESS, 8804 jobs |
-| E4 mathematical exit | `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941` | `31976903757` | SUCCESS, 8806 jobs |
-| E4 synchronized documentation head | `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f` | `31977861568` | SUCCESS, 8806 jobs |
+| E2 PNT closure | `6d06401bd2ee3aca116fd4ac592bf14d5e43694c` | `31975809856` | SUCCESS, 8800 jobs |
+| E3 strong Cambie | `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94` | `31975821891` | SUCCESS, 8804 jobs |
+| final synchronized E4 | `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f` | `31977861568` | SUCCESS, 8806 jobs |
 | mathematical merge on `main` | `8fd1b20541ac7782f52429db3a2cc4c887547372` | `32011189766` | SUCCESS, `No update necessary`, 8806 jobs |
-| archival documentation PR #18 | `4c5a305c8756c5dc0d8e5545825a87d48a438965` | `32013917788` | SUCCESS |
+| scientific dossier baseline | `0d8287bc5fcc41ed4dc7ea68e5d27cd0091b8d5e` | `32026434043` | SUCCESS |
 
-Red intermediate runs are diagnostic only and do not supersede later exact-head green checkpoints.
+The earlier independent route remains rejected because it used the false scaling identity `M(t*n,k)=t*M(n,k)` and later a wrong interval in a `Q=P/M` construction. The valid witness `M(36,8)>M(47,9)` and the machine-refuted `(495,504,8)` candidate remain regression evidence.
 
-## Exact boundary after archival
+## S1 — differential verification
 
-The mathematical reconstruction of Erdős #678 is complete, machine-checked, integrated, and verified on `main`. There is no known mathematical or analytic gap in the formalized proof chain.
+### Executed scientific experiment — SUCCESS
 
-Still deliberately not claimed:
+Run `32028006457`, job `95381414710`, executed on exact push head
 
-- a generic arbitrary-cardinality CRT-basis theorem; only the pair/triple arities needed by Cambie's argument are formalized;
-- that the earlier independent proof attempt was valid. It remains rejected because it used the false scaling identity `M(t*n,k) = t*M(n,k)` and later a wrong interval in a `Q=P/M` construction.
+`b1e3fc60f6dc4f125a125121a2abbcf3610ed749`.
+
+It established that:
+
+- `mk_all --check` reported `No update necessary`;
+- the internal canonical graph built successfully in 8808 jobs;
+- the statement bridge was reachable;
+- `plby/lean-proofs@6f906fef432892db5c910c48ad1a3728dd42cdac` was fetched with source-blob verification and its public `Erdos678.lean` compiled unchanged in our pinned Lean 4.33 / Mathlib / PNT+ environment;
+- selected endpoints on both sides printed only `[propext, Classical.choice, Quot.sound]`.
+
+Machine-checked S1 bridge results include:
+
+- length-based intervals equal the public `Finset.Ioc n (n+k)` semantics;
+- our theorem derives the Formal-Conjectures-style eventual-nonempty valid-pair statement;
+- valid block lengths are exposed through unbounded/infinite semantic endpoints;
+- the natural-factor strong theorem is lifted to every real `C ≥ 1`, with a `C=3/2` regression.
+
+This is differential-verification evidence, not a priority or architecture-superiority claim.
+
+### Verification-credit correction
+
+Audit of historical PR run `32033822601` found that PR metadata exposed head `610d525...` while the actual default checkout built synthetic integration-tree commit `5983f901...`. That run remains valid integration-tree evidence, not literal PR-head evidence.
+
+The active S1 workflow therefore:
+
+- checks out `${{ github.event.pull_request.head.sha || github.sha }}` explicitly;
+- records `git rev-parse HEAD`;
+- uses `permissions: contents: read`;
+- sets `persist-credentials: false`;
+- pins external GitHub Actions by commit SHA.
+
+## Public transition — completed
+
+The owner selected Apache License 2.0 and the license-only PR #26 merged it to `main` at
+
+`87cf560451ef5aa4714069d52a3851c1f8547f70`.
+
+The user then changed `scientifica007/Erdos_Solving` to **Public**. GitHub API verification reported:
+
+- `private: false` / `visibility: public`;
+- repository license metadata: `Apache-2.0`;
+- `LICENSE` readable on `main`;
+- the Lean Verification workflow active;
+- no repository rulesets detected at the transition checkpoint.
+
+The private-repository billing blocker is therefore historical. Reopening PR #22 after the visibility change launched run `32043331012`, whose job reached checkout, commit recording, and the canonical Lean build rather than failing before the first step. This confirms runner availability was restored.
+
+The current task is not to credit that diagnostic run as the final S1 gate after further documentation synchronization. A new run must verify the **actual final PR #22 head** after this synchronization.
+
+## S1 durable artifacts
+
+- `formalization/Formalization/Erdos678/ExternalStatementBridge.lean`
+- `formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean`
+- `problems/678/DIFFERENTIAL_VERIFICATION_PROTOCOL.md`
+- `problems/678/S1_DIFFERENTIAL_VERIFICATION_RESULT.md`
+- `problems/678/DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml`
+- `problems/678/CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md`
+- `problems/678/AI_CASE_EPISODE_VERIFICATION_CREDIT_DRIFT.md`
+- `problems/678/PUBLICATION_READINESS_LICENSE_AUDIT.md`
+- `problems/678/PUBLIC_RELEASE_AUDIT_2026-08-17.md`
+- `problems/678/experiments/run_public_comparator_common_env.sh`
+- `problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml`
+- `problems/678/PUBLICATION_AND_UPSTREAM_ROADMAP.md`
+- `LICENSE`
+- `THIRD_PARTY_NOTICES.md`
 
 ## Required restart sequence
 
-1. Verify the exact head of `main` and the latest relevant Lean CI evidence.
-2. Read this file before taking any new project action.
-3. Treat #678 as archived; do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
-4. Preserve the pinned PNT+ revision and all positive/negative regressions.
-5. **Stop here unless the user explicitly authorizes moving to another Erdős problem.**
-6. Only after explicit authorization may a new benchmark be selected or resumed under the repository research-state protocol.
-
-## Completed benchmark outcomes
-
-- #18: known sub-result `h(n!) ≤ n-1` independently reconstructed; parent problem not solved.
-- #214: candidate retracted; restart incomplete; blind phase later terminated by contamination.
-- #225: inactive with no candidate proof; blind boundary remains intact if resumed.
-- #246: paused because the copied benchmark statement is defective.
-- #275: independent proof audited and frozen before reference access; equivalent core mechanism to the reference proof.
-- #303: blind attempt incomplete; Brown–Rödl reference comparison completed.
-- #447: contaminated challenge; not an active blind benchmark.
-- #678: **Cambie reconstruction complete, machine-checked, integrated into `main`, post-merge verified, and archived.**
-- #1125: blind proof attempt failed; historical/modern reconstruction completed.
+1. Verify `main`, repository visibility, and active PR #22 head.
+2. Read this file plus the S1 result/evidence/public-release audit.
+3. Treat #678 mathematics as frozen/archived.
+4. Do not start S2 until S1 persistent-artifact integration closes.
+5. Run the hardened canonical gate on the actual final PR #22 head and inspect the checked-out commit.
+6. Merge only if green; then verify the resulting `main` head.
+7. Configure/verify `main` protection in the GitHub UI before accepting outside contributions; no ruleset was detected immediately after the public transition.
+8. **Do not select, activate, resume, research, or formalize another Erdős problem without explicit user authorization.**

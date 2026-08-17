@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 4
 snapshot_date: 2026-08-17
 scope: erdos-678-only
 
@@ -13,9 +13,11 @@ classification:
 
 internal_artifact:
   repository: scientifica007/Erdos_Solving
-  comparison_head: 4596a360257a3f659d2a260b4cb00b22d0ffa94c
+  visibility: public
+  license: Apache-2.0
+  license_main_commit: 87cf560451ef5aa4714069d52a3851c1f8547f70
   mathematical_merge_commit: 8fd1b20541ac7782f52429db3a2cc4c887547372
-  final_premerge_mathematical_head: eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f
+  scientific_dossier_merge_commit: 0d8287bc5fcc41ed4dc7ea68e5d27cd0091b8d5e
   lean_version: 4.33.0
   mathlib_version: v4.33.0
   pnt_dependency:
@@ -27,140 +29,132 @@ internal_artifact:
     - Formalization.Erdos678.cambie_lcm_ratio_eventually_with_large_start
     - Formalization.Erdos678.erdos678_unbounded_witnesses
     - Formalization.Erdos678.erdos678_good_lengths_infinite
-  architecture_metrics:
-    directory: formalization/Formalization/Erdos678
-    lean_files: 78
-    lines: 7046
-    non_test_files: 47
-    non_test_lines: 5662
-    test_regression_files: 31
-    test_regression_lines: 1384
-    metric_method: >-
-      Summed GitHub per-file additions for all current Formalization/Erdos678/*
-      files in comparison c5689514feaa3469b9234f5f79f76a61474d56a1...
-      4596a360257a3f659d2a260b4cb00b22d0ffa94c. Test classification uses
-      dedicated *Tests.lean files plus ConcreteTests.lean and SmallPrimeTests.lean.
-  verification:
-    final_e4_run:
-      id: 31977861568
-      status: success
-      jobs: 8806
-    postmerge_mathematical_run:
-      id: 32011189766
-      status: success
-      jobs: 8806
-    final_postmortem_exact_head_run:
-      id: 32019975193
-      status: success
-    final_postmortem_postmerge_run:
-      id: 32021192337
-      status: success
-  regressions:
-    positive_witness:
-      n: 36
-      m: 47
-      k: 8
-      property: M(36,8) > M(47,9)
-      status: machine-checked
-    rejected_candidate:
-      tuple: [495, 504, 8]
-      status: machine-refuted-retained
-    historical_failure_classes:
-      - false-scaling-generalization
-      - interval-index-off-by-one
-      - finite-witness-to-infinitude-overreach
-      - interface-information-loss
-      - documentation-state-drift
+  s1_comparison_endpoints:
+    - Formalization.Erdos678.intervalFinset_succ_eq_Ioc
+    - Formalization.Erdos678.erdosM_eq_Ioc_lcm
+    - Formalization.Erdos678.erdos678_eventually_nonempty_pairs
+    - Formalization.Erdos678.erdos678_formalConjectures_eventual_nonempty
+    - Formalization.Erdos678.erdos678_valid_pair_lengths_unbounded
+    - Formalization.Erdos678.erdos678_valid_pair_good_lengths_infinite
+    - Formalization.Erdos678.cambie_lcm_ratio_eventually_with_large_start_real
+
+verified_main_history:
+  mathematical_postmerge:
+    commit: 8fd1b20541ac7782f52429db3a2cc4c887547372
+    run: 32011189766
+    result: success
+    jobs: 8806
+  scientific_dossier_postmerge:
+    commit: 0d8287bc5fcc41ed4dc7ea68e5d27cd0091b8d5e
+    run: 32026434043
+    result: success
+
+s1_differential_verification:
+  scientific_experiment_status: success
+  repository_integration_status: pending-final-public-exact-head-ci
+  protocol: problems/678/DIFFERENTIAL_VERIFICATION_PROTOCOL.md
+  narrative_result: problems/678/S1_DIFFERENTIAL_VERIFICATION_RESULT.md
+  machine_evidence: problems/678/DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml
+  reproduction_script: problems/678/experiments/run_public_comparator_common_env.sh
+  successful_run:
+    id: 32028006457
+    job_id: 95381414710
+    event: push
+    exact_experiment_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
+    result: success
+    canonical_import_check: no-update-necessary
+    canonical_build_jobs: 8808
+    environment:
+      runner: Ubuntu-24.04
+      lean: 4.33.0
+      mathlib_resolved_revision: db584cd6d46c92f209a44c0f1c829460d327499d
+      pnt_revision: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+  verified_findings:
+    - canonical interval semantics formally aligned with Finset.Ioc public convention
+    - Formal-Conjectures-style eventual nonempty statement derived internally
+    - natural-factor strong theorem lifted to every real C >= 1
+    - pinned current public comparator source compiled unchanged in internal pinned environment
+    - matched selected-endpoint axiom footprint equals propext/Classical.choice/Quot.sound
+    - successful S1 experiment has exact execution provenance because push checkout log equals experiment head
+  limitations:
+    - no architecture superiority claim
+    - no controlled performance comparison yet
+    - no genealogical-independence proof
+    - no literal simultaneous import because both sources use namespace Erdos678
 
 external_comparator:
   repository: plby/lean-proofs
-  commit: 68da20b96673899166e94638f5a7fffeb7231d35
-  file: src/latest/ErdosProblems/Erdos678.lean
-  formal_authors:
-    - Aristotle
-    - Boris Alexeev
+  formal_authors: [Aristotle, Boris Alexeev]
   mathematical_author: Stijn Cambie
-  lean_version: 4.32.0
-  mathlib_version: v4.32.0
-  lines: 2535
-  layout: single-file
-  imports:
-    - Mathlib
-    - PrimeNumberTheoremAnd.Consequences
-  pnt_boundary:
-    local_theorem: Erdos678.pi_alt
-    implementation: _root_.pi_alt
-  printed_axioms:
-    Erdos678.main_theorem_expanded:
-      - propext
-      - Classical.choice
-      - Quot.sound
-    Erdos678.erdos_678:
-      - propext
-      - Classical.choice
-      - Quot.sound
-    Erdos678.erdos_678_kmn_infinite:
-      - propext
-      - Classical.choice
-      - Quot.sound
+  common_environment_pin:
+    commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+    file: src/latest/ErdosProblems/Erdos678.lean
+    blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+    source_header_lean_version: 4.33.0
+    source_header_mathlib_version: v4.33.0
+    compiled_unchanged_in_internal_environment: true
+    experiment_run: 32028006457
+  redistribution_boundary: immutable-external-fetch-non-vendored-license-not-detected
 
-formal_conjectures:
-  repository: google-deepmind/formal-conjectures
-  file: FormalConjectures/ErdosProblems/678.lean
-  status: research-solved
-  linked_formal_proof:
-    repository: plby/lean-proofs
-    commit: 68da20b96673899166e94638f5a7fffeb7231d35
-  recorded_readings:
-    - eventual-nonempty-pairs
-    - infinitely-many-triples
-    - not-infinitely-many-pairs-for-fixed-k-reading
+verification_credit_audit:
+  status: correction-recorded-workflow-hardened-awaiting-final-public-ci
+  audited_example:
+    run: 32033822601
+    pr_head_metadata: 610d525145a8129d345a1d3ce6a6b41809e3d1f8
+    actual_checked_out_commit: 5983f901358d8f82d85a425369d429cfa9475f96
+    classification: successful-integration-tree-verification
+  workflow_repair:
+    explicit_pr_head_checkout: true
+    records_git_rev_parse_head: true
+    permissions: contents-read
+    persist_credentials: false
+    external_actions_pinned_by_commit_sha: true
 
-primary_references:
-  cambie_2024:
-    title: Resolution of an Erdős' problem on least common multiples
-    arxiv: 2410.09138
-    url: https://arxiv.org/abs/2410.09138
-  formal_conjectures_2026:
-    title: Formal Conjectures: An Open and Evolving Benchmark for Verified Discovery in Mathematics
-    arxiv: 2605.13171
-    url: https://arxiv.org/abs/2605.13171
-  ai_proof_search_2026:
-    title: Advancing Mathematics Research with AI-Driven Formal Proof Search
-    arxiv: 2605.22763
-    url: https://arxiv.org/abs/2605.22763
-  lean_marathon_2026:
-    title: LeanMarathon: Toward Reliable AI Co-Mathematicians through Long-Horizon Lean Autoformalization
-    arxiv: 2606.05400
-    url: https://arxiv.org/abs/2606.05400
-  formal_science_2026:
-    title: FormalScience: Scalable Human-in-the-Loop Autoformalisation of Science with Agentic Code Generation in Lean
-    venue: ACL-2026
-    url: https://aclanthology.org/2026.acl-long.1057/
-  grasshopper_case_2026:
-    title: Using Aristotle API for AI-Assisted Theorem Proving in Lean 4: A Formalisation Case Study of the Grasshopper Problem
-    arxiv: 2605.20120
-    url: https://arxiv.org/abs/2605.20120
-  de_finetti_itp_2026:
-    title: Three Roads to de Finetti's Theorem in Lean 4
-    doi: 10.4230/LIPIcs.ITP.2026.34
-    url: https://doi.org/10.4230/LIPIcs.ITP.2026.34
+public_transition:
+  status: complete
+  api_verified_visibility: public
+  api_verified_license: Apache-2.0
+  private_billing_blocker: resolved-by-public-transition
+  diagnostic_run_after_transition:
+    id: 32043331012
+    classification: runner-availability-diagnostic-not-final-integration-credit
+    observed_progress:
+      - setup-success
+      - checkout-success
+      - verified-commit-step-success
+      - canonical-build-started
+  rulesets_detected_immediately_after_transition: false
+  protection_followup: configure-or-verify-main-protection-in-github-ui-before-outside-contributions
 
-community_sources:
-  erdos_problem_678: https://www.erdosproblems.com/678
-  erdos_678_discussion: https://www.erdosproblems.com/forum/thread/678
-  formalisation_discussion: https://www.erdosproblems.com/forum/thread/Formalisation
-  notable_public_remark: >-
-    Boris Alexeev states that #678 used pi_alt and that prime_between would have
-    been better, but he did not know it existed at the time.
+regressions:
+  positive_witness:
+    n: 36
+    m: 47
+    k: 8
+    property: M(36,8) > M(47,9)
+    status: machine-checked
+  rejected_candidate:
+    tuple: [495, 504, 8]
+    status: machine-refuted-retained
+  historical_failure_classes:
+    - false-scaling-generalization
+    - interval-index-off-by-one
+    - finite-witness-to-infinitude-overreach
+    - interface-information-loss
+    - documentation-state-drift
+    - verification-credit-drift
+    - public-artifact-release-boundary
 
 allowed_external_claims:
   - independent Lean reimplementation of Cambie's proof
   - machine-checked canonical Erdős #678 endpoint
   - direct prime_between-to-relative-prime-provider PNT interface
   - modular regression-heavy alternative proof architecture
-  - differential-verification candidate against the Aristotle/Alexeev artifact
-  - longitudinal AI-assisted scientific-production case study
+  - executed common-environment differential verification against pinned Aristotle/Alexeev source
+  - machine-checked normalization to Formal Conjectures interval/eventual-existence semantics
+  - real-factor C >= 1 bridge matching public strong-theorem parameter domain
+  - matched selected-endpoint standard-axiom footprint under one pinned environment
+  - longitudinal AI-assisted scientific-production case study including verification-credit correction and public-release closure
 
 claims_requiring_new_experiments:
   - easier maintenance than the public comparator
@@ -168,6 +162,7 @@ claims_requiring_new_experiments:
   - lower dependency coupling in practice
   - earlier semantic-drift detection in controlled tests
   - state protocol causally improves agent restart performance
+  - faster or more resource-efficient proof architecture
 
 forbidden_or_unsupported_claims:
   - new solution of Erdős #678
@@ -176,23 +171,17 @@ forbidden_or_unsupported_claims:
   - first unconditional PNT-backed Lean formalization of Erdős #678
   - autonomous AI authorship percentage
   - inferred token count or cost from git history
+  - proof of genealogical independence from public formalization
 
-missing_publication_grade_measurements:
-  - common-environment build of both formalizations
-  - normalized statement bridge between both artifacts
-  - matched axiom audit in one environment
-  - cold-and-warm build time and resource measurements
-  - dependency graph comparison
-  - edit-locality experiment
-  - mutation-testing comparison
-  - Mathlib-upgrade experiment
-  - independent human audit experiment
-  - model invocation count and cost history
-  - human attention time
+next_scientific_gate:
+  stage: S1-integration
+  requirement: corrected commit-explicit canonical run on actual final PR22 head followed by post-merge main verification
+  blocker: none-infrastructure; awaiting-final-ci
+  s2_authorized_to_start_before_s1_integration: false
 
 privacy_and_reproducibility:
-  repository_visibility: private
-  change_visibility_without_explicit_user_authorization: false
+  repository_visibility: public
+  project_owned_license: Apache-2.0
   publish_hidden_chain_of_thought: false
   process_data_policy: >-
     Publish externally observable hypotheses, actions, artifacts, commits, CI results,
@@ -201,4 +190,4 @@ privacy_and_reproducibility:
 transition_gate:
   decision: DEC-012
   new_erdos_problem_authorized: false
-  allowed_scope: scientific comparison, reproducibility analysis, and publication/upstream work on archived #678 only
+  allowed_scope: scientific comparison, reproducibility analysis, publication/upstream preparation, public-artifact integration, and AI-process analysis on archived #678 only

@@ -1,168 +1,168 @@
 # Erdős Problem #678 — Machine-Checked Cambie Reconstruction
 
-> **Current repository status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
-> The earlier independent attempt remains rejected. The completed result is an external-proof reconstruction and independent Lean reimplementation of Cambie (2024). The canonical operational sources are `PROJECT_STATE.md` and `LEAN_FORMALIZATION_ROADMAP.md`.
-> Per `DEC-012`, the project remains at this archived checkpoint until the user explicitly authorizes moving to another Erdős problem.
+> **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
+>
+> **Scientific-evaluation status: S1 differential-verification experiment SUCCESS; persistent-artifact integration PENDING final exact-head CI. The repository is now PUBLIC and project-owned material is licensed under Apache License 2.0.**
+>
+> The earlier independent attempt remains rejected. The successful result is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
-## Canonical statement
+## Canonical statement and final result
 
-Let `M(n,k) = lcm{n+1,...,n+k}`. Are there infinitely many `m,n,k ≥ 3` with `m ≥ n+k` such that `M(n,k) > M(m,k+1)`?
+Let
 
-The repository proves this conclusion in Lean.
+`M(n,k) = lcm{n+1,...,n+k}`.
 
-## Final formal theorem
+The repository proves the Erdős #678 conclusion in Lean through:
 
-`Erdos678Final.lean` contains:
+- `erdos678_unbounded_witnesses`: for every lower bound `B`, there exist canonical `n,m,k` with `B ≤ k`, `3 ≤ n,m,k`, `n+k ≤ m`, and `M(n,k) > M(m,k+1)`;
+- `erdos678_good_lengths_infinite`: the set of valid block lengths is infinite.
 
-- `erdos678_unbounded_witnesses`: for every lower bound `B : ℕ`, there exist `n,m,k` such that
-  - `B ≤ k`,
-  - `3 ≤ n`, `3 ≤ m`, `3 ≤ k`,
-  - `n + k ≤ m`, and
-  - `erdosM m (k+1) < erdosM n k`;
-- `erdos678_good_lengths_infinite`: the set of block lengths `k` admitting such canonical witnesses is infinite.
+The strong construction is formalized before specializing to the original problem.
 
-Thus the formalized conclusion is stronger than merely recording infinitely many unnamed triples: valid witnesses occur at unbounded block lengths.
+## Mathematical verification checkpoint
 
-## Verification and integration checkpoints
+| Checkpoint | Commit | Run | Result |
+|---|---|---:|---|
+| E2 PNT closure | `6d06401bd2ee3aca116fd4ac592bf14d5e43694c` | `31975809856` | SUCCESS, 8800 jobs |
+| E3 strong Cambie | `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94` | `31975821891` | SUCCESS, 8804 jobs |
+| final E4 synchronized head | `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f` | `31977861568` | SUCCESS, 8806 jobs |
+| mathematical merge on `main` | `8fd1b20541ac7782f52429db3a2cc4c887547372` | `32011189766` | SUCCESS, `No update necessary`, 8806 jobs |
+| scientific dossier baseline on `main` | `0d8287bc5fcc41ed4dc7ea68e5d27cd0091b8d5e` | `32026434043` | SUCCESS |
 
-Final E4 mathematical checkpoint:
+The analytic dependency is pinned to
 
-- head `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`;
-- canonical run `31976903757` — **SUCCESS**;
-- `lake exe mk_all --check` = `No update necessary`;
-- full `lake build` = **8806 jobs**.
+`AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`,
 
-Final synchronized E4 head:
+and the application adapter consumes its machine-checked `prime_between` theorem. No custom prime-density axiom remains in the credited theorem.
 
-- head `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`;
-- canonical run `31977861568` — **SUCCESS**;
-- `lake exe mk_all --check` = `No update necessary`;
-- full build = **8806 jobs**.
+## Exact scientific classification
 
-Integration and post-merge verification:
+- mathematical author/result: Stijn Cambie / known solution;
+- independent mathematical attempt in this repository: rejected;
+- successful project mode: external-proof reconstruction;
+- Lean artifact: independent reimplementation;
+- new mathematical proof claim: **no**;
+- first Lean formalization claim: **no**;
+- prior public formalization: Aristotle + Boris Alexeev;
+- machine verification: **yes** for the archived internal theorem;
+- differential verification against the public artifact: **yes, executed in S1**.
 
-- PR #17 merged into `main` on 2026-08-17;
-- mathematical merge commit `8fd1b20541ac7782f52429db3a2cc4c887547372`;
-- post-merge Lean Verification run `32011189766` — **SUCCESS**;
-- `lake exe mk_all --check` = `No update necessary`;
-- full `lake build` = **8806 jobs**.
+## S1 — executed differential verification
 
-Archival documentation synchronization:
+Run `32028006457`, job `95381414710`, on exact push-triggered experiment head
 
-- PR #18 exact head `4c5a305c8756c5dc0d8e5545825a87d48a438965`;
-- Lean Verification run `32013917788` — **SUCCESS**;
-- merged archival documentation commit `755c9601816fbbd7e2181a2e56c34f28667ceb67`.
+`b1e3fc60f6dc4f125a125121a2abbcf3610ed749`
 
-Final lessons/postmortem integration:
+provided the executable cross-artifact comparison. It:
 
-- PR #20 exact head `6fffdc71d2166004fe9e6d412ea3d0b1dd739e53`;
-- exact-head Lean Verification run `32019975193` — **SUCCESS**;
-- merge commit `4596a360257a3f659d2a260b4cb00b22d0ffa94c`;
-- post-merge Lean Verification run `32021192337` — **SUCCESS**.
+- ran the canonical import audit: `No update necessary`;
+- built the internal graph successfully: **8808 jobs**;
+- reached `ExternalStatementBridge` and its tests;
+- fetched `plby/lean-proofs@6f906fef432892db5c910c48ad1a3728dd42cdac` with exact source-blob verification;
+- compiled the public `Erdos678.lean` **unchanged** in this repository's pinned Lean 4.33 / Mathlib / PNT+ environment;
+- printed the same selected-endpoint axiom footprint on both sides: `propext`, `Classical.choice`, `Quot.sound`.
 
-## Exact project classification
+### Machine-checked statement bridges
 
-- External problem status: proved.
-- Repository reconstruction status: **proved / machine-checked / integrated / post-merge verified / archived**.
-- Independent proof attempt in this repository: rejected.
-- Valid concrete witness: `M(36,8) > M(47,9)` — machine-checked.
-- Rejected candidate: `(495,504,8)` — machine-refuted and retained as a negative regression.
-- Full Claim 5: machine-checked.
-- Claim 4 / Phase D: passed.
-- Phase E1 quantitative LCM-ratio estimate: passed.
-- Phase E2 prime-density existence: passed using pinned PNT+.
-- Phase E3 strong eventual Cambie theorem: passed.
-- Phase E4 canonical index translation and infinitude: passed.
-- Integration into `main`: passed through PR #17.
-- Post-merge canonical verification: passed through run `32011189766`.
-- Final postmortem verification: passed through run `32021192337`.
-- User transition gate: explicit authorization required before any other Erdős problem may become active.
+S1 proves internally that:
 
-## Proof architecture live in Lean
+- `intervalFinset (n+1) k = Finset.Ioc n (n+k)`;
+- `erdosM` therefore has the exact public half-open interval semantics;
+- our result derives the Formal-Conjectures-style eventual-nonempty valid-pair statement;
+- valid block lengths have explicit unbounded/infinite semantic endpoints;
+- the retained strong theorem extends from positive natural factors to every real `C ≥ 1`, including a regression at `C=3/2`.
 
-| Layer | Status |
-|---|---|
-| length-based intervals and canonical `erdosM` | machine-checked |
-| positive and negative concrete regressions | machine-checked |
-| finite product/LCM valuation core | machine-checked |
-| all three Claim 5 prime ranges + assembly | machine-checked |
-| Claim 4 finite density / modular / weighted CRT | machine-checked |
-| pair/triple CRT producers and exact application boxes | machine-checked |
-| constructed scales, full-scale factorization, dependent placement | machine-checked |
-| Cambie target window and sharp search budgets | machine-checked |
-| E1 cancellation-safe product/LCM estimate | machine-checked |
-| E2 five-strip relative-prime adapter | machine-checked |
-| E2 PNT `prime_between` → relative-prime provider | machine-checked |
-| E3 elementary large-`k` growth threshold | machine-checked |
-| E3 strong eventual Cambie comparison | machine-checked |
-| E4 `k<x` recovery and canonical `n=x-1, m=y-1` translation | machine-checked |
-| unbounded canonical witnesses and infinitely many good lengths | machine-checked |
+This is differential-verification evidence, not a priority or superiority claim.
 
-## Prime-density dependency
+## Verification-provenance correction
 
-No opaque prime-density hypothesis is left in the theorem.
+Post-experiment auditing found that the historical PR workflow used default `actions/checkout`. Run `32033822601` therefore built synthetic integration-tree commit `5983f901358d8f82d85a425369d429cfa9475f96` while metadata exposed PR head `610d525145a8129d345a1d3ce6a6b41809e3d1f8`.
 
-The analytic input is the pinned package `AxiomMath/PrimeNumberTheoremAnd` at revision `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
+That build remains valid integration-tree evidence, but not literal PR-head verification.
 
-Its kernel-checked `prime_between` consequence is converted into the natural-number `Claim4RelativePrimeProvider`, then into five disjoint additive prime strips with denominator `320*C`.
+The active S1 branch now:
 
-E2 exit: head `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856`, **8800 jobs**.
+- checks out `${{ github.event.pull_request.head.sha || github.sha }}` explicitly;
+- logs `git rev-parse HEAD`;
+- limits `GITHUB_TOKEN` to `contents: read`;
+- sets `persist-credentials: false`;
+- pins external GitHub Actions to concrete commit SHAs.
 
-## Strong Cambie layer
+See `CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md`.
 
-The remaining large-`k` condition is discharged independently using the fourth binomial coefficient. The explicit coarse threshold is
+## Public release — transition completed
 
-`claim4CambieLargeKThreshold C = max 9 (3840*C + 3)`.
+Before public visibility the project completed secret/provenance/license preflight, including defensive `.gitignore`, hardened CI, `THIRD_PARTY_NOTICES.md`, and non-vendoring of the unlicensed comparator source.
 
-The theorem `cambie_lcm_ratio_eventually` combines this elementary growth threshold with the PNT threshold.
+The owner selected **Apache License 2.0**. License-only PR #26 merged the standard license to `main` at
 
-E3 exit: head `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891`, **8804 jobs**.
+`87cf560451ef5aa4714069d52a3851c1f8547f70`.
 
-## Historical independent-attempt failure
+The repository was then changed to **Public**. GitHub API verification confirmed:
 
-The project first found the valid finite witness `(36,47,8)` but later asserted the false scaling identity
+- `private: false` / `visibility: public`;
+- repository license metadata `Apache-2.0`;
+- root `LICENSE` readable on `main`;
+- Lean Verification workflow active.
 
-```text
-M(t*n,k) = t*M(n,k).
-```
+No repository rulesets were detected immediately after the transition; `main` protection is therefore a separate GitHub-settings task before accepting external contributions.
 
-This is false because `M(t*n,k)` is the LCM of `tn+1,...,tn+k`, not of `t(n+1),...,t(n+k)`. A subsequent `Q=P/M` construction also used the wrong interval for `M(t,k+1)`.
+The public transition also restored GitHub-hosted runner availability. Reopening PR #22 launched run `32043331012`, which successfully completed job setup, checkout, and `Record verified commit` and entered `Build canonical Lean graph`; the historical private-repository billing blocker therefore no longer prevents execution.
 
-Those failures remain recorded as provenance and are not reclassified by the successful Cambie reconstruction.
+## Current S1 integration gate
 
-## Scientific positioning and external value
+Run `32043331012` is diagnostic evidence that runner availability returned after the public transition. Because the branch has since been synchronized to record the public state, it is **not** the final integration-credit run.
 
-The completed artifact is **not** a new solution of #678 and **not** the first Lean formalization. A prior public formalization by Aristotle and Boris Alexeev exists on top of Cambie's mathematics.
+The remaining S1 gate is:
 
-The current scientific opportunity is instead to use this independently reconstructed artifact in two ways:
+1. run the hardened canonical workflow on the **actual final PR #22 head**;
+2. require the logged checked-out commit to equal that credited PR head;
+3. require the canonical graph to pass;
+4. merge #22 only then;
+5. run post-merge verification on the resulting `main` commit;
+6. close S1 only after the post-merge check succeeds.
 
-1. **formal differential verification / proof engineering** — compare our modular, regression-heavy architecture and direct `prime_between` PNT interface with the public Aristotle/Alexeev development;
-2. **AI-assisted scientific-production research** — analyze the preserved path from failed independent reasoning to machine-checked reconstruction, including target fidelity, failure retention, externalized state, dependency closure, canonical build verification, and exact-head CI.
+S2 does not start before S1 closes.
 
-Canonical dossier:
+## Scientific value tracks
 
-- `SCIENTIFIC_COMPARATIVE_STUDY.md` — external comparison, claim boundaries, quantitative architecture, testable hypotheses, and candidate upstream contributions;
-- `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md` — longitudinal AI-for-science case study, failure taxonomy, research questions, threats to validity, and prospective experiments;
-- `PUBLICATION_AND_UPSTREAM_ROADMAP.md` — staged plan for common-environment comparison, upstream work, empirical extensions, and publication decisions;
-- `SCIENTIFIC_EVIDENCE_LEDGER.yaml` — machine-readable frozen provenance, metrics, comparison anchors, claim limits, and missing measurements.
+The archived #678 artifact is being developed along two external-value tracks:
 
-These documents do not reopen the mathematics and do not authorize transition to another Erdős problem.
+1. **formal differential verification / proof engineering:** compare the modular, regression-heavy reconstruction and direct `prime_between` boundary against the public Aristotle/Alexeev development;
+2. **AI-assisted scientific production:** study the observable path from invalid independent reasoning to verified reconstruction, including failure retention, state externalization, dependency closure, interface repair, attribution discipline, verification-credit correction, and public-artifact closure.
 
-## Archival disposition
+No claim of new mathematics follows from either track.
 
-No mathematical phase remains open. Integration and post-merge verification are complete. **#678 is archived as a completed benchmark.**
+## Durable S1/publication dossier
 
-Scientific comparison, reproducibility analysis, and publication/upstream work on the already completed #678 artifact are permitted archival follow-up. They must not be misclassified as new mathematical discovery.
+- `SCIENTIFIC_COMPARATIVE_STUDY.md`
+- `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md`
+- `AI_CASE_EPISODE_VERIFICATION_CREDIT_DRIFT.md`
+- `PUBLICATION_AND_UPSTREAM_ROADMAP.md`
+- `SCIENTIFIC_EVIDENCE_LEDGER.yaml`
+- `DIFFERENTIAL_VERIFICATION_PROTOCOL.md`
+- `S1_DIFFERENTIAL_VERIFICATION_RESULT.md`
+- `DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml`
+- `CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md`
+- `PUBLICATION_READINESS_LICENSE_AUDIT.md`
+- `PUBLIC_RELEASE_AUDIT_2026-08-17.md`
+- `experiments/run_public_comparator_common_env.sh`
+- `CAMBIE_PROOF_ANALYSIS.md`
+- `FORMALIZATION_CORRECTION_2026-08-14.md`
+- `LEAN_FORMALIZATION_ROADMAP.md`
+- root `LICENSE`
+- root `THIRD_PARTY_NOTICES.md`
 
-**Stop at this checkpoint. Do not select, activate, resume, research, or formalize another Erdős problem until the user explicitly authorizes the transition.** Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
+## Historical failed independent route
 
-## Main references inside this folder
+The repository first retained the valid witness `M(36,8)>M(47,9)` but later used the false scaling identity
 
-- `SCIENTIFIC_COMPARATIVE_STUDY.md` — comparative scientific positioning against Cambie, Aristotle/Alexeev, Formal Conjectures, and current AI-for-math work.
-- `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md` — #678 as an auditable long-horizon AI-assisted scientific-production case.
-- `PUBLICATION_AND_UPSTREAM_ROADMAP.md` — evidence gates and sequencing for external outputs.
-- `SCIENTIFIC_EVIDENCE_LEDGER.yaml` — machine-readable evidence and claim ledger for future papers/upstream work.
-- `CAMBIE_PROOF_ANALYSIS.md` — mathematical architecture and Claim 4 audit; contains historical development-status passages and is not the current operational state source.
-- `LEAN_FORMALIZATION_ROADMAP.md` — canonical execution roadmap, now closed, integrated, verified, and archived.
-- `FORMALIZATION_CORRECTION_2026-08-14.md` — rejection of the false earlier construction.
-- `LEAN_TEST_PLAN.md` — superseded historical plan; not an execution source.
+`M(t*n,k)=t*M(n,k)`
+
+and a subsequent `Q=P/M` construction used a wrong interval. Those paths remain rejected and documented; the `(495,504,8)` candidate remains machine-refuted regression evidence.
+
+## Operational stop rule
+
+#678 mathematics remains frozen/archived. Scientific evaluation may continue only within the documented #678 roadmap.
+
+**Do not select, activate, resume, research, or formalize another Erdős problem until the user explicitly authorizes the transition.**
