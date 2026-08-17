@@ -1,0 +1,24 @@
+# Local secret/configuration files
+.env
+.env.*
+!.env.example
+.secrets/
+credentials.json
+service-account*.json
+
+# Private key / certificate material
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+id_rsa
+id_ed25519
+
+# Lean/Lake local build state
+formalization/.lake/
+
+# Editor / OS noise
+.DS_Store
+*.swp
+*.swo
