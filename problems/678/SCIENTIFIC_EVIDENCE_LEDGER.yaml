@@ -1,4 +1,4 @@
-schema_version: 11
+schema_version: 12
 snapshot_date: 2026-08-17
 scope: erdos-678-only
 
@@ -58,7 +58,7 @@ s1_differential_verification:
 
 s2:
   status: active
-  current_substage: S2c-integration
+  current_substage: S2c-closure
 
   s2a_dependency_surface:
     status: complete-integrated-postmerge-verified-closure-verified
@@ -175,7 +175,7 @@ s2:
       - no causal claim for modular-versus-monolithic resource difference
 
   s2c_repair_locality:
-    status: executed-success-artifact-validated-pending-pr-integration
+    status: complete-integrated-postmerge-verified
     protocol: problems/678/S2_REPAIR_LOCALITY_PROTOCOL.md
     mutation_manifest: problems/678/S2_REPAIR_LOCALITY_MUTATIONS.yaml
     baseline_markdown: problems/678/S2_REPAIR_LOCALITY_BASELINE.md
@@ -277,6 +277,22 @@ s2:
       - R3 reverses at the production layer: zero internal production consumers versus three comparator production consumers
       - verification consumers materially affect the internal reference surface
       - no uniform repair-locality advantage is observed
+    integration:
+      pr: 32
+      exact_head: 7471370081dece8ac99ec3888636d7d9cc0fa78f
+      exact_head_run: 32065778293
+      exact_head_job: 95497421954
+      exact_head_result: success
+      exact_head_commit_match: true
+      exact_head_import_check: no-update-necessary
+      exact_head_build_jobs: 8808
+      merge_commit: bf54f5eb16e477d1b41b336e68ce82a729c98912
+      postmerge_run: 32067478680
+      postmerge_job: 95502840936
+      postmerge_result: success
+      postmerge_commit_match: true
+      postmerge_import_check: no-update-necessary
+      postmerge_build_jobs: 8808
     interpretation_limits:
       - not general maintainability
       - not human repair time or cognitive effort
@@ -309,6 +325,7 @@ allowed_external_claims:
   - materially different measured CPU-system-user and peak-memory profiles under the recorded S2b environment
   - predeclared S2c six-observation API/reference repair-locality experiment with zero third-party touches
   - S2c mixed interface-dependent repair result with no uniform repair-locality winner
+  - exact-head and post-merge verified integration of S2c evidence through PR 32
   - green computation and scientifically admissible measurement are separate gates as demonstrated by the excluded S2b pilot
   - preservation of mixed/null comparative evidence rather than post-observation metric redesign
 
@@ -331,9 +348,9 @@ forbidden_or_unsupported_claims:
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S2c-integration
-  status: pending
-  requirement: canonical exact-head Lean Verification on final S2c PR head; merge only if green; verify exact resulting main commit
+  stage: S2c-closure
+  status: in-progress
+  requirement: canonical exact-head Lean Verification on final documentation-only S2c closure PR head; merge only if green; verify exact resulting main commit
   next_after_close: S2d-semantic-index-mutation-predeclaration
 
 privacy_and_reproducibility:

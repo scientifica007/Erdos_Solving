@@ -2,7 +2,7 @@
 
 > **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b CLOSED. S2c EXECUTED / ARTIFACT VALIDATED / PENDING PR INTEGRATION. S2d NOT STARTED.**
+> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b CLOSED. S2c COMPLETE / INTEGRATED / POST-MERGE VERIFIED; DOCUMENTATION CLOSURE IN PROGRESS. S2d NOT STARTED.**
 >
 > The successful route is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. It is neither a new mathematical proof nor the first Lean formalization. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
@@ -38,7 +38,7 @@ The first six-job pilot is excluded in full because required runner-version prov
 
 Full protocol/result: `S2_BUILD_BEHAVIOR_PROTOCOL.md` and `S2_BUILD_BEHAVIOR_BASELINE.md/.json`.
 
-## S2c — repair locality — EXECUTED / VALIDATED
+## S2c — repair locality — COMPLETE / INTEGRATED / POST-MERGE VERIFIED
 
 ### Scope
 
@@ -105,6 +105,12 @@ The defensible result is:
 
 Detailed validated evidence is in `S2_REPAIR_LOCALITY_BASELINE.md/.json`.
 
+### Integration verification
+
+PR #32 final head `7471370081dece8ac99ec3888636d7d9cc0fa78f` passed canonical Lean Verification run `32065778293`, job `95497421954`, with `verified_commit` matching the exact head, `No update necessary`, and **8808 jobs**.
+
+The PR merged as `bf54f5eb16e477d1b41b336e68ce82a729c98912`. That exact `main` commit passed post-merge run `32067478680`, job `95502840936`, again with matching `verified_commit`, `No update necessary`, and **8808 jobs**. S2c substantive evidence is therefore integrated and post-merge machine-verified.
+
 ## AI-for-science relevance
 
 The process now contains three controlled methodology episodes:
@@ -115,9 +121,9 @@ The process now contains three controlled methodology episodes:
 
 These episodes are externally auditable from commits, protocols, CI runs, artifacts, and corrections; hidden chain-of-thought is unnecessary.
 
-## Next gate — S2d semantic/index mutation resistance
+## Next gate — S2c documentation closure, then S2d
 
-S2d has **not started**. First S2c must be synchronized, opened as a PR, pass exact-head canonical Lean Verification, merge, and pass post-merge verification on the exact `main` commit. Only then may S2d define its semantic/index mutation protocol prospectively.
+S2d has **not started**. This documentation-only S2c closure must first pass exact-head canonical Lean Verification, merge, and pass post-merge verification on the exact resulting `main` commit. Only then may S2d prospectively define semantic/index mutations and success metrics before any outcomes are observed.
 
 ## Public artifact
 
