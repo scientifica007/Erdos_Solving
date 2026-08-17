@@ -14,6 +14,10 @@
 - state/roadmap/decision artifacts؛
 - lessons learned والمواد القابلة للتحويل إلى مساهمة علمية.
 
+## الترخيص
+
+المادة المملوكة لهذا المشروع مرخصة بموجب **Apache License 2.0** ما لم يُذكر خلاف ذلك. النص الكامل موجود في `LICENSE`، وتبقى حدود الطرف الثالث والنَّسب العلمي موثقة بصورة مستقلة في `THIRD_PARTY_NOTICES.md` ووثائق #678.
+
 ## وثائق التشغيل الأساسية
 
 - `PROJECT_STATE.md` — نقطة الاستئناف الحالية والمرجع التشغيلي الحاكم.
@@ -89,9 +93,10 @@ Stage S1 نفذت بالفعل تجربة differential verification ناجحة:
 - أضيف `THIRD_PARTY_NOTICES.md`؛
 - تم التحقق من Apache-2.0 لـMathlib وPNT+ وFormal Conjectures؛
 - comparator `plby/lean-proofs` يبقى external pinned fetch ولا يُنسخ داخل المشروع لعدم وجود repository license معلنة في التدقيق؛
+- اختار المالك **Apache License 2.0** للمادة المملوكة للمشروع، وأضيف `LICENSE` في الجذر؛
 - سجل preflight الكامل موجود في `problems/678/PUBLIC_RELEASE_AUDIT_2026-08-17.md`.
 
-**المستودع ما يزال Private عند هذا checkpoint.** قرار رخصة material المملوكة للمشروع ما زال مطلوبًا من المالك قبل/مع التحويل إلى Public. التحويل نفسه لا يُنفذ تلقائيًا بواسطة هذا الـaudit.
+**المستودع ما يزال Private عند هذا checkpoint.** بند ترخيص المشروع مغلق الآن؛ الخطوة التالية هي التحويل الذي ينفذه المستخدم إلى Public، ثم مراجعة إعدادات GitHub بعد الانتقال.
 
 ### Current S1 integration gate
 
@@ -120,6 +125,7 @@ Stage S1 نفذت بالفعل تجربة differential verification ناجحة:
 
 وفي الجذر:
 
+- `LICENSE`
 - `THIRD_PARTY_NOTICES.md`
 
 ## ترتيب الاستئناف
@@ -127,7 +133,7 @@ Stage S1 نفذت بالفعل تجربة differential verification ناجحة:
 1. تحقق من رأس `main`، visibility، ومن PR S1 النشط.
 2. اقرأ `PROJECT_STATE.md`.
 3. تعامل مع #678 mathematics على أنها frozen/archived.
-4. احسم رخصة المشروع، ثم نفذ التحويل المقصود إلى Public.
+4. ترخيص المشروع مغلق على Apache-2.0؛ نفذ التحويل المقصود إلى Public.
 5. بعد التحويل راجع Actions/branch protections وشغّل exact-head canonical CI لـPR #22.
 6. ادمج فقط إذا نجح CI، ثم تحقق من `main` وأغلق S1؛ لا تبدأ S2 قبل ذلك.
 7. **لا تختَر أو تبدأ أو تستأنف أي مسألة Erdős أخرى حتى يعطي المستخدم إذنًا صريحًا وفق `DEC-012`.**
