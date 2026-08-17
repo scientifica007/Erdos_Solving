@@ -76,6 +76,29 @@ theorem erdos678_formalConjectures_eventual_nonempty :
   simpa [erdos678ValidPair, erdosM_eq_Ioc_lcm] using
     erdos678_eventually_nonempty_pairs
 
+/-- The explicit unbounded-witness theorem remains unbounded after forgetting
+repository-specific lower-bound side conditions and retaining only the canonical
+valid-pair semantics. -/
+theorem erdos678_valid_pair_lengths_unbounded :
+    ∀ B : ℕ, ∃ k : ℕ, B ≤ k ∧
+      {p : ℕ × ℕ | erdos678ValidPair k p}.Nonempty := by
+  intro B
+  obtain ⟨n, m, k, hBk, _hn, _hm, _hk, hsep, hratio⟩ :=
+    erdos678_unbounded_witnesses B
+  refine ⟨k, hBk, (m, n), ?_⟩
+  exact ⟨hsep, hratio⟩
+
+/-- Hence the set of block lengths admitting at least one canonical valid pair is
+infinite.  This statement-level bridge is useful when comparing the eventual
+nonempty formulation with the explicit infinitude endpoint. -/
+theorem erdos678_valid_pair_good_lengths_infinite :
+    Set.Infinite
+      {k : ℕ | {p : ℕ × ℕ | erdos678ValidPair k p}.Nonempty} := by
+  apply erdos678_good_lengths_infinite.mono
+  intro k hk
+  rcases hk with ⟨n, m, _hn, _hm, _hk, hsep, hratio⟩
+  exact ⟨(m, n), hsep, hratio⟩
+
 /-- Lift the strong Cambie endpoint from a positive natural multiplicative
 factor to an arbitrary real factor `C ≥ 1`.  This matches the parameter domain
 of the public Aristotle/Alexeev `main_theorem_expanded` endpoint without
