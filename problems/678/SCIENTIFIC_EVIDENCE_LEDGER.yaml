@@ -32,6 +32,8 @@ internal_artifact:
     - Formalization.Erdos678.erdosM_eq_Ioc_lcm
     - Formalization.Erdos678.erdos678_eventually_nonempty_pairs
     - Formalization.Erdos678.erdos678_formalConjectures_eventual_nonempty
+    - Formalization.Erdos678.erdos678_valid_pair_lengths_unbounded
+    - Formalization.Erdos678.erdos678_valid_pair_good_lengths_infinite
     - Formalization.Erdos678.cambie_lcm_ratio_eventually_with_large_start_real
   architecture_metrics:
     archival_baseline:
@@ -43,12 +45,8 @@ internal_artifact:
       test_regression_files: 31
       test_regression_lines: 1384
     after_s1_bridge_before_final_merge:
-      lean_files: 80
-      lines: 7188
-      non_test_files: 48
-      non_test_lines: 5772
-      test_regression_files: 32
-      test_regression_lines: 1416
+      status: stale-after-consolidation
+      note: rerun line/file metrics after S1 final integration; do not infer from the pre-consolidation count
 
 verified_main_history:
   mathematical_postmerge:
@@ -69,7 +67,6 @@ s1_differential_verification:
   machine_evidence: problems/678/DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml
   reproduction_script: problems/678/experiments/run_public_comparator_common_env.sh
   ci_provenance_correction: problems/678/CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md
-  temporary_workflow_retained: false
   successful_run:
     id: 32028006457
     job_id: 95381414710
@@ -91,6 +88,18 @@ s1_differential_verification:
     - pinned current public comparator source compiled unchanged in internal pinned environment
     - matched selected-endpoint axiom footprint equals propext/Classical.choice/Quot.sound
     - successful S1 run has exact execution provenance because push checkout log equals experiment head
+  semantic_consolidation_from_pr23:
+    source_pr: 23
+    source_head: ea51d716074961ea1ba573045790532f79855cef
+    source_ci_run: 32034003110
+    source_ci_result: success
+    concepts_consolidated_into_authoritative_s1_bridge:
+      - unbounded block lengths admitting a valid pair
+      - infinitude of block lengths admitting a valid pair
+    final_authoritative_names:
+      - Formalization.Erdos678.erdos678_valid_pair_lengths_unbounded
+      - Formalization.Erdos678.erdos678_valid_pair_good_lengths_infinite
+    note: final PR22 head still requires corrected canonical CI after Actions billing is restored
   limitations:
     - no architecture superiority claim
     - no controlled performance comparison yet
