@@ -18,6 +18,9 @@ id_ed25519
 # Lean/Lake local build state
 formalization/.lake/
 
+# Transient experiment outputs (durable reviewed baselines live outside out/)
+problems/678/experiments/out/
+
 # Editor / OS noise
 .DS_Store
 *.swp
