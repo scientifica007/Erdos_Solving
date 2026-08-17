@@ -4,16 +4,33 @@
 
 Convert the completed #678 work into the maximum defensible external value without reopening the mathematics or overstating novelty.
 
-The repository contains two related but separable candidate contributions:
+Two candidate contribution tracks remain distinct:
 
-1. **formal verification / proof engineering:** an independently engineered Lean reconstruction of Cambie's proof, differentially verified against the existing Aristotle/Alexeev formalization;
-2. **AI-assisted scientific production:** a longitudinal, auditable case study covering invalid independent reasoning, formal rejection, reconstruction, dependency closure, interface repair, regression discipline, state management, scientific attribution, verification-provenance correction, and public-release controls.
+1. **formal verification / proof engineering:** an independently engineered Lean reconstruction of Cambie's proof with executable differential verification against the Aristotle/Alexeev formalization;
+2. **AI-assisted scientific production:** a longitudinal auditable case study covering invalid reasoning, formal rejection, reconstruction, dependency closure, interface repair, regression discipline, state management, attribution, CI-provenance correction, and public-artifact closure.
 
-The mathematical theorem remains known work by Stijn Cambie. We do not claim a new solution, a new independent mathematical proof, or formalization priority.
+The mathematical theorem is known work by Stijn Cambie. We do not claim a new solution, an independent new mathematical proof, or formalization priority.
 
-## Track A — Formal verification / proof-engineering output
+## Established S1 contribution
 
-### Working title
+S1 has now completed both its scientific experiment and repository integration.
+
+The experiment run `32028006457` established that:
+
+- our `erdosM` semantics are machine-bridged to public `Finset.Ioc` semantics;
+- our theorem derives the Formal-Conjectures-style eventual-nonempty endpoint;
+- valid block lengths have explicit unbounded/infinite endpoints;
+- the natural-factor strong theorem is lifted to every real `C ≥ 1`;
+- `plby/lean-proofs@6f906fef432892db5c910c48ad1a3728dd42cdac` compiles unchanged in our pinned Lean 4.33 / Mathlib / PNT+ environment;
+- selected endpoints on both sides expose `[propext, Classical.choice, Quot.sound]` only.
+
+The persistent S1 artifact passed exact-head PR verification on `1c6bea992033390ac4364033fafcd221694baf4c` in run `32043807200`, then merged as `358cd541ff81a2b59611b7addfc90ae17e03b36f`. Post-merge run `32044314748`, attempt 2, successfully checked that exact merge commit with `No update necessary` and a full 8808-job build.
+
+Attempt 1 of the post-merge run failed while downloading Lean because of HTTP 502 and never entered proof checking. It is retained as an infrastructure-failure example, not mathematical evidence.
+
+## Track A — formal verification / proof engineering
+
+### Candidate paper title
 
 **A Modular Independent Lean Reconstruction of Cambie's Solution to Erdős Problem #678**
 
@@ -21,213 +38,96 @@ Possible subtitle:
 
 **Differential verification, direct PNT short-interval interfaces, and regression-oriented proof engineering**
 
-### Established contribution after S1 experiment
-
-Executed evidence already establishes that:
-
-- our length-based `erdosM` semantics are machine-bridged to the public `Finset.Ioc n (n+k)` convention;
-- our theorem derives the Formal-Conjectures-style eventual-nonempty endpoint;
-- valid-pair semantics expose unbounded and infinitely many admissible block lengths;
-- the positive-natural multiplicative-factor theorem is machine-lifted to every real `C ≥ 1`;
-- `plby/lean-proofs@6f906fef432892db5c910c48ad1a3728dd42cdac` compiled **unchanged** in our pinned Lean 4.33 / Mathlib / PNT+ environment;
-- selected endpoints from both artifacts expose the same standard axiom footprint: `propext`, `Classical.choice`, `Quot.sound`.
-
-Primary S1 experiment evidence: run `32028006457`, job `95381414710`.
-
-This supports a differential-verification claim. It does not establish architecture superiority, performance superiority, lower maintenance cost, or genealogical independence.
-
-### Strongest candidate technical differentiator
+### Main technical differentiator to test
 
 Our analytic boundary uses
 
 `prime_between -> Claim4RelativePrimeProvider`
 
-which directly matches the short multiplicative-prime interval needed by the combinatorial construction. The public comparator routes through a local `pi_alt`/prime-counting asymptotic layer, although its PNT+ source also contains `prime_between`.
+which directly matches the short multiplicative-prime interval needed by the construction. The public comparator routes through a local `pi_alt`/prime-counting layer even though its PNT+ source also contains `prime_between`.
 
-The research question is not logical strength. It is whether the direct application-shaped boundary measurably reduces dependency/API coupling or repair cost.
+This is not yet evidence of superiority. The S2 question is whether the direct boundary measurably changes dependency surface, repair locality, or upgrade robustness.
 
-### S2 experiments required before stronger engineering claims
+## S2 — metric and mutation suite — NEXT
 
-After S1 is integrated:
+S2 is authorized only for the archived #678 artifact. It must produce controlled evidence before any Level-2 engineering claim.
 
-1. generate direct/transitive dependency graphs for matched endpoints;
-2. measure cold/warm build time and resource use under a controlled protocol;
-3. perform controlled interface edits and measure repair locality;
-4. run historical interval/index mutation tests on both representations where feasible;
-5. run one controlled Mathlib upgrade experiment;
-6. have an independent reviewer audit statement/assumption boundaries.
+Planned experiments:
 
-Do not infer “better architecture” from file count or narrative structure alone.
+1. **Dependency surface:** generate direct/transitive dependency graphs for matched internal/public endpoints and define comparable graph metrics.
+2. **Build behavior:** measure controlled cold/warm build time and resource usage with repeated runs and recorded cache state.
+3. **Repair locality:** apply bounded interface mutations and count touched modules/lines/theorems required to restore the build.
+4. **Semantic mutation resistance:** replay interval/index mutations inspired by the historical off-by-one failure and record where each architecture rejects them.
+5. **Upgrade robustness:** execute a controlled Mathlib/Lean upgrade probe in isolated branches and measure failure/repair surface.
+6. **Independent audit:** have a reviewer inspect statement/assumption/dependency boundaries after quantitative results stabilize.
 
-## Track B — AI-assisted scientific-production output
+No claim such as “better architecture”, “easier maintenance”, “faster”, or “more robust” is allowed before these measurements exist.
 
-### Working title
+## Track B — AI-assisted scientific production
+
+### Candidate paper title
 
 **From Failed Conjecture to Machine-Checked Reconstruction: A Long-Horizon AI-Assisted Formalization Case Study of Erdős #678**
 
-Possible subtitle:
+The case does **not** show AI discovering #678. Its value is the observable process record:
 
-**Target fidelity, failure memory, dependency closure, execution-provenance controls, and public-artifact closure**
+- a false scaling generalization after a valid finite witness;
+- exact machine rejection and preserved negative regressions;
+- explicit switch from independent exploration to external-proof reconstruction;
+- interface-based decomposition of a research proof;
+- replacement of an analytic assumption boundary by a pinned machine-checked dependency;
+- recovery of side-condition information lost at an abstraction boundary;
+- documentation/build-graph synchronization as a verification obligation;
+- executable comparison instead of prose equivalence;
+- detection and correction of verification-credit drift;
+- distinction between proof failure and infrastructure failures, including private billing blockage and a transient 502 post-merge download failure;
+- licensing/security/provenance work as public-artifact closure.
 
-### Core contribution
+### S4 empirical extension
 
-The case does not show AI discovering #678. It provides an auditable record of a workflow that:
+After S2 stabilizes:
 
-- generated or endorsed a false scaling generalization after a genuine finite witness;
-- detected and retracted invalid mathematics;
-- retained rejected paths as negative knowledge/regressions;
-- explicitly changed mode from independent exploration to reference-proof reconstruction;
-- decomposed a long research-level proof into producer/consumer interfaces;
-- replaced a deep analytic assumption boundary with a pinned machine-checked PNT+ dependency;
-- recovered information lost by an earlier theorem interface at the final indexing layer;
-- treated canonical build reachability and documentation state as part of verification;
-- performed cross-artifact statement/environment/axiom comparison rather than relying on prose equivalence;
-- detected **verification-credit drift**, narrowed the claim, and repaired CI to record the commit actually built;
-- treated public release as a scientific closure stage requiring secret hygiene, least-privilege CI, dependency provenance, redistribution boundaries, explicit licensing, and a verified public transition.
+1. derive a machine-readable episode dataset from observable git/CI artifacts;
+2. annotate failure and human-intervention categories;
+3. run controlled restart tests with/without state artifacts;
+4. run negative-memory tests with/without retained regressions;
+5. prospectively record model id, invocation count, cost, wall clock, tool calls, and intervention category;
+6. publish observable hypotheses/actions/artifacts/outcomes, never hidden chain-of-thought.
 
-### S4 empirical extension required for a strong AI-for-science paper
+## Track C — upstream/community contribution
 
-After S1/S2 evidence is stable:
+After S2 evidence:
 
-1. reconstruct a machine-readable episode log from observable git/CI history;
-2. annotate failure/intervention classes using only externally observable artifacts;
-3. run restart tests with/without state/roadmap artifacts;
-4. run failure-memory tests with/without negative-regression artifacts;
-5. record model id, invocation count, cost, wall clock, tool calls, and human-intervention category prospectively for controlled experiments;
-6. do **not** publish hidden chain-of-thought; publish hypotheses, actions, artifacts, corrections, and outcomes instead.
-
-## Track C — Upstream/community contribution
-
-### C1 — PNT boundary probe
-
-Test a minimal refactor of the public #678 artifact from the `pi_alt`-shaped route toward the already available `prime_between` consequence. Measure whether the patch actually reduces proof/dependency complexity before proposing it upstream.
-
-### C2 — Statement-semantics bridge
-
-Potentially reusable machine-checked bridges now cover:
-
-- length-based interval semantics ↔ public `Finset.Ioc` semantics;
-- eventual nonempty valid-pair formulation;
-- unbounded/infinite admissible good-length semantics;
-- positive natural factor ↔ arbitrary real `C ≥ 1` strong theorem.
-
-### C3 — Regression contribution
-
-Candidate reusable regressions include known positive examples, the retained machine-refuted candidate, off-by-one interval mutations, and final-index translation tests.
-
-### C4 — Contact and attribution
-
-Before upstream submission, cite Stijn Cambie as mathematical author; cite Aristotle and Boris Alexeev as prior formal authors; notify relevant maintainers where appropriate; describe this project as an independent formal reconstruction, not independent mathematical discovery.
-
-## Shared reproducibility and public-artifact package
-
-The repository is now **Public** and project-owned material is licensed under **Apache License 2.0**. The public artifact includes or will include:
-
-- immutable repository commit/release;
-- exact Lean toolchain and Mathlib revision;
-- exact PNT+ revision;
-- canonical `mk_all --check` and build commands;
-- final theorem and bridge theorem names;
-- `#print axioms` outputs;
-- `DIFFERENTIAL_VERIFICATION_PROTOCOL.md`;
-- `DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml`;
-- `experiments/run_public_comparator_common_env.sh`;
-- `PUBLIC_RELEASE_AUDIT_2026-08-17.md`;
-- root `LICENSE` and `THIRD_PARTY_NOTICES.md`;
-- dependency/metric/mutation results once S2 exists;
-- machine-readable process-event data once S4 exists;
-- provenance and limitations statements.
+- probe a minimal public-formalization refactor from `pi_alt` toward `prime_between` and measure the actual effect before proposing upstream;
+- consider upstreaming compact statement-normalization lemmas for interval/eventual-existence variants;
+- package reusable positive/negative/off-by-one regressions where appropriate;
+- preserve exact attribution to Cambie, Aristotle, Alexeev, PNT+ authors/maintainers, and benchmark projects.
 
 The comparator remains an immutable external fetch rather than vendored material because no repository license was detected for it during the audit.
 
 ## Claim ladder
 
-### Level 0 — established / machine-checked / executed
+**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; our independent Lean reimplementation; direct `prime_between` boundary; machine-checked statement bridges; public comparator unchanged compilation in our pinned environment; matching selected standard-axiom footprint; public Apache-2.0 artifact; exact-head and post-merge S1 integration evidence.
 
-- Cambie solved the mathematics.
-- Aristotle/Alexeev produced a prior Lean formalization.
-- Our independent Lean reimplementation builds successfully.
-- Our PNT boundary directly consumes `prime_between`.
-- Our interval semantics are machine-bridged to the public convention.
-- Our Formal Conjectures eventual-nonempty reading is machine-derived.
-- Admissible good lengths have explicit unbounded/infinite semantic endpoints.
-- Our strong theorem is machine-lifted to every real `C ≥ 1`.
-- The pinned public comparator source compiled unchanged in our pinned environment.
-- Selected endpoints on both sides had matching standard axiom footprints in that environment.
+**Supported interpretation:** independent formal replication has differential-verification value; the process record is a useful long-horizon AI-assisted formalization case; the direct PNT boundary is a plausible upstream target; execution-provenance auditing is scientifically relevant.
 
-### Level 1 — supported interpretation
+**Requires S2/S4 experiments:** easier maintenance, better upgrade robustness, lower dependency coupling, earlier semantic-drift detection, smaller repair blast radius, causal benefit of state protocols, faster/more resource-efficient builds.
 
-- the second implementation has differential-verification value;
-- the process record is a useful long-horizon AI-assisted formalization case;
-- the `prime_between` adapter is a plausible upstream component;
-- the verification-credit correction is an empirical example of why execution logs should dominate metadata labels for commit-level proof credit;
-- the public-release process is an auditable example of treating security/provenance/licensing as scientific artifact closure rather than post-hoc administration.
+**Unsupported:** new solution of #678, new independent mathematical proof, first Lean formalization, general architecture superiority, autonomous AI authorship percentage, causal claim that one AI technique produced success.
 
-### Level 2 — requires controlled experiments
+## Stage plan
 
-- easier maintenance;
-- better upgrade robustness;
-- lower dependency coupling in practice;
-- earlier semantic-drift detection;
-- lower repair locality/blast radius;
-- state protocol causally improves agent restart performance;
-- faster or more resource-efficient builds.
+- **S0 — dossier freeze:** COMPLETE.
+- **S1 — common-environment differential verification + public integration:** COMPLETE / VERIFIED.
+- **S2 — metric and mutation suite:** NOT STARTED; next stage after this closure-sync PR itself is integrated.
+- **S3 — upstream probe:** NOT STARTED; after S2 evidence.
+- **S4 — AI episode dataset / prospective controls:** NOT STARTED.
+- **S5 — manuscript decision:** NOT STARTED; decide output structure only after evidence from S1–S4.
 
-### Level 3 — unsupported / prohibited from current evidence
+## Repository governance follow-up
 
-- new solution of #678;
-- new independent mathematical proof;
-- first Lean formalization;
-- general superiority of our architecture;
-- autonomous AI authorship percentage;
-- causal claim that a specific AI technique produced the success.
-
-## Stage plan and current checkpoint
-
-### S0 — dossier freeze — COMPLETE
-
-Initial scientific positioning and comparison anchors are frozen.
-
-### S1 — common-environment differential verification — EXPERIMENT COMPLETE / FINAL PUBLIC INTEGRATION PENDING
-
-The scientific experiment is complete: run `32028006457` successfully built the internal bridge/canonical graph and compiled the pinned public comparator source unchanged in the same pinned environment, with matched selected-endpoint axiom footprints.
-
-The public transition is also complete:
-
-- license-only PR #26 merged Apache-2.0 to `main` at `87cf560451ef5aa4714069d52a3851c1f8547f70`;
-- GitHub reports `visibility: public` and `license: Apache-2.0`;
-- public-runner availability was restored: reopening PR #22 launched diagnostic run `32043331012`, which entered the canonical Lean build rather than failing before the first step;
-- no repository rulesets were detected immediately after the transition.
-
-Because state synchronization after the public transition changes the PR head, `32043331012` is diagnostic rather than the final S1 integration-credit run.
-
-S1 closes only when:
-
-1. the **actual final PR #22 head** passes the hardened commit-explicit canonical gate;
-2. the logged checked-out commit equals the credited PR head;
-3. PR #22 merges;
-4. the merged `main` head passes post-merge verification.
-
-Branch/ruleset protection for `main` should be configured in the GitHub UI before accepting outside contributions; this is a repository-governance task, not a mathematical gate.
-
-### S2 — metric and mutation suite — NOT STARTED
-
-Do not start until S1 integration closes.
-
-### S3 — upstream probe — NOT STARTED
-
-After S2 evidence, test the smallest useful upstream contribution first.
-
-### S4 — AI episode dataset — NOT STARTED
-
-Convert repository history into structured observable episodes and run prospective controls.
-
-### S5 — manuscript decision — NOT STARTED
-
-Only after S1–S4 decide whether evidence supports one combined paper, two outputs, paper + upstream contribution, or artifact/technical report only.
+The repository is Public and Apache-2.0 licensed. No ruleset was detected immediately after the visibility transition. Before accepting outside contributions, protect `main` through GitHub so normal integration requires PR + Lean Verification and force pushes/deletions are blocked.
 
 ## Stop condition
 
-All work in this roadmap concerns the already completed Erdős #678 artifact and its scientific evaluation.
-
-It does **not** authorize selection, exploration, or formalization of another Erdős problem. `DEC-012` remains in force.
+All work in this roadmap concerns archived Erdős #678. It **does not** authorize selection, exploration, or formalization of another Erdős problem. `DEC-012` remains in force.
