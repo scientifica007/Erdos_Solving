@@ -2,7 +2,7 @@
 
 > **Operational checkpoint synchronized on 2026-08-17.**
 >
-> **Erdős Problem #678 mathematics is complete, machine-checked, integrated, post-merge verified, and archived. Scientific-evaluation stage S1 is also complete: the differential-verification artifact is integrated into public `main` and post-merge verified.**
+> **Erdős Problem #678 mathematics and scientific stage S1 are complete, integrated, and post-merge verified. S2 is active on archived #678 only. S2a dependency-surface measurement has executed successfully and is awaiting canonical PR integration.**
 >
 > **No other Erdős problem may be selected, activated, resumed, researched, or formalized without explicit user authorization (`DEC-012`).**
 
@@ -13,7 +13,7 @@ This file is the authoritative restart checkpoint. Proof/CI credit is tied to th
 ```yaml
 current_problem: 678
 current_phase: archived
-current_stage: scientific-evaluation-s1-complete-ready-for-s2
+current_stage: scientific-evaluation-s2a-dependency-surface-integration
 current_mode: external-proof-reconstruction
 proof_frozen: true
 
@@ -27,50 +27,53 @@ new_mathematical_proof_claim: false
 
 repository_visibility: public
 project_license: Apache-2.0
-project_license_main_commit: 87cf560451ef5aa4714069d52a3851c1f8547f70
 repository_rulesets_at_public_transition: none-detected
 
-s1_scientific_experiment_status: success
-s1_experiment_run: 32028006457
-s1_experiment_job: 95381414710
-s1_experiment_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
-s1_experiment_build_jobs: 8808
-s1_public_comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
-s1_public_comparator_compiled_unchanged_in_internal_environment: true
-s1_matched_axiom_footprint: propext-Classical.choice-Quot.sound
-
-s1_integration_pr: 22
-s1_premerge_head: 1c6bea992033390ac4364033fafcd221694baf4c
-s1_premerge_ci_run: 32043807200
-s1_premerge_ci_job: 95427648473
-s1_premerge_ci_result: success
-s1_premerge_verified_commit_match: true
-s1_premerge_build_jobs: 8808
+s1_status: complete-integrated-postmerge-verified
+s1_scientific_experiment_run: 32028006457
 s1_merge_commit: 358cd541ff81a2b59611b7addfc90ae17e03b36f
-s1_postmerge_ci_run: 32044314748
-s1_postmerge_ci_attempt: 2
-s1_postmerge_ci_job: 95429173912
-s1_postmerge_ci_result: success
-s1_postmerge_verified_commit_match: true
-s1_postmerge_import_check: no-update-necessary
-s1_postmerge_build_jobs: 8808
-s1_repository_integration_status: complete-public-main-verified
+s1_closure_merge_commit: 7aff8d8d8680e90b34be64650c68c0fc778749fc
+s1_closure_postmerge_ci_run: 32045885504
 
-postmerge_attempt_1_classification: transient-infrastructure-failure
-postmerge_attempt_1_root_cause: HTTP-502-downloading-Lean
-postmerge_attempt_1_proof_failure: false
+s2_status: active
+s2_current_substage: S2a-dependency-surface
+s2a_protocol: problems/678/S2_DEPENDENCY_SURFACE_PROTOCOL.md
+s2a_analyzer: problems/678/experiments/s2_dependency_surface.py
+s2a_baseline_markdown: problems/678/S2_DEPENDENCY_SURFACE_BASELINE.md
+s2a_baseline_json: problems/678/S2_DEPENDENCY_SURFACE_BASELINE.json
+s2a_experiment_status: executed-success-pending-pr-integration
+s2a_experiment_commit: 4685fca552ae4a0270dfa3823d46fde48efa5ade
+s2a_experiment_run: 32047324807
+s2a_experiment_job: 95438118197
+s2a_artifact_id: 9293347138
+s2a_artifact_digest: sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd
+s2a_comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+s2a_comparator_entry_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+s2a_identity_validation: pass
+s2a_internal_reachable_modules: 46
+s2a_internal_local_edges: 58
+s2a_internal_max_depth: 33
+s2a_internal_artifact_owned_lines: 5546
+s2a_comparator_reachable_local_modules: 10
+s2a_comparator_local_edges: 10
+s2a_comparator_max_depth: 4
+s2a_comparator_artifact_owned_modules: 1
+s2a_comparator_artifact_owned_lines: 2546
+s2a_comparator_third_party_repository_local_modules: 9
+s2a_comparator_third_party_repository_local_lines: 6943
+s2a_metric_scope: module-import-structure-not-proof-complexity
+s2a_primary_finding: dependency-surface-counts-are-boundary-sensitive-because-pnt-packaging-differs
 
-ci_provenance_audit_status: correction-recorded-and-validated
-canonical_workflow: explicit-head-checkout-plus-git-rev-parse-head
-public_ci_hardening: contents-read-only-persist-credentials-false-actions-pinned-by-sha
-private_billing_blocker_status: resolved-by-public-transition
-
-s2_status: not-started
+s2b_status: not-started
+s2c_status: not-started
+s2d_status: not-started
+s2e_status: not-started
+s2f_status: not-started
 s3_status: not-started
 s4_status: not-started
 s5_status: not-started
 user_transition_gate: explicit-authorization-required-for-another-erdos-problem
-next_action: after this S1-closure synchronization itself passes PR CI and merges cleanly, begin S2 metric-and-mutation work on archived #678 only; separately configure main protection/ruleset before accepting outside contributions
+next_action: open the S2a PR; require canonical exact-head Lean Verification on its final head; merge only if green; verify main; only then start S2b controlled build-behavior measurements
 ```
 
 ## Governing rules
@@ -80,71 +83,53 @@ next_action: after this S1-closure synchronization itself passes PR CI and merge
 - `lake exe mk_all --check` and the full reachable Lean build define canonical machine verification.
 - CI evidence is credited to the commit actually checked out; metadata labels alone are insufficient.
 - Infrastructure failures and proof failures are classified separately.
-- State/roadmap/README synchronization is a project gate, not optional bookkeeping.
+- State/roadmap/README synchronization is a project gate.
 - Public visibility does not relax attribution, provenance, licensing, or verification requirements.
+- S2 measurements are experimental evidence; no architecture-superiority claim is allowed before controlled measurements support it.
 
-## Mathematical #678 checkpoint — closed
+## Closed checkpoints
 
-The final reachable graph proves:
+### Mathematics
 
-- `cambie_lcm_ratio_eventually_with_large_start`;
-- `erdos678_unbounded_witnesses`;
-- `erdos678_good_lengths_infinite`.
+#678 is complete and archived. Final reachable endpoints include `cambie_lcm_ratio_eventually_with_large_start`, `erdos678_unbounded_witnesses`, and `erdos678_good_lengths_infinite`. The project pins `AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed` and consumes its machine-checked `prime_between` theorem.
 
-The analytic boundary pins
+### S1
 
-`AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`
+S1 differential verification is closed. Run `32028006457` established the common-environment cross-artifact result. PR #22 passed exact-head run `32043807200`, merged as `358cd541...`, and passed post-merge verification in `32044314748` attempt 2. Closure PR #27 merged as `7aff8d8d...` and passed post-merge run `32045885504` with exact provenance, `No update necessary`, and 8808 jobs.
 
-and consumes its machine-checked `prime_between` theorem. No custom prime-density axiom remains in the credited theorem.
+## S2a — dependency surface — EXECUTED
 
-Important mathematical verification remains anchored by final E4 run `31977861568` and mathematical post-merge run `32011189766`.
+The S2a analyzer ran at exact internal commit `4685fca552ae4a0270dfa3823d46fde48efa5ade` in run `32047324807`, job `95438118197`. The workflow validated the internal commit and fixed comparator commit/blob, generated JSON/Markdown evidence, and uploaded an artifact with digest `sha256:9723b6e2...`.
 
-The earlier independent route remains rejected because it used the false scaling identity `M(t*n,k)=t*M(n,k)` and later a wrong interval in a `Q=P/M` construction. The valid witness `M(36,8)>M(47,9)` and machine-refuted `(495,504,8)` candidate remain regression evidence.
+Canonical-result structural baseline:
 
-## S1 — differential verification — COMPLETE
+| Metric | Internal | Comparator |
+|---|---:|---:|
+| reachable local modules | 46 | 10 |
+| local import edges | 58 | 10 |
+| max local import depth | 33 | 4 |
+| external-frontier modules | 14 | 27 |
+| artifact-owned modules | 46 | 1 |
+| artifact-owned source lines | 5546 | 2546 |
+| third-party repository-local support modules | 0 | 9 |
+| third-party repository-local support lines | 0 | 6943 |
 
-The scientific experiment itself succeeded in run `32028006457` on exact head `b1e3fc60...` and established:
+The correct interpretation is **not** that one architecture is better. The important result is that dependency metrics are boundary-sensitive: PNT+ is an external Lake dependency internally, but its source is physically repository-local in the comparator. Raw module/file/frontier counts therefore mix decomposition, dependency packaging, and ownership unless normalized.
 
-- canonical graph build with 8808 jobs;
-- machine bridges to public `Finset.Ioc` interval semantics and Formal-Conjectures-style eventual existence;
-- explicit unbounded/infinite valid-length endpoints;
-- lift of the strong theorem to every real `C ≥ 1`;
-- unchanged compilation of `plby/lean-proofs@6f906fef...` #678 source inside our pinned Lean 4.33 / Mathlib / PNT+ environment;
-- matched selected-endpoint axiom footprint `[propext, Classical.choice, Quot.sound]`.
+This boundary result becomes a control for later S2 experiments. Build, repair, mutation, and upgrade studies must distinguish project-owned failure/repair surface from external or repository-local third-party support.
 
-The persistent S1 artifact then passed the repaired exact-head PR gate:
+The exact executed baseline is recorded in `S2_DEPENDENCY_SURFACE_BASELINE.md` and machine-readable summary JSON. Full module/edge output is reproducible with the analyzer and was generated in the run artifact.
 
-- PR #22 head: `1c6bea992033390ac4364033fafcd221694baf4c`;
-- run `32043807200`, job `95427648473`: **SUCCESS**;
-- logged checkout and `verified_commit` both equal the PR head;
-- `mk_all`: `No update necessary`;
-- build: **8808 jobs**.
+## Public-artifact governance
 
-PR #22 merged as
+The repository is Public and Apache-2.0 licensed. The comparator remains an immutable external fetch, not vendored source. No repository ruleset was detected at public transition; configure `main` protection before accepting outside contributions.
 
-`358cd541ff81a2b59611b7addfc90ae17e03b36f`.
-
-Post-merge run `32044314748` attempt 1 failed before Lean setup completed because `releases.lean-lang.org` returned HTTP 502. This is retained as a transient infrastructure failure, not a proof failure. Attempt 2, job `95429173912`, then:
-
-- checked out `358cd541ff81a2b59611b7addfc90ae17e03b36f` exactly;
-- logged the same `verified_commit`;
-- installed Lean 4.33.0;
-- checked the pinned PNT/Mathlib revisions;
-- returned `No update necessary` from `mk_all`;
-- completed the full build successfully with **8808 jobs**.
-
-Therefore S1 scientific evidence and repository integration are both closed.
-
-## Public-artifact checkpoint
-
-The repository is Public and GitHub recognizes Apache-2.0. `THIRD_PARTY_NOTICES.md` records provenance and redistribution boundaries. The public comparator remains an immutable external fetch rather than vendored source because no comparator repository license was detected during the audit.
-
-No repository ruleset was detected immediately after the public transition. Before accepting outside contributions, configure `main` protection in GitHub so normal integration remains PR + required Lean verification, with force-push/deletion protection.
+A non-blocking Actions warning was observed: the currently pinned checkout action targets Node 20 and GitHub forces it onto Node 24. This is retained as an environment/maintenance observation, not part of the S2a dependency metric.
 
 ## Required restart sequence
 
-1. Verify current `main` and repository visibility.
-2. Treat #678 mathematics and S1 as closed checkpoints.
-3. Do not start another Erdős problem without explicit authorization.
-4. S2 may begin only within #678 after this closure-documentation PR itself passes canonical CI and is integrated.
-5. Keep all S2 architecture/performance claims experimental until controlled evidence exists.
+1. Treat #678 mathematics and S1 as closed.
+2. Treat S2a experiment evidence as executed but not integrated until its PR passes canonical exact-head CI and post-merge verification.
+3. Do not start S2b before S2a integration closes.
+4. Continue all experiments only on archived #678.
+5. **Do not start another Erdős problem without explicit user authorization.**

@@ -1,0 +1,81 @@
+name: Erdos 678 S2a Dependency Surface
+
+on:
+  push:
+    branches:
+      - "agent/erdos678-s2a-dependency-surface-*"
+    paths:
+      - "problems/678/experiments/s2_dependency_surface.py"
+      - "problems/678/S2_DEPENDENCY_SURFACE_PROTOCOL.md"
+      - ".github/workflows/erdos678-s2a-dependency.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos678-s2a-dependency-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  measure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact experiment commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4 pin used by canonical workflow
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Record experiment commit
+        run: |
+          set -euo pipefail
+          printf 's2a_experiment_commit=%s\n' "$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+
+      - name: Measure dependency surface
+        run: |
+          set -euo pipefail
+          python3 problems/678/experiments/s2_dependency_surface.py \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --output-json problems/678/experiments/out/s2_dependency_surface.json \
+            --output-md problems/678/experiments/out/s2_dependency_surface.md
+
+      - name: Validate generated evidence identity
+        env:
+          EXPECTED_COMPARATOR_COMMIT: 6f906fef432892db5c910c48ad1a3728dd42cdac
+          EXPECTED_COMPARATOR_BLOB: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          path = Path("problems/678/experiments/out/s2_dependency_surface.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+          assert data["internal_repository"]["commit"] == os.environ["GITHUB_SHA"]
+          assert data["comparator"]["commit"] == os.environ["EXPECTED_COMPARATOR_COMMIT"]
+          assert data["comparator"]["entry_blob"] == os.environ["EXPECTED_COMPARATOR_BLOB"]
+          assert data["metric_scope"] == "module-import-structure-not-proof-complexity"
+          print("S2a identity validation: PASS")
+          print("internal_commit=", data["internal_repository"]["commit"])
+          print("comparator_commit=", data["comparator"]["commit"])
+          print("comparator_blob=", data["comparator"]["entry_blob"])
+          PY
+
+      - name: Print concise baseline
+        run: |
+          set -euo pipefail
+          cat problems/678/experiments/out/s2_dependency_surface.md
+
+      - name: Upload exact generated evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: erdos678-s2a-dependency-${{ github.sha }}
+          path: |
+            problems/678/experiments/out/s2_dependency_surface.json
+            problems/678/experiments/out/s2_dependency_surface.md
+          if-no-files-found: error
+          retention-days: 30

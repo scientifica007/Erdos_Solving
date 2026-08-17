@@ -6,65 +6,53 @@
 
 المادة المملوكة لهذا المشروع مرخصة بموجب **Apache License 2.0** ما لم يُذكر خلاف ذلك. النص الكامل في `LICENSE`، وحدود الطرف الثالث والنَّسب العلمي في `THIRD_PARTY_NOTICES.md` ووثائق المسائل.
 
-## وثائق التشغيل الأساسية
-
-`PROJECT_STATE.md` هو checkpoint التشغيل الحاكم، ويُقرأ مع `DECISIONS.md` و`RESEARCH_STATE_PROTOCOL.md` وملفات المسألة النشطة/المؤرشفة.
-
 ## الحالة الحالية — 17 أوت 2026
 
 ### Erdős #678 mathematics
 
 #678 **COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED**.
 
-المسار الناجح هو إعادة بناء برهان Stijn Cambie (2024) وإعادة تنفيذه بصورة مستقلة في Lean، وليس برهانًا رياضيًا جديدًا مستقلاً. المحاولة المستقلة السابقة مرفوضة ومحفوظة كجزء من سجل الفشل/regressions.
-
-النتيجتان النهائيتان البارزتان هما:
-
-- `erdos678_unbounded_witnesses`؛
-- `erdos678_good_lengths_infinite`.
-
-المدخل التحليلي يعتمد على `AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed` مع adapter مباشر من `prime_between`.
+المسار الناجح هو إعادة بناء برهان Stijn Cambie (2024) وإعادة تنفيذه بصورة مستقلة في Lean، وليس برهانًا رياضيًا جديدًا مستقلاً. النتيجتان النهائيتان البارزتان هما `erdos678_unbounded_witnesses` و`erdos678_good_lengths_infinite`. المدخل التحليلي يعتمد على PNT+ المثبت عند `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed` مع adapter مباشر من `prime_between`.
 
 ### S1 scientific evaluation — COMPLETE
 
-S1 حوّلت #678 من formalization داخلية إلى artifact مقارنة علمية قابلة لإعادة الإنتاج.
+S1 أنجزت independent formal replication / executable differential verification مقابل formalization Aristotle/Alexeev. التجربة الأساسية run `32028006457` بنت graph كاملًا من **8808 jobs** وcompiled المصدر العام المثبت دون تعديل داخل بيئتنا Lean 4.33 / Mathlib / PNT+، مع selected axiom footprint `[propext, Classical.choice, Quot.sound]` على الجانبين.
 
-التجربة الأساسية نجحت في run `32028006457` على exact head `b1e3fc60...`، وبنت graph كاملًا من **8808 jobs**، ثم compiled المصدر العام المثبت لـ`plby/lean-proofs@6f906fef...` دون تعديل داخل بيئتنا Lean 4.33 / Mathlib / PNT+، مع تطابق selected axiom footprint إلى `propext`, `Classical.choice`, `Quot.sound`.
+PR #22 أغلقت artifact S1، وPR #27 أغلقت synchronization الحاكم؛ رأس `main` بعد S1 closure هو `7aff8d8d8680e90b34be64650c68c0fc778749fc` وقد اجتاز post-merge run `32045885504` مع `No update necessary` وبناء 8808 jobs.
 
-الـbridge الداخلي يثبت صراحةً:
+### S2 — ACTIVE على #678 فقط
 
-- توافق interval semantics مع `Finset.Ioc`؛
-- صيغة Formal Conjectures eventual-nonempty؛
-- unbounded/infinite good-length semantics؛
-- رفع strong theorem إلى كل عامل حقيقي `C ≥ 1`.
+**S2a — dependency-surface baseline** نُفذت بنجاح في run `32047324807`, job `95438118197`, على exact experiment commit `4685fca552ae4a0270dfa3823d46fde48efa5ade`. الـworkflow تحقق من comparator commit/blob الثابتين وأنتج artifact evidence digest `sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd`.
 
-هذا يدعم وصف العمل بأنه **independent formal replication / executable differential verification**، ولا يدعم ادعاء حل جديد أو أول formalization أو تفوق معماري عام.
+الـbaseline البنيوية:
 
-### S1 integration evidence
+| Metric | Erdos_Solving | Public comparator |
+|---|---:|---:|
+| reachable local modules | 46 | 10 |
+| local import edges | 58 | 10 |
+| max local depth | 33 | 4 |
+| external-frontier modules | 14 | 27 |
+| artifact-owned modules | 46 | 1 |
+| artifact-owned source lines | 5546 | 2546 |
+| third-party repository-local support modules | 0 | 9 |
 
-PR #22 اجتازت البوابة المصححة على exact head
+**النتيجة العلمية الصحيحة في S2a ليست أن أحد التطويرين أفضل.** النتيجة هي أن dependency-surface metrics حساسة جدًا لتعريف boundary: مشروعنا يستهلك PNT+ كـLake dependency خارجية، بينما comparator يحتوي تسع وحدات PNT+ reachable داخل شجرة repository نفسها. لذلك raw file/module count يخلط modularization مع packaging وthird-party ownership.
 
-`1c6bea992033390ac4364033fafcd221694baf4c`
+المنهج في `problems/678/S2_DEPENDENCY_SURFACE_PROTOCOL.md`، والنتيجة في `S2_DEPENDENCY_SURFACE_BASELINE.md/.json`، والأداة القابلة لإعادة التشغيل في `experiments/s2_dependency_surface.py`.
 
-عبر run `32043807200`, job `95427648473`: checkout و`verified_commit` متطابقان مع الرأس، `mk_all` = `No update necessary`، والبناء **SUCCESS / 8808 jobs**.
-
-ثم دُمجت PR #22 في `main` كـ
-
-`358cd541ff81a2b59611b7addfc90ae17e03b36f`.
-
-تشغيل post-merge `32044314748` فشل في المحاولة الأولى بسبب HTTP 502 أثناء تنزيل Lean، قبل أي proof build؛ أُعيد تشغيل نفس job دون تغيير المستودع، وانتهت المحاولة الثانية بنجاح على نفس merge commit، مع `verified_commit` مطابق، `No update necessary`، وبناء **8808 jobs**. لذلك يصنف الفشل الأول كـtransient infrastructure failure، لا proof failure.
-
-بهذا أصبحت S1 **integrated and post-merge verified**.
+S2a لم تصبح checkpoint مدمجة بعد: يجب أن تمر branch/PR الحالية عبر canonical exact-head Lean Verification ثم post-merge verification. **S2b لا تبدأ قبل ذلك.**
 
 ### Public artifact
 
-المستودع **Public**، وGitHub يتعرف على `Apache-2.0`. الـworkflow يستخدم read-only token، لا يحتفظ ببيانات checkout الاعتمادية، ويسجل commit المبني فعليًا، مع Actions مباشرة مثبتة عند commit SHAs.
+المستودع **Public** ومرخص Apache-2.0. لم تكن هناك repository rulesets عند فحص الانتقال إلى Public؛ يجب ضبط حماية `main` قبل قبول مساهمات خارجية.
 
-لم تكن هناك repository rulesets عند فحص الانتقال إلى Public. يجب ضبط حماية `main` من واجهة GitHub قبل قبول مساهمات خارجية، بحيث يبقى المسار الطبيعي PR + required Lean Verification ومنع force-push/deletion.
+## وثائق التشغيل الأساسية
 
-## المرحلة التالية داخل #678
-
-بعد دمج واجتياز CI لهذا الـclosure synchronization نفسه، يمكن فتح **S2 — metric and mutation suite** لدراسة dependency coupling، build behavior، repair locality، mutation resistance، وupgrade robustness بصورة مضبوطة قبل أي claim عن أفضلية architecture.
+- `PROJECT_STATE.md` — checkpoint التشغيل الحاكم؛
+- `DECISIONS.md` — القرارات، ومنها `DEC-012`؛
+- `RESEARCH_STATE_PROTOCOL.md` — بوابات المراحل؛
+- `problems/678/PUBLICATION_AND_UPSTREAM_ROADMAP.md` — خارطة القيمة العلمية؛
+- `problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml` — سجل الأدلة.
 
 ## بوابة الانتقال
 
