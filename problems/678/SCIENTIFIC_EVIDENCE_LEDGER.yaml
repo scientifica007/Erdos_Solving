@@ -1,4 +1,4 @@
-schema_version: 7
+schema_version: 9
 snapshot_date: 2026-08-17
 scope: erdos-678-only
 
@@ -6,8 +6,8 @@ classification:
   mathematical_result: known
   mathematical_author: Stijn Cambie
   successful_project_mode: external-proof-reconstruction
-  independent_mathematical_attempt: rejected
   project_formalization: independent-lean-reimplementation
+  independent_mathematical_attempt: rejected
   first_formalization_claim: false
   new_mathematical_proof_claim: false
 
@@ -16,49 +16,10 @@ internal_artifact:
   visibility: public
   license: Apache-2.0
   mathematical_merge_commit: 8fd1b20541ac7782f52429db3a2cc4c887547372
-  s1_merge_commit: 358cd541ff81a2b59611b7addfc90ae17e03b36f
-  s1_closure_merge_commit: 7aff8d8d8680e90b34be64650c68c0fc778749fc
-  s2a_merge_commit: 37deb850f894d32863970aca6b07e876f89e813d
   lean_version: 4.33.0
-  mathlib_version: v4.33.0
-  pnt_dependency:
-    repository: AxiomMath/PrimeNumberTheoremAnd
-    revision: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
-    consumed_theorem: prime_between
-
-s1_differential_verification:
-  status: complete-integrated-postmerge-verified
-  scientific_experiment:
-    run: 32028006457
-    job: 95381414710
-    exact_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
-    result: success
-    canonical_build_jobs: 8808
-  exact_head_integration_gate:
-    pr: 22
-    head: 1c6bea992033390ac4364033fafcd221694baf4c
-    run: 32043807200
-    result: success
-    commit_match: true
-    import_check: no-update-necessary
-    build_jobs: 8808
-  merge_commit: 358cd541ff81a2b59611b7addfc90ae17e03b36f
-  postmerge_verification:
-    run: 32044314748
-    final_attempt: 2
-    job: 95429173912
-    result: success
-    commit_match: true
-    import_check: no-update-necessary
-    build_jobs: 8808
-  closure:
-    pr: 27
-    merge_commit: 7aff8d8d8680e90b34be64650c68c0fc778749fc
-    postmerge_run: 32045885504
-    result: success
-    commit_match: true
-    import_check: no-update-necessary
-    build_jobs: 8808
+  mathlib_input: v4.33.0
+  mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
+  pnt_revision: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
 
 external_comparator:
   repository: plby/lean-proofs
@@ -69,96 +30,188 @@ external_comparator:
   blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
   redistribution_boundary: immutable-external-fetch-non-vendored-license-not-detected
 
+s1_differential_verification:
+  status: complete-integrated-postmerge-verified
+  experiment:
+    run: 32028006457
+    job: 95381414710
+    exact_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
+    result: success
+    canonical_build_jobs: 8808
+  integration:
+    pr: 22
+    exact_head: 1c6bea992033390ac4364033fafcd221694baf4c
+    exact_head_run: 32043807200
+    merge_commit: 358cd541ff81a2b59611b7addfc90ae17e03b36f
+    postmerge_run: 32044314748
+    postmerge_final_attempt: 2
+  closure:
+    pr: 27
+    merge_commit: 7aff8d8d8680e90b34be64650c68c0fc778749fc
+    postmerge_run: 32045885504
+    result: success
+    commit_match: true
+    import_check: no-update-necessary
+    build_jobs: 8808
+
 s2:
   status: active
-  current_substage: S2a-closed-awaiting-S2b-start
+  current_substage: S2b-integration
 
   s2a_dependency_surface:
-    status: complete-integrated-postmerge-verified
+    status: complete-integrated-postmerge-verified-closure-verified
     protocol: problems/678/S2_DEPENDENCY_SURFACE_PROTOCOL.md
     analyzer: problems/678/experiments/s2_dependency_surface.py
     baseline_markdown: problems/678/S2_DEPENDENCY_SURFACE_BASELINE.md
     baseline_json: problems/678/S2_DEPENDENCY_SURFACE_BASELINE.json
-    metric_scope: module-import-structure-not-proof-complexity
     experiment:
-      workflow: Erdos 678 S2a Dependency Surface
       commit: 4685fca552ae4a0270dfa3823d46fde48efa5ade
       run: 32047324807
       job: 95438118197
-      result: success
-      identity_validation: pass
       artifact_id: 9293347138
       artifact_digest: sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd
-    comparator_identity:
-      commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
-      entry_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+      result: success
     integration:
       pr: 28
       exact_head: 3d4e35c15eb07938dfcb3fb5de29e8d51f1e767e
       exact_head_run: 32047808010
-      exact_head_result: success
-      exact_head_commit_match: true
-      exact_head_import_check: no-update-necessary
-      exact_head_build_jobs: 8808
       merge_commit: 37deb850f894d32863970aca6b07e876f89e813d
       postmerge_run: 32048513043
-      postmerge_job: 95441935353
-      postmerge_result: success
-      postmerge_commit_match: true
-      postmerge_import_check: no-update-necessary
-      postmerge_build_jobs: 8808
-    internal_metrics:
-      entry_module: Formalization.Erdos678.Erdos678Final
-      direct_entry_imports: 4
-      reachable_local_modules: 46
-      local_import_edges: 58
-      max_local_import_depth: 33
-      local_leaf_modules: 3
-      external_frontier_modules: 14
-      external_frontier_families: [Mathlib, PrimeNumberTheoremAnd]
-      artifact_owned_modules: 46
-      artifact_owned_source_lines: 5546
-      artifact_owned_declaration_commands: 237
-      third_party_repository_local_modules: 0
-    comparator_metrics:
-      entry_module: ErdosProblems.Erdos678
-      direct_entry_imports: 2
-      reachable_local_modules: 10
-      local_import_edges: 10
-      max_local_import_depth: 4
-      local_leaf_modules: 4
-      external_frontier_modules: 27
-      external_frontier_families: [Batteries, Mathlib]
-      artifact_owned_modules: 1
-      artifact_owned_source_lines: 2546
-      artifact_owned_declaration_commands: 108
-      third_party_repository_local_modules: 9
-      third_party_repository_local_source_lines: 6943
-      third_party_repository_local_declaration_commands: 381
-    verified_finding:
-      - dependency-surface counts are boundary-sensitive because the same PNT dependency is external through Lake internally but repository-local source in the comparator
-      - raw module/file/frontier counts conflate proof decomposition, dependency packaging, and ownership unless normalized
-    interpretation_limits:
+    closure:
+      pr: 29
+      exact_head: 0a1d1cf84c87c5a3b40d6a118e733cda5807a4a7
+      exact_head_run: 32050225638
+      merge_commit: c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5
+      postmerge_run: 32050862725
+      postmerge_job: 95449629511
+      result: success
+      commit_match: true
+      import_check: no-update-necessary
+      build_jobs: 8808
+    metrics:
+      internal:
+        reachable_local_modules: 46
+        local_import_edges: 58
+        max_local_depth: 33
+        external_frontier_modules: 14
+        artifact_owned_modules: 46
+        artifact_owned_source_lines: 5546
+      comparator:
+        reachable_local_modules: 10
+        local_import_edges: 10
+        max_local_depth: 4
+        external_frontier_modules: 27
+        artifact_owned_modules: 1
+        artifact_owned_source_lines: 2546
+        third_party_repository_local_modules: 9
+        third_party_repository_local_source_lines: 6943
+    finding: dependency-surface-counts-are-boundary-sensitive
+    limits:
       - no architecture-superiority claim
-      - no direct lower-coupling claim from external-frontier counts
-      - no proof-complexity interpretation from module or line counts
-      - build speed, repair locality, mutation resistance, and upgrade robustness remain unmeasured
-    infrastructure_observation:
-      checkout_action_node20_warning: true
-      classification: non-blocking-environment-maintenance-observation
+      - no proof-complexity interpretation from module/file/line counts
 
   s2b_controlled_build_behavior:
-    status: not-started
-    required_controls:
-      - fixed internal and comparator identities
-      - fixed runner image and Lean/Mathlib/PNT identities
-      - explicit cold versus warm cache semantics
-      - repeated runs and predeclared aggregation
-      - phase-separated setup versus artifact compilation
-      - ownership-aware attribution of repository-local PNT support
-      - network/setup time excluded from or separately reported from build timing
-      - explicit failure/retry classification
-      - machine-readable result artifact
+    status: executed-success-validated-pending-pr-integration
+    protocol: problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md
+    runner: problems/678/experiments/s2_build_behavior.py
+    aggregator: problems/678/experiments/s2_build_behavior_aggregate.py
+    baseline_markdown: problems/678/S2_BUILD_BEHAVIOR_BASELINE.md
+    baseline_json: problems/678/S2_BUILD_BEHAVIOR_BASELINE.json
+    metric_scope: artifact-owned-cold-and-warm-lake-build-behavior-common-environment
+
+    excluded_pilot:
+      apparatus_commit: a349010e295afa52d040feacbb2d02d5c081c548
+      run: 32052134207
+      matrix_jobs_success: 6
+      matrix_jobs_total: 6
+      exclusion_scope: entire-run
+      reason: runner-version-missing-from-result-evidence
+      timing_values_credited: false
+      performance_selected_exclusion: false
+      corrective_action: make-runner-and-image-provenance-fail-closed-and-rerun-all-six
+
+    credited_experiment:
+      apparatus_commit: c2ef703c954e462096162a3b4a59a5e0f8d48488
+      run: 32053575928
+      result: success
+      replicates_planned: 6
+      replicates_successful: 6
+      retries: 0
+      exclusions: 0
+      order_sequence:
+        - internal-first
+        - comparator-first
+        - internal-first
+        - comparator-first
+        - internal-first
+        - comparator-first
+      environment:
+        runner_version: 2.336.0
+        runner_image_os: ubuntu24
+        runner_image_version: 20260810.271.1
+        cpu_count: 4
+        lean: 4.33.0
+        mathlib_input: v4.33.0
+        mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
+        pnt: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+        comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+        comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+      artifacts:
+        - {replicate: 1, job: 95458495483, artifact_id: 9296089666, digest: sha256:0ae4abb0a926d87e0ee934c38e3781bdd1acf662aa886f94056749d9c688868d}
+        - {replicate: 2, job: 95458495190, artifact_id: 9296073673, digest: sha256:30ef2e618283d3164113931ddab48a3e2c5a4d642f9f90413b903a4bb25e55a3}
+        - {replicate: 3, job: 95458495351, artifact_id: 9295948207, digest: sha256:39460c4c00e49f2c3cb3f5e7b02ac4bf6871dc3aa734ad9f8fdad4ccd48b868c}
+        - {replicate: 4, job: 95458495136, artifact_id: 9296067771, digest: sha256:d078a33dd396edf08b685eaa192a66c8d43159268fa3ddf76797c41a17c5b41c}
+        - {replicate: 5, job: 95458495633, artifact_id: 9295931091, digest: sha256:fab91859fd85623c1f703c0999bc1a881101553e92799428c9e0952e30ad0997}
+        - {replicate: 6, job: 95458495066, artifact_id: 9295940038, digest: sha256:bd64b13cb21451a8c7a5bf54235579db6720b044ace51af0bda38387ba81321e}
+      artifact_digest_validation: pass-all-six
+      result_identity_validation: pass-all-six
+      build_exit_validation: pass-all-cold-warm
+
+    cold_wall_seconds:
+      internal: [160.80, 161.59, 157.11, 149.56, 158.35, 162.45]
+      comparator: [162.34, 151.93, 165.81, 160.24, 146.62, 152.32]
+      paired_internal_minus_comparator: [-1.54, 9.66, -8.70, -10.68, 11.73, 10.13]
+      internal_median: 159.575
+      comparator_median: 156.280
+      paired_median_difference: 4.06
+      paired_median_ratio_internal_over_comparator: 1.027048
+      finding: no-stable-wall-clock-winner
+
+    warm_wall_seconds:
+      internal_median: 4.420
+      comparator_median: 4.340
+      interpretation: no-change-incremental-check-not-compilation-speed
+
+    cold_resource_medians:
+      internal_user_cpu_s: 176.105
+      comparator_user_cpu_s: 480.580
+      internal_system_cpu_s: 64.840
+      comparator_system_cpu_s: 5.990
+      internal_total_cpu_s: 241.155
+      comparator_total_cpu_s: 486.475
+      paired_median_total_cpu_ratio_internal_over_comparator: 0.502837
+      internal_max_rss_kib: 7183766
+      comparator_max_rss_kib: 7828930
+      internal_built_progress_lines: 46
+      comparator_built_progress_lines: 1
+
+    resource_direction_consistency:
+      user_cpu_internal_over_comparator_ratio_range: [0.341, 0.388]
+      max_rss_internal_over_comparator_ratio_range: [0.917, 0.918]
+      system_cpu_internal_over_comparator_ratio_range: [10.5, 11.1]
+
+    finding:
+      - wall-clock ordering is unstable across the six paired runs
+      - the two proof layouts show materially different user/system CPU and peak-memory profiles under one pinned common environment
+      - internal total CPU is descriptively about half the comparator under this experiment while internal system CPU is much higher
+    causal_interpretation_status: inference-only-not-established
+    causal_hypothesis: modular process-and-file overhead versus monolithic elaboration cost
+    interpretation_limits:
+      - descriptive hosted-runner evidence only
+      - no general architecture-superiority claim
+      - no universal speed claim
+      - no maintainability or repair-locality inference
+      - no extrapolation to other toolchain/cache/machine regimes
 
 verification_credit_audit:
   status: corrected-and-validated
@@ -178,18 +231,17 @@ allowed_external_claims:
   - independent Lean reimplementation of Cambie's proof
   - executed common-environment differential verification against pinned Aristotle/Alexeev source
   - machine-checked statement normalization and real-factor bridge
-  - matched selected-endpoint standard-axiom footprint under one pinned environment
-  - exact-head and post-merge S1 integration provenance
-  - reproducible fully integrated S2a module/import structural baseline under explicit ownership and packaging boundaries
-  - dependency-surface metrics are boundary-sensitive under the observed PNT packaging difference
+  - reproducible closure-verified S2a boundary-sensitive dependency baseline
+  - six-replicate S2b common-environment build/resource baseline with no stable wall-time winner
+  - materially different measured CPU-system-user and peak-memory profiles under the recorded S2b environment
+  - green computation and scientifically admissible measurement are separate gates as demonstrated by the excluded S2b pilot
 
 claims_requiring_new_experiments:
   - easier maintenance than the public comparator
-  - better upgrade robustness than the public comparator
-  - lower dependency coupling in practice
-  - earlier semantic-drift detection in controlled tests
   - smaller repair blast radius
-  - faster or more resource-efficient proof architecture
+  - earlier semantic-drift detection
+  - better upgrade robustness
+  - causal explanation of S2b resource-profile differences
   - causal benefit of state protocols
 
 forbidden_or_unsupported_claims:
@@ -197,14 +249,15 @@ forbidden_or_unsupported_claims:
   - new independent mathematical proof of Erdős #678
   - first Lean formalization of Erdős #678
   - general superiority of our architecture
+  - universal speed advantage
   - autonomous AI authorship percentage
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S2a-closure-document-integration
+  stage: S2b-pr-integration
   status: pending
-  requirement: canonical exact-head Lean Verification on this documentation-only closure PR, merge, then post-merge main verification
-  next_after_close: S2b-controlled-build-behavior
+  requirement: canonical exact-head Lean Verification on final S2b PR head; merge only if green; verify resulting main commit
+  next_after_close: S2c-repair-locality
 
 privacy_and_reproducibility:
   repository_visibility: public
