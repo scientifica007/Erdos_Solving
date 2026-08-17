@@ -2,7 +2,7 @@
 
 > **Operational checkpoint synchronized on 2026-08-17.**
 >
-> **Erdős #678 mathematics, S1, and S2a are closed and machine-verified. S2b controlled build-behavior has executed successfully with six validated paired replicates and is awaiting canonical PR integration. S2c has not started.**
+> **Erdős #678 mathematics, S1, S2a, and S2b are closed, integrated, and post-merge machine-verified. S2c repair-locality has not started.**
 >
 > **No other Erdős problem may be selected, activated, resumed, researched, or formalized without explicit user authorization (`DEC-012`).**
 
@@ -13,7 +13,7 @@ This is the authoritative restart checkpoint. Verification credit belongs only t
 ```yaml
 current_problem: 678
 current_phase: archived
-current_stage: scientific-evaluation-s2b-integration
+current_stage: scientific-evaluation-s2b-closure
 proof_frozen: true
 repository_visibility: public
 project_license: Apache-2.0
@@ -31,7 +31,7 @@ s2a_closure_merge_commit: c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5
 s2a_closure_postmerge_run: 32050862725
 s2a_primary_finding: dependency-surface-counts-are-boundary-sensitive
 
-s2b_status: executed-success-validated-pending-pr-integration
+s2b_status: complete-integrated-postmerge-verified
 s2b_protocol: problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md
 s2b_runner: problems/678/experiments/s2_build_behavior.py
 s2b_aggregator: problems/678/experiments/s2_build_behavior_aggregate.py
@@ -63,6 +63,15 @@ s2b_paired_total_cpu_median_ratio_internal_over_comparator: 0.502837
 s2b_internal_cold_max_rss_median_kib: 7183766
 s2b_comparator_cold_max_rss_median_kib: 7828930
 s2b_resource_conclusion: similar-wall-time-but-materially-different-cpu-and-memory-profile-under-pinned-common-environment
+s2b_pr: 30
+s2b_exact_head: e52e85d9b328a9cbc2349a6b61e23187dcc72fb5
+s2b_exact_head_ci_run: 32055813783
+s2b_merge_commit: c9900f9e2590f3101fc24f3f894f43b6fcf4e03c
+s2b_postmerge_ci_run: 32058421851
+s2b_postmerge_job: 95473817638
+s2b_postmerge_commit_match: true
+s2b_postmerge_import_check: no-update-necessary
+s2b_postmerge_build_jobs: 8808
 
 s2c_status: not-started
 s2d_status: not-started
@@ -72,7 +81,7 @@ s3_status: not-started
 s4_status: not-started
 s5_status: not-started
 user_transition_gate: explicit-authorization-required-for-another-erdos-problem
-next_action: synchronize S2b evidence; open PR; require canonical exact-head Lean Verification; merge only if green; verify main; only then start S2c repair-locality study
+next_action: exact-head verify and merge this documentation-only S2b closure; verify main; then predeclare S2c matched repair-locality mutations and success metrics before execution
 ```
 
 ## Governing rules
@@ -96,7 +105,7 @@ S2a dependency-surface evidence closed through PR #28 and closure PR #29. The fi
 
 Its scientific control remains binding: PNT+ lies on different repository boundaries in the two source trees, so raw module/file/frontier counts mix decomposition, packaging, and ownership.
 
-## Active checkpoint — S2b result
+### S2b — controlled build behavior — CLOSED
 
 The protocol predeclared six fresh paired `ubuntu-24.04` runner replicates with alternating order, common Lean/Mathlib/PNT+ environment, dependency preparation outside timing, artifact-owned cold cleanup, immediate warm repeat, and robust summaries.
 
@@ -104,18 +113,14 @@ The first green pilot (`32052134207`) is **not credited** because every result o
 
 After making provenance fail-closed, run `32053575928` on exact apparatus commit `c2ef703c954e462096162a3b4a59a5e0f8d48488` completed 6/6 jobs successfully with no retries/exclusions. All six downloaded artifact digests matched GitHub and all `result.json` files recorded runner `2.336.0`, image `ubuntu24/20260810.271.1`, Lean 4.33.0, the exact Mathlib/PNT+ pins, exact comparator commit/blob, and zero build exit codes.
 
-### Result interpretation
+Cold wall time does **not** show a stable winner: paired differences change sign and range from `-10.68` to `+11.73 s`; medians are `159.575 s` internal versus `156.280 s` comparator. Median cold user CPU is `176.105 s` versus `480.580 s`; system CPU `64.840 s` versus `5.990 s`; total CPU `241.155 s` versus `486.475 s`; max RSS `7,183,766 KiB` versus `7,828,930 KiB`. These are descriptive common-environment execution-profile results, not a universal speed or architecture-superiority claim.
 
-Cold wall time does **not** show a stable winner: paired differences change sign and range from `-10.68` to `+11.73 s`; medians are `159.575 s` internal versus `156.280 s` comparator.
-
-The resource profile is substantially different under the common environment. Median cold user CPU is `176.105 s` internal versus `480.580 s` comparator; median cold system CPU is `64.840 s` versus `5.990 s`; median total CPU is `241.155 s` versus `486.475 s`; max RSS medians are `7,183,766 KiB` versus `7,828,930 KiB`. This supports a descriptive claim of different execution profiles, not a universal speed/quality claim.
-
-The causal explanation—e.g. modular process/file overhead versus monolithic elaboration cost—remains an inference for later investigation, not an S2b theorem.
+PR #30 passed exact-head canonical run `32055813783` on `e52e85d9b328a9cbc2349a6b61e23187dcc72fb5`, merged as `c9900f9e2590f3101fc24f3f894f43b6fcf4e03c`, and the exact merge commit passed post-merge run `32058421851`, job `95473817638`. The run recorded `verified_commit=c9900f9e...`, `No update necessary`, and `Build completed successfully (8808 jobs)`.
 
 ## Required restart sequence
 
-1. Treat mathematics, S1, and S2a as closed.
-2. Treat S2b evidence as executed/validated but not integrated until its PR passes exact-head CI and `main` post-merge verification.
-3. Do not start S2c before S2b integration closes.
+1. Treat mathematics, S1, S2a, and S2b as closed and machine-verified.
+2. Complete this documentation-only S2b closure through exact-head CI, merge, and `main` verification.
+3. Only then start S2c by predeclaring matched repair-locality mutations and metrics before observing repair behavior.
 4. Continue all scientific work only on archived #678.
 5. **Do not start another Erdős problem without explicit user authorization.**
