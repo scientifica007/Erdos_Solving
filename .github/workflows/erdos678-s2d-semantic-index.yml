@@ -6,6 +6,7 @@ on:
       - "agent/erdos678-s2d-semantic-apparatus-*"
     paths:
       - "problems/678/experiments/s2_semantic_index_mutation.py"
+      - "problems/678/experiments/s2_semantic_index_mutation_credited.py"
       - ".github/workflows/erdos678-s2d-semantic-index.yml"
   workflow_dispatch:
 
@@ -36,6 +37,8 @@ jobs:
           printf 's2d_internal_baseline=%s\n' '47b85a2f2f5be6e6e4ede2b600723b8616aeeee4'
           printf 's2d_predeclaration_head=%s\n' '5aaef5a667ee11cc526beae587cf9ab799727f7e'
           printf 's2d_predeclaration_merge=%s\n' '2db145226bf530f406e734129fd8a451a2ab3899'
+          printf 's2d_excluded_pilot_run=%s\n' '32074822049'
+          printf 's2d_excluded_pilot_reason=%s\n' 'comparator-main-theorem-logical-classification-defect'
           test "$actual" = "$GITHUB_SHA"
           git cat-file -e 47b85a2f2f5be6e6e4ede2b600723b8616aeeee4^{commit}
           git cat-file -e 5aaef5a667ee11cc526beae587cf9ab799727f7e^{commit}
@@ -53,10 +56,10 @@ jobs:
           use-mathlib-cache: true
           use-github-cache: false
 
-      - name: Execute predeclared S2d semantic/index mutations
+      - name: Execute complete credited S2d semantic/index mutation set
         run: |
           set -euo pipefail
-          python3 problems/678/experiments/s2_semantic_index_mutation.py \
+          python3 problems/678/experiments/s2_semantic_index_mutation_credited.py \
             --repo-root "$GITHUB_WORKSPACE" \
             --output-dir "problems/678/experiments/out/s2d-${GITHUB_SHA}"
 
