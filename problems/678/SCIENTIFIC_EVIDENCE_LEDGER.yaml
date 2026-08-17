@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 snapshot_date: 2026-08-17
 scope: erdos-678-only
 
@@ -13,7 +13,8 @@ classification:
 
 internal_artifact:
   repository: scientifica007/Erdos_Solving
-  comparison_head: 4596a360257a3f659d2a260b4cb00b22d0ffa94c
+  archival_comparison_head: 4596a360257a3f659d2a260b4cb00b22d0ffa94c
+  scientific_dossier_merge_commit: 0d8287bc5fcc41ed4dc7ea68e5d27cd0091b8d5e
   mathematical_merge_commit: 8fd1b20541ac7782f52429db3a2cc4c887547372
   final_premerge_mathematical_head: eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f
   lean_version: 4.33.0
@@ -27,19 +28,36 @@ internal_artifact:
     - Formalization.Erdos678.cambie_lcm_ratio_eventually_with_large_start
     - Formalization.Erdos678.erdos678_unbounded_witnesses
     - Formalization.Erdos678.erdos678_good_lengths_infinite
+  s1_comparison_endpoints:
+    - Formalization.Erdos678.intervalFinset_succ_eq_Ioc
+    - Formalization.Erdos678.erdosM_eq_Ioc_lcm
+    - Formalization.Erdos678.erdos678_eventually_nonempty_pairs
+    - Formalization.Erdos678.erdos678_formalConjectures_eventual_nonempty
+    - Formalization.Erdos678.cambie_lcm_ratio_eventually_with_large_start_real
   architecture_metrics:
-    directory: formalization/Formalization/Erdos678
-    lean_files: 78
-    lines: 7046
-    non_test_files: 47
-    non_test_lines: 5662
-    test_regression_files: 31
-    test_regression_lines: 1384
-    metric_method: >-
-      Summed GitHub per-file additions for all current Formalization/Erdos678/*
-      files in comparison c5689514feaa3469b9234f5f79f76a61474d56a1...
-      4596a360257a3f659d2a260b4cb00b22d0ffa94c. Test classification uses
-      dedicated *Tests.lean files plus ConcreteTests.lean and SmallPrimeTests.lean.
+    archival_baseline:
+      head: 4596a360257a3f659d2a260b4cb00b22d0ffa94c
+      directory: formalization/Formalization/Erdos678
+      lean_files: 78
+      lines: 7046
+      non_test_files: 47
+      non_test_lines: 5662
+      test_regression_files: 31
+      test_regression_lines: 1384
+      metric_method: >-
+        Summed GitHub per-file additions for all Formalization/Erdos678/* files
+        in comparison c5689514feaa3469b9234f5f79f76a61474d56a1...
+        4596a360257a3f659d2a260b4cb00b22d0ffa94c.
+    after_s1_bridge_before_final_merge:
+      lean_files: 80
+      lines: 7188
+      non_test_files: 48
+      non_test_lines: 5772
+      test_regression_files: 32
+      test_regression_lines: 1416
+      note: >-
+        Adds ExternalStatementBridge.lean (110 lines) and the documented
+        ExternalStatementBridgeTests.lean (32 lines) to the archival baseline.
   verification:
     final_e4_run:
       id: 31977861568
@@ -55,6 +73,19 @@ internal_artifact:
     final_postmortem_postmerge_run:
       id: 32021192337
       status: success
+    scientific_dossier_exact_head_run:
+      id: 32025245681
+      status: success
+    scientific_dossier_postmerge_run:
+      id: 32026434043
+      status: success
+    s1_common_environment_experiment:
+      id: 32028006457
+      job_id: 95381414710
+      exact_experiment_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
+      status: success
+      canonical_build_jobs: 8808
+      evidence_file: problems/678/DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml
   regressions:
     positive_witness:
       n: 36
@@ -74,23 +105,32 @@ internal_artifact:
 
 external_comparator:
   repository: plby/lean-proofs
-  commit: 68da20b96673899166e94638f5a7fffeb7231d35
-  file: src/latest/ErdosProblems/Erdos678.lean
   formal_authors:
     - Aristotle
     - Boris Alexeev
   mathematical_author: Stijn Cambie
-  lean_version: 4.32.0
-  mathlib_version: v4.32.0
-  lines: 2535
-  layout: single-file
+  formal_conjectures_historical_pin:
+    commit: 68da20b96673899166e94638f5a7fffeb7231d35
+    file: src/latest/ErdosProblems/Erdos678.lean
+    lean_version: 4.32.0
+    mathlib_version: v4.32.0
+    lines: 2535
+    layout: single-file
+  common_environment_pin:
+    commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+    file: src/latest/ErdosProblems/Erdos678.lean
+    blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+    source_header_lean_version: 4.33.0
+    source_header_mathlib_version: v4.33.0
+    compiled_unchanged_in_internal_environment: true
+    experiment_run: 32028006457
   imports:
     - Mathlib
     - PrimeNumberTheoremAnd.Consequences
   pnt_boundary:
     local_theorem: Erdos678.pi_alt
     implementation: _root_.pi_alt
-  printed_axioms:
+  printed_axioms_common_environment:
     Erdos678.main_theorem_expanded:
       - propext
       - Classical.choice
@@ -103,9 +143,18 @@ external_comparator:
       - propext
       - Classical.choice
       - Quot.sound
+    Erdos678.not_erdos_678_fc:
+      - propext
+      - Classical.choice
+      - Quot.sound
+    Erdos678.not_erdos_678_other:
+      - propext
+      - Classical.choice
+      - Quot.sound
 
 formal_conjectures:
   repository: google-deepmind/formal-conjectures
+  comparison_commit: 398958d3964d738886bd24433918c365df4a2aab
   file: FormalConjectures/ErdosProblems/678.lean
   status: research-solved
   linked_formal_proof:
@@ -115,6 +164,26 @@ formal_conjectures:
     - eventual-nonempty-pairs
     - infinitely-many-triples
     - not-infinitely-many-pairs-for-fixed-k-reading
+  internal_machine_checked_bridge: Formalization.Erdos678.erdos678_formalConjectures_eventual_nonempty
+
+s1_differential_verification:
+  status: experiment-success-integration-pending
+  protocol: problems/678/DIFFERENTIAL_VERIFICATION_PROTOCOL.md
+  narrative_result: problems/678/S1_DIFFERENTIAL_VERIFICATION_RESULT.md
+  machine_evidence: problems/678/DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml
+  reproduction_script: problems/678/experiments/run_public_comparator_common_env.sh
+  temporary_workflow_retained: false
+  verified_findings:
+    - canonical interval semantics formally aligned with Finset.Ioc public convention
+    - Formal-Conjectures-style eventual nonempty statement derived internally
+    - natural-factor strong theorem lifted to every real C >= 1
+    - public comparator source compiled unchanged in internal pinned environment
+    - matched selected endpoint axiom footprint equals propext/Classical.choice/Quot.sound
+  limitations:
+    - no simultaneous import due namespace collision
+    - no architecture superiority claim
+    - no controlled performance comparison yet
+    - no genealogical-independence proof
 
 primary_references:
   cambie_2024:
@@ -159,7 +228,9 @@ allowed_external_claims:
   - machine-checked canonical Erdős #678 endpoint
   - direct prime_between-to-relative-prime-provider PNT interface
   - modular regression-heavy alternative proof architecture
-  - differential-verification candidate against the Aristotle/Alexeev artifact
+  - executed common-environment differential verification against a pinned current Aristotle/Alexeev source
+  - machine-checked normalization to the Formal Conjectures interval/eventual-existence semantics
+  - matched selected-endpoint standard-axiom footprint under the common environment
   - longitudinal AI-assisted scientific-production case study
 
 claims_requiring_new_experiments:
@@ -168,6 +239,7 @@ claims_requiring_new_experiments:
   - lower dependency coupling in practice
   - earlier semantic-drift detection in controlled tests
   - state protocol causally improves agent restart performance
+  - faster or more resource-efficient proof architecture
 
 forbidden_or_unsupported_claims:
   - new solution of Erdős #678
@@ -176,12 +248,16 @@ forbidden_or_unsupported_claims:
   - first unconditional PNT-backed Lean formalization of Erdős #678
   - autonomous AI authorship percentage
   - inferred token count or cost from git history
+  - proof of genealogical independence from the public formalization
+
+completed_comparison_measurements:
+  - common-environment compilation of both formalizations
+  - normalized interval and eventual-existence statement bridge
+  - real-factor API bridge for C >= 1
+  - matched selected-endpoint axiom audit in one environment
 
 missing_publication_grade_measurements:
-  - common-environment build of both formalizations
-  - normalized statement bridge between both artifacts
-  - matched axiom audit in one environment
-  - cold-and-warm build time and resource measurements
+  - controlled cold-and-warm build time and resource measurements
   - dependency graph comparison
   - edit-locality experiment
   - mutation-testing comparison
