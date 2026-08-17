@@ -60,6 +60,13 @@ Final lessons/postmortem integration:
 - merge commit `4596a360257a3f659d2a260b4cb00b22d0ffa94c`;
 - post-merge Lean Verification run `32021192337` — **SUCCESS**.
 
+Scientific dossier integration:
+
+- PR #21 exact head `a9c336e66f4bf0853d03378f44ad33ebca89dfaf`;
+- exact-head Lean Verification run `32025245681` — **SUCCESS**;
+- merge commit `0d8287bc5fcc41ed4dc7ea68e5d27cd0091b8d5e`;
+- post-merge Lean Verification run `32026434043` — **SUCCESS**.
+
 ## Exact project classification
 
 - External problem status: proved.
@@ -76,6 +83,8 @@ Final lessons/postmortem integration:
 - Integration into `main`: passed through PR #17.
 - Post-merge canonical verification: passed through run `32011189766`.
 - Final postmortem verification: passed through run `32021192337`.
+- Scientific positioning dossier: integrated and post-merge verified through PR #21/run `32026434043`.
+- S1 differential-verification experiment: **successful**; persistent-artifact integration is the current task.
 - User transition gate: explicit authorization required before any other Erdős problem may become active.
 
 ## Proof architecture live in Lean
@@ -97,6 +106,9 @@ Final lessons/postmortem integration:
 | E3 strong eventual Cambie comparison | machine-checked |
 | E4 `k<x` recovery and canonical `n=x-1, m=y-1` translation | machine-checked |
 | unbounded canonical witnesses and infinitely many good lengths | machine-checked |
+| `erdosM` ↔ public `Finset.Ioc` interval semantics bridge | machine-checked in S1 experiment |
+| Formal-Conjectures-style eventual nonempty endpoint | machine-checked in S1 experiment |
+| strong Cambie factor lifted from positive `ℕ` to every real `C ≥ 1` | machine-checked in S1 experiment |
 
 ## Prime-density dependency
 
@@ -134,27 +146,47 @@ Those failures remain recorded as provenance and are not reclassified by the suc
 
 The completed artifact is **not** a new solution of #678 and **not** the first Lean formalization. A prior public formalization by Aristotle and Boris Alexeev exists on top of Cambie's mathematics.
 
-The current scientific opportunity is instead to use this independently reconstructed artifact in two ways:
+The scientific opportunity is to use this independently reconstructed artifact in two ways:
 
 1. **formal differential verification / proof engineering** — compare our modular, regression-heavy architecture and direct `prime_between` PNT interface with the public Aristotle/Alexeev development;
 2. **AI-assisted scientific-production research** — analyze the preserved path from failed independent reasoning to machine-checked reconstruction, including target fidelity, failure retention, externalized state, dependency closure, canonical build verification, and exact-head CI.
+
+### S1 executed differential verification
+
+S1 has produced executable evidence rather than a prose-only comparison.
+
+GitHub Actions run `32028006457`, job `95381414710`, on exact experiment head `b1e3fc60f6dc4f125a125121a2abbcf3610ed749`:
+
+- built the complete internal canonical graph with the new statement bridge — **SUCCESS**, `No update necessary`, **8808 jobs**;
+- fetched `plby/lean-proofs@6f906fef432892db5c910c48ad1a3728dd42cdac` and verified comparator blob `f2331e8bcc71bc36cce7724a0c54fafd8d64d480`;
+- compiled the public `Erdos678.lean` **unchanged** in this repository's pinned Lean 4.33 / Mathlib / PNT+ environment — **SUCCESS**;
+- established the same selected-endpoint axiom footprint on both sides: `propext`, `Classical.choice`, `Quot.sound`;
+- machine-proved our interval semantics equal the public `Finset.Ioc n (n+k)` convention;
+- machine-derived the Formal Conjectures eventual-nonempty endpoint;
+- machine-lifted the retained natural-factor strong theorem to every real `C ≥ 1`, including a regression at `C=3/2`.
+
+This establishes statement/interface/environment compatibility and matched axiom baselines. It does **not** establish architecture superiority, performance superiority, or genealogical independence.
 
 Canonical dossier:
 
 - `SCIENTIFIC_COMPARATIVE_STUDY.md` — external comparison, claim boundaries, quantitative architecture, testable hypotheses, and candidate upstream contributions;
 - `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md` — longitudinal AI-for-science case study, failure taxonomy, research questions, threats to validity, and prospective experiments;
 - `PUBLICATION_AND_UPSTREAM_ROADMAP.md` — staged plan for common-environment comparison, upstream work, empirical extensions, and publication decisions;
-- `SCIENTIFIC_EVIDENCE_LEDGER.yaml` — machine-readable frozen provenance, metrics, comparison anchors, claim limits, and missing measurements.
+- `SCIENTIFIC_EVIDENCE_LEDGER.yaml` — machine-readable frozen provenance, metrics, comparison anchors, claim limits, and missing measurements;
+- `DIFFERENTIAL_VERIFICATION_PROTOCOL.md` — exact S1 comparison protocol and success criteria;
+- `S1_DIFFERENTIAL_VERIFICATION_RESULT.md` — narrative result and scientific interpretation of executed S1;
+- `DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml` — machine-readable S1 environment/run/axiom evidence;
+- `experiments/run_public_comparator_common_env.sh` — persistent pinned reproduction script; the public source is fetched ephemerally and is not redistributed here.
 
-These documents do not reopen the mathematics and do not authorize transition to another Erdős problem.
+These artifacts do not reopen the mathematics and do not authorize transition to another Erdős problem.
 
 ## Archival disposition
 
-No mathematical phase remains open. Integration and post-merge verification are complete. **#678 is archived as a completed benchmark.**
+No original mathematical proof phase remains open. Integration and post-merge verification of the mathematical result are complete. **#678 remains archived as a completed benchmark.**
 
 Scientific comparison, reproducibility analysis, and publication/upstream work on the already completed #678 artifact are permitted archival follow-up. They must not be misclassified as new mathematical discovery.
 
-**Stop at this checkpoint. Do not select, activate, resume, research, or formalize another Erdős problem until the user explicitly authorizes the transition.** Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
+**Stop at this checkpoint for mathematical work. Do not select, activate, resume, research, or formalize another Erdős problem until the user explicitly authorizes the transition.** Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
 
 ## Main references inside this folder
 
@@ -162,6 +194,10 @@ Scientific comparison, reproducibility analysis, and publication/upstream work o
 - `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md` — #678 as an auditable long-horizon AI-assisted scientific-production case.
 - `PUBLICATION_AND_UPSTREAM_ROADMAP.md` — evidence gates and sequencing for external outputs.
 - `SCIENTIFIC_EVIDENCE_LEDGER.yaml` — machine-readable evidence and claim ledger for future papers/upstream work.
+- `DIFFERENTIAL_VERIFICATION_PROTOCOL.md` — frozen S1 protocol.
+- `S1_DIFFERENTIAL_VERIFICATION_RESULT.md` — executed S1 result.
+- `DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml` — machine-readable S1 evidence.
+- `experiments/run_public_comparator_common_env.sh` — pinned common-environment comparator reproduction script.
 - `CAMBIE_PROOF_ANALYSIS.md` — mathematical architecture and Claim 4 audit; contains historical development-status passages and is not the current operational state source.
 - `LEAN_FORMALIZATION_ROADMAP.md` — canonical execution roadmap, now closed, integrated, verified, and archived.
 - `FORMALIZATION_CORRECTION_2026-08-14.md` — rejection of the false earlier construction.
