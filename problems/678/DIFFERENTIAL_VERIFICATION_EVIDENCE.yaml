@@ -1,7 +1,8 @@
-schema_version: 1
+schema_version: 2
 experiment: erdos678-stage-s1-common-environment-differential-verification
 executed_date: 2026-08-17
-status: success
+experiment_status: success
+integration_status: pending-ci-infrastructure
 
 internal:
   repository: scientifica007/Erdos_Solving
@@ -45,12 +46,16 @@ formal_conjectures:
   historical_formal_proof_pin: 68da20b96673899166e94638f5a7fffeb7231d35
   normalized_internal_endpoint: Erdos678.erdos678_formalConjectures_eventual_nonempty
 
-ci:
+successful_experiment_ci:
   workflow_name: Erdős 678 Differential Experiment
+  event: push
   run_id: 32028006457
   job_id: 95381414710
   result: success
   runner_os: Ubuntu-24.04
+  run_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
+  checkout_log_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
+  provenance_classification: exact-experiment-head
   internal_build_step:
     result: success
     lake_build_duration_ms: 838647
@@ -102,12 +107,43 @@ public_comparator_axiom_audit:
     - Classical.choice
     - Quot.sound
 
+verification_provenance_correction:
+  discovered_date: 2026-08-17
+  correction_document: problems/678/CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md
+  issue: pull-request-run-metadata-does-not-prove-literal-head-checkout
+  audited_example:
+    run_id: 32033822601
+    pr_head_metadata: 610d525145a8129d345a1d3ce6a6b41809e3d1f8
+    actual_checked_out_commit: 5983f901358d8f82d85a425369d429cfa9475f96
+    classification: successful-integration-tree-verification
+  canonical_workflow_repair:
+    checkout_ref: github.event.pull_request.head.sha-or-github.sha
+    records_git_rev_parse_head: true
+    repaired_branch: agent/erdos678-differential-verification-20260817
+    repaired_gate_status: awaiting-runnable-actions
+
+current_ci_infrastructure_blocker:
+  provider: GitHub Actions
+  classification: billing-or-spending-limit
+  proof_failure: false
+  lean_steps_started: false
+  observed_runs:
+    - run_id: 32036454657
+      purpose: canonical-commit-explicit-pr-gate
+      result: job-not-started
+    - run_id: 32036454660
+      purpose: duplicate-comparison-workflow-attempt
+      result: job-not-started
+  provider_message_summary: recent account payments failed or spending limit needs increase
+
 verified_findings:
   - internal canonical erdosM interval semantics are machine-bridged to Finset.Ioc n (n+k)
   - internal proof derives the Formal-Conjectures-style eventual-nonempty statement
   - internal positive-natural-factor strong theorem is machine-lifted to every real C >= 1
   - current public comparator source compiles unchanged under the internal pinned Lean/Mathlib/PNT+ environment
   - internal and public audited endpoints depend only on the same standard logical axioms listed above
+  - experiment execution provenance is exact-head because the successful comparison run was push-triggered and its checkout log matches the run head
+  - later audit found and corrected overstrong exact-head language for historical pull-request runs
 
 non_findings_and_limits:
   - experiment does not establish that one architecture is superior
@@ -115,6 +151,7 @@ non_findings_and_limits:
   - experiment is not a literal simultaneous import because both sources use namespace Erdos678
   - build-time numbers are not yet a controlled performance comparison
   - historical Formal Conjectures comparator pin remains 68da20b; executable portability used newer 6f906fef for Lean-4.33 compatibility
+  - final S1 persistent-artifact PR has not yet passed the corrected commit-explicit gate because new Actions jobs are billing-blocked
 
 reproduction:
   script: problems/678/experiments/run_public_comparator_common_env.sh
