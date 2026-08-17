@@ -2,18 +2,18 @@
 
 > **Operational checkpoint synchronized on 2026-08-17.**
 >
-> **Erdős #678 mathematics, S1, S2a, S2b, and S2c are closed and machine-verified. S2d semantic/index mutation resistance is prospectively defined but has not been executed.**
+> **Erdős #678 mathematics, S1, S2a, S2b, and S2c are closed and machine-verified. S2d semantic/index mutation resistance has executed under a prospectively frozen mutation set; the credited artifact is validated and awaits final PR integration.**
 >
 > **No other Erdős problem may be selected, activated, resumed, researched, or formalized without explicit user authorization (`DEC-012`).**
 
-This is the authoritative restart checkpoint. Verification and experimental credit belong only to artifacts, commits, and runs actually executed.
+This is the authoritative restart checkpoint. Verification and experimental credit belong only to artifacts, commits, and runs actually executed and scientifically admitted.
 
 ## Current state
 
 ```yaml
 current_problem: 678
 current_phase: archived
-current_stage: scientific-evaluation-s2d-predeclaration
+current_stage: scientific-evaluation-s2d-integration
 proof_frozen: true
 repository_visibility: public
 project_license: Apache-2.0
@@ -43,22 +43,8 @@ s2b_closure_postmerge_import_check: no-update-necessary
 s2b_closure_postmerge_build_jobs: 8808
 
 s2c_status: complete-integrated-postmerge-verified-closure-verified
-s2c_protocol: problems/678/S2_REPAIR_LOCALITY_PROTOCOL.md
-s2c_mutation_manifest: problems/678/S2_REPAIR_LOCALITY_MUTATIONS.yaml
-s2c_baseline_markdown: problems/678/S2_REPAIR_LOCALITY_BASELINE.md
-s2c_baseline_json: problems/678/S2_REPAIR_LOCALITY_BASELINE.json
-s2c_internal_baseline: cc55073fceddb51e3fa2c1854f797fe989523985
-s2c_predeclaration_commit: a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1
-s2c_experiment_commit: 00d340d3ccdc13418615b6526e9b736d9f9e03e7
-s2c_run: 32062501296
-s2c_job: 95486770197
-s2c_artifact_id: 9299556049
-s2c_artifact_digest: sha256:0369ec66c689572307660765b0c84cd86b6339f4f4d26a788c560ca11f7b7f4b
 s2c_primary_finding: repair-blast-radius-is-mixed-and-interface-layer-dependent-no-uniform-advantage
 s2c_pr: 32
-s2c_exact_head: 7471370081dece8ac99ec3888636d7d9cc0fa78f
-s2c_exact_head_ci_run: 32065778293
-s2c_exact_head_ci_job: 95497421954
 s2c_merge_commit: bf54f5eb16e477d1b41b336e68ce82a729c98912
 s2c_postmerge_ci_run: 32067478680
 s2c_postmerge_job: 95502840936
@@ -66,9 +52,6 @@ s2c_closure_pr: 33
 s2c_closure_exact_head: 3439b58f1e05e2cb21ee1c9374857eb3b4197163
 s2c_closure_exact_head_ci_run: 32070637072
 s2c_closure_exact_head_job: 95512851767
-s2c_closure_exact_head_commit_match: true
-s2c_closure_exact_head_import_check: no-update-necessary
-s2c_closure_exact_head_build_jobs: 8808
 s2c_closure_merge_commit: 47b85a2f2f5be6e6e4ede2b600723b8616aeeee4
 s2c_closure_postmerge_ci_run: 32071325525
 s2c_closure_postmerge_job: 95514986697
@@ -76,20 +59,51 @@ s2c_closure_postmerge_commit_match: true
 s2c_closure_postmerge_import_check: no-update-necessary
 s2c_closure_postmerge_build_jobs: 8808
 
-s2d_status: predeclared-not-executed-pending-integration
-s2d_internal_baseline: 47b85a2f2f5be6e6e4ede2b600723b8616aeeee4
-s2d_comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
-s2d_comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+s2d_status: executed-success-artifact-validated-pending-pr-integration
 s2d_protocol: problems/678/S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md
 s2d_mutation_manifest: problems/678/S2_SEMANTIC_INDEX_MUTATIONS.yaml
+s2d_baseline_markdown: problems/678/S2_SEMANTIC_INDEX_BASELINE.md
+s2d_baseline_json: problems/678/S2_SEMANTIC_INDEX_BASELINE.json
+s2d_internal_baseline: 47b85a2f2f5be6e6e4ede2b600723b8616aeeee4
+s2d_predeclaration_head: 5aaef5a667ee11cc526beae587cf9ab799727f7e
+s2d_predeclaration_pr: 34
+s2d_predeclaration_exact_head_run: 32073161789
+s2d_predeclaration_exact_head_job: 95520595880
+s2d_predeclaration_merge: 2db145226bf530f406e734129fd8a451a2ab3899
+s2d_predeclaration_postmerge_run: 32073820006
+s2d_predeclaration_postmerge_job: 95522556326
+s2d_comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+s2d_comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
 s2d_mutation_count: 3
-s2d_observation_count_planned: 6
-s2d_mutations:
-  - I1-canonical-start-left-shift
-  - I2-long-block-drop-final-term
-  - I3-strengthen-canonical-separation-one
-s2d_harness_status: forbidden-until-predeclaration-integrated-and-postmerge-verified
-s2d_execution_status: not-executed
+s2d_observation_count: 6
+s2d_excluded_pilot_run: 32074822049
+s2d_excluded_pilot_job: 95525626029
+s2d_excluded_pilot_artifact_id: 9303487756
+s2d_excluded_pilot_artifact_digest: sha256:815e676189486afa15876589043e563f9a1d69d18a27c72e766c660993e40faf
+s2d_excluded_pilot_reason: comparator-main-theorem-logical-classification-defect
+s2d_excluded_pilot_scope: entire-run
+s2d_credited_apparatus_head: a82ae53b57a9f97844013a9b2e96a9182cee241d
+s2d_credited_run: 32076614547
+s2d_credited_job: 95531085803
+s2d_credited_trigger: pull_request-exact-head
+s2d_artifact_id: 9303987121
+s2d_artifact_size_bytes: 74518
+s2d_artifact_digest: sha256:29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881
+s2d_artifact_digest_local_revalidation: pass
+s2d_semantic_rejections: 6
+s2d_semantic_survivors: 0
+s2d_proof_repairs: 0
+s2d_third_party_dependency_source_touches: 0
+s2d_i1_internal_first_rejection: L1-concrete-semantic-oracle-after-mutated-source-elaborated
+s2d_i1_comparator_first_rejection: local-invariant-lcmInterval_ge_choose
+s2d_i2_internal_first_rejection: L0-mutated-strong-endpoint-source-type-mismatch
+s2d_i2_comparator_first_rejection: strong-theorem-main_theorem
+s2d_i3_internal_first_rejection: L0-mutated-canonical-endpoint-source-application-type-mismatch
+s2d_i3_comparator_first_rejection: canonical-corollary-erdos_678_kmn_infinite
+s2d_primary_finding: all-three-predeclared-semantic-index-perturbations-rejected-in-both-artifacts-with-layer-dependent-detection
+s2d_scope: three-predeclared-one-unit-type-correct-semantic-index-perturbations-only
+s2d_general_semantic_robustness_claim: unsupported
+s2d_pr: 35
 
 s2e_status: not-started
 s2f_status: not-started
@@ -97,7 +111,7 @@ s3_status: not-started
 s4_status: not-started
 s5_status: not-started
 user_transition_gate: explicit-authorization-required-for-another-erdos-problem
-next_action: exact-head verify and merge the S2d predeclaration-only PR; verify the resulting main commit; only then create the S2d harness and execute the frozen six observations
+next_action: synchronize final S2d evidence on PR 35; require canonical exact-head Lean Verification on the final PR head; merge only if green; verify exact resulting main commit; then perform documentation-only S2d closure before S2e
 ```
 
 ## Governing rules
@@ -109,8 +123,9 @@ next_action: exact-head verify and merge the S2d predeclaration-only PR; verify 
 - Documentation/state synchronization is an integration gate (`DEC-008`).
 - S2 metrics are descriptive evidence with explicit scope; no general architecture-superiority claim is allowed.
 - A predeclared experiment that produces a mixed/null/surviving result is preserved rather than redesigned after observation.
-- S2d mutations must remain type-correct semantic/index changes; identifier/API breakage belongs to closed S2c.
-- No S2d proof repair is allowed during measurement: S2d measures rejection/survival depth, not repair effort.
+- S2d mutations are type-correct semantic/index changes; identifier/API breakage belongs to closed S2c.
+- S2d contains no proof-repair phase: it measures rejection/survival location only.
+- A computationally green run is scientifically excluded if a predeclared primary measurement classification is instrumented incorrectly.
 
 ## Closed checkpoints
 
@@ -120,38 +135,45 @@ next_action: exact-head verify and merge the S2d predeclaration-only PR; verify 
 
 ### S2a
 
-S2a dependency-surface evidence and closure are complete. Its binding control is that raw module/file/frontier counts mix decomposition, packaging, and ownership because PNT+ lies on different repository boundaries in the two source trees.
+S2a dependency-surface evidence and closure are complete. Its durable control is that raw dependency counts are boundary-sensitive.
 
 ### S2b
 
-S2b controlled build/resource evidence and its documentation closure are complete. The credited run `32053575928` supports no stable wall-clock winner while recording materially different user/system CPU and peak-memory profiles. Closure PR #31 merged as `cc55073fceddb51e3fa2c1854f797fe989523985`, and that exact merge passed post-merge run `32060186755`, job `95479480527`, with matching `verified_commit`, `No update necessary`, and 8808 jobs.
+S2b controlled build/resource evidence and closure are complete. The credited six-replicate run found no stable wall-clock winner while recording materially different CPU/memory profiles under the pinned common environment.
 
-### S2c — repair locality — CLOSED / CLOSURE VERIFIED
+### S2c
 
-S2c used a prospectively frozen declaration-rename experiment and retained its mixed/interface-dependent result. PR #32 integrated the evidence. Documentation closure PR #33 final head `3439b58f1e05e2cb21ee1c9374857eb3b4197163` passed run `32070637072`, job `95512851767`, then merged as `47b85a2f2f5be6e6e4ede2b600723b8616aeeee4`. That exact merge passed post-merge run `32071325525`, job `95514986697`, with matching `verified_commit`, `No update necessary`, and 8808 jobs. S2c is therefore fully closed.
+S2c repair-locality evidence and closure are complete. Its result is mixed/interface-dependent and supports no uniform repair-locality or maintainability advantage.
 
-## S2d — semantic/index mutation resistance — PREDECLARED / NOT EXECUTED
+## S2d — semantic/index mutation resistance — EXECUTED / VALIDATED
 
-Historical motivation is the rejected interval-index construction recorded on 2026-08-14: `M(t,k+1)` was mistakenly treated as the shifted block `[t,t+k]` rather than `[t+1,t+k+1]`. S2d prospectively replays bounded, type-correct one-unit semantic drifts instead of identifier breaks.
+The protocol and three matched mutations were frozen and fully integrated through PR #34 before apparatus creation. The frozen internal source baseline is `47b85a2f2f5be6e6e4ede2b600723b8616aeeee4`.
 
-Frozen design files on the current predeclaration branch:
+The first computationally successful pilot run `32074822049` is excluded in full because post-run audit found a defect in the comparator logical-layer classifier: `main_theorem : MainTheoremStatement` was categorized as a generic local lemma instead of a strong theorem. Since rejection classification is a primary metric, the run was not relabeled post hoc. Only the classifier was corrected; the mutation set and checks remained frozen, and all six observations were rerun.
 
-- `problems/678/S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md`;
-- `problems/678/S2_SEMANTIC_INDEX_MUTATIONS.yaml`.
+The credited exact-head PR-event run `32076614547`, job `95531085803`, on apparatus head `a82ae53b57a9f97844013a9b2e96a9182cee241d` completed successfully. Artifact `9303987121` has GitHub SHA-256 `29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881`; an independent download produced the same digest.
 
-The three matched mutations are:
+All six observations were semantic rejections; there were no survivors, no proof repairs, and no third-party/dependency source edits.
 
-1. **I1 canonical start shift:** shift the canonical same-length block left by one at the primitive interval convention.
-2. **I2 long-block endpoint:** remove exactly the final term from the `k+1`-term long block at the strong theorem interface.
-3. **I3 separation control:** strengthen `n+k≤m` to `n+(k+1)≤m` at a canonical endpoint. This is intentionally a possible semantic-survival control: if a changed but still true target passes verification, that is retained as evidence that machine checking alone does not guarantee statement fidelity.
+| mutation | internal first rejection | comparator first rejection |
+|---|---|---|
+| I1 canonical start shift | `L1` concrete numerical oracle, after mutated `erdosM` source built | local invariant `lcmInterval_ge_choose` |
+| I2 drop long-block final term | `L0` mutated strong endpoint source, type mismatch | strong theorem `main_theorem` |
+| I3 strengthen separation | `L0` mutated canonical endpoint source, application type mismatch | canonical corollary `erdos_678_kmn_infinite` |
 
-No harness exists and no S2d mutation has been executed. The predeclaration must pass exact-head CI, merge, and exact-main post-merge verification before apparatus creation is permitted.
+The defensible conclusion is limited: **the three frozen one-unit semantic/index perturbations were rejected in both artifacts, but the first encoded rejection location depended on mutation and artifact structure.** In particular, I1 demonstrates distinct value from the internal independent concrete oracle because the type-correct primitive mutation itself elaborated before that oracle rejected it.
+
+This does not support a general semantic-robustness ranking. Internal staged modules and comparator monolithic declaration classes are not a shared ordinal robustness scale.
+
+Full validated evidence is in `S2_SEMANTIC_INDEX_BASELINE.md/.json`; exact raw `result.json` and logs remain in artifact `9303987121`.
 
 ## Required restart sequence
 
 1. Treat mathematics, S1, S2a, S2b, and S2c as closed and machine-verified.
-2. Treat the S2d protocol/manifest as proposed predeclaration only until their PR is integrated and post-merge verified.
-3. Do not create the S2d harness or execute a mutation before that integration gate.
-4. After the gate, execute exactly the frozen three mutations on both artifacts from pristine baselines, retaining early rejection, late rejection, and canonical survival alike.
-5. Continue all scientific work only on archived #678.
-6. **Do not start another Erdős problem without explicit user authorization.**
+2. Treat S2d predeclaration as frozen/integrated and the credited run/artifact above as the executed result.
+3. Complete S2d state/evidence synchronization on PR #35.
+4. Require canonical exact-head Lean Verification on the final PR #35 head; merge only if green.
+5. Verify the exact resulting `main` commit, then close S2d documentation through the same DEC-008/DEC-011 discipline.
+6. Do not start S2e until S2d closure verification is complete.
+7. Continue all scientific work only on archived #678.
+8. **Do not start another Erdős problem without explicit user authorization.**
