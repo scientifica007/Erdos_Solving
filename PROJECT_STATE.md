@@ -1,141 +1,130 @@
 # Project State
 
-> **Operational checkpoint synchronized on 2026-08-16.**
+> **Operational checkpoint synchronized on 2026-08-17.**
 >
-> D4 final reachable repair: commit `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, run `31963803495` — **SUCCESS**, `No update necessary`, **8766 jobs**.
-> E1 mathematical exit: commit `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909` — **SUCCESS**, `No update necessary`, **8770 jobs**.
-> E2 prime-density exit: commit `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856` — **SUCCESS**, `No update necessary`, **8800 jobs**.
-> E3 strong Cambie exit: commit `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891` — **SUCCESS**, `No update necessary`, **8804 jobs**.
-> E4 / full Erdős #678 mathematical exit: commit `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757` — **SUCCESS**, `No update necessary`, **8806 jobs**.
+> Erdős Problem #678 is mathematically closed, machine-checked, and integrated into `main` through PR #17.
 >
-> **Phases D and E1–E4 are mathematically closed. Erdős Problem #678 is fully formalized in the reachable Lean graph on the E4 branch.**
+> - D4 final reachable repair: `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, run `31963803495` — **SUCCESS**, **8766 jobs**.
+> - E1 mathematical exit: `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909` — **SUCCESS**, **8770 jobs**.
+> - E2 prime-density exit: `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856` — **SUCCESS**, **8800 jobs**.
+> - E3 strong Cambie exit: `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891` — **SUCCESS**, **8804 jobs**.
+> - E4 mathematical exit: `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757` — **SUCCESS**, **8806 jobs**.
+> - Final synchronized E4 head: `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`, run `31977861568` — **SUCCESS**, **8806 jobs**.
+> - Integration: PR #17 merged into `main` as `8fd1b20541ac7782f52429db3a2cc4c887547372` on 2026-08-17.
+> - Post-merge `main` verification: run `32011189766` was started for the merge commit; credit it only after GitHub reports a successful conclusion.
 
-This file is the authoritative operational memory checkpoint. It must agree with the reachable Lean graph and the latest credited CI evidence.
+This file is the authoritative operational restart checkpoint. Mathematical credit comes from exact reachable Lean builds, not from source presence or GitHub metadata alone.
 
 ## Global operating rules
 
 - `DEC-011` supersedes `DEC-004`: `main` is the stable integration branch; substantive work uses a dedicated branch and pull request.
 - Do not merge a mathematical change unless canonical Lean CI is green for the credited pull-request head.
-- State documents travel in the same pull request and must be synchronized before merge.
-- Do not treat source presence, a file name, GitHub metadata, or an AI-generated argument as proof by itself.
-- Distinguish problem-level status, known sub-results, formalized statements, formalized proofs, external-proof reconstruction, and independent discovery.
-- Preserve rejected paths, revoked freezes, contamination events, and negative regressions.
-- For interval arguments, endpoints and length are mathematical data and must remain explicit.
-- A Lean module is live only when `lake exe mk_all --check` accepts the aggregator and canonical build reaches the module.
+- State documents must agree with the reachable Lean graph and credited CI evidence.
+- Do not treat a file name, source presence, GitHub metadata, or an AI-generated argument as proof by itself.
+- Distinguish external problem status, project reconstruction, independent discovery, and machine verification.
+- Preserve rejected paths, negative regressions, contamination events, and revoked claims.
+- For interval arguments, endpoints and length remain explicit mathematical data.
+- A Lean module is live only when the canonical aggregator reaches it and the build succeeds.
 
 ## Current project
 
 ```yaml
 current_problem: 678
-current_phase: cambie-quantitative-finish
-current_stage: E4-complete-documentation-sync
+current_phase: closed
+current_stage: integrated-main-postmerge-verification
 current_mode: external-proof-reconstruction
 blind_mode: false
 reference_solution_accessed: true
-proof_frozen: false
+proof_frozen: true
 
 external_problem_status: proved
-project_reconstruction_status: proved-machine-checked-on-e4-branch
+project_reconstruction_status: proved-machine-checked-integrated-main
 independent_attempt_status: rejected
 reference_proof: Cambie-2024
 reference_understanding_status: reconstructed-through-final-index-translation
 
-current_target: documentation-sync-and-review-ready-stacked-pr-chain
+current_target: close-operational-tail-and-archive-678
 small_prime_claim5_status: machine-checked
 full_claim5_status: machine-checked
 claim4_status: machine-checked
 lcm_ratio_status: machine-checked-eventually-for-every-positive-C
-full_erdos678_formalization_status: proved-machine-checked
+full_erdos678_formalization_status: proved-machine-checked-integrated-main
 
-ci_status: green-through-E4-mathematical-exit
-canonical_ci_run: 31976903757
-canonical_ci_commit: 54fe163f8a70b736255bea7ffc1a4cf8d4fcb941
-canonical_build_jobs: 8806
-build_graph_audit: mk-all-check-passed
-ci_blocker: none
+premerge_canonical_ci_run: 31977861568
+premerge_canonical_ci_commit: eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f
+premerge_canonical_build_jobs: 8806
+main_integration_commit: 8fd1b20541ac7782f52429db3a2cc4c887547372
+main_postmerge_ci_run: 32011189766
+main_postmerge_ci_status: pending-at-this-checkpoint
+build_graph_audit: mk-all-check-passed-on-final-e4-head
+ci_blocker: none-known
 phase_e_gate: closed
-next_action: synchronize documentation, re-run canonical CI for documentation head, then review stacked PRs without rewriting mathematical layers
+next_action: confirm post-merge main CI, finish non-blocking PR hygiene, archive #678, then select the next active problem
 ```
 
-## Trusted machine-checked state
+## Trusted machine-checked result for Erdős #678
+
+The reachable formal graph proves the complete canonical infinite-family conclusion.
 
 ### Arithmetic, Claim 5, and Claim 4 / Phase D
 
-The reachable graph machine-checks:
+Machine-checked components include:
 
 - length-based consecutive intervals and canonical `erdosM`;
-- the valid finite witness `M(36,8) > M(47,9)` and the rejected `(495,504,8)` negative regression;
+- the valid finite witness `M(36,8) > M(47,9)`;
+- the rejected `(495,504,8)` candidate retained as a negative regression;
 - finite-product, finite-LCM, reciprocal-LCM, and prime-power valuation primitives;
-- Claim 5 in the large, medium, and capped small-prime ranges;
-- explicit medium/small residue interfaces and the assembled natural-number Claim 5 identity;
-- the finite union-bound, modular, weighted CRT, pair/triple CRT-basis producers, exact application boxes, scales, factorizations, and dependent placement;
-- Cambie's division-safe `gap`, `yLower`, `yUpper`, full-scale LCM identity, target-window room, small-scale gap, sharp-prime-window budgets, and the final D4 sharp representative endpoint.
+- Claim 5 in all prime ranges and the assembled natural-number identity;
+- finite density, modular and weighted CRT arguments;
+- pair/triple CRT-basis producers and exact residue boxes;
+- constructed scales, factorizations, dependent placement, target windows, and sharp prime-window budgets.
 
-D4 final reachable checkpoint: `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, run `31963803495`, **8766 jobs**.
+D4 final reachable checkpoint: `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, run `31963803495`.
 
 ### E1 — quantitative LCM-ratio estimate — PASSED
 
-Machine-checked components include:
+The graph proves exact interval-LCM divisibility, cancellation-safe cross multiplication, product comparison, and strict transfer from product inequalities to LCM inequalities.
 
-- `intervalLCM_dvd_intervalProd`;
-- cancellation-safe `claim5_cross_multiplication`;
-- `claim5_lcm_lt_of_product_lt`;
-- interval-product recursion and the universal `(k+1)^k < 3*k^k` bound;
-- the target/closeness prefix-product comparison;
-- the full product inequality and transfer to LCMs;
-- `claim4_exists_cambie_lcm_ratio_of_sharp_windows`.
-
-E1 exit: `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909`, **8770 jobs**.
+E1 exit: `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909`.
 
 ### E2 — sharp prime density — PASSED
 
-E2 no longer contains an opaque prime-existence hypothesis.
+No opaque prime-existence hypothesis remains. The proof pins `AxiomMath/PrimeNumberTheoremAnd` at revision `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`, derives a natural-number relative-prime provider from its kernel-checked `prime_between` consequence, and converts that provider to the five required additive strips.
 
-The reachable graph machine-checks:
-
-- `Claim4CambieFiveStripPrimeData`, reducing distinctness to five disjoint strips;
-- a natural-number `Claim4RelativePrimeProvider q` with an explicit threshold and prime-after theorem;
-- conversion of multiplicative relative prime intervals to additive strips;
-- application of one provider at denominator `320*C` to the three near-`k` and two near-`k/2` strips;
-- the pinned dependency `AxiomMath/PrimeNumberTheoremAnd` at revision `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed` under project Mathlib `v4.33.0`;
-- `claim4RelativePrimeProviderOfPNT`, derived from the imported `prime_between` consequence;
-- `claim4_exists_cambie_lcm_ratio_eventually_of_pnt`.
-
-Checkpoints:
-
-- five-strip arithmetic: `81cf4b2303a4a93bf30d2fcb322b810c754530f3`, run `31972724132`, **8774 jobs**;
-- provider→five-strips: `14c9e5e8df00de4e129d142e472b3c9d91fd1c00`, run `31975082883`, **8778 jobs**;
-- E2 PNT exit: `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856`, **8800 jobs**.
+E2 exit: `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856`.
 
 No custom prime-density axiom is introduced.
 
 ### E3 — strong eventual Cambie theorem — PASSED
 
-The elementary large-`k` package is discharged independently by the fourth binomial coefficient:
+The elementary large-`k` condition is discharged with
 
-- `claim4CambieLargeKThreshold C = max 9 (3840*C + 3)`;
-- `claim4CambieLargeKData_of_threshold` proves `20*C*k^2*(k+1) ≤ 2^k` above that threshold using Mathlib's binomial bounds;
-- `cambie_lcm_ratio_eventually` combines the growth threshold with E2's PNT threshold.
+`claim4CambieLargeKThreshold C = max 9 (3840*C + 3)`
 
-E3a checkpoint: `58b870511588e6f9100443d2250024031bfaa3fd`, run `31974295910`, **8776 jobs**.
+and combined with the PNT threshold in `cambie_lcm_ratio_eventually`.
 
-E3 exit: `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891`, **8804 jobs**.
+E3 exit: `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891`.
 
 ### E4 — canonical Erdős #678 theorem — PASSED
 
-`Erdos678Final.lean` retains enough placement data to perform the canonical off-by-one translation safely:
+`Erdos678Final.lean` performs the off-by-one-safe translation from interval starts to canonical variables. In particular:
 
-- `claim4_cambie_k_lt_x_of_bounds` recovers `k < x` from the verified lower target and closeness bounds;
-- strengthened sharp-window, five-strip, provider, and PNT endpoints preserve `k < x`;
-- `cambie_lcm_ratio_eventually_with_large_start` gives the strong eventual comparison with large starts;
-- `erdos678_unbounded_witnesses` proves that for every `B : ℕ` there exist `n m k` with
-  `B ≤ k`, `3 ≤ n`, `3 ≤ m`, `3 ≤ k`, `n+k ≤ m`, and
-  `erdosM m (k+1) < erdosM n k`;
-- `erdos678_good_lengths_infinite` proves the set of block lengths admitting canonical witnesses is infinite.
+- `claim4_cambie_k_lt_x_of_bounds` recovers `k < x` from verified bounds;
+- `cambie_lcm_ratio_eventually_with_large_start` retains sufficient start information;
+- `erdos678_unbounded_witnesses` proves that for every `B : ℕ` there exist `n m k` with `B ≤ k`, `3 ≤ n,m,k`, `n+k ≤ m`, and `erdosM m (k+1) < erdosM n k`;
+- `erdos678_good_lengths_infinite` proves that the set of valid block lengths is infinite.
 
-This is the requested infinite-family conclusion for Erdős Problem #678.
+E4 mathematical exit: `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757`.
 
-E4 mathematical exit: `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757`, `No update necessary`, **8806 jobs**. The build reached `Claim4RelativePrimePNT`, `CambieStrongTheorem`, `Erdos678Final`, their regression modules, and the top-level `Formalization` target.
+Final synchronized E4 head: `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`, run `31977861568`.
+
+## Integration state
+
+PR #17, `agent/erdos678-e4-index-translation-20260816` → `main`, was merged on 2026-08-17 as merge commit `8fd1b20541ac7782f52429db3a2cc4c887547372`.
+
+The previous stacked checkpoint PRs #7–#12 and #14–#16 were closed after integration because their content is preserved in the merged history. PR #13 is a diagnostic-only compatibility probe and is non-blocking; it was never intended as the integration vehicle.
+
+No mathematical layer should be reopened unless a concrete regression is found.
 
 ## Verification chronology
 
@@ -148,26 +137,29 @@ E4 mathematical exit: `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `319769037
 | E2d provider→five-strips | `14c9e5e8df00de4e129d142e472b3c9d91fd1c00` | `31975082883` | SUCCESS, 8778 jobs |
 | E2 PNT exit | `6d06401bd2ee3aca116fd4ac592bf14d5e43694c` | `31975809856` | SUCCESS, 8800 jobs |
 | E3 strong Cambie exit | `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94` | `31975821891` | SUCCESS, 8804 jobs |
-| E4 / full #678 exit | `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941` | `31976903757` | SUCCESS, 8806 jobs |
+| E4 mathematical exit | `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941` | `31976903757` | SUCCESS, 8806 jobs |
+| E4 synchronized documentation head | `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f` | `31977861568` | SUCCESS, 8806 jobs |
+| merged `main` | `8fd1b20541ac7782f52429db3a2cc4c887547372` | `32011189766` | post-merge verification pending at this checkpoint |
 
-Red intermediate runs are diagnostic only. They do not reduce the status of later exact-head green checkpoints.
+Red intermediate runs are diagnostic only and do not supersede later exact-head green checkpoints.
 
-## Exact boundary after E4
+## Exact boundary after integration
 
-The mathematical reconstruction of Erdős #678 is complete on the E4 branch. There is no remaining mathematical or analytic gap in the formalized proof chain.
+The mathematical reconstruction of Erdős #678 is complete and integrated into `main`. There is no known mathematical or analytic gap in the formalized proof chain.
 
 Still deliberately not claimed:
 
-- a generic arbitrary-cardinality CRT-basis theorem; only the pair/triple arities actually needed by Cambie's argument are formalized;
-- that the earlier independent proof attempt was valid; it remains rejected because it used the false scaling identity `M(t*n,k) = t*M(n,k)` and later a wrong interval in a `Q=P/M` construction.
+- a generic arbitrary-cardinality CRT-basis theorem; only the pair/triple arities needed by Cambie's argument are formalized;
+- that the earlier independent proof attempt was valid. It remains rejected because it used the false scaling identity `M(t*n,k) = t*M(n,k)` and later a wrong interval in a `Q=P/M` construction.
 
 ## Required restart sequence
 
-1. Verify the active E4 documentation head and its canonical CI.
+1. Verify the exact head of `main` and its latest Lean CI conclusion.
 2. Read this file and `problems/678/LEAN_FORMALIZATION_ROADMAP.md`.
 3. Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
-4. Finish documentation synchronization and stacked-PR review hygiene.
-5. Preserve the pinned PNT+ revision and all negative regressions when integrating.
+4. Treat remaining diagnostic PR or branch cleanup as non-mathematical hygiene.
+5. Preserve the pinned PNT+ revision and all positive/negative regressions.
+6. Once `main` post-merge verification is green, classify #678 as archived/completed and choose the next active benchmark.
 
 ## Completed benchmark outcomes
 
@@ -178,8 +170,5 @@ Still deliberately not claimed:
 - #275: independent proof audited and frozen before reference access; equivalent core mechanism to the reference proof.
 - #303: blind attempt incomplete; Brown–Rödl reference comparison completed.
 - #447: contaminated challenge; not an active blind benchmark.
+- #678: Cambie reconstruction complete, machine-checked, and integrated into `main`; post-merge verification is the only remaining gate at this checkpoint.
 - #1125: blind proof attempt failed; historical/modern reconstruction completed.
-
-## Documentation synchronization status
-
-`PROJECT_STATE.md` now records the E4 mathematical exit. The active roadmap, root README, problem index, and `problems/678/README.md` must be synchronized on this same E4 PR head, followed by one final canonical CI run before documentation closure is credited.
