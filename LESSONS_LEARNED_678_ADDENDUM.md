@@ -4,6 +4,23 @@
 
 This addendum records lessons learned from the Erdős Problem #678 benchmark, including the failed independent infinitude construction, the transition to Cambie-proof reconstruction, and the subsequent Lean formalization consolidation.
 
+## Final outcome — 2026-08-17
+
+Erdős #678 is now a completed and archived benchmark in this repository.
+
+- external problem status: **proved**;
+- independent attempt in this project: **rejected**;
+- successful mathematical mode: **external-proof reconstruction of Cambie (2024)**;
+- formal result: **independent Lean reimplementation of the reconstructed proof**;
+- full Claim 5, Claim 4 application chain, quantitative LCM-ratio theorem, prime-density bridge, strong Cambie theorem, and canonical Erdős #678 theorem: **machine-checked**;
+- canonical final theorems include `erdos678_unbounded_witnesses` and `erdos678_good_lengths_infinite`;
+- mathematical integration: PR #17 merged as `8fd1b20541ac7782f52429db3a2cc4c887547372`;
+- archival synchronization: PR #18 merged as `755c9601816fbbd7e2181a2e56c34f28667ceb67`;
+- user-transition gate: PR #19 merged as `65f0acd3d39000fae9224371de31ac1e55376cbb`;
+- final post-merge Lean Verification run `32016867259`: **SUCCESS**, `No update necessary`, full build **8806 jobs**.
+
+This final outcome supersedes intermediate status snapshots below without rewriting their chronology.
+
 ## L-678-005 — Separate infrastructure validation from mathematical validation
 
 A successful Lean/Lake/Mathlib CI run proves that the submitted Lean statements type-check. It does **not** prove a stronger mathematical strategy that was not encoded.
@@ -73,6 +90,8 @@ Passing layer 1 says nothing by itself about layers 2–4.
 Lean should be used early enough to expose definitional mistakes, but expensive formalization should not proceed far on a construction that has not survived exact finite checks.
 
 ## L-678-013 — Correct benchmark classification
+
+> **HISTORICAL SNAPSHOT — SUPERSEDED on 2026-08-17.** The classification below records the state at this intermediate checkpoint. The authoritative final outcome is the `Final outcome` section above and the final lessons L-678-034 onward.
 
 Current classification:
 
@@ -213,8 +232,6 @@ Reusable rule:
 
 > When a definition is opaque or non-reducible, test the proved interface and discharge concrete hypotheses; do not force kernel reduction or enlarge the trusted computing base merely for convenience.
 
-
-
 ## L-678-024 — Separate a theorem consumer from its construction layer
 
 The full Claim 5 assembly became short and auditable only after the residue data were named as two explicit interfaces. The assembly module consumes those interfaces, combines the three already verified prime ranges, proves the nonzero side conditions, and obtains natural-number equality from every prime valuation. It does not pretend to construct the residues supplied later by Claim 4 and CRT.
@@ -329,3 +346,107 @@ Run `31872158679` already built the complete theorem module; it rejected only te
 Reusable rule:
 
 > When one layer claims to satisfy another layer's contract, include a regression that crosses the contract and invokes the downstream theorem; keep a malformed-interface negative case alongside it.
+
+## L-678-034 — Preserve downstream-critical information through theorem layers
+
+The first quantitative LCM-ratio endpoints were sufficient to prove the comparison but discarded placement information that the final Erdős indexing needed. E4 required the additional fact `k < x` in order to translate safely to `n = x - 1` while preserving `3 ≤ n`.
+
+The successful repair did not re-prove the construction from scratch. It proved `claim4_cambie_k_lt_x_of_bounds` from already verified Cambie bounds and threaded that fact through strengthened E1/E2/E3 interfaces to `cambie_lcm_ratio_eventually_with_large_start`.
+
+Reusable rule:
+
+> Before freezing an intermediate theorem interface, list the invariants required by every known downstream translation. Do not discard location, positivity, distinctness, or size data merely because the immediate consumer does not need them.
+
+## L-678-035 — Replace custom analytic assumptions with pinned machine-checked dependencies
+
+The prime-density bridge was initially an external analytic obligation. The final E2 layer imports `AxiomMath/PrimeNumberTheoremAnd` at the pinned revision `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`, derives the natural-number relative-prime provider from its kernel-checked `prime_between` consequence, and then obtains the five additive prime strips required by the construction.
+
+No project-specific opaque prime-density axiom is part of the credited final theorem.
+
+Reusable rule:
+
+> When a proof depends on a deep external theorem, prefer a pinned, reachable, machine-checked dependency over a custom axiom. Record the exact revision and test the adapter layer that converts the library theorem into the project's application interface.
+
+## L-678-036 — Prove the stronger parameterized theorem when it simplifies the final deduction
+
+Cambie's architecture naturally proves that for every `C > 0`, all sufficiently large `k` admit an LCM ratio exceeding `C`. The formalization preserved that stronger statement instead of specializing prematurely to `C = 1`.
+
+The Erdős problem then becomes a short corollary by setting `C = 1`, while the stronger theorem remains reusable and makes the quantitative structure explicit.
+
+Reusable rule:
+
+> If the proof naturally produces a stronger parameterized statement and the extra parameter does not destabilize the interfaces, formalize the stronger theorem and derive the benchmark as a corollary.
+
+## L-678-037 — Encode infinitude through unbounded witnesses when possible
+
+The canonical theorem `erdos678_unbounded_witnesses` states that for every lower bound `B`, there is a valid witness with `B ≤ k`. This is stronger and easier to reuse than merely constructing an abstract infinite set of triples.
+
+`erdos678_good_lengths_infinite` then follows by contradiction from boundedness of the set of good lengths.
+
+Reusable rule:
+
+> For infinitude claims over a natural parameter, prefer an explicit `∀ B, ∃ witness, B ≤ parameter` theorem when the construction supports it. Unboundedness often gives a cleaner machine-checked infinitude proof than manual pairwise-distinctness bookkeeping.
+
+## L-678-038 — Final index translation is a mathematical proof layer, not formatting
+
+The strong Cambie theorem is expressed using intervals starting at `x` and `y`; the canonical Erdős function uses `erdosM n k = intervalLCM (n+1) k`. The final step therefore requires the exact substitutions `n = x - 1`, `m = y - 1`, proofs that subtraction/addition cancel under positivity, and preservation of `n + k ≤ m` and all lower bounds.
+
+This translation was isolated in `Erdos678Final.lean` rather than hidden in simplification.
+
+Reusable rule:
+
+> Treat translations between a paper's coordinates and the benchmark's canonical indexing as explicit theorems. Prove every off-by-one, positivity, and domain-preservation obligation at that boundary.
+
+## L-678-039 — Exact-head CI is the unit of machine-check credit
+
+The final mathematical head `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f` passed canonical run `31977861568`; PR #17 was merged only after its exact head was green. The resulting `main` merge commit then passed run `32011189766`. The final documentation/user-gate merge `65f0acd3d39000fae9224371de31ac1e55376cbb` passed run `32016867259`, with `No update necessary` and a successful 8806-job build.
+
+Reusable rule:
+
+> Credit a theorem to the exact commit whose reachable graph passed the required check. Use post-merge verification to establish that the stable integration branch reproduces the credited tree, not as a substitute for pre-merge exact-head validation.
+
+## L-678-040 — Attribution and verification are orthogonal dimensions
+
+The project rejected its independent mathematical attempt, reconstructed Cambie's published proof, and independently implemented that reconstruction in Lean. Machine verification raises confidence in the reconstructed argument but does not change its historical authorship.
+
+Reusable rule:
+
+> Record at least two independent labels: mathematical provenance (`independent`, `reference-derived`, `historical`) and verification status (`informal`, `audited`, `machine-checked`). Never infer novelty from formal verification or formal verification from novelty.
+
+## L-678-041 — Archive closure is part of a reproducible research result
+
+Finishing the theorem was not the final operational step. The project synchronized the roadmap, problem README, root README, and `PROJECT_STATE.md`; closed obsolete stacked PRs; verified the merge on `main`; and recorded the explicit transition gate in DEC-012.
+
+This prevented a later session from reopening a completed phase, crediting stale CI, or silently selecting a new benchmark.
+
+Reusable rule:
+
+> A benchmark is operationally complete only when proof state, build state, documentation state, open-PR state, and next-action policy agree. Archive deliberately rather than merely stopping work.
+
+## L-678-042 — A completed benchmark deserves a final postmortem pass
+
+Intermediate lessons were valuable but one historical status line remained stale after the theorem was finished, and the late E1–E4 lessons had not yet been extracted. A final knowledge-consolidation pass caught that drift after the mathematics was already complete.
+
+Reusable rule:
+
+> After final integration and post-merge verification, perform one explicit postmortem pass: mark superseded status snapshots, record the final outcome, extract late-stage lessons, and convert the strongest recurring lessons into project protocol or decisions when warranted.
+
+## Final reusable checklist from #678
+
+Before archiving a future benchmark:
+
+- [ ] The exact canonical statement and indexing convention are explicit.
+- [ ] Positive witnesses and important rejected candidates are preserved as regressions.
+- [ ] Finite evidence is not confused with an infinitude mechanism.
+- [ ] Producer/consumer interfaces are explicit and tested across boundaries.
+- [ ] Every external deep theorem is either formally supplied or clearly classified as an assumption; pinned dependencies record exact revisions.
+- [ ] Downstream-critical invariants are preserved through intermediate theorem interfaces.
+- [ ] The canonical final theorem matches the benchmark's own variables and domain constraints, not merely an equivalent paper coordinate system.
+- [ ] Infinitude is stated in the strongest convenient reusable form, preferably unbounded witnesses when available.
+- [ ] Every credited Lean module is reachable from the canonical build graph.
+- [ ] `lake exe mk_all --check` and the full build pass on the exact credited head.
+- [ ] PR exact-head CI is green before merge, and `main` reproduces the result after merge.
+- [ ] Mathematical provenance and machine-verification status are recorded separately.
+- [ ] Historical snapshots are labeled when superseded; current state documents agree.
+- [ ] Obsolete PRs and blockers are closed or explicitly preserved with status.
+- [ ] A final postmortem extracts late-stage lessons before the benchmark is considered archived.
