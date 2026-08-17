@@ -20,6 +20,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Record verified commit
+        run: |
+          set -euo pipefail
+          printf 'verified_commit=%s\n' "$(git rev-parse HEAD)"
 
       - name: Build canonical Lean graph
         uses: leanprover/lean-action@v1
