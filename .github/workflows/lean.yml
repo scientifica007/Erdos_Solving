@@ -22,7 +22,7 @@ jobs:
         working-directory: formalization
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
@@ -33,7 +33,7 @@ jobs:
           printf 'verified_commit=%s\n' "$(git rev-parse HEAD)"
 
       - name: Build canonical Lean graph
-        uses: leanprover/lean-action@v1
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9 # v1
         with:
           lake-package-directory: formalization
           use-mathlib-cache: true
