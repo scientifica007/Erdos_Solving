@@ -2,34 +2,34 @@
 
 ## Status
 
-**PUBLIC TRANSITION COMPLETED. FINAL S1 INTEGRATION CI PENDING.**
+**PUBLIC TRANSITION COMPLETE. LICENSE COMPLETE. S1 ARTIFACT INTEGRATED AND POST-MERGE VERIFIED.**
 
-The repository is now public. Project-owned material is licensed under Apache License 2.0. The archived Erdős #678 mathematics remains frozen; this audit concerns publication/readiness and does not authorize work on another Erdős problem. `DEC-012` remains in force.
+The repository is Public and project-owned material is licensed under Apache License 2.0. Erdős #678 mathematics remains frozen/archived. This audit does not authorize work on another Erdős problem; `DEC-012` remains in force.
 
-## 1. Pre-transition audit result
+## Pre-transition audit
 
-Before the visibility change, the project inspected the current repository and accessible historical surfaces for common secret/token/private-key indicators, representative GitHub Actions logs, workflow permissions and credential persistence, third-party license/provenance boundaries, repository surfaces that would become public, and scientific attribution.
+The project inspected accessible current/historical surfaces for common secret/token/private-key indicators, representative Actions logs, workflow permissions, third-party provenance/licenses, public repository exposure, and scientific attribution.
 
-No known credential/private-key blocker was found on the audited current/indexed surfaces. This remains a bounded audit, not a cryptographic proof about every unreachable Git object, deleted object, cache, attachment, artifact, or historical log.
+No known credential/private-key blocker was found on the audited current/indexed surfaces. This is a bounded audit, not proof about every unreachable/deleted Git object, attachment, cache, artifact, or historical log.
 
-The connected integration could not exhaustively enumerate historical commit-author emails before the transition. Git commit author/committer metadata is public history; if a personal historical email is ever identified and considered sensitive, address that independently rather than treating this audit as proof that none exists.
+The integration could not exhaustively certify every historical commit-author email before publication. Git author/committer metadata is public history; any later-discovered personal email should be handled independently.
 
-## 2. Workflow hardening before public operation
+## Workflow hardening
 
-The active S1 branch hardens `.github/workflows/lean.yml` for public/fork execution:
+The public workflow uses:
 
 - `permissions: contents: read`;
-- literal PR-head checkout via `${{ github.event.pull_request.head.sha || github.sha }}`;
+- literal PR-head/current-commit checkout;
 - `persist-credentials: false`;
 - explicit `git rev-parse HEAD` recording;
-- `actions/checkout` and `leanprover/lean-action` pinned to concrete commit SHAs;
-- no repository secrets required by the Lean build.
+- concrete commit SHAs for the directly configured `actions/checkout` and `leanprover/lean-action` references;
+- no project secrets for the Lean build.
 
-A root `.gitignore` excludes common local secret/configuration files, private-key material, and Lean/Lake local build state.
+A root `.gitignore` excludes common local secret/configuration files, private keys, and local Lean/Lake build state.
 
-## 3. Scientific attribution
+## Attribution
 
-The repository classifies #678 as:
+The public classification is:
 
 - mathematical result/author: known result by Stijn Cambie;
 - project route: external-proof reconstruction;
@@ -38,76 +38,84 @@ The repository classifies #678 as:
 - new mathematical solution claim: no;
 - first Lean formalization claim: no;
 - prior formal authors: Aristotle and Boris Alexeev;
-- S1 contribution: executable differential verification and alternative formal-engineering evidence.
+- S1 contribution: executable differential verification plus alternative formal-engineering/process evidence.
 
-Historical branches may contain superseded exploratory states. Normative public state is `main`, `PROJECT_STATE.md`, and the #678 evidence/result files.
+## Licensing and redistribution
 
-## 4. Licensing and redistribution
-
-The owner selected **Apache License 2.0** for project-owned material. License-only PR #26 merged the standard root `LICENSE` to `main` at
+The owner selected **Apache License 2.0** for project-owned material. License-only PR #26 merged root `LICENSE` to `main` at
 
 `87cf560451ef5aa4714069d52a3851c1f8547f70`.
 
-GitHub subsequently recognized repository license metadata as `Apache-2.0`.
+GitHub recognizes repository license metadata as `Apache-2.0`.
 
-Root `THIRD_PARTY_NOTICES.md` records important provenance and redistribution boundaries. At the audited state:
+`THIRD_PARTY_NOTICES.md` records important boundaries. Mathlib, PNT+, and Formal Conjectures reported Apache-2.0 at audit time. No repository license was detected for `plby/lean-proofs`; its comparator source therefore remains an immutable **external fetch**, not vendored material.
 
-- Mathlib reports Apache-2.0;
-- `AxiomMath/PrimeNumberTheoremAnd` reports Apache-2.0;
-- `google-deepmind/formal-conjectures` reports Apache-2.0;
-- `plby/lean-proofs` had no repository license metadata detected, so its comparator source remains an immutable external fetch and is not vendored into this repository.
+## Public transition
 
-## 5. Public transition verification
-
-After the user changed repository visibility, GitHub API verification reported:
+GitHub API confirmed:
 
 - `private: false`;
 - `visibility: public`;
-- default branch: `main`;
-- repository license: `Apache-2.0`;
-- root `LICENSE` readable on `main`;
-- Lean Verification workflow state: active.
+- default branch `main`;
+- repository license `Apache-2.0`;
+- root `LICENSE` readable;
+- Lean Verification workflow active.
 
-The browser briefly displayed an `Error loading page` when opening `LICENSE`, but the repository/content APIs returned the file correctly; this was classified as a UI/session rendering issue rather than repository corruption.
+The temporary browser `Error loading page` for `LICENSE` was classified as UI/session rendering because repository/content APIs returned the file correctly.
 
-## 6. Actions/billing blocker resolution
+## Billing/runner restoration
 
-While private, runs `32036454657` and `32036454660` stopped before any Lean step because of the account payment/spending condition.
+Private-repository runs `32036454657` and `32036454660` were prevented from starting by the account billing/spending condition.
 
-After the repository became public, reopening PR #22 launched run `32043331012`. Its job successfully advanced through setup, checkout, `Record verified commit`, and entry into `Build canonical Lean graph`.
+After publication, diagnostic run `32043331012` progressed through setup, checkout, commit recording, and the canonical build. This demonstrated that standard GitHub-hosted runner execution had been restored.
 
-Therefore the private-repository billing/spending condition is no longer preventing standard GitHub-hosted runner execution.
+## Final S1 integration
 
-Run `32043331012` is **diagnostic evidence of restored runner availability**, not the final S1 integration-credit run, because documentation synchronization after the public transition changed PR #22's head.
+PR #22 final head
 
-## 7. Repository protection status
+`1c6bea992033390ac4364033fafcd221694baf4c`
 
-Immediately after the public transition, the GitHub rulesets API returned an empty list (`[]`). No repository ruleset was therefore detected at that checkpoint.
+passed canonical exact-head run `32043807200`, job `95427648473`:
 
-This does not invalidate #678 or S1. It is a repository-governance item: configure/verify `main` protection in the GitHub UI before accepting outside contributions. The desired policy should prevent unreviewed/unverified integration while preserving the existing PR + canonical CI workflow.
+- checked-out commit = exact PR head;
+- `verified_commit` = exact PR head;
+- `mk_all`: `No update necessary`;
+- build: **SUCCESS / 8808 jobs**.
 
-## 8. Final S1 release sequence
+PR #22 merged as
 
-The remaining controlled sequence is:
+`358cd541ff81a2b59611b7addfc90ae17e03b36f`.
 
-1. synchronize `PROJECT_STATE.md`, active roadmap, and READMEs to the public state;
-2. identify the **actual final PR #22 head**;
-3. require a fresh hardened canonical Lean Verification run on that head;
-4. inspect execution provenance so the checked-out commit equals the PR head being credited;
-5. require the canonical graph to pass;
-6. merge PR #22 only if green;
-7. verify the resulting `main` merge commit with the canonical workflow;
-8. mark S1 integrated/closed only after post-merge success;
-9. do not start S2 before S1 closes;
-10. do not start another Erdős problem without explicit authorization.
+Post-merge run `32044314748` attempt 1 failed while downloading Lean because `releases.lean-lang.org` returned HTTP 502. The proof build never started; classification: **transient infrastructure failure**.
 
-## 9. Release decision
+Attempt 2, job `95429173912`, reused the unchanged merge commit and succeeded:
+
+- checkout and `verified_commit`: `358cd541ff81a2b59611b7addfc90ae17e03b36f`;
+- Lean 4.33.0 installed;
+- exact PNT+/Mathlib revisions resolved;
+- `mk_all`: `No update necessary`;
+- build: **SUCCESS / 8808 jobs**.
+
+Therefore S1 integration is closed.
+
+## Repository protection status
+
+At the public-transition checkpoint, the rulesets API returned `[]`; no repository ruleset was detected.
+
+This is a governance follow-up, not a mathematical blocker. Before accepting outside contributions, configure protection for `main` in GitHub so normal integration requires a pull request and successful Lean Verification and blocks force pushes/deletion.
+
+## Release decision
 
 - Security/privacy preflight: **PASS WITH STATED LIMITATIONS**.
 - Scientific attribution: **PASS**.
 - Third-party redistribution: **PASS WITH NON-VENDORING BOUNDARY**.
-- Project-owned licensing: **PASS — Apache-2.0 committed on `main`**.
-- Public visibility: **PASS — transition completed and verified by API**.
-- GitHub-hosted runner availability: **RESTORED after public transition**.
-- Repository protection: **UI CONFIGURATION/VERIFICATION STILL REQUIRED before outside contributions**.
-- Final S1 integration: **PENDING exact-head PR #22 CI + post-merge main verification**.
+- Project-owned licensing: **PASS — Apache-2.0**.
+- Public visibility: **PASS**.
+- GitHub-hosted runner availability: **PASS / RESTORED**.
+- S1 exact-head integration: **PASS**.
+- S1 post-merge verification: **PASS**.
+- Repository protection: **UI GOVERNANCE FOLLOW-UP REQUIRED BEFORE OUTSIDE CONTRIBUTIONS**.
+
+## Next gate
+
+After this closure-sync PR itself passes canonical CI and integrates cleanly, S2 metric/mutation work may begin on archived #678 only. No other Erdős problem is authorized.
