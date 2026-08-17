@@ -16,33 +16,32 @@
 
 ### S1 scientific evaluation — COMPLETE
 
-S1 أنجزت independent formal replication / executable differential verification مقابل formalization Aristotle/Alexeev. التجربة الأساسية run `32028006457` بنت graph كاملًا من **8808 jobs** وcompiled المصدر العام المثبت دون تعديل داخل بيئتنا Lean 4.33 / Mathlib / PNT+، مع selected axiom footprint `[propext, Classical.choice, Quot.sound]` على الجانبين.
-
-PR #22 وPR #27 أغلقتا S1 رسميًا؛ closure main commit `7aff8d8d8680e90b34be64650c68c0fc778749fc` اجتاز post-merge run `32045885504` مع exact provenance و`No update necessary` وبناء 8808 jobs.
+S1 أنجزت independent formal replication / executable differential verification مقابل formalization Aristotle/Alexeev. التجربة الأساسية run `32028006457` بنت graph كاملًا من **8808 jobs** وcompiled المصدر العام المثبت دون تعديل داخل بيئتنا Lean 4.33 / Mathlib / PNT+، مع selected axiom footprint `[propext, Classical.choice, Quot.sound]` على الجانبين. S1 أُغلقت رسميًا عبر PR #22 وPR #27 والتحقق بعد الدمج.
 
 ### S2 — ACTIVE على #678 فقط
 
-**S2a — dependency-surface baseline: COMPLETE / INTEGRATED / POST-MERGE VERIFIED / CLOSURE VERIFIED.** التجربة الأساسية نُفذت في run `32047324807`, job `95438118197`, على exact experiment commit `4685fca552ae4a0270dfa3823d46fde48efa5ade`، وأنتجت artifact digest `sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd`.
+**S2a — dependency surface: COMPLETE / VERIFIED / CLOSED.** النتيجة الحاكمة هي أن raw module/file metrics حساسة لتعريف dependency/ownership boundary؛ لذلك لا يجوز تحويل `46 modules vs 1 artifact module` إلى حكم على proof complexity أو architecture quality.
 
-PR #28 اجتازت exact-head run `32047808010` ثم دُمجت كـ`37deb850f894d32863970aca6b07e876f89e813d` واجتازت post-merge run `32048513043`. Closure PR #29 اجتازت run `32050225638` على رأسها الحرفي، ثم دُمجت كـ`c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5`؛ هذا الـmerge commit اجتاز run `32050862725`, job `95449629511`, مع `verified_commit` مطابق، `No update necessary`، وبناء كامل من **8808 jobs**.
+**S2b — controlled build behavior: EXECUTED / VALIDATED / PENDING PR INTEGRATION.** البروتوكول في `problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md`، والأداة في `problems/678/experiments/s2_build_behavior.py`، والـbaseline في `S2_BUILD_BEHAVIOR_BASELINE.md/.json`.
 
-الـbaseline البنيوية:
+الجولة التجريبية الأولى run `32052134207` استُبعدت **كاملة** رغم نجاح 6/6 jobs لأن `runner_version` لم يكن مسجلًا في result evidence، وهو شرط provenance محدد مسبقًا. بعد إصلاح apparatus لتفشل مغلقة عند غياب الهوية، run `32053575928` على exact apparatus commit `c2ef703c954e462096162a3b4a59a5e0f8d48488` نجحت في **6/6 replicates، بلا retries أو exclusions**. كل النتائج تحمل runner `2.336.0`, image `ubuntu24/20260810.271.1`, Lean 4.33.0، ونفس Mathlib/PNT+/comparator pins.
 
-| Metric | Erdos_Solving | Public comparator |
+النتيجة المقارنة الأساسية:
+
+| cold metric | Erdos_Solving | public comparator |
 |---|---:|---:|
-| reachable local modules | 46 | 10 |
-| local import edges | 58 | 10 |
-| max local depth | 33 | 4 |
-| external-frontier modules | 14 | 27 |
-| artifact-owned modules | 46 | 1 |
-| artifact-owned source lines | 5546 | 2546 |
-| third-party repository-local support modules | 0 | 9 |
+| wall-time median | 159.575 s | 156.280 s |
+| user CPU median | 176.105 s | 480.580 s |
+| system CPU median | 64.840 s | 5.990 s |
+| total CPU median | 241.155 s | 486.475 s |
+| max RSS median | 7,183,766 KiB | 7,828,930 KiB |
+| Lake `Built` lines | 46 | 1 |
 
-**النتيجة العلمية الصحيحة في S2a ليست أن أحد التطويرين أفضل.** dependency-surface metrics حساسة لتعريف boundary: مشروعنا يستهلك PNT+ كـLake dependency خارجية، بينما comparator يحتوي تسع وحدات PNT+ reachable داخل شجرة repository نفسها. لذلك raw file/module count يخلط modularization مع packaging وthird-party ownership.
+**لا يوجد wall-clock winner ثابت**: الفروق الزوجية `internal − comparator` تتغير إشارتها وتمتد من `-10.68` إلى `+11.73 s`. لكن resource profile مختلف بصورة متسقة: comparator يستخدم user CPU أعلى كثيرًا وRSS أعلى قليلًا، بينما التطوير المعياري الداخلي يستخدم system CPU أعلى كثيرًا. هذا دليل وصفي على اختلاف execution profile تحت بيئة واحدة مثبتة، وليس ادعاء تفوق عام.
 
-**S2b — controlled build behavior: ACTIVE / PROTOCOL DEFINED / EXPERIMENT PENDING.** البروتوكول في `problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md` والأداة في `problems/678/experiments/s2_build_behavior.py`. القياس المسبق التعريف يستخدم ستة hosted-runner replicates مقترنة، مع ترتيب داخلي/مقارن متناوب، وبيئة Lean/Mathlib/PNT+ واحدة مثبتة. يميز بين cold artifact-owned rebuild وwarm no-change incremental check، ويقيس wall/user/system CPU وmax RSS. تنزيل الشبكة/الأداة/dependencies خارج المنطقة الزمنية المقاسة.
+Warm rebuild medians (`4.42 s` مقابل `4.34 s`) هي no-change incremental checks وليست compilation-speed measurements.
 
-لا يُسمح باستنتاج “أسرع” أو “أفضل architecture” من log واحدة أو قبل اكتمال replicates الست وتدقيقها.
+**S2c — repair locality: NOT STARTED.** لن تبدأ قبل أن يمر S2b عبر PR exact-head CI ثم merge ثم post-merge verification على `main`.
 
 ### Public artifact
 
