@@ -1,6 +1,6 @@
 # problems/
 
-> **Current index synchronized on 2026-08-16.**
+> **Current index synchronized on 2026-08-17.**
 
 This directory contains local research records for nine selected Erdős problems. It is not a mirror of the full upstream database and does not claim that every folder is an active benchmark.
 
@@ -15,7 +15,7 @@ This directory contains local research records for nine selected Erdős problems
 | 275 | completed successful blind cycle and historical comparison | `275/comparison.md` |
 | 303 | blind attempt incomplete; reference comparison completed | `303/comparison.md` |
 | 447 | contaminated benchmark; not an active blind challenge | `447/README.md` |
-| 678 | **Cambie reconstruction complete and machine-checked in Lean on the E4 branch**; D4 and E1–E4 passed; canonical unbounded witnesses and infinitely many good block lengths proved | `678/LEAN_FORMALIZATION_ROADMAP.md` |
+| 678 | **completed / machine-checked / integrated / post-merge verified / archived**; Cambie reconstruction proves canonical unbounded witnesses and infinitely many good block lengths; `main` verification run `32011189766` succeeded with 8806 jobs | `678/LEAN_FORMALIZATION_ROADMAP.md` |
 | 1125 | blind attempt failed; historical reconstruction completed | `1125/comparison/historical-reconstruction.md` |
 
 ## Reading rule
