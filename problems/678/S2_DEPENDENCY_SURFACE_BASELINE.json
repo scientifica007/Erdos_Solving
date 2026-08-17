@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "experiment": "erdos678-s2a-dependency-surface",
+  "status": "executed-success-pending-pr-integration",
+  "metric_scope": "module-import-structure-not-proof-complexity",
+  "execution": {
+    "workflow": "Erdos 678 S2a Dependency Surface",
+    "run_id": 32047324807,
+    "job_id": 95438118197,
+    "internal_commit": "4685fca552ae4a0270dfa3823d46fde48efa5ade",
+    "artifact_id": 9293347138,
+    "artifact_name": "erdos678-s2a-dependency-4685fca552ae4a0270dfa3823d46fde48efa5ade",
+    "artifact_digest": "sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd",
+    "identity_validation": "pass"
+  },
+  "internal": {
+    "repository": "scientifica007/Erdos_Solving",
+    "entry_module": "Formalization.Erdos678.Erdos678Final",
+    "direct_entry_import_count": 4,
+    "reachable_local_module_count": 46,
+    "reachable_local_edge_count": 58,
+    "max_local_import_depth": 33,
+    "local_leaf_module_count": 3,
+    "external_frontier_module_count": 14,
+    "external_frontier_families": [
+      "Mathlib",
+      "PrimeNumberTheoremAnd"
+    ],
+    "artifact_owned": {
+      "modules": 46,
+      "source_lines": 5546,
+      "declaration_commands": 237
+    },
+    "third_party_repository_local_support": {
+      "modules": 0,
+      "source_lines": 0,
+      "declaration_commands": 0
+    }
+  },
+  "comparator": {
+    "repository": "plby/lean-proofs",
+    "commit": "6f906fef432892db5c910c48ad1a3728dd42cdac",
+    "entry_path": "src/latest/ErdosProblems/Erdos678.lean",
+    "entry_blob": "f2331e8bcc71bc36cce7724a0c54fafd8d64d480",
+    "entry_module": "ErdosProblems.Erdos678",
+    "direct_entry_import_count": 2,
+    "reachable_local_module_count": 10,
+    "reachable_local_edge_count": 10,
+    "max_local_import_depth": 4,
+    "local_leaf_module_count": 4,
+    "external_frontier_module_count": 27,
+    "external_frontier_families": [
+      "Batteries",
+      "Mathlib"
+    ],
+    "artifact_owned": {
+      "modules": 1,
+      "source_lines": 2546,
+      "declaration_commands": 108
+    },
+    "third_party_repository_local_support": {
+      "modules": 9,
+      "source_lines": 6943,
+      "declaration_commands": 381
+    },
+    "redistribution": "ephemeral-pinned-fetch-only"
+  },
+  "interpretation_constraints": [
+    "Module counts are structural packaging/decomposition metrics, not mathematical proof-complexity metrics.",
+    "The comparator physically contains reachable PrimeNumberTheoremAnd source that is classified as third-party repository-local support.",
+    "Erdos_Solving consumes PrimeNumberTheoremAnd as an external pinned Lake dependency.",
+    "External-frontier counts are boundary-sensitive and are not a direct coupling ranking.",
+    "No claim about better architecture, maintenance, build speed, repair locality, or robustness follows from S2a alone."
+  ],
+  "next_gate": "canonical exact-head Lean Verification on the final S2a PR head, then merge and post-merge main verification before S2b"
+}
