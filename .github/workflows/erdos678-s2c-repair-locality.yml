@@ -1,0 +1,71 @@
+name: Erdos 678 S2c Repair Locality
+
+on:
+  push:
+    branches:
+      - "agent/erdos678-s2c-repair-locality-*"
+    paths:
+      - "problems/678/S2_REPAIR_LOCALITY_PROTOCOL.md"
+      - "problems/678/S2_REPAIR_LOCALITY_MUTATIONS.yaml"
+      - "problems/678/experiments/s2_repair_locality.py"
+      - ".github/workflows/erdos678-s2c-repair-locality.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos678-s2c-repair-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repair-locality:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - name: Checkout exact experiment commit with baseline history
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Record experiment identity
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          printf 's2c_experiment_commit=%s\n' "$actual"
+          printf 's2c_internal_baseline=%s\n' 'cc55073fceddb51e3fa2c1854f797fe989523985'
+          printf 's2c_predeclaration_commit=%s\n' 'a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1'
+          test "$actual" = "$GITHUB_SHA"
+          git cat-file -e cc55073fceddb51e3fa2c1854f797fe989523985^{commit}
+          git cat-file -e a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1^{commit}
+      - name: Prepare pinned Lean and Mathlib environment
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          lake-package-directory: formalization
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          mk_all-check: false
+          use-mathlib-cache: true
+          use-github-cache: false
+      - name: Execute predeclared S2c repair-locality experiment
+        run: |
+          set -euo pipefail
+          python3 problems/678/experiments/s2_repair_locality.py \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --output-dir "problems/678/experiments/out/s2c-${GITHUB_SHA}"
+      - name: Print exact S2c summary
+        if: always()
+        run: |
+          path="problems/678/experiments/out/s2c-${GITHUB_SHA}/summary.md"
+          if [ -f "$path" ]; then cat "$path"; else echo "No summary produced; inspect fail-closed logs."; fi
+      - name: Upload exact S2c evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: erdos678-s2c-${{ github.sha }}
+          path: problems/678/experiments/out/s2c-${{ github.sha }}
+          if-no-files-found: warn
+          retention-days: 30
