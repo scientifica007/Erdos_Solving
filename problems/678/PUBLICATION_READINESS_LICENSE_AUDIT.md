@@ -11,16 +11,14 @@ It is not a legal opinion. Repository owners/maintainers remain responsible for 
 ### 1. This repository: `scientifica007/Erdos_Solving`
 
 - visibility at this checkpoint: private;
-- GitHub repository license metadata: none detected;
 - user authorization: **public-visibility preparation and intended public transition explicitly authorized**;
 - actual visibility transition: not yet executed at this checkpoint;
-- project-owned license: undecided.
+- project-owned license: **Apache License 2.0 (`Apache-2.0`) selected by the repository owner and committed in root `LICENSE`**;
+- scope: project-owned code, documentation, and other repository material are Apache-2.0 unless a file or third-party notice states otherwise.
 
 Publication implication:
 
-> Choose and add an explicit license for material owned by this project before, or immediately with, the public transition so that scientific reuse rights are not ambiguous.
-
-The license choice itself is a user/project-owner decision and is not made automatically by this audit.
+> The project-owned licensing gate is closed. Public release must still preserve third-party licenses/notices and the non-vendoring boundary for material whose redistribution rights are not established.
 
 ### 2. `leanprover-community/mathlib4`
 
@@ -75,13 +73,13 @@ If a future paper/artifact needs a vendored comparator snapshot, first request l
 
 For the first public #678 artifact, use this packaging model:
 
-1. distribute only project-owned/licensed material plus normal package-manager dependencies;
+1. distribute project-owned material under root Apache-2.0 plus normal package-manager dependencies;
 2. pin external repositories by immutable commit/revision;
 3. fetch the public comparator ephemerally in reproduction scripts instead of vendoring it;
 4. verify comparator commit and file blob before compilation;
 5. cite mathematical and formal authors explicitly;
 6. maintain root `THIRD_PARTY_NOTICES.md` describing dependencies and comparison inputs;
-7. choose an explicit license for this project's own code/docs before or at the visibility change.
+7. preserve file-specific or third-party license notices wherever they apply.
 
 This keeps reproducibility and redistribution separate: a comparison can be fully reproducible from an external pin without copying third-party source into our artifact.
 
@@ -89,9 +87,9 @@ This keeps reproducibility and redistribution separate: a comparison can be full
 
 - [x] User explicitly authorizes preparation for public release / visibility change.
 - [ ] Repository visibility actually changed to public.
-- [ ] Project-owned code license chosen and committed.
-- [ ] Documentation/data license choice recorded if different from code.
-- [ ] Copyright/author attribution policy recorded.
+- [x] Project-owned license chosen: Apache-2.0.
+- [x] Root `LICENSE` committed with the Apache License 2.0 text.
+- [x] Project-owned documentation/data use the same Apache-2.0 default unless otherwise noted.
 - [x] `THIRD_PARTY_NOTICES.md` created.
 - [x] Mathlib repository currently reports Apache-2.0.
 - [x] PNT+ repository currently reports Apache-2.0.
