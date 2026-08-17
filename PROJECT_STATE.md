@@ -2,7 +2,7 @@
 
 > **Operational checkpoint synchronized on 2026-08-17.**
 >
-> **Erdős Problem #678 mathematics is complete, machine-checked, integrated into `main`, post-merge verified, and archived. The only authorized active work is scientific evaluation of that archived artifact: differential verification, reproducibility, publication positioning, upstream preparation, and AI-process analysis.**
+> **Erdős Problem #678 mathematics is complete, machine-checked, integrated into `main`, post-merge verified, and archived. The only authorized active work is scientific evaluation and public-release preparation of that archived artifact.**
 >
 > **No other Erdős problem may be selected, activated, resumed, researched, or formalized without explicit user authorization (`DEC-012`).**
 
@@ -13,7 +13,7 @@ This file is the authoritative restart checkpoint. Proof/CI credit must be tied 
 ```yaml
 current_problem: 678
 current_phase: archived
-current_stage: scientific-evaluation-s1-integration-pending
+current_stage: scientific-evaluation-s1-public-release-preflight
 current_mode: external-proof-reconstruction
 blind_mode: false
 reference_solution_accessed: true
@@ -30,7 +30,7 @@ new_mathematical_proof_claim: false
 scientific_evaluation_authorized: true
 scientific_evaluation_scope: erdos678-only
 scientific_dossier_main_baseline: 0d8287bc5fcc41ed4dc7ea68e5d27cd0091b8d5e
-current_target: close-s1-persistent-artifact-integration
+current_target: complete-public-release-transition-then-close-s1-integration
 
 s1_scientific_experiment_status: success
 s1_experiment_run: 32028006457
@@ -40,20 +40,29 @@ s1_canonical_build_jobs: 8808
 s1_public_comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
 s1_public_comparator_compiled_unchanged_in_internal_environment: true
 s1_matched_axiom_footprint: propext-Classical.choice-Quot.sound
-s1_repository_integration_status: pending
+s1_repository_integration_status: pending-fresh-final-head-ci
 
 ci_provenance_audit_status: correction-recorded
 historical_pr_checkout_issue: default-pull-request-checkout-may-build-synthetic-merge-ref
 canonical_workflow_repair: explicit-pr-head-checkout-plus-git-rev-parse-head
-current_ci_blocker: github-actions-billing-or-spending-limit
+public_ci_hardening: contents-read-only-persist-credentials-false-actions-pinned-by-sha
+current_ci_blocker: github-actions-billing-or-spending-limit-while-private
 current_ci_blocker_is_proof_failure: false
+
+public_visibility_preparation_authorized_by_user: true
+repository_visibility_at_checkpoint: private
+public_release_preflight_status: complete-awaiting-project-license-and-user-visibility-switch
+project_license_status: undecided-owner-decision-required
+third_party_notices_status: created
+secret_audit_status: no-known-secret-blocker-on-audited-surfaces-with-stated-limitations
+public_transition_strategy: user-will-change-repository-to-public-to-restore-standard-actions
 
 s2_status: not-started
 s3_status: not-started
 s4_status: not-started
 s5_status: not-started
 user_transition_gate: explicit-authorization-required
-next_action: resolve external Actions billing/spending blocker, run corrected canonical PR gate, merge S1 persistent artifacts only if green, verify main, then close S1 before S2
+next_action: owner chooses project license; user changes repository visibility to public; verify public GitHub settings; run corrected canonical CI on actual final PR22 head; merge only if green; verify main; close S1 before S2
 ```
 
 ## Governing rules
@@ -64,9 +73,10 @@ next_action: resolve external Actions billing/spending blocker, run corrected ca
 - `lake exe mk_all --check` and the full Lean build are part of canonical verification.
 - Pull-request verification credit must identify the commit actually checked out. `head_sha` metadata alone is not literal exact-head proof.
 - Infrastructure failures must be separated from proof failures.
-- Mathematical provenance, formal-verification status, and scientific novelty are independent labels.
+- Mathematical provenance, formal-verification status, scientific novelty, and redistribution rights are independent labels.
 - Rejected paths and negative regressions remain part of the scientific record.
 - State/roadmap/README synchronization is required before advancing a project stage.
+- Public visibility does not relax proof, attribution, provenance, or licensing gates.
 
 ## Mathematical #678 checkpoint — closed
 
@@ -121,6 +131,7 @@ Machine-checked bridge results include:
 
 - our length-based intervals equal `Finset.Ioc n (n+k)` semantics;
 - our theorem derives the Formal-Conjectures-style eventual-nonempty valid-pair statement;
+- valid block lengths are exposed through unbounded/infinite semantic endpoints;
 - our natural-factor strong theorem is lifted to every real `C ≥ 1`, with a `C=3/2` regression.
 
 This establishes differential-verification compatibility. It does not establish that one architecture is superior.
@@ -134,25 +145,39 @@ A later audit of PR run `32033822601` found:
 
 That successful run remains valid evidence for the integration tree, but not literal PR-head checkout.
 
-The active S1 branch repairs `.github/workflows/lean.yml` to checkout
-
-`${{ github.event.pull_request.head.sha || github.sha }}`
-
-and records `git rev-parse HEAD` before building.
+The active S1 branch repairs `.github/workflows/lean.yml` to checkout the literal PR head, records `git rev-parse HEAD`, declares `contents: read`, disables persisted checkout credentials, and pins third-party Actions by commit SHA.
 
 Full record: `problems/678/CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md`.
 
-### Current blocker — EXTERNAL INFRASTRUCTURE
+### Public-release preflight
 
-New GitHub Actions jobs currently cannot start because GitHub reports an account payment/spending-limit condition. Runs `32036454657` and `32036454660` stopped before any Lean step.
+The user chose public repository visibility as the intended resolution to the private-repository Actions billing blocker and explicitly authorized the preflight.
+
+Completed before the visibility switch:
+
+- indexed current-tree searches found no known common credential/private-key blocker on the audited surfaces;
+- representative historical Actions logs showed authentication values masked by GitHub;
+- `.gitignore` now excludes common local secrets/private keys and Lean local build state;
+- CI token permissions are read-only and checkout credentials are not persisted;
+- `actions/checkout` and `leanprover/lean-action` are pinned to concrete commit SHAs;
+- `THIRD_PARTY_NOTICES.md` records dependency/comparator provenance;
+- Mathlib, PNT+, and Formal Conjectures currently report Apache-2.0;
+- the public comparator remains external/non-vendored because no repository license metadata was detected;
+- `problems/678/PUBLIC_RELEASE_AUDIT_2026-08-17.md` records the full preflight and limitations.
+
+The remaining publication decision before/with visibility change is the owner-selected root license for project-owned material.
+
+### Current blocker / transition
+
+While the repository remains private, new GitHub Actions jobs are blocked by the account billing/spending condition. Runs `32036454657` and `32036454660` stopped before any Lean step.
 
 Classification:
 
-- CI infrastructure blocker: **yes**;
+- CI infrastructure blocker: **yes while private**;
 - proof failure: **no**;
 - evidence against the S1 experiment: **no**.
 
-The persistent S1 artifacts must remain unmerged until the account condition is resolved and the corrected commit-explicit canonical PR gate succeeds.
+The user intends to change the repository to public. After that transition, the actual final PR #22 head must receive a fresh corrected canonical run before merge.
 
 ## S1 durable artifacts
 
@@ -162,16 +187,21 @@ The persistent S1 artifacts must remain unmerged until the account condition is 
 - `problems/678/S1_DIFFERENTIAL_VERIFICATION_RESULT.md`
 - `problems/678/DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml`
 - `problems/678/CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md`
+- `problems/678/AI_CASE_EPISODE_VERIFICATION_CREDIT_DRIFT.md`
+- `problems/678/PUBLICATION_READINESS_LICENSE_AUDIT.md`
+- `problems/678/PUBLIC_RELEASE_AUDIT_2026-08-17.md`
 - `problems/678/experiments/run_public_comparator_common_env.sh`
 - `problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml`
 - `problems/678/PUBLICATION_AND_UPSTREAM_ROADMAP.md`
+- `THIRD_PARTY_NOTICES.md`
 
 ## Required restart sequence
 
-1. Verify `main` and the active S1 PR head.
-2. Read this file and the S1 result/evidence files.
+1. Verify `main`, repository visibility, and the active S1 PR head.
+2. Read this file and the S1 result/evidence/public-release audit files.
 3. Treat #678 mathematics as frozen/archived.
 4. Do not start S2 until the S1 persistent-artifact integration gate closes.
-5. If GitHub Actions is still billing-blocked, do not infer a proof failure and do not weaken the gate; keep the PR unmerged.
-6. After billing is restored, run the corrected canonical PR gate, inspect the logged checkout commit, merge only if green, then verify `main`.
-7. **Do not select, activate, resume, research, or formalize another Erdős problem without explicit user authorization.**
+5. If the repository is still private and Actions remains billing-blocked, do not infer a proof failure and do not weaken the gate.
+6. Resolve the project-license decision and have the user perform the intended public-visibility switch.
+7. After public transition, review GitHub Actions/branch protection settings, run the corrected canonical PR gate, inspect the logged checkout commit, merge only if green, then verify `main`.
+8. **Do not select, activate, resume, research, or formalize another Erdős problem without explicit user authorization.**
