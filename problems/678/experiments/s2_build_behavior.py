@@ -2,7 +2,7 @@
 """Controlled paired build measurements for archived Erdős #678 S2b.
 
 This script deliberately measures artifact-owned Lake rebuild behavior inside
-one pinned Erdos_Solving environment.  It does not measure network/setup time
+one pinned Erdos_Solving environment. It does not measure network/setup time
 and it does not make architecture-superiority claims.
 """
 
@@ -13,7 +13,6 @@ import json
 import os
 import re
 import shutil
-import statistics
 import subprocess
 import sys
 import time
@@ -71,7 +70,44 @@ def lean_version(formalization: Path) -> str:
     return m.group(1)
 
 
+def _runner_version_from_proc() -> str | None:
+    """Recover the hosted runner binary version from visible process metadata."""
+    version_re = re.compile(r"(?:^|/)(\d+\.\d+\.\d+)(?:/|$)")
+    proc_root = Path("/proc")
+    try:
+        pids = [p for p in proc_root.iterdir() if p.name.isdigit()]
+    except OSError:
+        return None
+
+    for pid in pids:
+        candidates: list[str] = []
+        try:
+            candidates.append(os.readlink(pid / "exe"))
+        except OSError:
+            pass
+        try:
+            raw = (pid / "cmdline").read_bytes().replace(b"\x00", b" ")
+            candidates.append(raw.decode("utf-8", errors="replace"))
+        except OSError:
+            pass
+        for text in candidates:
+            if "Runner.Worker" not in text and "/runners/" not in text:
+                continue
+            match = version_re.search(text)
+            if match:
+                return match.group(1)
+    return None
+
+
 def runner_version() -> str:
+    env_value = os.getenv("ACTIONS_RUNNER_VERSION") or os.getenv("S2B_RUNNER_VERSION")
+    if env_value and re.fullmatch(r"\d+\.\d+\.\d+", env_value.strip()):
+        return env_value.strip()
+
+    proc_value = _runner_version_from_proc()
+    if proc_value:
+        return proc_value
+
     roots = [Path("/home/runner/runners"), Path("/opt/actions-runner")]
     for root in roots:
         if not root.exists():
@@ -89,13 +125,15 @@ def runner_version() -> str:
                 )
                 text = proc.stdout.strip()
                 if proc.returncode == 0 and text:
-                    return text.splitlines()[-1].strip()
+                    candidate_version = text.splitlines()[-1].strip()
+                    if re.fullmatch(r"\d+\.\d+\.\d+", candidate_version):
+                        return candidate_version
             except (OSError, subprocess.TimeoutExpired):
                 pass
         for child in sorted(root.iterdir()):
             if re.fullmatch(r"\d+\.\d+\.\d+", child.name):
                 return child.name
-    return "unknown"
+    raise ExperimentError("GitHub runner version could not be recovered; identity invariant failed")
 
 
 def mem_total_kib() -> int | None:
@@ -118,6 +156,11 @@ def environment_metadata(formalization: Path) -> dict[str, Any]:
     if mathlib_input != EXPECTED_MATHLIB_INPUT:
         raise ExperimentError(f"Mathlib identity mismatch: {mathlib_input} != {EXPECTED_MATHLIB_INPUT}")
 
+    image_os = os.getenv("ImageOS", "unknown")
+    image_version = os.getenv("ImageVersion", "unknown")
+    if image_os == "unknown" or image_version == "unknown":
+        raise ExperimentError("runner image identity is unavailable")
+
     return {
         "lean_version": version,
         "pnt_revision": pnt_rev,
@@ -125,8 +168,10 @@ def environment_metadata(formalization: Path) -> dict[str, Any]:
         "mathlib_resolved_revision": mathlib_rev,
         "runner_os_context": os.getenv("RUNNER_OS", "unknown"),
         "runner_arch_context": os.getenv("RUNNER_ARCH", "unknown"),
-        "runner_image_os": os.getenv("ImageOS", "unknown"),
-        "runner_image_version": os.getenv("ImageVersion", "unknown"),
+        "runner_name": os.getenv("RUNNER_NAME", "unknown"),
+        "runner_environment": os.getenv("RUNNER_ENVIRONMENT", "unknown"),
+        "runner_image_os": image_os,
+        "runner_image_version": image_version,
         "runner_version": runner_version(),
         "uname": run_checked(["uname", "-a"], cwd=formalization).stdout.strip(),
         "cpu_count": os.cpu_count(),
@@ -315,7 +360,7 @@ def markdown_summary(data: dict[str, Any]) -> str:
         f"- order: `{' -> '.join(data['order'])}`",
         f"- comparator: `{data['comparator']['commit']}` / `{data['comparator']['blob']}`",
         f"- Lean: `{data['environment']['lean_version']}`",
-        f"- runner image: `{data['environment']['runner_image_os']}` / `{data['environment']['runner_image_version']}`",
+        f"- runner: `{data['environment']['runner_version']}` / `{data['environment']['runner_image_os']}` / `{data['environment']['runner_image_version']}`",
         "",
         "| artifact | condition | wall s | user s | sys s | max RSS KiB | Built lines |",
         "|---|---|---:|---:|---:|---:|---:|",
@@ -370,8 +415,6 @@ def main() -> int:
     work = Path(os.getenv("RUNNER_TEMP", "/tmp")) / f"erdos678-s2b-r{args.replicate}"
     comparator = fetch_comparator(repo_root, formalization, work)
 
-    # Validate that both Lake target shapes are resolvable and populate the complete
-    # prerequisite environment before any timed region.
     prebuild(formalization, "internal", out_dir)
     prebuild(formalization, "comparator", out_dir)
 
