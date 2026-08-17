@@ -7,7 +7,7 @@ Convert the completed #678 work into the maximum defensible external value witho
 Two candidate contribution tracks remain distinct:
 
 1. **formal verification / proof engineering:** an independently engineered Lean reconstruction of Cambie's proof with executable differential verification against the Aristotle/Alexeev formalization;
-2. **AI-assisted scientific production:** a longitudinal auditable case study covering invalid reasoning, formal rejection, reconstruction, dependency closure, interface repair, regression discipline, state management, attribution, CI-provenance correction, public-artifact closure, and metric-validity controls.
+2. **AI-assisted scientific production:** a longitudinal auditable case study covering invalid reasoning, formal rejection, reconstruction, dependency closure, interface repair, regression discipline, state management, attribution, CI-provenance correction, public-artifact closure, metric-validity controls, and prospective experiment design.
 
 The mathematical theorem is known work by Stijn Cambie. We do not claim a new solution, an independent new mathematical proof, or formalization priority.
 
@@ -49,11 +49,12 @@ Execution:
 - comparator entry blob `f2331e8bcc71bc36cce7724a0c54fafd8d64d480`;
 - generated artifact digest `sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd`.
 
-Integration:
+Integration and closure:
 
-- PR #28 exact head `3d4e35c15eb07938dfcb3fb5de29e8d51f1e767e` passed canonical run `32047808010`;
-- merged as `37deb850f894d32863970aca6b07e876f89e813d`;
-- the exact merge commit passed post-merge run `32048513043` with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
+- PR #28 exact head `3d4e35c15eb07938dfcb3fb5de29e8d51f1e767e` passed `32047808010`;
+- merge `37deb850f894d32863970aca6b07e876f89e813d` passed post-merge `32048513043`;
+- closure PR #29 exact head `0a1d1cf84c87c5a3b40d6a118e733cda5807a4a7` passed `32050225638`;
+- closure merge `c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5` passed `32050862725`, job `95449629511`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
 
 Measured canonical-result structure:
 
@@ -68,27 +69,37 @@ Measured canonical-result structure:
 | third-party repository-local modules | 0 | 9 |
 | third-party repository-local lines | 0 | 6943 |
 
-The key finding is **metric boundary sensitivity**, not superiority. PNT+ is an external Lake dependency internally, while the comparator physically carries nine reachable PNT+ modules in its repository tree. Thus a raw repository/module/frontier count conflates proof decomposition, dependency packaging, and source ownership.
+The key finding is **metric boundary sensitivity**, not superiority. PNT+ is an external Lake dependency internally, while the comparator physically carries nine reachable PNT+ modules in its repository tree. Thus raw repository/module/frontier counts conflate proof decomposition, dependency packaging, and source ownership.
 
-S2a establishes a control requirement for the rest of S2: every experiment must identify which failures, files, modules, timings, and repairs belong to project-owned proof code versus external/repository-local dependency support.
+### S2b — controlled build behavior — ACTIVE / PROTOCOL DEFINED
 
-### S2b — controlled build behavior — NEXT
+Protocol: `S2_BUILD_BEHAVIOR_PROTOCOL.md`.
 
-Measure cold/warm build time and resource use with repeated runs, explicit cache state, fixed runner/toolchain identities, and separate phases for internal graph and pinned comparator. Do not use historical wall-clock times as controlled evidence.
+Runner: `experiments/s2_build_behavior.py`.
 
-The first S2b protocol must define before execution:
+Scientific question:
 
-- exact internal and comparator commits/blobs;
-- runner image and Lean/Mathlib/PNT identities;
-- cold versus warm cache semantics;
-- repetitions and aggregation method;
-- phase boundaries (toolchain/dependency setup, project-owned compile, comparator compile);
-- treatment of repository-local third-party PNT+ support;
-- network/setup time exclusion or separate reporting;
-- failure classification and retry rules;
-- machine-readable result artifact.
+> Under one pinned Lean/Mathlib/PNT+ environment, how do the two #678 artifacts behave when their artifact-owned compilation outputs are cold versus immediately re-used warm?
 
-S2b may begin only after this documentation-only S2a closure PR is exact-head verified, merged, and `main` verifies.
+The experiment design is fixed before observing timings:
+
+- six independent fresh GitHub `ubuntu-24.04` runner replicates;
+- each replicate measures both artifacts on the same runner;
+- order alternates internal-first/comparator-first to control first-measurement effects;
+- comparator source is fetched at commit `6f906fef432892db5c910c48ad1a3728dd42cdac`, validated by blob `f2331e8bcc71bc36cce7724a0c54fafd8d64d480`, and exposed byte-for-byte as a temporary Lake module;
+- both artifacts use the internal pinned Lean 4.33 / Mathlib v4.33 / PNT+ `2667e414...` environment, neutralizing the repository-local PNT packaging difference observed in S2a;
+- checkout/network/toolchain/dependency/cache/prebuild work is outside artifact timing;
+- internal cold cleanup deletes generated outputs in `Formalization/Erdos678` only;
+- comparator cold cleanup deletes generated outputs in temporary `Formalization/Erdos678Benchmark` only;
+- each cold build is followed by an unchanged warm build of the identical target;
+- per invocation record wall time, user CPU, system CPU, max RSS, exit code, and Lake progress observations;
+- retain all six observations; retry/exclude only predeclared infrastructure failures, never silent performance outliers;
+- aggregate by median, range, MAD, IQR, and paired descriptive differences/ratios;
+- upload raw logs, `/usr/bin/time` files, JSON, and Markdown per replicate.
+
+**Interpretation control:** warm is a no-change incremental check, not compilation speed. S2b alone cannot establish maintainability, proof complexity, repair locality, or general architecture superiority.
+
+The experiment is not credited until the pinned workflow executes the six replicates and every inclusion/exclusion decision is auditable.
 
 ### S2c — repair locality — PLANNED
 
@@ -114,9 +125,9 @@ No claim such as “better architecture”, “easier maintenance”, “faster�
 
 **From Failed Conjecture to Machine-Checked Reconstruction: A Long-Horizon AI-Assisted Formalization Case Study of Erdős #678**
 
-The case does **not** show AI discovering #678. Its value is the observable process record: false generalization, machine rejection, retained negative knowledge, explicit reconstruction mode, interface decomposition, pinned dependency closure, recovered side conditions, state/build synchronization, differential verification, verification-credit correction, infrastructure/proof-failure classification, public-artifact closure, and metric-boundary validation.
+The case does **not** show AI discovering #678. Its value is the observable process record: false generalization, machine rejection, retained negative knowledge, explicit reconstruction mode, interface decomposition, pinned dependency closure, recovered side conditions, state/build synchronization, differential verification, verification-credit correction, infrastructure/proof-failure classification, public-artifact closure, metric-boundary validation, and prospective experiment definition before measurement.
 
-S2a adds a specific AI-for-science lesson: **an automated metric can be reproducible but scientifically invalid if it measures an unexamined proxy boundary**. Ownership and dependency-packaging rules must be explicit before comparative numbers are interpreted.
+S2a contributes the lesson that an automated metric can be reproducible but scientifically invalid if it measures an unexamined proxy boundary. S2b strengthens the process methodology by freezing cache semantics, order control, repetitions, exclusions, metrics, and interpretation boundaries **before** timing evidence is observed.
 
 ### S4 empirical extension
 
@@ -135,11 +146,11 @@ The comparator remains an immutable external fetch rather than vendored material
 
 ## Claim ladder
 
-**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; our independent Lean reimplementation; direct `prime_between` boundary; machine-checked statement bridges; unchanged public-comparator compilation; matching selected standard-axiom footprint; public Apache-2.0 artifact; exact-head/post-merge S1 evidence; reproducible and fully integrated S2a structural baseline under explicit ownership boundaries.
+**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; our independent Lean reimplementation; direct `prime_between` boundary; machine-checked statement bridges; unchanged public-comparator compilation; matching selected standard-axiom footprint; public Apache-2.0 artifact; exact-head/post-merge S1 evidence; reproducible, integrated, and closure-verified S2a structural baseline under explicit ownership boundaries.
 
 **Supported interpretation:** independent formal replication has differential-verification value; the process record is a useful long-horizon AI-assisted formalization case; execution-provenance and metric-boundary auditing are scientifically relevant.
 
-**Requires later S2/S4 evidence:** lower dependency coupling in practice, easier maintenance, better upgrade robustness, earlier semantic-drift detection, smaller repair blast radius, faster/more resource-efficient builds, causal benefit of state protocols.
+**Requires S2b/S2c/S2d/S2e/S4 evidence:** faster/more resource-efficient artifact-owned builds, easier maintenance, lower repair blast radius, earlier semantic-drift detection, better upgrade robustness, causal benefit of state protocols.
 
 **Unsupported:** new solution of #678, new independent mathematical proof, first Lean formalization, general architecture superiority, autonomous AI authorship percentage, causal claim that one AI technique produced success.
 
@@ -148,8 +159,8 @@ The comparator remains an immutable external fetch rather than vendored material
 - **S0:** COMPLETE.
 - **S1:** COMPLETE / VERIFIED.
 - **S2:** ACTIVE.
-  - **S2a dependency surface:** COMPLETE / INTEGRATED / POST-MERGE VERIFIED.
-  - **S2b build behavior:** NOT STARTED; NEXT after S2a closure-document integration.
+  - **S2a dependency surface:** COMPLETE / INTEGRATED / POST-MERGE + CLOSURE VERIFIED.
+  - **S2b build behavior:** ACTIVE / PROTOCOL DEFINED / EXPERIMENT PENDING.
   - **S2c repair locality:** NOT STARTED.
   - **S2d mutation resistance:** NOT STARTED.
   - **S2e upgrade robustness:** NOT STARTED.
@@ -162,7 +173,7 @@ The comparator remains an immutable external fetch rather than vendored material
 
 The repository is Public and Apache-2.0 licensed. No ruleset was detected immediately after public transition. Before accepting outside contributions, protect `main` so normal integration requires PR + Lean Verification and force pushes/deletions are blocked.
 
-The S2a workflow also surfaced a non-blocking environment-drift warning: the current pinned checkout action targets Node 20 and GitHub forces it onto Node 24. This should be handled as an infrastructure maintenance item, not mixed into dependency-surface conclusions.
+The S2a/CI runs also surface a non-blocking environment-drift warning: the current pinned checkout action targets Node 20 and GitHub forces it onto Node 24. This is infrastructure maintenance evidence, not a scientific S2 result.
 
 ## Stop condition
 
