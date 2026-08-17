@@ -33,7 +33,7 @@ S2 must determine whether architectural differences produce measurable effects; 
 
 ## S2 — metric and mutation suite — ACTIVE
 
-### S2a — dependency-surface baseline — EXECUTED / INTEGRATION PENDING
+### S2a — dependency-surface baseline — CLOSED / VERIFIED
 
 Protocol: `S2_DEPENDENCY_SURFACE_PROTOCOL.md`.
 
@@ -43,11 +43,17 @@ Result: `S2_DEPENDENCY_SURFACE_BASELINE.md/.json`.
 
 Execution:
 
-- exact internal commit `4685fca552ae4a0270dfa3823d46fde48efa5ade`;
+- exact internal experiment commit `4685fca552ae4a0270dfa3823d46fde48efa5ade`;
 - run `32047324807`, job `95438118197` — **SUCCESS**;
 - comparator `plby/lean-proofs@6f906fef432892db5c910c48ad1a3728dd42cdac`;
 - comparator entry blob `f2331e8bcc71bc36cce7724a0c54fafd8d64d480`;
 - generated artifact digest `sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd`.
+
+Integration:
+
+- PR #28 exact head `3d4e35c15eb07938dfcb3fb5de29e8d51f1e767e` passed canonical run `32047808010`;
+- merged as `37deb850f894d32863970aca6b07e876f89e813d`;
+- the exact merge commit passed post-merge run `32048513043` with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
 
 Measured canonical-result structure:
 
@@ -64,13 +70,25 @@ Measured canonical-result structure:
 
 The key finding is **metric boundary sensitivity**, not superiority. PNT+ is an external Lake dependency internally, while the comparator physically carries nine reachable PNT+ modules in its repository tree. Thus a raw repository/module/frontier count conflates proof decomposition, dependency packaging, and source ownership.
 
-S2a therefore establishes a control requirement for the rest of S2: every experiment must identify which failures, files, modules, or timings belong to project-owned proof code versus external/repository-local dependency support.
+S2a establishes a control requirement for the rest of S2: every experiment must identify which failures, files, modules, timings, and repairs belong to project-owned proof code versus external/repository-local dependency support.
 
-S2a becomes closed only after its PR passes canonical exact-head Lean CI, merges, and `main` verifies. **S2b does not begin before then.**
-
-### S2b — controlled build behavior — NEXT AFTER S2a INTEGRATION
+### S2b — controlled build behavior — NEXT
 
 Measure cold/warm build time and resource use with repeated runs, explicit cache state, fixed runner/toolchain identities, and separate phases for internal graph and pinned comparator. Do not use historical wall-clock times as controlled evidence.
+
+The first S2b protocol must define before execution:
+
+- exact internal and comparator commits/blobs;
+- runner image and Lean/Mathlib/PNT identities;
+- cold versus warm cache semantics;
+- repetitions and aggregation method;
+- phase boundaries (toolchain/dependency setup, project-owned compile, comparator compile);
+- treatment of repository-local third-party PNT+ support;
+- network/setup time exclusion or separate reporting;
+- failure classification and retry rules;
+- machine-readable result artifact.
+
+S2b may begin only after this documentation-only S2a closure PR is exact-head verified, merged, and `main` verifies.
 
 ### S2c — repair locality — PLANNED
 
@@ -96,7 +114,7 @@ No claim such as “better architecture”, “easier maintenance”, “faster�
 
 **From Failed Conjecture to Machine-Checked Reconstruction: A Long-Horizon AI-Assisted Formalization Case Study of Erdős #678**
 
-The case does **not** show AI discovering #678. Its value is the observable process record: false generalization, machine rejection, retained negative knowledge, explicit reconstruction mode, interface decomposition, pinned dependency closure, recovered side conditions, state/build synchronization, differential verification, verification-credit correction, infrastructure/proof-failure classification, public-artifact closure, and now metric-boundary validation.
+The case does **not** show AI discovering #678. Its value is the observable process record: false generalization, machine rejection, retained negative knowledge, explicit reconstruction mode, interface decomposition, pinned dependency closure, recovered side conditions, state/build synchronization, differential verification, verification-credit correction, infrastructure/proof-failure classification, public-artifact closure, and metric-boundary validation.
 
 S2a adds a specific AI-for-science lesson: **an automated metric can be reproducible but scientifically invalid if it measures an unexamined proxy boundary**. Ownership and dependency-packaging rules must be explicit before comparative numbers are interpreted.
 
@@ -117,7 +135,7 @@ The comparator remains an immutable external fetch rather than vendored material
 
 ## Claim ladder
 
-**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; our independent Lean reimplementation; direct `prime_between` boundary; machine-checked statement bridges; unchanged public-comparator compilation; matching selected standard-axiom footprint; public Apache-2.0 artifact; exact-head/post-merge S1 evidence; reproducible S2a structural baseline under explicit ownership boundaries.
+**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; our independent Lean reimplementation; direct `prime_between` boundary; machine-checked statement bridges; unchanged public-comparator compilation; matching selected standard-axiom footprint; public Apache-2.0 artifact; exact-head/post-merge S1 evidence; reproducible and fully integrated S2a structural baseline under explicit ownership boundaries.
 
 **Supported interpretation:** independent formal replication has differential-verification value; the process record is a useful long-horizon AI-assisted formalization case; execution-provenance and metric-boundary auditing are scientifically relevant.
 
@@ -130,8 +148,8 @@ The comparator remains an immutable external fetch rather than vendored material
 - **S0:** COMPLETE.
 - **S1:** COMPLETE / VERIFIED.
 - **S2:** ACTIVE.
-  - **S2a dependency surface:** EXECUTED / PR INTEGRATION PENDING.
-  - **S2b build behavior:** NOT STARTED; next only after S2a integration.
+  - **S2a dependency surface:** COMPLETE / INTEGRATED / POST-MERGE VERIFIED.
+  - **S2b build behavior:** NOT STARTED; NEXT after S2a closure-document integration.
   - **S2c repair locality:** NOT STARTED.
   - **S2d mutation resistance:** NOT STARTED.
   - **S2e upgrade robustness:** NOT STARTED.
