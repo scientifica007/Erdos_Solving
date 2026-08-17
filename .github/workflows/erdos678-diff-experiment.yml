@@ -1,0 +1,33 @@
+name: Erdős 678 Differential Experiment
+
+on:
+  push:
+    branches: ["agent/erdos678-differential-verification-20260817"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos678-diff-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  differential:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build internal canonical Lean graph
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: formalization
+          use-mathlib-cache: true
+          use-github-cache: false
+          build: true
+          test: false
+          mk_all-check: true
+
+      - name: Compile public comparator in the same Lake environment
+        run: bash problems/678/experiments/run_public_comparator_common_env.sh
