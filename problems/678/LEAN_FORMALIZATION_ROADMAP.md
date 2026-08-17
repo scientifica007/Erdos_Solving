@@ -1,17 +1,17 @@
 # Erdős Problem #678 — Canonical Lean Formalization Roadmap
 
-**Status:** COMPLETE / MACHINE-CHECKED / INTEGRATED INTO `main`  
+**Status:** COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED  
 **Mode:** reconstruction and independent Lean reimplementation of Cambie (2024), not independent mathematical discovery  
 **D4 final reachable gate:** `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, run `31963803495` — SUCCESS, **8766 jobs**  
 **E1 mathematical exit:** `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909` — SUCCESS, **8770 jobs**  
 **E2 prime-density exit:** `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856` — SUCCESS, **8800 jobs**  
 **E3 strong Cambie exit:** `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891` — SUCCESS, **8804 jobs**  
 **E4 mathematical exit:** `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757` — SUCCESS, **8806 jobs**  
-**Final synchronized E4 head:** `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`, run `31977861568` — SUCCESS, **8806 jobs**  
+**Final synchronized E4 head:** `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`, run `31977861568` — SUCCESS, `No update necessary`, **8806 jobs**  
 **Integration:** PR #17 merged into `main` as `8fd1b20541ac7782f52429db3a2cc4c887547372` on 2026-08-17  
-**Post-merge verification:** run `32011189766` started on the merge commit; its conclusion must be checked before archival credit.
+**Post-merge verification:** run `32011189766` — SUCCESS, `No update necessary`, **8806 jobs**.
 
-This file is the operational answer to: **what remains to be done for #678?** No mathematical phase remains open. The only remaining gate at this checkpoint is post-merge verification and non-blocking repository hygiene.
+This roadmap is closed. There is no remaining mathematical, analytic, CI, or integration task for #678. Repository hygiene such as closing a diagnostic-only PR is non-blocking and does not reopen the benchmark.
 
 The mathematical analysis remains in `CAMBIE_PROOF_ANALYSIS.md`. `LEAN_TEST_PLAN.md` is superseded and historical.
 
@@ -25,11 +25,11 @@ Externally, Erdős #678 is proved. In this repository:
 - `M(36,8) > M(47,9)` is machine-checked;
 - `(495,504,8)` is machine-refuted and retained as a negative regression;
 - the arithmetic core, Claim 5, Claim 4 / CRT engine, quantitative LCM estimate, prime-density bridge, strong Cambie theorem, final canonical index translation, and infinite-family theorem are machine-checked;
-- the completed graph is integrated into `main` through PR #17;
+- the completed graph is integrated into `main` through PR #17 and independently rebuilt on the resulting merge commit;
 - the analytic input is the pinned `AxiomMath/PrimeNumberTheoremAnd` revision `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`, used through its kernel-checked `prime_between` consequence;
 - no custom prime-density axiom and no `sorry` is introduced.
 
-A source file is not evidence that Lean accepted it. Credited mathematical status comes from exact reachable canonical builds.
+A source file is not evidence that Lean accepted it. Credited status comes from exact reachable canonical builds.
 
 ---
 
@@ -102,7 +102,7 @@ using the fourth binomial coefficient and `Nat.choose_le_two_pow`.
 
 `Erdos678Final.lean` performs the off-by-one-safe translation from interval starts to canonical variables:
 
-- `claim4_cambie_k_lt_x_of_bounds` recovers `k < x` from existing verified bounds, ensuring the translated start is valid;
+- `claim4_cambie_k_lt_x_of_bounds` recovers `k < x` from existing verified bounds;
 - the large-start fact is preserved through sharp-window, five-strip, provider, and PNT endpoints;
 - `cambie_lcm_ratio_eventually_with_large_start` supplies the final strong construction;
 - `erdos678_unbounded_witnesses` proves that for every lower bound `B`, there exist `n,m,k` with `B ≤ k`, `3 ≤ n,m,k`, `n+k ≤ m`, and `erdosM m (k+1) < erdosM n k`;
@@ -114,9 +114,15 @@ Final synchronized head: `eb917ee8ff469c68d3f80c5b23abc3d2dbf17a0f`, run `319778
 
 ---
 
-# Integration — PASSED
+# Integration and post-merge verification — PASSED
 
 PR #17 (`agent/erdos678-e4-index-translation-20260816` → `main`) was merged as `8fd1b20541ac7782f52429db3a2cc4c887547372`.
+
+Lean Verification run `32011189766` rebuilt that exact merge commit successfully:
+
+- `lake exe mk_all --check`: `No update necessary`;
+- full `lake build`: **8806 jobs**;
+- reachable graph includes the PNT bridge, `CambieStrongTheorem`, `Erdos678Final`, its regressions, and the top-level `Formalization` target.
 
 The earlier stacked checkpoint PRs #7–#12 and #14–#16 were closed after integration. PR #13 is diagnostic-only and non-blocking; it was explicitly not intended as the integration vehicle.
 
@@ -130,12 +136,15 @@ Erdős #678
 │   ├── E2 sharp prime-density existence ......... PASSED
 │   ├── E3 strong Cambie theorem ................. PASSED
 │   └── E4 canonical #678 + infinitude ........... PASSED
-└── Integration into main ........................ PASSED
+├── Integration into main ........................ PASSED
+└── Post-merge canonical verification ............ PASSED
 ```
 
-## Sole next action
+## Archival disposition
 
-Confirm the post-merge Lean Verification run for `main`. If it is green, archive #678 as a completed benchmark and select the next active problem. Do not reopen the mathematical proof unless a concrete regression is found.
+**#678 is a completed benchmark and is archived.**
+
+The next project action is to select a new active benchmark according to the repository research-state protocol. Do not reopen #678 mathematics unless a concrete regression is found.
 
 ## Global audit gates retained for future work
 
