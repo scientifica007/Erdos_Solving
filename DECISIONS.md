@@ -48,3 +48,11 @@ This decision supersedes `DEC-004`, following the user's explicit approval on 20
 - Repository-level branch protection should enforce this policy when the administrative interface is available; the policy remains binding even if that setting has not yet been enabled.
 - A previously verified green commit is cited explicitly as the recovery checkpoint; history is not rewritten merely to create a label.
 
+## DEC-012 — Explicit user gate after Erdős #678
+
+Following the user's explicit instruction on 2026-08-17, completion of Erdős #678 does **not** authorize automatic selection, activation, exploration, or formalization of another Erdős problem.
+
+- #678 remains the current archived checkpoint until the user explicitly authorizes moving to another problem.
+- No other benchmark may be selected as active, resumed, researched, or formalized without that explicit authorization.
+- Repository hygiene and verification work needed to close or preserve #678 may continue without reopening its mathematics.
+- Candidate problems may not be pre-activated under the label of planning or preparation; any transition to a new mathematical target requires explicit user permission first.
