@@ -2,7 +2,7 @@
 
 > **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 differential-verification experiment SUCCESS; persistent-artifact integration PENDING because GitHub Actions is currently blocked by an account billing/spending-limit condition.**
+> **Scientific-evaluation status: S1 differential-verification experiment SUCCESS; persistent-artifact integration PENDING. Public-release preflight is complete; the repository is still private at this checkpoint and awaits the owner-selected project license plus the user's intended public-visibility switch.**
 >
 > The earlier independent attempt remains rejected. The successful result is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
@@ -74,6 +74,7 @@ S1 proves internally that:
 - `intervalFinset (n+1) k = Finset.Ioc n (n+k)`;
 - `erdosM` therefore has the exact public half-open interval semantics;
 - our result derives the Formal-Conjectures-style eventual-nonempty valid-pair statement;
+- valid block lengths have explicit unbounded/infinite semantic endpoints;
 - the retained strong theorem extends from positive natural factors to every real `C ≥ 1`, including a regression at `C=3/2`.
 
 This is differential-verification evidence, not a priority or superiority claim.
@@ -89,50 +90,73 @@ Run `32033822601` is the concrete case:
 
 The build was successful, but its correct classification is **integration-tree verification**, not literal PR-head checkout.
 
-The active S1 branch fixes canonical PR verification by explicitly checking out
+The active S1 branch now:
 
-`${{ github.event.pull_request.head.sha || github.sha }}`
-
-and logging `git rev-parse HEAD` before the build.
+- checks out `${{ github.event.pull_request.head.sha || github.sha }}` explicitly;
+- logs `git rev-parse HEAD`;
+- limits `GITHUB_TOKEN` to `contents: read`;
+- sets `persist-credentials: false`;
+- pins external GitHub Actions to concrete commit SHAs.
 
 See `CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md`.
 
-## Current blocker
+## Public-release preflight
 
-The S1 **experiment is complete**. Its persistent artifacts are not yet integrated into `main` because new GitHub Actions jobs currently cannot start.
+The user chose to make the repository public as the intended resolution to the private-repository GitHub Actions billing blocker, and explicitly authorized the preflight.
 
-GitHub reported an account payment/spending-limit condition for attempted runs `32036454657` and `32036454660`; both stopped before any Lean step.
+Before the visibility switch the project has:
+
+- searched the indexed repository for common secret/private-key indicators and found no known blocker on the audited surfaces;
+- inspected representative historical Actions logs, where authentication values were masked;
+- added a defensive root `.gitignore` for local secrets/private keys/build state;
+- hardened the only GitHub Actions workflow for public/fork execution;
+- verified Apache-2.0 repository metadata for Mathlib, PNT+, and Formal Conjectures;
+- retained the `plby/lean-proofs` comparator as an immutable external fetch rather than vendoring it because no repository license metadata was detected by the audit;
+- created root `THIRD_PARTY_NOTICES.md`;
+- documented the audit and its limitations in `PUBLIC_RELEASE_AUDIT_2026-08-17.md`.
+
+The repository itself has no selected root license yet. That is the remaining owner decision before/with public visibility.
+
+## Current S1 integration gate
+
+While the repository remains private, GitHub reported an account payment/spending-limit condition for attempted runs `32036454657` and `32036454660`; both stopped before any Lean step.
 
 Therefore:
 
 - this is an infrastructure blocker, not a proof failure;
 - the active S1 PR remains unmerged;
-- S2 metrics/mutation work does not start until S1 integration closes;
-- the verification gate will not be weakened to bypass the billing issue.
+- the intended resolution is the user-performed public visibility switch, not weakening CI;
+- after the switch, the actual final PR #22 head must pass the hardened exact-head canonical workflow;
+- `main` must then pass post-merge verification;
+- S2 does not start until S1 closes.
 
 ## Scientific value tracks
 
-The archived #678 artifact is now being developed along two external-value tracks:
+The archived #678 artifact is being developed along two external-value tracks:
 
 1. **formal differential verification / proof engineering:** compare the modular, regression-heavy reconstruction and direct `prime_between` boundary against the public Aristotle/Alexeev development;
-2. **AI-assisted scientific production:** study the observable path from invalid independent reasoning to verified reconstruction, including failure retention, state externalization, dependency closure, interface repair, attribution discipline, and verification-credit correction.
+2. **AI-assisted scientific production:** study the observable path from invalid independent reasoning to verified reconstruction, including failure retention, state externalization, dependency closure, interface repair, attribution discipline, verification-credit correction, and public-artifact closure.
 
 No claim of new mathematics follows from either track.
 
-## Durable S1 dossier
+## Durable S1/publication dossier
 
 - `SCIENTIFIC_COMPARATIVE_STUDY.md`
 - `AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md`
+- `AI_CASE_EPISODE_VERIFICATION_CREDIT_DRIFT.md`
 - `PUBLICATION_AND_UPSTREAM_ROADMAP.md`
 - `SCIENTIFIC_EVIDENCE_LEDGER.yaml`
 - `DIFFERENTIAL_VERIFICATION_PROTOCOL.md`
 - `S1_DIFFERENTIAL_VERIFICATION_RESULT.md`
 - `DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml`
 - `CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md`
+- `PUBLICATION_READINESS_LICENSE_AUDIT.md`
+- `PUBLIC_RELEASE_AUDIT_2026-08-17.md`
 - `experiments/run_public_comparator_common_env.sh`
 - `CAMBIE_PROOF_ANALYSIS.md`
 - `FORMALIZATION_CORRECTION_2026-08-14.md`
 - `LEAN_FORMALIZATION_ROADMAP.md`
+- root `THIRD_PARTY_NOTICES.md`
 
 ## Historical failed independent route
 
