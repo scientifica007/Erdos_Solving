@@ -18,13 +18,13 @@
 
 S1 أنجزت independent formal replication / executable differential verification مقابل formalization Aristotle/Alexeev. التجربة الأساسية run `32028006457` بنت graph كاملًا من **8808 jobs** وcompiled المصدر العام المثبت دون تعديل داخل بيئتنا Lean 4.33 / Mathlib / PNT+، مع selected axiom footprint `[propext, Classical.choice, Quot.sound]` على الجانبين.
 
-PR #22 أغلقت artifact S1، وPR #27 أغلقت synchronization الحاكم؛ رأس `main` بعد S1 closure هو `7aff8d8d8680e90b34be64650c68c0fc778749fc` وقد اجتاز post-merge run `32045885504` مع `No update necessary` وبناء 8808 jobs.
+PR #22 وPR #27 أغلقتا S1 رسميًا؛ closure main commit `7aff8d8d8680e90b34be64650c68c0fc778749fc` اجتاز post-merge run `32045885504` مع exact provenance و`No update necessary` وبناء 8808 jobs.
 
 ### S2 — ACTIVE على #678 فقط
 
-**S2a — dependency-surface baseline: COMPLETE / INTEGRATED / POST-MERGE VERIFIED.** التجربة الأساسية نُفذت بنجاح في run `32047324807`, job `95438118197`, على exact experiment commit `4685fca552ae4a0270dfa3823d46fde48efa5ade`. الـworkflow تحقق من comparator commit/blob الثابتين وأنتج artifact evidence digest `sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd`.
+**S2a — dependency-surface baseline: COMPLETE / INTEGRATED / POST-MERGE VERIFIED / CLOSURE VERIFIED.** التجربة الأساسية نُفذت في run `32047324807`, job `95438118197`, على exact experiment commit `4685fca552ae4a0270dfa3823d46fde48efa5ade`، وأنتجت artifact digest `sha256:9723b6e2f9a37757c535bdcd16c424869560a3f1d80d55ad0b1e22053f9812fd`.
 
-PR #28 اجتازت canonical exact-head run `32047808010` على `3d4e35c15eb07938dfcb3fb5de29e8d51f1e767e`، ثم دُمجت كـ`37deb850f894d32863970aca6b07e876f89e813d`. هذا الـmerge commit نفسه اجتاز post-merge run `32048513043` مع `verified_commit` مطابق، و`No update necessary`، وبناء كامل من **8808 jobs**.
+PR #28 اجتازت exact-head run `32047808010` ثم دُمجت كـ`37deb850f894d32863970aca6b07e876f89e813d` واجتازت post-merge run `32048513043`. Closure PR #29 اجتازت run `32050225638` على رأسها الحرفي، ثم دُمجت كـ`c0dff9a6da270ca2fca7da9b8af7d1e64a898ff5`؛ هذا الـmerge commit اجتاز run `32050862725`, job `95449629511`, مع `verified_commit` مطابق، `No update necessary`، وبناء كامل من **8808 jobs**.
 
 الـbaseline البنيوية:
 
@@ -38,11 +38,11 @@ PR #28 اجتازت canonical exact-head run `32047808010` على `3d4e35c15eb07
 | artifact-owned source lines | 5546 | 2546 |
 | third-party repository-local support modules | 0 | 9 |
 
-**النتيجة العلمية الصحيحة في S2a ليست أن أحد التطويرين أفضل.** النتيجة هي أن dependency-surface metrics حساسة جدًا لتعريف boundary: مشروعنا يستهلك PNT+ كـLake dependency خارجية، بينما comparator يحتوي تسع وحدات PNT+ reachable داخل شجرة repository نفسها. لذلك raw file/module count يخلط modularization مع packaging وthird-party ownership.
+**النتيجة العلمية الصحيحة في S2a ليست أن أحد التطويرين أفضل.** dependency-surface metrics حساسة لتعريف boundary: مشروعنا يستهلك PNT+ كـLake dependency خارجية، بينما comparator يحتوي تسع وحدات PNT+ reachable داخل شجرة repository نفسها. لذلك raw file/module count يخلط modularization مع packaging وthird-party ownership.
 
-المنهج في `problems/678/S2_DEPENDENCY_SURFACE_PROTOCOL.md`، والنتيجة في `S2_DEPENDENCY_SURFACE_BASELINE.md/.json`، والأداة القابلة لإعادة التشغيل في `experiments/s2_dependency_surface.py`.
+**S2b — controlled build behavior: ACTIVE / PROTOCOL DEFINED / EXPERIMENT PENDING.** البروتوكول في `problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md` والأداة في `problems/678/experiments/s2_build_behavior.py`. القياس المسبق التعريف يستخدم ستة hosted-runner replicates مقترنة، مع ترتيب داخلي/مقارن متناوب، وبيئة Lean/Mathlib/PNT+ واحدة مثبتة. يميز بين cold artifact-owned rebuild وwarm no-change incremental check، ويقيس wall/user/system CPU وmax RSS. تنزيل الشبكة/الأداة/dependencies خارج المنطقة الزمنية المقاسة.
 
-**S2b — controlled build behavior: NOT STARTED.** تبدأ فقط بعد دمج PR الإغلاق التوثيقية لـS2a والتحقق من `main`، ثم تقيس cold/warm build behavior تحت runner/toolchain/cache identities ثابتة وبفصل واضح بين artifact-owned code وthird-party support.
+لا يُسمح باستنتاج “أسرع” أو “أفضل architecture” من log واحدة أو قبل اكتمال replicates الست وتدقيقها.
 
 ### Public artifact
 
