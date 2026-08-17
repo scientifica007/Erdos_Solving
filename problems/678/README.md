@@ -2,7 +2,7 @@
 
 > **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 differential-verification experiment SUCCESS; persistent-artifact integration PENDING. Public-release preflight is complete; Apache License 2.0 has been selected and committed for project-owned material. The repository is still private at this checkpoint and awaits the user's intended public-visibility switch.**
+> **Scientific-evaluation status: S1 differential-verification experiment SUCCESS; persistent-artifact integration PENDING final exact-head CI. The repository is now PUBLIC and project-owned material is licensed under Apache License 2.0.**
 >
 > The earlier independent attempt remains rejected. The successful result is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
@@ -20,8 +20,6 @@ The repository proves the Erdős #678 conclusion in Lean through:
 The strong construction is formalized before specializing to the original problem.
 
 ## Mathematical verification checkpoint
-
-Key final checkpoints:
 
 | Checkpoint | Commit | Run | Result |
 |---|---|---:|---|
@@ -51,15 +49,12 @@ and the application adapter consumes its machine-checked `prime_between` theorem
 
 ## S1 — executed differential verification
 
-Run `32028006457`, job `95381414710`, on push-triggered experiment head
+Run `32028006457`, job `95381414710`, on exact push-triggered experiment head
 
 `b1e3fc60f6dc4f125a125121a2abbcf3610ed749`
 
-provided the first executable cross-artifact comparison.
+provided the executable cross-artifact comparison. It:
 
-On one Ubuntu 24.04 runner it:
-
-- checked out the exact experiment head;
 - ran the canonical import audit: `No update necessary`;
 - built the internal graph successfully: **8808 jobs**;
 - reached `ExternalStatementBridge` and its tests;
@@ -81,14 +76,9 @@ This is differential-verification evidence, not a priority or superiority claim.
 
 ## Verification-provenance correction
 
-Post-experiment auditing found that the historical PR workflow used default `actions/checkout`. For a pull-request event, GitHub can therefore build a synthetic merge ref even when run metadata displays the PR head.
+Post-experiment auditing found that the historical PR workflow used default `actions/checkout`. Run `32033822601` therefore built synthetic integration-tree commit `5983f901358d8f82d85a425369d429cfa9475f96` while metadata exposed PR head `610d525145a8129d345a1d3ce6a6b41809e3d1f8`.
 
-Run `32033822601` is the concrete case:
-
-- PR head metadata: `610d525145a8129d345a1d3ce6a6b41809e3d1f8`;
-- actual checked-out integration-tree commit: `5983f901358d8f82d85a425369d429cfa9475f96`.
-
-The build was successful, but its correct classification is **integration-tree verification**, not literal PR-head checkout.
+That build remains valid integration-tree evidence, but not literal PR-head verification.
 
 The active S1 branch now:
 
@@ -100,36 +90,39 @@ The active S1 branch now:
 
 See `CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md`.
 
-## Public-release preflight
+## Public release — transition completed
 
-The user chose to make the repository public as the intended resolution to the private-repository GitHub Actions billing blocker, and explicitly authorized the preflight.
+Before public visibility the project completed secret/provenance/license preflight, including defensive `.gitignore`, hardened CI, `THIRD_PARTY_NOTICES.md`, and non-vendoring of the unlicensed comparator source.
 
-Before the visibility switch the project has:
+The owner selected **Apache License 2.0**. License-only PR #26 merged the standard license to `main` at
 
-- searched the indexed repository for common secret/private-key indicators and found no known blocker on the audited surfaces;
-- inspected representative historical Actions logs, where authentication values were masked;
-- added a defensive root `.gitignore` for local secrets/private keys/build state;
-- hardened the only GitHub Actions workflow for public/fork execution;
-- verified Apache-2.0 repository metadata for Mathlib, PNT+, and Formal Conjectures;
-- retained the `plby/lean-proofs` comparator as an immutable external fetch rather than vendoring it because no repository license metadata was detected by the audit;
-- created root `THIRD_PARTY_NOTICES.md`;
-- selected and committed **Apache License 2.0** in root `LICENSE` for project-owned material, unless otherwise noted;
-- documented the audit and its limitations in `PUBLIC_RELEASE_AUDIT_2026-08-17.md`.
+`87cf560451ef5aa4714069d52a3851c1f8547f70`.
 
-The project-license decision is therefore closed. Third-party material remains governed by its own licenses/notices and the non-vendoring boundary documented in `THIRD_PARTY_NOTICES.md`.
+The repository was then changed to **Public**. GitHub API verification confirmed:
+
+- `private: false` / `visibility: public`;
+- repository license metadata `Apache-2.0`;
+- root `LICENSE` readable on `main`;
+- Lean Verification workflow active.
+
+No repository rulesets were detected immediately after the transition; `main` protection is therefore a separate GitHub-settings task before accepting external contributions.
+
+The public transition also restored GitHub-hosted runner availability. Reopening PR #22 launched run `32043331012`, which successfully completed job setup, checkout, and `Record verified commit` and entered `Build canonical Lean graph`; the historical private-repository billing blocker therefore no longer prevents execution.
 
 ## Current S1 integration gate
 
-While the repository remains private, GitHub reported an account payment/spending-limit condition for attempted runs `32036454657` and `32036454660`; both stopped before any Lean step.
+Run `32043331012` is diagnostic evidence that runner availability returned after the public transition. Because the branch has since been synchronized to record the public state, it is **not** the final integration-credit run.
 
-Therefore:
+The remaining S1 gate is:
 
-- this is an infrastructure blocker, not a proof failure;
-- the active S1 PR remains unmerged;
-- the intended resolution is the user-performed public visibility switch, not weakening CI;
-- after the switch, the actual final PR #22 head must pass the hardened exact-head canonical workflow;
-- `main` must then pass post-merge verification;
-- S2 does not start until S1 closes.
+1. run the hardened canonical workflow on the **actual final PR #22 head**;
+2. require the logged checked-out commit to equal that credited PR head;
+3. require the canonical graph to pass;
+4. merge #22 only then;
+5. run post-merge verification on the resulting `main` commit;
+6. close S1 only after the post-merge check succeeds.
+
+S2 does not start before S1 closes.
 
 ## Scientific value tracks
 
