@@ -1,196 +1,173 @@
 # Project State
 
-> **Operational checkpoint synchronized on 2026-08-15.**
+> **Operational checkpoint synchronized on 2026-08-16.**
 >
-> Verified theorem-and-regression basis: commit `853a3486af63e86030e5b669266b6e0fe5e16ce8`.
-> Canonical pull-request CI run for that head: `31872525005` — **SUCCESS**.
-> The run passed `lake exe mk_all --check`, reached all twelve live Claim 4 implementation and regression modules, and completed the canonical `lake build` with 8741 jobs.
+> D4 final reachable repair: commit `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, run `31963803495` — **SUCCESS**, `No update necessary`, **8766 jobs**.
+> E1 mathematical exit: commit `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909` — **SUCCESS**, `No update necessary`, **8770 jobs**.
+> E2 prime-density exit: commit `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856` — **SUCCESS**, `No update necessary`, **8800 jobs**.
+> E3 strong Cambie exit: commit `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891` — **SUCCESS**, `No update necessary`, **8804 jobs**.
+> E4 / full Erdős #678 mathematical exit: commit `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757` — **SUCCESS**, `No update necessary`, **8806 jobs**.
+>
+> **Phases D and E1–E4 are mathematically closed. Erdős Problem #678 is fully formalized in the reachable Lean graph on the E4 branch.**
 
 This file is the authoritative operational memory checkpoint. It must agree with the reachable Lean graph and the latest credited CI evidence.
 
 ## Global operating rules
 
 - `DEC-011` supersedes `DEC-004`: `main` is the stable integration branch; substantive work uses a dedicated branch and pull request.
-- Do not merge a mathematical change unless the canonical Lean check is green for the exact pull-request head.
+- Do not merge a mathematical change unless canonical Lean CI is green for the credited pull-request head.
 - State documents travel in the same pull request and must be synchronized before merge.
-- Do not treat GitHub, a file name, or an AI-generated argument as proof by itself.
+- Do not treat source presence, a file name, GitHub metadata, or an AI-generated argument as proof by itself.
 - Distinguish problem-level status, known sub-results, formalized statements, formalized proofs, external-proof reconstruction, and independent discovery.
 - Preserve rejected paths, revoked freezes, contamination events, and negative regressions.
-- For interval arguments, endpoints and length are mathematical data and must be fixed before algebra.
-- A Lean module is live only when `lake exe mk_all --check` accepts the aggregator and the canonical build reaches the module.
-- After every material transition, update this file, the active roadmap, and every README presenting current status.
+- For interval arguments, endpoints and length are mathematical data and must remain explicit.
+- A Lean module is live only when `lake exe mk_all --check` accepts the aggregator and canonical build reaches the module.
 
 ## Current project
 
 ```yaml
 current_problem: 678
-current_phase: cambie-claim4
-current_stage: claim4-representatives-and-separation
+current_phase: cambie-quantitative-finish
+current_stage: E4-complete-documentation-sync
 current_mode: external-proof-reconstruction
 blind_mode: false
 reference_solution_accessed: true
 proof_frozen: false
 
 external_problem_status: proved
-project_reconstruction_status: in-progress
+project_reconstruction_status: proved-machine-checked-on-e4-branch
 independent_attempt_status: rejected
 reference_proof: Cambie-2024
-reference_understanding_status: exact-claim4-audited
+reference_understanding_status: reconstructed-through-final-index-translation
 
-current_target: construct-quantitative-scales-prime-choices-and-separated-representatives
+current_target: documentation-sync-and-review-ready-stacked-pr-chain
 small_prime_claim5_status: machine-checked
-full_claim5_status: machine-checked-under-explicit-residue-hypotheses
-claim4_status: partial-machine-checked-through-scaled-claim5-interface-connection
-full_erdos678_formalization_status: not-proved
+full_claim5_status: machine-checked
+claim4_status: machine-checked
+lcm_ratio_status: machine-checked-eventually-for-every-positive-C
+full_erdos678_formalization_status: proved-machine-checked
 
-ci_status: green
-canonical_ci_run: 31872525005
-canonical_ci_commit: 853a3486af63e86030e5b669266b6e0fe5e16ce8
+ci_status: green-through-E4-mathematical-exit
+canonical_ci_run: 31976903757
+canonical_ci_commit: 54fe163f8a70b736255bea7ffc1a4cf8d4fcb941
+canonical_build_jobs: 8806
 build_graph_audit: mk-all-check-passed
 ci_blocker: none
-next_action: define the actual scales Nx and Ny from the fixed CRT coordinates, discharge their medium/small divisibility and special-prime unit conditions, choose admissible search intervals, and prove the representative bounds and y > x + k
+phase_e_gate: closed
+next_action: synchronize documentation, re-run canonical CI for documentation head, then review stacked PRs without rewriting mathematical layers
 ```
-
-## Verified small-prime transition
-
-The previous red graph contained two visible failures and one masked downstream failure. They were repaired without weakening theorem statements:
-
-1. `SmallPrimeWindows.lean`: used the symmetry of the available equality.
-2. `SmallPrimeValuation.lean`: replaced an opaque `omega` step over natural subtraction with `Nat.sub_pos_iff_lt`.
-3. `SmallPrimeSup.lean`: supplied the exact finset and summand to `Finset.single_le_sum`, removing an unresolved metavariable.
-
-Verification chronology:
-
-- run `31844342803` first built the complete small-prime graph successfully;
-- run `31844727128` correctly rejected an out-of-date hand-maintained aggregator after `mk_all-check` was enabled;
-- run `31845035150` correctly rejected non-reducible direct `decide` tests for `padicValNat`;
-- run `31845987598` accepted the generated aggregator, theorem-instantiation boundary tests, and the full canonical build.
 
 ## Trusted machine-checked state
 
-The reachable graph now machine-checks:
+### Arithmetic, Claim 5, and Claim 4 / Phase D
+
+The reachable graph machine-checks:
 
 - length-based consecutive intervals and canonical `erdosM`;
-- positive witness `M(36,8) > M(47,9)` and negative regression for `(495,504,8)`;
-- equality of nonzero naturals from all prime `padicValNat` values;
-- finite-product, finite-LCM, and product-over-LCM valuation lemmas;
-- prime-power divisibility counting primitives;
-- Claim 5 large-prime range `p > k`;
-- Claim 5 medium-prime range `p ≤ k < p²`;
-- capped small-prime congruence, window, supremum, initial-LCM, and valuation lemmas;
-- integrated theorem `claim5_small_prime_range`;
-- concrete theorem-instantiation regressions at `e = 1` and `e = 0`;
-- a negative congruence regression showing that the `y` residue hypothesis is active;
-- explicit medium- and small-prime residue interfaces for the future Claim 4 / CRT layer;
-- nonzero interval-product, interval-LCM, and exact quotient lemmas;
-- the prime-by-prime assembled Claim 5 valuation identity;
-- the final Claim 5 natural-number identity under the explicit residue hypotheses;
-- a reachable assembled theorem-interface regression at `k = 2`;
-- a generic finite coordinate-avoidance theorem from injectivity and a strict excluded-cardinality budget;
-- positive and equality-budget negative regressions for that union bound;
-- injectivity of multiplication modulo a coprime modulus over a short consecutive interval;
-- its prime/nondivisibility specialization and the resulting prime-coordinate density theorem;
-- a positive unit-multiplier regression and a negative non-unit regression;
-- a named weighted-combination representation contract and a theorem transporting coordinate density through it;
-- a positive one-coordinate weighted representation and a negative zero-weight regression.
-- the concrete pair basis with weights `q,p`, inverse multipliers, its weighted representation theorem, and a density endpoint requiring no external representation contract;
-- the concrete triple basis with weights `q*r,p*r,p*q`, inverse multipliers, its weighted representation theorem, and the analogous density endpoint;
-- concrete pair/triple producer regressions, a full-contract negative regression for a divisible multiplier, and reachable pair/triple density-endpoint instantiations.
-- the explicit translation from canonical residue zero to the paper coefficient `p`, with modular equivalence and coefficient bounds;
-- the exact canonical exclusion sets for the two-prime `y` box and three-prime `x` box, with exact cardinalities;
-- exact pair/triple search lengths equal to the summed exclusion budget plus one;
-- `claim4_pair_y_box_density` and `claim4_triple_x_box_density`, which expose the paper's coefficient inequalities and weighted congruences;
-- reachable concrete pair/triple application regressions and an equality-budget negative regression.
-- affine modular injectivity for actual representatives of the form `1 + z * Nx`;
-- scaled pair/triple application endpoints for `y = z * Ny` and `x = 1 + z * Nx`;
-- `Claim4SmallPrimeScaleData` and the derivation of `Claim5SmallResidues` from common prime-power divisibility;
-- packaging of the five special boxes plus fixed other medium coordinates into `Claim5MediumResidues`;
-- a combined scaled producer yielding both Claim 5 residue interfaces;
-- a nonvacuous `k = 4` regression that crosses the new producer boundary and invokes `claim5_full_identity_of_residues`, plus an invalid-medium-interface regression.
+- the valid finite witness `M(36,8) > M(47,9)` and the rejected `(495,504,8)` negative regression;
+- finite-product, finite-LCM, reciprocal-LCM, and prime-power valuation primitives;
+- Claim 5 in the large, medium, and capped small-prime ranges;
+- explicit medium/small residue interfaces and the assembled natural-number Claim 5 identity;
+- the finite union-bound, modular, weighted CRT, pair/triple CRT-basis producers, exact application boxes, scales, factorizations, and dependent placement;
+- Cambie's division-safe `gap`, `yLower`, `yUpper`, full-scale LCM identity, target-window room, small-scale gap, sharp-prime-window budgets, and the final D4 sharp representative endpoint.
 
-## Claim 5 module state
+D4 final reachable checkpoint: `eb5ffebffcb199cc76c83a941da955f4ecfebde5`, run `31963803495`, **8766 jobs**.
 
-| Module | Current classification |
-|---|---|
-| `SmallPrimeRange.lean` | reachable and machine-checked |
-| `SmallPrimeInitialLCM.lean` | reachable and machine-checked |
-| `SmallPrimeWindows.lean` | repaired, reachable, and machine-checked |
-| `SmallPrimeValuation.lean` | repaired, reachable, and machine-checked |
-| `SmallPrimeSup.lean` | repaired, reachable, and machine-checked |
-| `SmallPrimeClaim5.lean` | reachable and machine-checked |
-| `SmallPrimeTests.lean` | reachable; positive boundary and negative congruence regressions checked |
-| `Claim5Assembly.lean` | reachable; all-range valuation assembly, nonzero bridge, and natural identity checked |
-| `Claim5AssemblyTests.lean` | reachable; assembled theorem interface checked at `k = 2` |
+### E1 — quantitative LCM-ratio estimate — PASSED
 
-## Claim 4 module state
+Machine-checked components include:
 
-| Module | Current classification |
-|---|---|
-| `Claim4Density.lean` | reachable; generic strict finite union-bound theorem machine-checked |
-| `Claim4DensityTests.lean` | reachable; positive and equality-budget negative regressions checked |
-| `Claim4Modular.lean` | reachable; coprime/prime modular injectivity and prime-coordinate density checked |
-| `Claim4ModularTests.lean` | reachable; unit positive and non-unit negative regressions checked |
-| `Claim4Weighted.lean` | reachable; weighted representation contract and conditional consumer theorem checked |
-| `Claim4WeightedTests.lean` | reachable; one-coordinate positive and zero-weight negative regressions checked |
-| `Claim4CRT.lean` | reachable; pair/triple CRT weights, inverse multipliers, representation contracts, and unconditional density endpoints machine-checked |
-| `Claim4CRTTests.lean` | reachable; pair/triple positive, full-contract negative, existence, and density-endpoint regressions checked |
-| `Claim4ApplicationBoxes.lean` | reachable; paper/canonical coefficient translation, exact exclusions and cards, strict search lengths, and pair/triple application-box endpoints machine-checked |
-| `Claim4ApplicationBoxesTests.lean` | reachable; endpoint convention, exact-cardinality, concrete pair/triple, and strict equality-budget regressions checked |
-| `Claim4Claim5Interface.lean` | reachable; scaled/affine box density, fixed-coordinate packaging, small-scale data, and combined Claim 5 interface producer machine-checked |
-| `Claim4Claim5InterfaceTests.lean` | reachable; paper-representative, nonvacuous small-prime, full Claim 5 boundary, and invalid-interface regressions checked |
+- `intervalLCM_dvd_intervalProd`;
+- cancellation-safe `claim5_cross_multiplication`;
+- `claim5_lcm_lt_of_product_lt`;
+- interval-product recursion and the universal `(k+1)^k < 3*k^k` bound;
+- the target/closeness prefix-product comparison;
+- the full product inequality and transfer to LCMs;
+- `claim4_exists_cambie_lcm_ratio_of_sharp_windows`.
 
-The table does **not** certify Cambie's full construction. The scaled interface theorem now yields `Claim5MediumResidues` and `Claim5SmallResidues` from explicit scale-support data, but the repository does not yet define the general-`k` scales `Nx,Ny`, choose the required primes and search intervals, or prove the representative size and separation bounds. A generic arbitrary-cardinality CRT-basis theorem is also not present; only the two arities used by the current reconstruction are credited.
+E1 exit: `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a`, run `31968714909`, **8770 jobs**.
 
-## Claim 4 CI disk incident — RESOLVED
+### E2 — sharp prime density — PASSED
 
-Run `31853895481` reached `No update necessary`, built the then-live six Claim 4 modules, and reported `Build completed successfully (8735 jobs)`. The job then failed while GitHub's cache-save path exhausted the runner disk, so that run is correctly classified as red despite the successful Lean build.
+E2 no longer contains an opaque prime-existence hypothesis.
 
-The workflow now keeps `use-mathlib-cache: true` but sets the official `lean-action` input `use-github-cache: false`. Run `31872525005` preserves that configuration: `mk_all --check` passes, all twelve current Claim 4 modules are reached, and the 8741-job build and job conclusion are successful.
+The reachable graph machine-checks:
 
-## Current #678 mathematical state
+- `Claim4CambieFiveStripPrimeData`, reducing distinctness to five disjoint strips;
+- a natural-number `Claim4RelativePrimeProvider q` with an explicit threshold and prime-after theorem;
+- conversion of multiplicative relative prime intervals to additive strips;
+- application of one provider at denominator `320*C` to the three near-`k` and two near-`k/2` strips;
+- the pinned dependency `AxiomMath/PrimeNumberTheoremAnd` at revision `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed` under project Mathlib `v4.33.0`;
+- `claim4RelativePrimeProviderOfPNT`, derived from the imported `prime_between` consequence;
+- `claim4_exists_cambie_lcm_ratio_eventually_of_pnt`.
 
-Canonical statement: locked.
+Checkpoints:
 
-Verified:
+- five-strip arithmetic: `81cf4b2303a4a93bf30d2fcb322b810c754530f3`, run `31972724132`, **8774 jobs**;
+- provider→five-strips: `14c9e5e8df00de4e129d142e472b3c9d91fd1c00`, run `31975082883`, **8778 jobs**;
+- E2 PNT exit: `6d06401bd2ee3aca116fd4ac592bf14d5e43694c`, run `31975809856`, **8800 jobs**.
 
-- the valid concrete witness and its domain condition;
-- rejection of the false scaling and `Q=P/M` constructions;
-- all three range-specific Claim 5 valuation identities under explicit hypotheses;
-- a single theorem assembling Claim 5 across every prime;
-- nonzero side conditions and the final natural-number equality for Claim 5 under the explicit residue interfaces;
-- the finite counting mechanism at the heart of Cambie's Claim 4;
-- the modular injectivity obligation made explicit as coprimality/nondivisibility;
-- the prime-coordinate density specialization;
-- the weighted conclusion under an explicit representation contract.
-- concrete pair and triple CRT weights and inverse multipliers;
-- `Claim4WeightedRepresentation` for both concrete bases;
-- pair/triple density endpoints that internalize the producer and expose only prime, coprimality, interval, and exclusion-budget hypotheses.
-- the exact `x` and `y` application boxes in the paper's `{1,...,p}` coefficient convention;
-- their exact canonical exclusion cardinalities and strict summed search budgets;
-- concrete pair/triple density endpoints whose outputs satisfy the application coefficient inequalities.
-- the necessary distinction between normalized coordinates and the actual scaled representatives `x = 1 + z*Nx`, `y = z*Ny`;
-- scaled box-density endpoints and the complete connection to both Claim 5 residue interfaces under explicit scale-support hypotheses;
-- direct consumption of those interfaces by the full Claim 5 identity in a reachable nonvacuous regression.
+No custom prime-density axiom is introduced.
 
-Not yet proved in this repository:
+### E3 — strong eventual Cambie theorem — PASSED
 
-- the general-`k` construction of `Nx` and `Ny` from the fixed CRT coordinates;
-- the scale divisibility, special-prime nondivisibility, and search-length inequalities required by the combined producer;
-- the required prime choices and interval placement;
-- quantitative representative bounds and the separation condition;
-- quantitative LCM-ratio estimate;
-- exact formal prime-density input;
-- strong Cambie theorem;
-- Erdős #678 itself.
+The elementary large-`k` package is discharged independently by the fourth binomial coefficient:
+
+- `claim4CambieLargeKThreshold C = max 9 (3840*C + 3)`;
+- `claim4CambieLargeKData_of_threshold` proves `20*C*k^2*(k+1) ≤ 2^k` above that threshold using Mathlib's binomial bounds;
+- `cambie_lcm_ratio_eventually` combines the growth threshold with E2's PNT threshold.
+
+E3a checkpoint: `58b870511588e6f9100443d2250024031bfaa3fd`, run `31974295910`, **8776 jobs**.
+
+E3 exit: `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94`, run `31975821891`, **8804 jobs**.
+
+### E4 — canonical Erdős #678 theorem — PASSED
+
+`Erdos678Final.lean` retains enough placement data to perform the canonical off-by-one translation safely:
+
+- `claim4_cambie_k_lt_x_of_bounds` recovers `k < x` from the verified lower target and closeness bounds;
+- strengthened sharp-window, five-strip, provider, and PNT endpoints preserve `k < x`;
+- `cambie_lcm_ratio_eventually_with_large_start` gives the strong eventual comparison with large starts;
+- `erdos678_unbounded_witnesses` proves that for every `B : ℕ` there exist `n m k` with
+  `B ≤ k`, `3 ≤ n`, `3 ≤ m`, `3 ≤ k`, `n+k ≤ m`, and
+  `erdosM m (k+1) < erdosM n k`;
+- `erdos678_good_lengths_infinite` proves the set of block lengths admitting canonical witnesses is infinite.
+
+This is the requested infinite-family conclusion for Erdős Problem #678.
+
+E4 mathematical exit: `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941`, run `31976903757`, `No update necessary`, **8806 jobs**. The build reached `Claim4RelativePrimePNT`, `CambieStrongTheorem`, `Erdos678Final`, their regression modules, and the top-level `Formalization` target.
+
+## Verification chronology
+
+| Substep | Exact head | Canonical run | Result |
+|---|---|---:|---|
+| D4 final reachable repair | `eb5ffebffcb199cc76c83a941da955f4ecfebde5` | `31963803495` | SUCCESS, 8766 jobs |
+| E1 mathematical exit | `3fa8f4416ae976dbfa6be6ddbe7726dd74c0c42a` | `31968714909` | SUCCESS, 8770 jobs |
+| E2c five-strip arithmetic | `81cf4b2303a4a93bf30d2fcb322b810c754530f3` | `31972724132` | SUCCESS, 8774 jobs |
+| E3a elementary growth | `58b870511588e6f9100443d2250024031bfaa3fd` | `31974295910` | SUCCESS, 8776 jobs |
+| E2d provider→five-strips | `14c9e5e8df00de4e129d142e472b3c9d91fd1c00` | `31975082883` | SUCCESS, 8778 jobs |
+| E2 PNT exit | `6d06401bd2ee3aca116fd4ac592bf14d5e43694c` | `31975809856` | SUCCESS, 8800 jobs |
+| E3 strong Cambie exit | `d13cf16a1a1a0a42d8d5bd4afc4ae0a50e9bda94` | `31975821891` | SUCCESS, 8804 jobs |
+| E4 / full #678 exit | `54fe163f8a70b736255bea7ffc1a4cf8d4fcb941` | `31976903757` | SUCCESS, 8806 jobs |
+
+Red intermediate runs are diagnostic only. They do not reduce the status of later exact-head green checkpoints.
+
+## Exact boundary after E4
+
+The mathematical reconstruction of Erdős #678 is complete on the E4 branch. There is no remaining mathematical or analytic gap in the formalized proof chain.
+
+Still deliberately not claimed:
+
+- a generic arbitrary-cardinality CRT-basis theorem; only the pair/triple arities actually needed by Cambie's argument are formalized;
+- that the earlier independent proof attempt was valid; it remains rejected because it used the false scaling identity `M(t*n,k) = t*M(n,k)` and later a wrong interval in a `Q=P/M` construction.
 
 ## Required restart sequence
 
-1. Define `Nx` and `Ny` as the products of the fixed small-prime powers and non-special medium primes required by Cambie's construction.
-2. Prove the medium-coordinate divisibility, common small-prime power divisibility, and nondivisibility at each special prime.
-3. Supply the prime-window hypotheses needed for two primes near `k/2` and three near `k`, and derive the exact search-length inequalities.
-4. Choose the `zx,zy` search intervals so that `x = 1 + zx*Nx` and `y = zy*Ny` satisfy the required size bounds and `y > x + k`.
-5. Invoke the verified scaled interface producer and `claim5_full_identity_of_residues` for those representatives.
-6. Add reachable boundary regressions, pass the exact-head canonical CI gate, and synchronize this checkpoint before opening the analytic finish.
+1. Verify the active E4 documentation head and its canonical CI.
+2. Read this file and `problems/678/LEAN_FORMALIZATION_ROADMAP.md`.
+3. Do not reopen D4 or E1–E4 mathematics unless a concrete regression is found.
+4. Finish documentation synchronization and stacked-PR review hygiene.
+5. Preserve the pinned PNT+ revision and all negative regressions when integrating.
 
 ## Completed benchmark outcomes
 
@@ -205,4 +182,4 @@ Not yet proved in this repository:
 
 ## Documentation synchronization status
 
-The root README, this checkpoint, the active #678 roadmap, the problem index, the #678 README, the Cambie proof analysis, and the #678 lessons addendum are synchronized with the verified scaled Claim 4 / Claim 5 interface checkpoint. The decision register, agent guide, protocols, and historical snapshots were audited and remain current without semantic change.
+`PROJECT_STATE.md` now records the E4 mathematical exit. The active roadmap, root README, problem index, and `problems/678/README.md` must be synchronized on this same E4 PR head, followed by one final canonical CI run before documentation closure is credited.
