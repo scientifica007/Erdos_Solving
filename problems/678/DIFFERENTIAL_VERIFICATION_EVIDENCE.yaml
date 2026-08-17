@@ -1,0 +1,122 @@
+schema_version: 1
+experiment: erdos678-stage-s1-common-environment-differential-verification
+executed_date: 2026-08-17
+status: success
+
+internal:
+  repository: scientifica007/Erdos_Solving
+  base_commit: 0d8287bc5fcc41ed4dc7ea68e5d27cd0091b8d5e
+  experiment_head: b1e3fc60f6dc4f125a125121a2abbcf3610ed749
+  branch: agent/erdos678-differential-verification-20260817
+  lean_version: 4.33.0
+  lean_commit: d8b18978322de05a8f3dba51ef03cf5461676c17
+  mathlib_lake_version: v4.33.0
+  mathlib_resolved_revision: db584cd6d46c92f209a44c0f1c829460d327499d
+  pnt_repository: AxiomMath/PrimeNumberTheoremAnd
+  pnt_revision: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+  canonical_import_check: no-update-necessary
+  canonical_build_jobs: 8808
+  bridge_modules:
+    - Formalization.Erdos678.ExternalStatementBridge
+    - Formalization.Erdos678.ExternalStatementBridgeTests
+  bridge_endpoints:
+    - Erdos678.intervalFinset_succ_eq_Ioc
+    - Erdos678.erdosM_eq_Ioc_lcm
+    - Erdos678.erdos678_eventually_nonempty_pairs
+    - Erdos678.erdos678_formalConjectures_eventual_nonempty
+    - Erdos678.cambie_lcm_ratio_eventually_with_large_start_real
+
+public_comparator:
+  repository: plby/lean-proofs
+  commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+  path: src/latest/ErdosProblems/Erdos678.lean
+  blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+  source_header_lean: 4.33.0
+  source_header_mathlib: 4.33.0
+  compilation_environment: internal-pinned-lake-environment
+  compilation_result: success
+  source_persisted_in_internal_repository: false
+  source_modified_for_experiment: false
+
+formal_conjectures:
+  repository: google-deepmind/formal-conjectures
+  comparison_commit: 398958d3964d738886bd24433918c365df4a2aab
+  path: FormalConjectures/ErdosProblems/678.lean
+  historical_formal_proof_pin: 68da20b96673899166e94638f5a7fffeb7231d35
+  normalized_internal_endpoint: Erdos678.erdos678_formalConjectures_eventual_nonempty
+
+ci:
+  workflow_name: Erdős 678 Differential Experiment
+  run_id: 32028006457
+  job_id: 95381414710
+  result: success
+  runner_os: Ubuntu-24.04
+  internal_build_step:
+    result: success
+    lake_build_duration_ms: 838647
+    final_jobs: 8808
+  external_compile_step:
+    result: success
+    source_compile_started_utc: 2026-08-17T12:23:27.5000216Z
+    axiom_output_utc: 2026-08-17T12:26:37.3742782Z
+    approximate_compile_seconds: 190
+  temporary_workflow_retained_after_experiment: false
+
+internal_axiom_audit:
+  Erdos678.cambie_lcm_ratio_eventually_with_large_start_real:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  Erdos678.erdos678_formalConjectures_eventual_nonempty:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  Erdos678.erdos678_unbounded_witnesses:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  Erdos678.erdos678_good_lengths_infinite:
+    - propext
+    - Classical.choice
+    - Quot.sound
+
+public_comparator_axiom_audit:
+  Erdos678.main_theorem_expanded:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  Erdos678.erdos_678_kmn_infinite:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  Erdos678.not_erdos_678_fc:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  Erdos678.not_erdos_678_other:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  Erdos678.erdos_678:
+    - propext
+    - Classical.choice
+    - Quot.sound
+
+verified_findings:
+  - internal canonical erdosM interval semantics are machine-bridged to Finset.Ioc n (n+k)
+  - internal proof derives the Formal-Conjectures-style eventual-nonempty statement
+  - internal positive-natural-factor strong theorem is machine-lifted to every real C >= 1
+  - current public comparator source compiles unchanged under the internal pinned Lean/Mathlib/PNT+ environment
+  - internal and public audited endpoints depend only on the same standard logical axioms listed above
+
+non_findings_and_limits:
+  - experiment does not establish that one architecture is superior
+  - experiment does not establish genealogical independence of all proof ideas
+  - experiment is not a literal simultaneous import because both sources use namespace Erdos678
+  - build-time numbers are not yet a controlled performance comparison
+  - historical Formal Conjectures comparator pin remains 68da20b; executable portability used newer 6f906fef for Lean-4.33 compatibility
+
+reproduction:
+  script: problems/678/experiments/run_public_comparator_common_env.sh
+  comparator_fetch_policy: ephemeral-pinned-git-fetch-with-commit-and-blob-verification
+  hidden_chain_of_thought_required: false
