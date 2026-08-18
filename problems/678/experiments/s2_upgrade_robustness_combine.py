@@ -3,8 +3,9 @@
 
 This file does not execute candidates. It accepts exactly one completed U1
 artifact and one completed U2 artifact from the same workflow/apparatus commit,
-rejects apparatus-invalid or provenance-mismatched inputs, and emits the single
-complete-set reproducibility artifact required for scientific credit.
+rejects apparatus-invalid, ownership-invalid, or provenance-mismatched inputs,
+and emits the single complete-set reproducibility artifact required for
+scientific credit.
 """
 
 from __future__ import annotations
@@ -22,6 +23,17 @@ EXPECTED = {
     "U1": "U1-lean-4.34.0-rc1-compiler-only",
     "U2": "U2-lean-mathlib-4.34.0-rc1-root-upgrade",
 }
+OWNER_CLASSES = frozenset(
+    {
+        "apparatus_or_provenance",
+        "package_resolution",
+        "lean_toolchain",
+        "mathlib_or_transitive_dependency",
+        "pnt_dependency_support",
+        "project_owned",
+        "ambiguous",
+    }
+)
 
 
 class CombineError(RuntimeError):
@@ -30,6 +42,81 @@ class CombineError(RuntimeError):
 
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def failed_owner(short: str, label: str, stage: Any) -> str | None:
+    if not isinstance(stage, dict) or stage.get("status") != "failed":
+        return None
+    owner = stage.get("failure", {}).get("owner")
+    if owner not in OWNER_CLASSES:
+        raise CombineError(f"{short} {label} failed without a valid owner: {owner}")
+    return str(owner)
+
+
+def expected_primary_owner(short: str, detection: dict[str, Any]) -> str | None:
+    """Re-derive the frozen primary owner in D1→D6 order, fail-closed.
+
+    D0 is a validity gate, not a creditable compatibility failure: any non-green
+    D0 invalidates the candidate set.  Once D0 is green, the first retained
+    failed scientific stage supplies the required primary owner.  D2 is kept in
+    its prospectively frozen sentinel order.  D6 is checked as mk_all followed
+    by the full build.
+    """
+
+    d0 = detection.get("D0")
+    if not isinstance(d0, dict) or d0.get("status") != "green":
+        raise CombineError(f"{short} D0 is not green; candidate provenance is invalid")
+
+    d1 = detection.get("D1")
+    owner = failed_owner(short, "D1", d1)
+    if owner is not None:
+        return owner
+    if not isinstance(d1, dict) or d1.get("status") != "green":
+        raise CombineError(f"{short} D1 is neither green nor a classified failure")
+
+    d2 = detection.get("D2")
+    if not isinstance(d2, list):
+        raise CombineError(f"{short} D2 is not a list")
+    for index, stage in enumerate(d2, start=1):
+        owner = failed_owner(short, f"D2[{index}]", stage)
+        if owner is not None:
+            return owner
+
+    for label in ("D3", "D4", "D5"):
+        owner = failed_owner(short, label, detection.get(label))
+        if owner is not None:
+            return owner
+
+    d6 = detection.get("D6")
+    if isinstance(d6, dict):
+        for key, label in (("mk_all", "D6:mk_all"), ("full_build", "D6:full_build")):
+            owner = failed_owner(short, label, d6.get(key))
+            if owner is not None:
+                return owner
+
+    survivor = detection.get("full_no_repair_survivor")
+    if survivor is True:
+        return None
+    if survivor is not False:
+        raise CombineError(f"{short} full_no_repair_survivor is not boolean")
+    raise CombineError(f"{short} is a non-survivor but has no classified failed stage")
+
+
+def validate_candidate_ownership(short: str, item: dict[str, Any]) -> None:
+    detection = item.get("detection")
+    if not isinstance(detection, dict):
+        raise CombineError(f"{short} detection result missing")
+    expected = expected_primary_owner(short, detection)
+    observed = item.get("primary_failure_owner")
+    if expected is None:
+        if observed is not None:
+            raise CombineError(
+                f"{short} full survivor has unexpected primary owner: {observed}"
+            )
+    elif observed != expected:
+        raise CombineError(
+            f"{short} primary owner mismatch: observed={observed} expected={expected}"
+        )
 
 
 def load_candidate(short: str, root: Path) -> dict[str, Any]:
@@ -60,6 +147,7 @@ def load_candidate(short: str, root: Path) -> dict[str, Any]:
         )
     if "repair" in item:
         raise CombineError(f"{short} detection artifact unexpectedly contains repair output")
+    validate_candidate_ownership(short, item)
     return result
 
 
@@ -174,6 +262,7 @@ def main() -> int:
                 "accepted_candidates": ["U1", "U2"],
                 "input_apparatus_failures": 0,
                 "provenance_mismatches": [],
+                "ownership_validation": "PASS",
                 "repair_outputs_present": 0,
             },
         )
