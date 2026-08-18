@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "experiment": "erdos-678-s2e-upgrade-robustness",
+  "status": "detection-executed-success-artifact-validated-pending-evidence-integration",
+  "scope": "two-prospectively-frozen-forward-candidates-only",
+  "baseline": {
+    "commit": "5039d464f6196e6b47494f0a6fae869e3362d082",
+    "lean": "4.33.0",
+    "mathlib_input": "v4.33.0",
+    "mathlib_resolved": "db584cd6d46c92f209a44c0f1c829460d327499d",
+    "pnt": "2667e414c38e5a5dc9aa1946f16f13001e5cd3ed",
+    "mk_all": "No update necessary",
+    "canonical_build_jobs": 8808
+  },
+  "predeclaration": {
+    "pr": 38,
+    "head": "c733ac4baae1a53b20d2e395eaab5c938683a74a",
+    "exact_head_run": 32105032799,
+    "exact_head_job": 95612654549,
+    "merge": "0fcefd7ea8cb3753a80a3f93c2498841b1938e55",
+    "postmerge_run": 32105520785,
+    "postmerge_job": 95614030394,
+    "protocol_sha256": "e81c6905693d7407dcf325bbe61e4709178b5f5479acac74cfcc41fe3bafbf96",
+    "matrix_sha256": "c774e472855bbc21765ef342e6b700d46b168e6337ed6cd4386d9dbe11927e3a"
+  },
+  "instrumentation": {
+    "core_apparatus_commit": "1b241344377d80e9cc4532ec1b92f884e71dc837",
+    "runtime_primary_owner_wrapper_commit": "fdfee69c0672067469d6916f630c61e345579ed7",
+    "combiner_commit": "4e18481d34ccf609cd5ee7ea2726f2ef1a7f0c63",
+    "integrated_main_commit": "eaf77afd8db3e9e3c32770b953eb2c0ef8a61be7",
+    "postmerge_run": 32164784651,
+    "postmerge_job": 95801720316,
+    "artifact_download_action": "actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093"
+  },
+  "excluded_runs": [
+    {
+      "pr": 42,
+      "run": 32114757196,
+      "job": 95641647630,
+      "artifact_id": 9317541063,
+      "artifact_sha256": "5b3a760a681fafe9f5b04c826a538368e8b2048e72aef929d04648333d7cd061",
+      "reason": "mandatory-baseline-full-build-exceeded-2400s-instrumentation-timeout-before-candidates",
+      "credited_u1": 0,
+      "credited_u2": 0
+    },
+    {
+      "pr": 45,
+      "run": 32139077608,
+      "job": 95717175646,
+      "artifact_id": 9329881083,
+      "artifact_sha256": "617e1c7ccfab90231542859954838eb919b967fbe8bf1e084e939625bf422e31",
+      "reason": "mandatory-baseline-full-build-exceeded-7200s-instrumentation-timeout-before-candidates",
+      "credited_u1": 0,
+      "credited_u2": 0
+    },
+    {
+      "pr": 48,
+      "run": 32161655865,
+      "diagnostic_u2_job": 95791719193,
+      "diagnostic_u2_artifact_id": 9334138232,
+      "diagnostic_u2_artifact_sha256": "bd3fc72a91b9645a3250c907c45b1c36755f63471f76d3e9001190c6bc67baaa",
+      "reason": "primary-owner-classifier-omitted-D1-package-resolution-failures",
+      "credited_u1": 0,
+      "credited_u2": 0
+    },
+    {
+      "pr": 51,
+      "run": 32168529883,
+      "aggregate_job": 95817854779,
+      "diagnostic_u1_artifact_id": 9336727544,
+      "diagnostic_u1_artifact_sha256": "7dd6db5f1b2b368ab6d4f8155ed4e93043517f77c7112851ee3a178bc91e9a15",
+      "diagnostic_u2_artifact_id": 9336789944,
+      "diagnostic_u2_artifact_sha256": "3748707c1530f48038a404f9b44c883195cc41aa9f6ae9bf86e6e1d53ff93eb7",
+      "reason": "aggregate-artifact-transport-http-401-before-combiner",
+      "credited_u1": 0,
+      "credited_u2": 0
+    }
+  ],
+  "transport_audit": {
+    "pr": 52,
+    "run": 32170073082,
+    "aggregate_job": 95818872837,
+    "candidate_execution": false,
+    "result": "PASS",
+    "synthetic_aggregate_artifact_id": 9336911899,
+    "synthetic_aggregate_sha256": "6db56bcae1ff73c799544e30805a9d35d4585a515bd0a93c9f20a559c15b501e"
+  },
+  "credited_detection": {
+    "execution_pr": 53,
+    "execution_pr_merged": false,
+    "workflow_commit": "dfb7d1122e0e482626c9849f0e083ecbe71e58be",
+    "run": 32170243744,
+    "u1_job": 95819384522,
+    "u2_job": 95819384599,
+    "aggregate_job": 95822552072,
+    "u1_artifact": {
+      "id": 9337314559,
+      "size_bytes": 32730,
+      "sha256": "d06ce516f34f509d307ab121242c60b7dca95ecff6646355783a544caa846ac7",
+      "result_sha256": "e142963b42bcc24d2361d54bbcbd5a29430c74c83a124ea2712f65bf810a9148"
+    },
+    "u2_artifact": {
+      "id": 9337277099,
+      "size_bytes": 18865,
+      "sha256": "fadbb09d97c96292838d25ed1cf89297a14918dfe4c24772e3e880ed464470c7",
+      "result_sha256": "2ebb741302ef11ba7dbaacfb501620185f64c9da4a64548075353ecd27138092"
+    },
+    "complete_artifact": {
+      "id": 9337321640,
+      "size_bytes": 58933,
+      "sha256": "90f7285496372570e6b7e90e5c3b0dc0437299bcf1a824ddaea33f635171001c",
+      "independent_digest_match": true,
+      "retained_file_count": 40,
+      "combine_audit": "PASS",
+      "ownership_validation": "PASS",
+      "apparatus_failures": 0,
+      "provenance_mismatches": [],
+      "repair_outputs_present": 0
+    }
+  },
+  "candidates": {
+    "U1-lean-4.34.0-rc1-compiler-only": {
+      "D0": "green",
+      "D1": "green",
+      "D2": {
+        "Formalization.Erdos678.Intervals": {
+          "status": "failed",
+          "first_failure": "Batteries/Data/List/Basic.lean:577",
+          "owner": "mathlib_or_transitive_dependency"
+        },
+        "Formalization.Erdos678.ValuationBasic": {
+          "status": "failed",
+          "first_failure": "Batteries/Data/Float/Basic.lean:16",
+          "owner": "mathlib_or_transitive_dependency"
+        },
+        "Formalization.Erdos678.Claim4Density": {
+          "status": "failed",
+          "first_failure": "Batteries/Data/Float/Basic.lean:16",
+          "owner": "mathlib_or_transitive_dependency"
+        }
+      },
+      "D3": {
+        "status": "failed",
+        "first_failure": "Mathlib/Tactic/Linter/Whitespace.lean:49",
+        "owner": "mathlib_or_transitive_dependency"
+      },
+      "D4": "not_applicable",
+      "D5": "not_applicable",
+      "D6": "not_applicable",
+      "deepest_green_stage": "D1",
+      "primary_failure_owner": "mathlib_or_transitive_dependency",
+      "full_no_repair_survivor": false,
+      "dependency_support_blocked": true,
+      "project_owned_failure_reached": false
+    },
+    "U2-lean-mathlib-4.34.0-rc1-root-upgrade": {
+      "D0": "green",
+      "D1": {
+        "status": "failed",
+        "owner": "package_resolution",
+        "mathlib_candidate_selected": "de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11",
+        "diagnostic": "dependency-version-mismatch warnings followed by error: mathlib: failed to fetch cache"
+      },
+      "D2": "not_applicable",
+      "D3": "not_applicable",
+      "D4": "not_applicable",
+      "D5": "not_applicable",
+      "D6": "not_applicable",
+      "deepest_green_stage": "D0",
+      "primary_failure_owner": "package_resolution",
+      "full_no_repair_survivor": false,
+      "project_owned_failure_reached": false
+    }
+  },
+  "repair_phase": {
+    "status": "not_applicable",
+    "reason": "no-eligible-project-owned-failure-reached",
+    "repair_batches": 0,
+    "project_owned_files_touched": 0,
+    "third_party_source_touches": 0
+  },
+  "bounded_finding": "both exact frozen forward candidates were blocked at dependency/package boundaries before an eligible project-owned repair surface was reached",
+  "interpretation_limits": [
+    "not general Lean/Mathlib compatibility",
+    "not general maintainability",
+    "not expected future upgrade cost",
+    "not human repair difficulty or speed",
+    "not proof-quality criticism of dependencies",
+    "not architecture superiority",
+    "timing is apparatus metadata only"
+  ]
+}
