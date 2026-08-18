@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - agent/erdos678-s2e-upgrade-apparatus-20260818
+  pull_request:
+    paths:
+      - problems/678/experiments/s2_upgrade_robustness.py
+      - .github/workflows/erdos678-s2e-apparatus-static-audit.yml
 
 permissions:
   contents: read
@@ -12,9 +16,10 @@ jobs:
   static-audit:
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout exact branch head
+      - name: Checkout exact PR head
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
       - name: Compile Python apparatus
