@@ -22,7 +22,7 @@ Durable result: no stable wall-clock winner in six paired runs under the pinned 
 
 Durable result: three prospectively frozen API-reference mutations produced a mixed/interface-dependent result; no uniform repair-locality or maintainability winner. S2c is fully closure-verified.
 
-### S2d — semantic/index mutation resistance — EXECUTED / VALIDATED / PENDING INTEGRATION
+### S2d — semantic/index mutation resistance — INTEGRATED / POST-MERGE VERIFIED / CLOSURE IN PROGRESS
 
 #### Question and frozen design
 
@@ -71,13 +71,28 @@ The I3 survival control did not survive in either artifact. That outcome is reta
 
 Full report: `S2_SEMANTIC_INDEX_BASELINE.md/.json`. Exact raw logs/result remain in artifact `9303987121`.
 
-#### Integration gate
+#### Verified integration
 
-PR #35 must now pass canonical exact-head Lean Verification on its **final evidence-synchronized head**, merge only if green, and pass post-merge verification on the exact resulting `main` commit. A documentation-only closure should then record the integration evidence before S2e starts.
+PR #35 final head `1a5728574f3d2c5101851becfb2500400aa395bd` passed canonical Lean Verification run `32078084197`, job `95535434320`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
+
+PR #35 merged as `891d7b9e51c3ecc1313ee2de8d2a98036841b128`. The exact resulting `main` commit passed push run `32102682942`, job `95606121109`, again with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
+
+The substantive S2d experiment/evidence integration is therefore complete and post-merge verified.
+
+#### Closure gate
+
+Documentation-only PR #36 is now the remaining gate. It must:
+
+1. contain only state/evidence documentation changes;
+2. pass canonical exact-head Lean Verification on its final head;
+3. merge only with that verified head unchanged;
+4. pass post-merge verification on the exact resulting `main` commit.
+
+Only after those conditions are met is S2d `CLOSURE VERIFIED` and S2e permitted to enter predeclaration.
 
 ### S2e — upgrade robustness — PLANNED / BLOCKED
 
-Run isolated Lean/Mathlib upgrade probes and measure failure/repair surfaces with project-owned versus dependency-support attribution. **Do not start until S2d integration and documentation closure are verified.**
+Run isolated Lean/Mathlib upgrade probes and measure failure/repair surfaces with project-owned versus dependency-support attribution. **Do not start until S2d documentation closure is verified.**
 
 ### S2f — independent audit — PLANNED
 
@@ -96,7 +111,7 @@ S2 now contributes four concrete methodology episodes:
 - **S2c:** a prospectively defined comparison may yield a mixed result that should be preserved rather than redesigned after observation;
 - **S2d:** type-correct semantic drift can be rejected at different encoded control locations, and a computationally successful run must still be discarded when a primary classifier is instrumented incorrectly.
 
-These are externally auditable through protocols, commits, CI runs, artifacts, corrections, and persisted evidence; hidden chain-of-thought is unnecessary.
+These are externally auditable through protocols, commits, CI runs, artifacts, corrections, excluded pilots, and persisted evidence; hidden chain-of-thought is unnecessary.
 
 ## Track C — upstream/community contribution
 
@@ -109,7 +124,7 @@ After S2 evidence stabilizes:
 
 ## Claim ladder
 
-**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; machine-checked statement bridges; executable differential verification; S2a boundary-sensitive structural control; S2b resource-profile baseline with no stable wall-time winner; S2c mixed repair-locality baseline; S2d six-observation semantic/index mutation baseline with all three frozen perturbations rejected in both artifacts and layer-dependent detection.
+**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; machine-checked statement bridges; executable differential verification; S2a boundary-sensitive structural control; S2b resource-profile baseline with no stable wall-time winner; S2c mixed repair-locality baseline; S2d six-observation semantic/index mutation baseline with all three frozen perturbations rejected in both artifacts and layer-dependent detection; verified integration of the S2d evidence through PR #35 and its exact post-merge `main` commit.
 
 **Supported interpretation:** independent numerical/regression controls can add statement-fidelity value beyond primitive type correctness in the observed I1 mutation; measurement provenance/classification auditing is scientifically consequential.
 
@@ -125,8 +140,8 @@ After S2 evidence stabilizes:
   - **S2a:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
   - **S2b:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
   - **S2c:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
-  - **S2d:** EXECUTED / ARTIFACT VALIDATED / PENDING PR INTEGRATION.
-  - **S2e:** NOT STARTED / BLOCKED BY S2d CLOSURE.
+  - **S2d:** COMPLETE / INTEGRATED / POST-MERGE VERIFIED / CLOSURE IN PROGRESS.
+  - **S2e:** NOT STARTED / BLOCKED BY S2d CLOSURE VERIFICATION.
   - **S2f:** NOT STARTED.
 - **S3:** NOT STARTED.
 - **S4:** NOT STARTED.
