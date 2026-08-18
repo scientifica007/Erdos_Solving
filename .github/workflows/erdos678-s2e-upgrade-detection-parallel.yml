@@ -1,0 +1,121 @@
+name: Erdos 678 S2e Upgrade Detection Parallel
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/erdos678-s2e-upgrade-detection-parallel.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  detection:
+    name: detection-${{ matrix.candidate }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      matrix:
+        candidate: [U1, U2]
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Record workflow and apparatus identities
+        run: |
+          set -euo pipefail
+          printf 'workflow_commit=%s\n' "$(git rev-parse HEAD)"
+          printf 'runtime_v2_apparatus_commit=%s\n' "$(git log -1 --format=%H -- problems/678/experiments/s2_upgrade_robustness_runtimefix_v2.py)"
+          printf 'frozen_core_commit=%s\n' "$(git log -1 --format=%H -- problems/678/experiments/s2_upgrade_robustness.py)"
+          printf 'candidate=%s\n' '${{ matrix.candidate }}'
+
+      - name: Install Elan only
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          lake-package-directory: formalization
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          mk_all-check: false
+          use-mathlib-cache: false
+          use-github-cache: false
+          check-reservoir-eligibility: false
+          leanchecker: false
+          lean4checker: false
+          nanoda: false
+
+      - name: Execute frozen no-repair detection for ${{ matrix.candidate }}
+        id: detection
+        run: |
+          set -euo pipefail
+          python3 problems/678/experiments/s2_upgrade_robustness_runtimefix_v2.py \
+            --phase detection \
+            --candidate '${{ matrix.candidate }}' \
+            --repo . \
+            --output "${RUNNER_TEMP}/s2e-${{ matrix.candidate }}"
+
+      - name: Upload exact candidate artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: erdos678-s2e-${{ matrix.candidate }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/s2e-${{ matrix.candidate }}
+          if-no-files-found: error
+          retention-days: 90
+
+  aggregate:
+    name: aggregate-complete-frozen-set
+    if: always()
+    needs: detection
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Download exact U1 artifact using audited pinned action
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: erdos678-s2e-U1-${{ github.run_id }}
+          path: ${{ runner.temp }}/s2e-inputs/U1
+
+      - name: Download exact U2 artifact using audited pinned action
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: erdos678-s2e-U2-${{ github.run_id }}
+          path: ${{ runner.temp }}/s2e-inputs/U2
+
+      - name: Combine complete frozen candidate set fail-closed
+        id: combine
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          python3 problems/678/experiments/s2_upgrade_robustness_combine.py \
+            --u1 "${RUNNER_TEMP}/s2e-inputs/U1" \
+            --u2 "${RUNNER_TEMP}/s2e-inputs/U2" \
+            --output "${RUNNER_TEMP}/s2e-complete"
+
+      - name: Upload complete frozen-set artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: erdos678-s2e-detection-complete-${{ github.run_id }}
+          path: ${{ runner.temp }}/s2e-complete
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Enforce complete-set validity
+        if: steps.combine.outcome != 'success'
+        run: |
+          echo 'Complete frozen-set combiner rejected the candidate artifacts.' >&2
+          exit 1
