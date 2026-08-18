@@ -1,0 +1,102 @@
+name: Erdos 678 S2d Closure Postmerge ID Audit
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/erdos678-s2d-closure-postmerge-id.yml"
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TARGET_SHA: 5039d464f6196e6b47494f0a6fae869e3362d082
+      EXPECTED_WORKFLOW: Lean Verification
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Locate exact successful main push verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          import time
+          import urllib.request
+
+          repo = os.environ["GITHUB_REPOSITORY"]
+          target = os.environ["TARGET_SHA"]
+          expected = os.environ["EXPECTED_WORKFLOW"]
+          token = os.environ["GH_TOKEN"]
+          api = "https://api.github.com"
+          headers = {
+              "Accept": "application/vnd.github+json",
+              "Authorization": f"Bearer {token}",
+              "X-GitHub-Api-Version": "2022-11-28",
+              "User-Agent": "erdos678-s2d-closure-postmerge-id-audit",
+          }
+
+          def get_json(url):
+              req = urllib.request.Request(url, headers=headers)
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  return json.load(r)
+
+          branch = get_json(f"{api}/repos/{repo}/branches/main")
+          main_sha = branch["commit"]["sha"]
+          print(f"main_head_at_audit={main_sha}")
+          if main_sha != target:
+              raise SystemExit(f"main moved: {main_sha} != {target}")
+
+          chosen = None
+          for attempt in range(40):
+              data = get_json(
+                  f"{api}/repos/{repo}/actions/runs?head_sha={target}&event=push&per_page=100"
+              )
+              candidates = [
+                  r for r in data.get("workflow_runs", [])
+                  if r.get("name") == expected
+                  and r.get("head_sha") == target
+                  and r.get("event") == "push"
+              ]
+              if candidates:
+                  candidates.sort(key=lambda r: r.get("created_at", ""), reverse=True)
+                  chosen = candidates[0]
+                  print(
+                      f"probe_run_id={chosen['id']} status={chosen['status']} "
+                      f"conclusion={chosen.get('conclusion')}"
+                  )
+                  if chosen.get("status") == "completed":
+                      break
+              else:
+                  print(f"probe_run=none attempt={attempt + 1}")
+              time.sleep(15)
+          else:
+              raise SystemExit("timed out waiting for exact main push Lean Verification")
+
+          if chosen is None:
+              raise SystemExit("exact main push Lean Verification not found")
+          if chosen.get("conclusion") != "success":
+              raise SystemExit(
+                  f"exact main push run {chosen['id']} concluded {chosen.get('conclusion')}"
+              )
+
+          jobs = get_json(chosen["jobs_url"])
+          lean_jobs = [j for j in jobs.get("jobs", []) if j.get("name") == "lean"]
+          if len(lean_jobs) != 1:
+              raise SystemExit(f"expected one lean job, found {len(lean_jobs)}")
+          job = lean_jobs[0]
+          if job.get("status") != "completed" or job.get("conclusion") != "success":
+              raise SystemExit(
+                  f"lean job {job['id']} status={job.get('status')} conclusion={job.get('conclusion')}"
+              )
+
+          print(f"postmerge_run_id={chosen['id']}")
+          print(f"postmerge_job_id={job['id']}")
+          print(f"postmerge_head_sha={chosen['head_sha']}")
+          print("s2d_closure_postmerge_id_audit=PASS")
+          PY
