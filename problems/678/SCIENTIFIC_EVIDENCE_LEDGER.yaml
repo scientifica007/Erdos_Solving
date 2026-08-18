@@ -1,4 +1,4 @@
-schema_version: 13
+schema_version: 14
 snapshot_date: 2026-08-17
 scope: erdos-678-only
 
@@ -7,7 +7,6 @@ classification:
   mathematical_author: Stijn Cambie
   successful_project_mode: external-proof-reconstruction
   project_formalization: independent-lean-reimplementation
-  independent_mathematical_attempt: rejected
   first_formalization_claim: false
   new_mathematical_proof_claim: false
 
@@ -15,7 +14,6 @@ internal_artifact:
   repository: scientifica007/Erdos_Solving
   visibility: public
   license: Apache-2.0
-  mathematical_merge_commit: 8fd1b20541ac7782f52429db3a2cc4c887547372
   lean_version: 4.33.0
   mathlib_input: v4.33.0
   mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
@@ -39,13 +37,12 @@ s1_differential_verification:
   closure_pr: 27
   closure_merge_commit: 7aff8d8d8680e90b34be64650c68c0fc778749fc
   closure_postmerge_run: 32045885504
-  closure_result: success
   selected_axiom_footprint_both_artifacts: [propext, Classical.choice, Quot.sound]
   result: common-environment-differential-verification-success
 
 s2:
   status: active
-  current_substage: S2d-predeclaration
+  current_substage: S2d-integration
 
   s2a_dependency_surface:
     status: complete-integrated-postmerge-verified-closure-verified
@@ -64,8 +61,6 @@ s2:
   s2b_controlled_build_behavior:
     status: complete-integrated-postmerge-verified-closure-verified
     protocol: problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md
-    runner: problems/678/experiments/s2_build_behavior.py
-    aggregator: problems/678/experiments/s2_build_behavior_aggregate.py
     baseline_markdown: problems/678/S2_BUILD_BEHAVIOR_BASELINE.md
     baseline_json: problems/678/S2_BUILD_BEHAVIOR_BASELINE.json
     excluded_pilot:
@@ -81,8 +76,6 @@ s2:
       replicates: 6
       retries: 0
       exclusions: 0
-      runner_version: 2.336.0
-      runner_image: ubuntu24/20260810.271.1
     wall_result:
       internal_cold_median_s: 159.575
       comparator_cold_median_s: 156.280
@@ -106,7 +99,6 @@ s2:
     limits:
       - no general speed superiority
       - no maintainability inference
-      - no causal claim for resource-profile difference
 
   s2c_repair_locality:
     status: complete-integrated-postmerge-verified-closure-verified
@@ -114,95 +106,70 @@ s2:
     mutation_manifest: problems/678/S2_REPAIR_LOCALITY_MUTATIONS.yaml
     baseline_markdown: problems/678/S2_REPAIR_LOCALITY_BASELINE.md
     baseline_json: problems/678/S2_REPAIR_LOCALITY_BASELINE.json
-    scope: predeclared-symbol-api-reference-repair-locality-only
-    provenance:
-      internal_baseline: cc55073fceddb51e3fa2c1854f797fe989523985
+    experiment:
       predeclaration_commit: a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1
-      experiment_commit: 00d340d3ccdc13418615b6526e9b736d9f9e03e7
+      apparatus_commit: 00d340d3ccdc13418615b6526e9b736d9f9e03e7
       run: 32062501296
       job: 95486770197
       artifact_id: 9299556049
       artifact_digest: sha256:0369ec66c689572307660765b0c84cd86b6339f4f4d26a788c560ca11f7b7f4b
-      independently_downloaded_artifact_digest_match: true
-      comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
-      comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
     validations:
       observation_count: 6
       observable_breaks: 6
       legal_repairs_green: 6
       third_party_dependency_files_touched_total: 0
-      internal_repairs_mk_all_no_update: 3
-      internal_repairs_full_8808_job_build_success: 3
-      all_repairs_pure_identifier_substitution: true
-    raw_reference_counts:
-      R1:
-        internal: {total: 3, production: 2, verification: 1}
-        comparator: {total: 1, production: 1}
-      R2:
-        internal: {total: 2, production: 1, verification: 1}
-        comparator: {total: 1, production: 1}
-      R3:
-        internal: {total: 2, production: 0, verification: 2}
-        comparator: {total: 3, production: 3}
     finding:
       - repair-reference blast radius is mixed and interface-layer dependent
       - no uniform repair-locality advantage is observed
       - raw totals are not a maintainability ranking
     integration:
       pr: 32
-      exact_head: 7471370081dece8ac99ec3888636d7d9cc0fa78f
       exact_head_run: 32065778293
-      exact_head_job: 95497421954
-      exact_head_result: success
-      exact_head_commit_match: true
-      exact_head_import_check: no-update-necessary
-      exact_head_build_jobs: 8808
       merge_commit: bf54f5eb16e477d1b41b336e68ce82a729c98912
       postmerge_run: 32067478680
-      postmerge_job: 95502840936
-      postmerge_result: success
-      postmerge_commit_match: true
-      postmerge_import_check: no-update-necessary
-      postmerge_build_jobs: 8808
     closure:
       pr: 33
       exact_head: 3439b58f1e05e2cb21ee1c9374857eb3b4197163
       exact_head_run: 32070637072
       exact_head_job: 95512851767
-      exact_head_result: success
-      exact_head_commit_match: true
-      exact_head_import_check: no-update-necessary
-      exact_head_build_jobs: 8808
       merge_commit: 47b85a2f2f5be6e6e4ede2b600723b8616aeeee4
       postmerge_run: 32071325525
       postmerge_job: 95514986697
-      postmerge_result: success
-      postmerge_commit_match: true
-      postmerge_import_check: no-update-necessary
-      postmerge_build_jobs: 8808
-    interpretation_limits:
+      result: success
+      commit_match: true
+      import_check: no-update-necessary
+      build_jobs: 8808
+    limits:
       - not general maintainability
-      - not human repair time or cognitive effort
       - not semantic robustness
-      - not proof complexity
-      - not upgrade robustness
       - not architecture superiority
 
   s2d_semantic_index_mutation:
-    status: predeclared-not-executed-pending-integration
+    status: executed-success-artifact-validated-pending-pr-integration
     protocol: problems/678/S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md
     mutation_manifest: problems/678/S2_SEMANTIC_INDEX_MUTATIONS.yaml
-    scope: three-predeclared-one-unit-type-correct-semantic-index-perturbations
-    internal_baseline: 47b85a2f2f5be6e6e4ede2b600723b8616aeeee4
-    comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
-    comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+    baseline_markdown: problems/678/S2_SEMANTIC_INDEX_BASELINE.md
+    baseline_json: problems/678/S2_SEMANTIC_INDEX_BASELINE.json
+    scope: three-predeclared-one-unit-type-correct-semantic-index-perturbations-only
     historical_anchor:
       document: problems/678/FORMALIZATION_CORRECTION_2026-08-14.md
       error: shifted-M-t-k-plus-one-block-left-one
       correct_block: "[t+1,t+k+1]"
       rejected_block: "[t,t+k]"
+    predeclaration:
+      internal_baseline: 47b85a2f2f5be6e6e4ede2b600723b8616aeeee4
+      head: 5aaef5a667ee11cc526beae587cf9ab799727f7e
+      pr: 34
+      exact_head_run: 32073161789
+      exact_head_job: 95520595880
+      merge: 2db145226bf530f406e734129fd8a451a2ab3899
+      postmerge_run: 32073820006
+      postmerge_job: 95522556326
+      protocol_sha256: 04e5b4051650636847df979bde1a16c46018cf46f73c62a9763a4a88605699f6
+      manifest_sha256: d624e93eb51f9229f5d5304365cf39b777f2ee813b9798f939ca26788d1d103f
+      postmerge_verified: true
     experiment_contract:
-      mutations: 3
+      mutation_count: 3
       planned_observations: 6
       proof_repairs_allowed: false
       pristine_reset_between_observations: true
@@ -213,77 +180,127 @@ s2:
       I1-canonical-start-left-shift:
         family: interval-start-index
         role: primitive-canonical-interval-semantics
-        internal: erdosM-n-plus-one-to-n
-        comparator: Ioc-n-n-plus-k-to-Ico-n-n-plus-k
         historical_replay: closest
       I2-long-block-drop-final-term:
         family: interval-length-index
         role: strong-cambie-endpoint
-        internal: intervalLCM-y-k-plus-one-to-y-k
-        comparator: Icc-y-y-plus-k-to-Icc-y-y-plus-k-minus-one
       I3-strengthen-canonical-separation-one:
         family: separation-index
         role: canonical-unbounded-or-infinitude-endpoint
-        internal: n-plus-k-le-m-to-n-plus-k-plus-one-le-m
-        comparator: n-plus-k-le-m-to-n-plus-k-plus-one-le-m
         control: possible-semantic-survival
-    internal_rejection_strata:
-      - L0_mutation_source_elaboration
-      - L1_concrete_semantic_oracle
-      - L2_local_endpoint_regression
-      - L3_statement_bridge
-      - L4_canonical_import_graph
-      - L5_full_canonical_build
-    comparator_rejection_method: first-error-line-and-enclosing-declaration-in-complete-monolithic-source
-    current_observations:
-      harness_created: false
-      mutations_executed: 0
-      outcomes_observed: 0
-    execution_gate:
-      predeclaration_exact_head_ci: required
-      predeclaration_merge: required
-      predeclaration_postmerge_exact_main_verification: required
-      harness_before_gate: forbidden
-      mutation_execution_before_gate: forbidden
+    excluded_pilot:
+      experiment_commit: 22aa85900b6f395b96d47cace7f9322976c1a2e3
+      run: 32074822049
+      job: 95525626029
+      artifact_id: 9303487756
+      artifact_digest: sha256:815e676189486afa15876589043e563f9a1d69d18a27c72e766c660993e40faf
+      artifact_digest_independent_match: true
+      computation_result: success
+      exclusion_scope: entire-run
+      reason: comparator-main-theorem-logical-classification-defect
+      posthoc_relabel_used: false
+      mutation_or_protocol_changed_after_observation: false
+    credited_experiment:
+      apparatus_head: a82ae53b57a9f97844013a9b2e96a9182cee241d
+      pr: 35
+      run: 32076614547
+      job: 95531085803
+      trigger: pull_request
+      credit_rule: pull-request-event-exact-head-only
+      result: success
+      runner_version: 2.336.0
+      runner_image: ubuntu24/20260810.271.1
+      artifact_id: 9303987121
+      artifact_size_bytes: 74518
+      artifact_digest: sha256:29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881
+      artifact_digest_independent_match: true
+      comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
+      comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
+      comparator_source_sha256: 186a651174c7f8f7ef1e7d7d86f262ff51889a55c6767ca116b08a009fe8a4db
+    baseline_validations:
+      internal_mk_all_no_update: true
+      internal_full_build_jobs: 8808
+      comparator_compile_green: true
+      final_internal_restore_build_jobs: 8808
+    results:
+      observations: 6
+      semantic_rejections: 6
+      semantic_survivors: 0
+      proof_repairs: 0
+      third_party_dependency_source_touches: 0
+      I1_internal:
+        source_elaborated: true
+        first_rejection: L1_concrete_semantic_oracle
+        first_check: concrete_semantic_oracle
+        diagnostic: tactic_failure
+      I1_comparator:
+        source_elaborated: true
+        first_rejection: local_lemma_or_regression
+        first_declaration: lcmInterval_ge_choose
+        diagnostic: unsolved_goals
+      I2_internal:
+        source_elaborated: false
+        first_rejection: L0_mutation_source_elaboration
+        diagnostic: type_mismatch
+      I2_comparator:
+        source_elaborated: true
+        first_rejection: strong_theorem
+        first_declaration: main_theorem
+        diagnostic: unsolved_goals
+      I3_internal:
+        source_elaborated: false
+        first_rejection: L0_mutation_source_elaboration
+        diagnostic: application_type_mismatch
+      I3_comparator:
+        source_elaborated: false
+        first_rejection: canonical_corollary
+        first_declaration: erdos_678_kmn_infinite
+        diagnostic: unsolved_goals
+    finding:
+      - all three predeclared semantic/index perturbations were rejected in both artifacts
+      - first rejection location depends on mutation and artifact structure
+      - I1 internal primitive mutation elaborated before independent concrete oracle rejection
+      - I3 possible-survival control did not survive in either artifact
+      - internal staged strata and comparator monolithic declaration classes are not a common ordinal scale
     interpretation_limits:
       - not general semantic robustness
-      - not general maintainability
-      - not human debugging time
+      - not general architecture superiority
+      - not human debugging or repair time
       - not proof complexity
-      - not architecture superiority
+      - not maintainability
       - not upgrade robustness
 
 verification_credit_audit:
-  status: corrected-and-validated
-  historical_example:
-    run: 32033822601
-    metadata_pr_head: 610d525145a8129d345a1d3ce6a6b41809e3d1f8
-    actual_checkout: 5983f901358d8f82d85a425369d429cfa9475f96
-    classification: successful-integration-tree-verification
+  status: corrected-and-active
+  examples:
+    - episode: historical-integration-tree-credit-correction
+      run: 32033822601
+      classification: successful-integration-tree-verification
+    - episode: s2b-missing-runner-version
+      action: excluded-entire-pilot-and-reran-fail-closed
+    - episode: s2d-comparator-logical-classifier
+      action: excluded-entire-pilot-and-reran-complete-frozen-set
 
 public_artifact:
   visibility: public
   license: Apache-2.0
-  rulesets_detected_at_transition: false
   governance_followup: configure-main-protection-before-accepting-outside-contributions
 
 allowed_external_claims:
   - independent Lean reimplementation of Cambie's proof
   - executed common-environment differential verification against pinned Aristotle/Alexeev source
-  - machine-checked statement normalization and real-factor bridge
   - closure-verified S2a boundary-sensitive dependency baseline
   - closure-verified S2b six-replicate resource baseline with no stable wall-time winner
-  - S2c mixed interface-dependent repair result with no uniform repair-locality winner
-  - S2c full closure through PR 33 and exact-main postmerge verification
-  - green computation and scientifically admissible measurement are separate gates
-  - preservation of mixed/null comparative evidence rather than post-observation metric redesign
-  - S2d protocol and mutation set are prospectively defined but have no outcome evidence yet
+  - closure-verified S2c mixed interface-dependent repair result with no uniform winner
+  - prospectively frozen S2d six-observation semantic/index mutation experiment
+  - all three frozen S2d perturbations were rejected in both artifacts with layer-dependent detection
+  - internal I1 primitive semantic shift elaborated before independent concrete oracle rejected it
+  - computational success and scientifically admissible measurement remain separate gates
 
 claims_requiring_new_experiments:
-  - S2d earliest semantic-rejection behavior
-  - general semantic robustness
+  - general semantic robustness superiority
   - general maintainability superiority
-  - human repair-time advantage
+  - human debugging or repair-time advantage
   - better upgrade robustness
   - causal explanation of S2b resource-profile differences
   - causal benefit of state protocols
@@ -300,18 +317,19 @@ forbidden_or_unsupported_claims:
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S2d-predeclaration-integration
+  stage: S2d-integration
   status: in-progress
-  requirement: exact-head canonical CI on final predeclaration-only PR; merge only if green; verify exact resulting main commit
-  next_after_close: S2d-apparatus-creation-and-frozen-six-observation-execution
+  requirement: synchronize validated S2d evidence on PR 35; canonical exact-head Lean Verification on final PR head; merge only if green; exact-main postmerge verification; then documentation-only closure
+  next_after_close: S2e-upgrade-robustness-predeclaration
 
 privacy_and_reproducibility:
   repository_visibility: public
   project_owned_license: Apache-2.0
   publish_hidden_chain_of_thought: false
   process_data_policy: >-
-    Publish externally observable hypotheses, actions, artifacts, commits, CI results,
-    corrections, mixed/null/surviving results, and human intervention categories; do not publish hidden model chain-of-thought.
+    Publish externally observable hypotheses, protocols, mutations, actions, artifacts,
+    commits, CI results, corrections, excluded pilots, mixed/null/surviving results,
+    and human intervention categories; do not publish hidden model chain-of-thought.
 
 transition_gate:
   decision: DEC-012

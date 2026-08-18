@@ -1,0 +1,88 @@
+name: Erdos 678 S2d Semantic Index Mutation
+
+on:
+  push:
+    branches:
+      - "agent/erdos678-s2d-semantic-apparatus-*"
+    paths:
+      - "problems/678/experiments/s2_semantic_index_mutation.py"
+      - "problems/678/experiments/s2_semantic_index_mutation_credited.py"
+      - ".github/workflows/erdos678-s2d-semantic-index.yml"
+  pull_request:
+    paths:
+      - "problems/678/experiments/s2_semantic_index_mutation.py"
+      - "problems/678/experiments/s2_semantic_index_mutation_credited.py"
+      - ".github/workflows/erdos678-s2d-semantic-index.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos678-s2d-semantic-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  semantic-index:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    env:
+      S2D_TARGET_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact experiment commit with baseline history
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Record experiment identity
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          printf 's2d_trigger_event=%s\n' "$GITHUB_EVENT_NAME"
+          printf 's2d_experiment_commit=%s\n' "$actual"
+          printf 's2d_credit_rule=%s\n' 'pull-request-event-exact-head-only'
+          printf 's2d_internal_baseline=%s\n' '47b85a2f2f5be6e6e4ede2b600723b8616aeeee4'
+          printf 's2d_predeclaration_head=%s\n' '5aaef5a667ee11cc526beae587cf9ab799727f7e'
+          printf 's2d_predeclaration_merge=%s\n' '2db145226bf530f406e734129fd8a451a2ab3899'
+          printf 's2d_excluded_pilot_run=%s\n' '32074822049'
+          printf 's2d_excluded_pilot_reason=%s\n' 'comparator-main-theorem-logical-classification-defect'
+          test "$actual" = "$S2D_TARGET_SHA"
+          git cat-file -e 47b85a2f2f5be6e6e4ede2b600723b8616aeeee4^{commit}
+          git cat-file -e 5aaef5a667ee11cc526beae587cf9ab799727f7e^{commit}
+          git cat-file -e 2db145226bf530f406e734129fd8a451a2ab3899^{commit}
+
+      - name: Prepare pinned Lean and Mathlib environment
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          lake-package-directory: formalization
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          mk_all-check: false
+          use-mathlib-cache: true
+          use-github-cache: false
+
+      - name: Execute complete credited S2d semantic/index mutation set
+        run: |
+          set -euo pipefail
+          python3 problems/678/experiments/s2_semantic_index_mutation_credited.py \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --output-dir "problems/678/experiments/out/s2d-${S2D_TARGET_SHA}"
+
+      - name: Print exact S2d summary
+        if: always()
+        run: |
+          path="problems/678/experiments/out/s2d-${S2D_TARGET_SHA}/summary.md"
+          if [ -f "$path" ]; then cat "$path"; else echo "No summary produced; inspect fail-closed logs."; fi
+
+      - name: Upload exact S2d evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: erdos678-s2d-${{ github.event.pull_request.head.sha || github.sha }}
+          path: problems/678/experiments/out/s2d-${{ github.event.pull_request.head.sha || github.sha }}
+          if-no-files-found: warn
+          retention-days: 30

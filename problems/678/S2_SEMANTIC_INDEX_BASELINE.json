@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "stage": "S2d-semantic-index-mutation-resistance",
+  "status": "credited-run-validated-pending-pr-integration",
+  "scope": "three-predeclared-type-correct-semantic-index-perturbations-only",
+  "internal_baseline": "47b85a2f2f5be6e6e4ede2b600723b8616aeeee4",
+  "predeclaration": {
+    "head": "5aaef5a667ee11cc526beae587cf9ab799727f7e",
+    "merge": "2db145226bf530f406e734129fd8a451a2ab3899",
+    "exact_head_run": 32073161789,
+    "exact_head_job": 95520595880,
+    "postmerge_run": 32073820006,
+    "postmerge_job": 95522556326,
+    "protocol_sha256": "04e5b4051650636847df979bde1a16c46018cf46f73c62a9763a4a88605699f6",
+    "manifest_sha256": "d624e93eb51f9229f5d5304365cf39b777f2ee813b9798f939ca26788d1d103f"
+  },
+  "excluded_pilot": {
+    "experiment_commit": "22aa85900b6f395b96d47cace7f9322976c1a2e3",
+    "run": 32074822049,
+    "job": 95525626029,
+    "artifact_id": 9303487756,
+    "artifact_sha256": "815e676189486afa15876589043e563f9a1d69d18a27c72e766c660993e40faf",
+    "computation_completed": true,
+    "exclusion_scope": "entire-run",
+    "reason": "comparator-main-theorem-logical-classification-defect",
+    "outcome_selected_exclusion": false
+  },
+  "credited_experiment": {
+    "experiment_commit": "a82ae53b57a9f97844013a9b2e96a9182cee241d",
+    "run": 32076614547,
+    "job": 95531085803,
+    "trigger": "pull_request",
+    "credit_rule": "pull-request-event-exact-head-only",
+    "artifact_id": 9303987121,
+    "artifact_size_bytes": 74518,
+    "artifact_sha256": "29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881",
+    "independent_downloaded_artifact_digest_match": true,
+    "runner_version": "2.336.0",
+    "runner_image": "ubuntu24/20260810.271.1",
+    "lean": "4.33.0",
+    "mathlib_input": "v4.33.0",
+    "mathlib_resolved": "db584cd6d46c92f209a44c0f1c829460d327499d",
+    "pnt_revision": "2667e414c38e5a5dc9aa1946f16f13001e5cd3ed",
+    "comparator_commit": "6f906fef432892db5c910c48ad1a3728dd42cdac",
+    "comparator_blob": "f2331e8bcc71bc36cce7724a0c54fafd8d64d480",
+    "comparator_source_sha256": "186a651174c7f8f7ef1e7d7d86f262ff51889a55c6767ca116b08a009fe8a4db"
+  },
+  "validations": {
+    "internal_baseline_green": true,
+    "internal_baseline_mk_all_no_update": true,
+    "internal_baseline_build_jobs": 8808,
+    "comparator_baseline_green": true,
+    "planned_observations": 6,
+    "observations": 6,
+    "semantic_rejections": 6,
+    "semantic_survivors": 0,
+    "proof_repairs": 0,
+    "third_party_dependency_source_touches": 0,
+    "pristine_reset_between_observations": true
+  },
+  "observations": [
+    {
+      "mutation": "I1-canonical-start-left-shift",
+      "artifact": "internal",
+      "outcome": "semantic_rejection",
+      "mutation_source_elaborated": true,
+      "first_rejection_stratum": "L1_concrete_semantic_oracle",
+      "first_failing_check_or_declaration": "concrete_semantic_oracle",
+      "diagnostic_class": "tactic_failure",
+      "first_diagnostic": "ConcreteTests.lean:35:2: Tactic decide proved that the mutated proposition is false",
+      "baseline_source_sha256": "b276cea3d0fda5293135deee60e74ddcbb3d2ebce51c323898606f37ad2dc8fd",
+      "mutated_source_sha256": "9f50d0fb8173657f93f9e76d6be97722092885ec4e1c8b1ec3f3ddf98117026a"
+    },
+    {
+      "mutation": "I1-canonical-start-left-shift",
+      "artifact": "comparator",
+      "outcome": "semantic_rejection",
+      "mutation_source_elaborated": true,
+      "first_rejection_stratum": "local_lemma_or_regression",
+      "first_failing_check_or_declaration": "lcmInterval_ge_choose",
+      "diagnostic_class": "unsolved_goals",
+      "first_error_line": 2299,
+      "baseline_source_sha256": "186a651174c7f8f7ef1e7d7d86f262ff51889a55c6767ca116b08a009fe8a4db",
+      "mutated_source_sha256": "89f79079b241abf9196149741884b60fd0fe217166c178727effef4bbdeafa32"
+    },
+    {
+      "mutation": "I2-long-block-drop-final-term",
+      "artifact": "internal",
+      "outcome": "semantic_rejection",
+      "mutation_source_elaborated": false,
+      "first_rejection_stratum": "L0_mutation_source_elaboration",
+      "first_failing_check_or_declaration": "mutation_source",
+      "diagnostic_class": "type_mismatch",
+      "first_error_line": 126,
+      "baseline_source_sha256": "fce4ab353533b7a3bf9e10d2bf0285c411f6831d4d2084fb5c05a828ef5a1a7c",
+      "mutated_source_sha256": "00d4cdecd01f496f0d8258aaccd30d3dcb34b31f44cfe03b22e10b07b26de888"
+    },
+    {
+      "mutation": "I2-long-block-drop-final-term",
+      "artifact": "comparator",
+      "outcome": "semantic_rejection",
+      "mutation_source_elaborated": true,
+      "first_rejection_stratum": "strong_theorem",
+      "first_failing_check_or_declaration": "main_theorem",
+      "diagnostic_class": "unsolved_goals",
+      "first_error_line": 2008,
+      "baseline_source_sha256": "186a651174c7f8f7ef1e7d7d86f262ff51889a55c6767ca116b08a009fe8a4db",
+      "mutated_source_sha256": "70c6b08113f0acf37cebdaed2b0dd6e99f7c528a4a6b793666358c2c0f8dc4f6"
+    },
+    {
+      "mutation": "I3-strengthen-canonical-separation-one",
+      "artifact": "internal",
+      "outcome": "semantic_rejection",
+      "mutation_source_elaborated": false,
+      "first_rejection_stratum": "L0_mutation_source_elaboration",
+      "first_failing_check_or_declaration": "mutation_source",
+      "diagnostic_class": "application_type_mismatch",
+      "first_error_line": 179,
+      "baseline_source_sha256": "fce4ab353533b7a3bf9e10d2bf0285c411f6831d4d2084fb5c05a828ef5a1a7c",
+      "mutated_source_sha256": "59edb4fc5e3757245125bddaad3f6b57f5dfac4718b587c9d8b98d956d029f9f"
+    },
+    {
+      "mutation": "I3-strengthen-canonical-separation-one",
+      "artifact": "comparator",
+      "outcome": "semantic_rejection",
+      "mutation_source_elaborated": false,
+      "first_rejection_stratum": "canonical_corollary",
+      "first_failing_check_or_declaration": "erdos_678_kmn_infinite",
+      "diagnostic_class": "unsolved_goals",
+      "first_error_line": 2506,
+      "baseline_source_sha256": "186a651174c7f8f7ef1e7d7d86f262ff51889a55c6767ca116b08a009fe8a4db",
+      "mutated_source_sha256": "75ff12affad059f52a8afe4a67b14d34327aad2feb61b9a458b6cf9c2584f1b8"
+    }
+  ],
+  "finding": {
+    "primary": "all-three-predeclared-semantic-index-perturbations-were-rejected-in-both-artifacts-with-layer-dependent-detection",
+    "internal_I1_control": "mutated primitive interval definition elaborated, then independent concrete oracle rejected it",
+    "survival_control_result": "I3 did not survive in either artifact",
+    "no_uniform_layer_ranking": true,
+    "no_general_semantic_robustness_claim": true
+  },
+  "interpretation_limits": [
+    "not general semantic robustness",
+    "not general architecture superiority",
+    "not human error-detection time",
+    "not proof complexity",
+    "not maintainability",
+    "not upgrade robustness",
+    "internal ordinal strata and comparator monolithic declaration classes are not a common quantitative scale"
+  ],
+  "exact_raw_result_location": "GitHub Actions artifact 9303987121/result.json"
+}
