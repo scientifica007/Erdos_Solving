@@ -1,6 +1,6 @@
 # Erdos_Solving
 
-مستودع بحثي عام لدراسة مسائل Erdős بمساعدة الذكاء الاصطناعي مع إعطاء الأولوية لصحة المعرفة، وقابلية التدقيق، وإعادة الإنتاج، والفصل الصريح بين الاكتشاف الرياضي وإعادة بناء الأدلة والتحقق الرسمي.
+مستودع بحثي عام لدراسة مسائل Erdős بمساعدة الذكاء الاصطناعي، مع إعطاء الأولوية لصحة المعرفة، وقابلية التدقيق، وإعادة الإنتاج، والفصل الصريح بين الاكتشاف الرياضي وإعادة بناء الأدلة والتحقق الرسمي.
 
 ## الترخيص
 
@@ -14,57 +14,48 @@
 
 المسار الناجح هو إعادة بناء برهان Stijn Cambie (2024) وإعادة تنفيذه بصورة مستقلة في Lean، وليس برهانًا رياضيًا جديدًا ولا أول formalization. المدخل التحليلي يعتمد على PNT+ المثبت عند `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
 
-### S1 / S2a / S2b / S2c — CLOSED
+### Scientific evaluation — S1 / S2 COMPLETE
 
-- **S1:** executable differential verification مقابل Aristotle/Alexeev؛ closed and machine-verified.
-- **S2a:** dependency-surface metrics boundary-sensitive؛ لا ranking معماري من raw counts.
+- **S1:** differential verification executable مقابل Aristotle/Alexeev؛ مغلقة ومتحقق منها آليًا.
+- **S2a:** dependency-surface metrics حساسة لحدود ownership؛ لا ranking معماري من raw counts.
 - **S2b:** لا stable wall-clock winner في الجولة المعتمدة، مع اختلاف CPU/memory profile؛ pilot خضراء استُبعدت بسبب provenance ناقصة.
 - **S2c:** repair-locality mixed/interface-dependent؛ لا uniform maintainability winner.
+- **S2d:** 6/6 semantic rejections في مجموعة perturbations المجمدة، مع 0 survivors و0 proof repairs و0 dependency-source touches؛ closure-verified.
+- **S2e:** **CLOSED / CLOSURE VERIFIED** بعد تجربة upgrade robustness المجمدة.
 
-### S2d — CLOSED / CLOSURE VERIFIED
+### S2e — ماذا وجدنا؟
 
-S2d اختبرت ثلاث perturbations دلالية/فهرسية صغيرة جُمّدت قبل التنفيذ. أول run `32074822049` استُبعدت بالكامل بسبب خطأ instrumentation في تصنيف `main_theorem`; لم تتغير mutations أو البروتوكول، وصُحح classifier فقط ثم أُعيدت الحالات الست كاملة.
+اختبرنا مرشحين محددين ومجمّدين مسبقًا للترقية:
 
-الجولة المعتمدة `32076614547` / `95531085803` على apparatus head `a82ae53b57a9f97844013a9b2e96a9182cee241d` أعطت:
+1. **U1 compiler-only:** Lean `v4.34.0-rc1` مع Mathlib/PNT والـmanifest الحالية ثابتة.
+2. **U2 root Lean+Mathlib RC:** Lean `v4.34.0-rc1` + Mathlib exact `de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11` مع PNT+ ثابتة عند `2667e414...`.
 
-- **6/6 semantic rejections**؛
-- **0 survivors**؛
-- **0 proof repairs**؛
-- **0 dependency-source touches**؛
-- artifact `9303987121`، SHA-256 `29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881` مع independent digest match.
+الجولة المعتمدة هي `32170243744`: U1 job `95819384522`، U2 job `95819384599`، والـaggregate job `95822552072` نجحت جميعًا. الـcomplete artifact هي `9337321640`، SHA-256:
 
-I1 الداخلية مهمة منهجيًا: تعريف `erdosM` المتحوّر بقي type-correct، لكن independent concrete numerical oracle رفض الانزياح الدلالي. لا يُستنتج من ذلك general semantic-robustness أو architecture superiority.
+`90f7285496372570e6b7e90e5c3b0dc0437299bcf1a824ddaea33f635171001c`
 
-PR #35 دمجت الدليل ونجحت exact-head/post-merge verification. ثم closure PR #36 final head `46b52c2c8ed1c4dd0623974c82c367071618f71b` نجحت في run `32103456742`, job `95608318715`، ودُمجت كـ`5039d464f6196e6b47494f0a6fae869e3362d082`. هذا exact `main` commit اجتاز run `32103947182`, job `95609642835` مع `verified_commit` مطابق، `No update necessary`، و**8808 jobs**. بذلك S2d **closure-verified**.
+أُعيد تنزيلها والتحقق من digest بصورة مستقلة؛ `COMBINE_AUDIT` وownership/provenance validations كلها PASS، بلا apparatus failures وبلا repair outputs.
 
-### S2e — upgrade robustness: PREDECLARED / NOT EXECUTED
+النتيجة المحدودة:
 
-S2e تقيس compatibility مع ترقية محددة وبسطح إصلاح project-owned محدود، وليس “maintainability” عامة ولا مقارنة جديدة مع comparator.
+- **U1:** D0 وD1 green، ثم تظهر failures داخل Mathlib/transitive dependencies؛ deepest green = `D1`، primary owner = `mathlib_or_transitive_dependency`. لم نصل إلى project-owned proof failure.
+- **U2:** D0 green، ثم D1 package resolution تفشل قبل project compilation؛ deepest green = `D0`، primary owner = `package_resolution`.
+- **Repair:** لم تدخل مرحلة project repair لأن أيًا من المرشحين لم يصل إلى failure project-owned مؤهلة وفق البروتوكول.
 
-الباسلاين المجمد هو S2d closure merge `5039d464f6196e6b47494f0a6fae869e3362d082`:
+هذه النتيجة تصف **version/dependency boundary لهذين المرشحين فقط**. لا تعني general Lean/Mathlib incompatibility، ولا general maintainability، ولا expected future upgrade cost، ولا proof-quality defect في dependencies، ولا architecture superiority.
 
-- Lean `v4.33.0`؛
-- Mathlib input `v4.33.0`, resolved `db584cd6d46c92f209a44c0f1c829460d327499d`؛
-- PNT+ `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
-
-الـcandidateان المجمدان:
-
-1. **U1 compiler-only:** Lean `v4.34.0-rc1` مع Mathlib/PNT والـmanifest الحالية ثابتة، ولا `lake update`.
-2. **U2 root Lean+Mathlib RC:** Lean `v4.34.0-rc1` + Mathlib exact `de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11` (tag provenance `v4.34.0-rc1`) مع PNT+ ثابتة عند `2667e414...`.
-
-عند لحظة predeclaration، PNT+ `main` نفسها تساوي `2667e414...`؛ لذلك لا توجد newer coordinated provider revision يمكن تبديلها تلقائيًا. إذا توقفت الترقية عند dependency support فهذه نتيجة supply-chain/version-boundary، وليست proof-quality defect، ولا يسمح S2e بترقيع third-party source.
-
-قبل أي repair ستُنفذ detection pass كاملة: environment identity، package resolution، ثلاث Mathlib-only project sentinels، PNT boundary، project PNT boundary، endpoint النهائي، ثم canonical graph. الإصلاح project-owned فقط وبميزانية ثابتة: **12 batches / 10 files / 250 changed lines**، مع theorem-header fingerprints وregression files غير قابلة للتغيير.
-
-التصميم المجمد في:
+الأدلة الدائمة:
 
 - `problems/678/S2_UPGRADE_ROBUSTNESS_PROTOCOL.md`؛
-- `problems/678/S2_UPGRADE_ROBUSTNESS_MATRIX.yaml`.
+- `problems/678/S2_UPGRADE_ROBUSTNESS_MATRIX.yaml`؛
+- `problems/678/S2_UPGRADE_ROBUSTNESS_RESULT.md`؛
+- `problems/678/S2_UPGRADE_ROBUSTNESS_RESULT.json`؛
+- `problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml`.
 
-**لم يُنشأ harness ولم تُنفذ U1 أو U2.** يجب أولًا دمج predeclaration والتحقق من exact `main` commit الناتج؛ بعدها فقط يسمح بإنشاء apparatus وتنفيذ المرشحين.
+Evidence PR #55 merged as `a0dffadfbba22325103170a8222d8adb10ffe6e9` and passed exact-main verification `32175057976` / `95834940169`. Closure PR #57 merged as `872be99ac79e3d905dd6d696e626d424331a1faa`; that exact `main` commit passed canonical run `32177665772` / job `95843195690` with `No update necessary` and **8808 jobs**.
 
 ## بوابة الانتقال
 
-**لا تختَر أو تبدأ أو تستأنف أي مسألة Erdős أخرى حتى يعطي المستخدم إذنًا صريحًا وفق `DEC-012`.**
+**S2 مكتملة. لا تختَر أو تبدأ أو تستأنف أي مسألة Erdős أخرى حتى يعطي المستخدم إذنًا صريحًا وفق `DEC-012`.**
 
 > مخرجات AI لا تكتسب قيمة علمية من الإقناع اللغوي. قيمتها تأتي من statement fidelity، provenance، predeclared controls، النقد، machine checking، وإمكانية إعادة الإنتاج، مع تسمية مستوى الأصالة وحدود الاستنتاج بدقة.

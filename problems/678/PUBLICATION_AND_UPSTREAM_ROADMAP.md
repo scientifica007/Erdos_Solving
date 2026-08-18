@@ -24,79 +24,82 @@ Durable result: three prospectively frozen API-reference mutations produced a mi
 
 ### S2d — semantic/index mutation resistance — CLOSED / CLOSURE VERIFIED
 
-Three prospectively frozen one-unit semantic/index perturbations were all rejected in both artifacts, with mutation- and structure-dependent first rejection locations. I1 provides direct evidence that the internal independent concrete numerical regression layer detects a semantic convention drift that remains type-correct at the primitive definition.
+Three prospectively frozen one-unit semantic/index perturbations were all rejected in both artifacts, with mutation- and structure-dependent first rejection locations. Credited run `32076614547` produced 6 semantic rejections, 0 survivors, 0 proof repairs, and 0 dependency-source touches. Closure merge `5039d464f6196e6e4ede2b600723b8616aeeee4` passed exact-main run `32103947182` / job `95609642835` with `No update necessary` and 8808 jobs.
 
-The first computationally successful pilot was excluded in full after a primary comparator-classification instrumentation defect was found; only the classifier was corrected and the complete frozen set was rerun.
-
-Credited run `32076614547`, job `95531085803`, produced 6 semantic rejections, 0 survivors, 0 proof repairs, and 0 dependency-source touches. Substantive integration PR #35 and documentation closure PR #36 both passed exact-head and exact-main post-merge verification.
-
-Closure PR #36 final head `46b52c2c8ed1c4dd0623974c82c367071618f71b` passed run `32103456742`, job `95608318715`, then merged as `5039d464f6196e6b47494f0a6fae869e3362d082`. That exact main commit passed run `32103947182`, job `95609642835`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**. S2d is fully closed.
-
-### S2e — upgrade robustness — PREDECLARED / NOT EXECUTED
+### S2e — upgrade robustness — CLOSED / CLOSURE VERIFIED
 
 #### Scientific question
 
-For exact frozen forward Lean/Mathlib candidates, determine where compatibility first fails, whether the blocker belongs to dependency support or project-owned source, and—only for eligible project-owned failures—what bounded semantic-preserving repair surface restores the predeclared verification targets.
+For exact frozen forward Lean/Mathlib candidates, determine where compatibility first fails, whether the blocker belongs to package/dependency support or project-owned source, and—only for eligible project-owned failures—what bounded semantic-preserving repair surface is needed.
 
-This is an internal-artifact version-transition experiment, not a new cross-artifact ranking and not a general maintainability benchmark.
+This is an internal-artifact version-transition experiment, not a cross-artifact ranking and not a general maintainability benchmark.
 
-#### Baseline
+#### Frozen baseline and candidates
 
-S2e starts from exact S2d closure merge `5039d464f6196e6b47494f0a6fae869e3362d082` with:
+Baseline `5039d464f6196e6e4ede2b600723b8616aeeee4`:
 
 - Lean `v4.33.0`;
 - Mathlib `v4.33.0` / `db584cd6d46c92f209a44c0f1c829460d327499d`;
 - PNT+ `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`;
-- canonical baseline build: **8808 jobs**.
+- canonical graph **8808 jobs**.
 
-#### Frozen candidates
+Candidates prospectively frozen through PR #38:
 
-1. **U1 — compiler-only forward pressure**
-   - Lean `v4.34.0-rc1`;
-   - baseline Mathlib/PNT source and manifest identities fixed;
-   - no `lake update`.
+1. **U1 compiler-only:** Lean `v4.34.0-rc1`, baseline Mathlib/PNT and manifest identities fixed, no `lake update`.
+2. **U2 root Lean + Mathlib RC:** Lean `v4.34.0-rc1`, exact Mathlib `de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11`, PNT+ fixed at `2667e414...`.
 
-2. **U2 — root Lean + Mathlib release-candidate upgrade**
-   - Lean `v4.34.0-rc1`;
-   - Mathlib exact commit `de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11`, provenance tag `v4.34.0-rc1`;
-   - PNT+ remains exact `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
+The design froze D0–D6 detection, failure ownership classes, third-party repair prohibition, 12-batch/10-file/250-line project repair budget, immutable regressions, and canonical theorem-header fingerprints before candidate observation.
 
-At predeclaration time PNT+ `main` is the same baseline commit and has not supplied a newer coordinated 4.34 provider revision. S2e therefore does not invent, vendor, or automatically patch such a provider. A PNT/dependency-support blocker is retained as a supply-chain/version-boundary result, not a proof-quality defect.
+#### Governance episodes
 
-#### Detection taxonomy and stages
+S2e produced several useful methodology episodes before a credited result:
 
-No repair occurs before the complete no-repair detection pass.
+- PR #42 / run `32114757196`: excluded before candidates because baseline full build exceeded a 2400 s instrumentation timeout.
+- PR #45 / run `32139077608`: excluded before candidates after the replacement 7200 s instrumentation timeout also proved unsuitable.
+- PR #48 / run `32161655865`: excluded in full because the primary-owner classifier omitted D1 package-resolution failures.
+- PR #51 / run `32168529883`: candidate jobs were coherent but the complete-set run was excluded because the prospectively required aggregate artifact was not produced; manual artifact transport received HTTP 401 before the combiner.
+- PR #52 / run `32170073082`: synthetic-only transport audit; pinned official artifact download plus hardened combiner passed. No Lean candidate was executed.
 
-- D0 candidate identity/provenance;
-- D1 package graph/manifest resolution;
-- D2 all three project-owned Mathlib-only sentinels (`Intervals`, `ValuationBasic`, `Claim4Density`);
-- D3 external PNT+ support boundary;
-- D4 project PNT boundary `Claim4RelativePrimePNT` when D3 is green;
-- D5 canonical #678 endpoint `Erdos678Final` when D3 is green;
-- D6 `mk_all --check` + full canonical `Formalization` build.
+The candidate versions, scientific stages, ownership taxonomy, repair contract, and interpretation rules were not redesigned after these observations.
 
-Primary ownership classes are frozen as apparatus/provenance, package resolution, Lean toolchain, Mathlib/transitive dependency, PNT dependency support, project-owned, or ambiguous.
+#### Credited result
 
-#### Repair discipline
+Credited complete-set detection:
 
-Dependency-source edits are prohibited. Project-owned repair is eligible only after no-repair detection and under one cumulative budget per candidate:
+- execution carrier PR #53, intentionally closed without merge;
+- exact workflow head `dfb7d1122e0e482626c9849f0e083ecbe71e58be`;
+- run **`32170243744`**;
+- U1 job `95819384522`;
+- U2 job `95819384599`;
+- aggregate job `95822552072`.
 
-- maximum **12 batches**;
-- maximum **10 project-owned files**;
-- maximum **250 aggregate additions + deletions**.
+Complete artifact `9337321640` has SHA-256 `90f7285496372570e6b7e90e5c3b0dc0437299bcf1a824ddaea33f635171001c`; independent re-download/re-hash matched. It contains 40 retained files and passes aggregate ownership/provenance validation with zero apparatus failures and zero repair outputs.
 
-Key verification files remain byte-identical, and canonical semantic endpoint headers are fingerprinted and must remain unchanged. A full candidate blocked at PNT support may still yield interpretable Mathlib-only sentinel/repair evidence; no workaround is introduced to force the PNT-dependent stack green.
+**U1:** D0/D1 green; all three D2 sentinels and D3 fail first in Mathlib/transitive dependency code. Deepest green `D1`; primary owner `mathlib_or_transitive_dependency`; no project-owned proof failure reached.
 
-#### Predeclaration artifacts
+**U2:** D0 green; D1 package resolution fails before project compilation. Deepest green `D0`; primary owner `package_resolution`.
+
+**Repair phase:** prospectively **not applicable** because neither candidate reaches an eligible project-owned failure. Zero repair batches were attempted. Consequently S2e has no repair-surface metric for these two candidates, and none should be inferred.
+
+#### Integration and closure
+
+Persistent evidence:
 
 - `S2_UPGRADE_ROBUSTNESS_PROTOCOL.md`;
-- `S2_UPGRADE_ROBUSTNESS_MATRIX.yaml`.
+- `S2_UPGRADE_ROBUSTNESS_MATRIX.yaml`;
+- `S2_UPGRADE_ROBUSTNESS_RESULT.md/.json`;
+- `SCIENTIFIC_EVIDENCE_LEDGER.yaml`;
+- raw complete artifact `9337321640`.
 
-At this checkpoint **no S2e harness exists and neither U1 nor U2 has been executed**. Apparatus creation is forbidden until this predeclaration passes exact-head CI, merges, and the exact resulting main commit passes post-merge verification.
+Evidence PR #55 merged as `a0dffadfbba22325103170a8222d8adb10ffe6e9` after exact-head verification, and that exact merge passed post-merge run `32175057976` / job `95834940169`.
 
-### S2f — independent audit — PLANNED
+Closure PR #57 merged unchanged as `872be99ac79e3d905dd6d696e626d424331a1faa`. That exact `main` commit passed post-merge run `32177665772` / job `95843195690` with matching `verified_commit`, pinned dependencies, `No update necessary`, and **8808 jobs**.
 
-After S2 quantitative evidence stabilizes, have an independent reviewer inspect statement, metric, assumption, dependency, and interpretation boundaries.
+#### Durable bounded result
+
+For these two exact forward candidates, the archived artifact is blocked at package/dependency boundaries before an eligible project-owned compatibility-repair surface is reached. This is a supply-chain/version-boundary observation for the frozen configurations, not a proof-quality or general maintainability result.
+
+S2e is fully closed. S2 is complete.
 
 ## Track B — AI-assisted scientific production
 
@@ -104,50 +107,40 @@ Candidate title:
 
 **From Failed Conjecture to Machine-Checked Reconstruction: A Long-Horizon AI-Assisted Formalization Case Study of Erdős #678**
 
-Methodology episodes now include:
+Auditable methodology episodes now include:
 
 - **S2a:** reproducible metrics can be scientifically misleading under incomparable ownership boundaries;
 - **S2b:** computational success can still be scientifically inadmissible when predeclared provenance is absent;
 - **S2c:** prospective comparisons may yield mixed results that must be retained;
-- **S2d:** type-correct semantic drift is caught at different encoded controls, and a primary measurement-classifier defect invalidates a green run;
-- **S2e design:** upgrade evidence must separate dependency-support lag from project-owned compatibility repair before repair counts are interpreted.
+- **S2d:** type-correct semantic drift can be caught by independent controls, and a primary classifier defect can invalidate a green run;
+- **S2e:** runtime/provenance/aggregation instrumentation failures were separated from compatibility outcomes, and the credited result terminated legitimately at dependency/package boundaries with no eligible repair phase.
 
-These are externally auditable through protocols, commits, CI runs, artifacts, corrections, excluded pilots, and persisted evidence; hidden chain-of-thought is unnecessary.
+These episodes are externally auditable through protocols, commits, CI runs, artifacts, corrections, exclusions, and persisted evidence; hidden chain-of-thought is unnecessary.
 
 ## Track C — upstream/community contribution
 
-After S2 evidence stabilizes:
-
-- probe a minimal public-formalization refactor from `pi_alt` toward `prime_between` and measure effects before proposing upstream;
-- consider compact statement-normalization lemmas;
-- package reusable positive/negative/off-by-one regressions where appropriate;
-- preserve exact attribution to Cambie, Aristotle, Alexeev, PNT+ authors/maintainers, and benchmark projects.
+Potential future upstream/community work is not part of the completed S2 closure. Any such work should be separately authorized and scoped before execution.
 
 ## Claim ladder
 
-**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; machine-checked statement bridges; executable differential verification; closure-verified S2a boundary-sensitive structural control; closure-verified S2b resource baseline with no stable wall-time winner; closure-verified S2c mixed repair-locality baseline; closure-verified S2d six-observation semantic/index baseline with all three frozen perturbations rejected in both artifacts.
+**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; machine-checked statement bridges; executable differential verification; closure-verified S2a/S2b/S2c/S2d results; and closure-verified S2e exact-candidate dependency/package boundary results.
 
-**Prospectively defined but not yet evidenced:** U1/U2 upgrade-compatibility outcomes, dependency-support blockers, and bounded project-owned repair surface under S2e.
+**Still requires new evidence:** compatibility of any Lean/Mathlib/PNT tuple other than the two frozen S2e candidates; compatibility or repair cost of a future coordinated release; general semantic robustness; general maintainability; human repair/debugging effort; expected future upgrade cost; causal explanations for S2b resource differences; causal benefit of state protocols.
 
-**Still requires later evidence:** general semantic robustness, general maintainability, human repair/debugging effort, expected future upgrade cost, causal explanations for S2b resource differences, causal benefit of state protocols.
-
-**Unsupported:** new solution, new independent mathematical proof, first Lean formalization, general architecture superiority, universal speed advantage, general maintainability superiority, general semantic-robustness superiority, autonomous AI authorship percentage.
+**Unsupported:** new solution, new independent mathematical proof, first Lean formalization, general architecture superiority, universal speed advantage, general maintainability superiority, general Lean/Mathlib incompatibility, autonomous AI authorship percentage.
 
 ## Stage plan
 
 - **S0:** COMPLETE.
 - **S1:** COMPLETE / VERIFIED.
-- **S2:** ACTIVE.
-  - **S2a:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
-  - **S2b:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
-  - **S2c:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
-  - **S2d:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
-  - **S2e:** PREDECLARED / NOT EXECUTED / PENDING PREDECLARATION INTEGRATION.
-  - **S2f:** NOT STARTED.
-- **S3:** NOT STARTED.
-- **S4:** NOT STARTED.
-- **S5:** NOT STARTED.
+- **S2:** COMPLETE.
+  - **S2a:** COMPLETE / CLOSURE VERIFIED.
+  - **S2b:** COMPLETE / CLOSURE VERIFIED.
+  - **S2c:** COMPLETE / CLOSURE VERIFIED.
+  - **S2d:** COMPLETE / CLOSURE VERIFIED.
+  - **S2e:** COMPLETE / CLOSURE VERIFIED.
+- **Next scientific gate:** AWAIT EXPLICIT USER AUTHORIZATION.
 
 ## Stop condition
 
-All work in this roadmap concerns archived Erdős #678. It **does not** authorize selection, exploration, or formalization of another Erdős problem. `DEC-012` remains in force.
+All completed work in this roadmap concerns archived Erdős #678. It **does not** authorize selection, exploration, or formalization of another Erdős problem. `DEC-012` remains in force.
