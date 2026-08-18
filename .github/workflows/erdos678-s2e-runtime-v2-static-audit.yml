@@ -1,0 +1,124 @@
+name: Erdos 678 S2e Runtime V2 Static Audit
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/erdos678-s2e-runtime-v2-static-audit.yml
+      - problems/678/experiments/s2_upgrade_robustness_runtimefix_v2.py
+      - problems/678/experiments/s2_upgrade_robustness_combine.py
+
+permissions:
+  contents: read
+
+jobs:
+  static-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Compile instrumentation scripts
+        run: |
+          set -euo pipefail
+          python3 -m py_compile \
+            problems/678/experiments/s2_upgrade_robustness_runtimefix_v2.py \
+            problems/678/experiments/s2_upgrade_robustness_combine.py
+
+      - name: Execute non-observational core static check through wrapper
+        run: |
+          set -euo pipefail
+          out="${RUNNER_TEMP}/s2e-runtime-v2-static"
+          python3 problems/678/experiments/s2_upgrade_robustness_runtimefix_v2.py \
+            --phase static-check \
+            --repo . \
+            --output "$out" | tee "$out.stdout"
+          grep -q '"status": "PASS"' "$out.stdout"
+          test -f "$out/STATIC_CHECK.json"
+          test ! -e "$out/result.json"
+          test ! -d "$out/candidates"
+
+      - name: Audit baseline-only cache scope statically
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('problems/678/experiments/s2_upgrade_robustness_runtimefix_v2.py').read_text()
+          required = [
+              'if name == "baseline"',
+              '"candidate_cache_prefetch": False',
+              '["lake", "exe", "cache", "get"]',
+              'MIN_LAKE_BUILD_TIMEOUT_SECONDS = 18_000',
+          ]
+          missing = [item for item in required if item not in text]
+          if missing:
+              raise SystemExit(f'missing runtime-v2 invariant(s): {missing}')
+          print('baseline_cache_scope_static_audit=PASS')
+          PY
+
+      - name: Exercise combiner on synthetic non-scientific fixtures
+        run: |
+          set -euo pipefail
+          root="${RUNNER_TEMP}/combine-fixtures"
+          mkdir -p "$root/U1" "$root/U2"
+          ROOT="$root" python3 - <<'PY'
+          import json, os, pathlib, subprocess
+          root = pathlib.Path(os.environ['ROOT'])
+          workflow = subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip()
+          apparatus = subprocess.check_output([
+              'git','log','-1','--format=%H','--',
+              'problems/678/experiments/s2_upgrade_robustness_runtimefix_v2.py'
+          ], text=True).strip()
+          common = {
+              'repository': 'scientifica007/Erdos_Solving',
+              'workflow_commit': workflow,
+              'apparatus_commit': apparatus,
+              'baseline_commit': '5039d464f6196e6b47494f0a6fae869e3362d082',
+              'predeclaration_head': 'synthetic-static-audit',
+              'predeclaration_merge': 'synthetic-static-audit',
+              'protocol_sha256': 'synthetic-static-audit',
+              'matrix_sha256': 'synthetic-static-audit',
+          }
+          ids = {
+              'U1': 'U1-lean-4.34.0-rc1-compiler-only',
+              'U2': 'U2-lean-mathlib-4.34.0-rc1-root-upgrade',
+          }
+          for short in ('U1','U2'):
+              value = {
+                  'schema_version': 1,
+                  'experiment': 'erdos-678-s2e-upgrade-robustness',
+                  'phase': 'detection',
+                  'provenance': common,
+                  'baseline': {'status':'green'},
+                  'candidates': [{
+                      'candidate_id': ids[short],
+                      'detection': {
+                          'full_no_repair_survivor': False,
+                          'deepest_green_stage': 'D0',
+                      },
+                      'primary_failure_owner': 'synthetic',
+                      'repair_eligibility': {},
+                  }],
+                  'scientific_limits': ['synthetic-static-audit'],
+              }
+              (root/short/'result.json').write_text(json.dumps(value))
+          PY
+          python3 problems/678/experiments/s2_upgrade_robustness_combine.py \
+            --u1 "$root/U1" --u2 "$root/U2" --output "$root/combined" | tee "$root/combine.stdout"
+          grep -q '"candidate_count": 2' "$root/combine.stdout"
+          test -f "$root/combined/result.json"
+          test -f "$root/combined/COMBINE_AUDIT.json"
+
+          mkdir -p "$root/invalid-U1"
+          printf '{}\n' > "$root/invalid-U1/APPARATUS_FAILURE.json"
+          if python3 problems/678/experiments/s2_upgrade_robustness_combine.py \
+              --u1 "$root/invalid-U1" --u2 "$root/U2" --output "$root/should-fail"; then
+            echo 'combiner unexpectedly accepted apparatus-invalid input' >&2
+            exit 1
+          fi
+          test -f "$root/should-fail/COMBINE_FAILURE.json"
+          printf 'combiner_static_audit=PASS\n'
