@@ -6,7 +6,7 @@
 
 المادة المملوكة لهذا المشروع مرخصة بموجب **Apache License 2.0** ما لم يُذكر خلاف ذلك. النص الكامل في `LICENSE`، وحدود الطرف الثالث والنَّسب العلمي في `THIRD_PARTY_NOTICES.md` ووثائق المسائل.
 
-## الحالة الحالية — 17 أوت 2026
+## الحالة الحالية — 18 أوت 2026
 
 ### Erdős #678 mathematics
 
@@ -26,7 +26,7 @@
 
 **S2c — repair locality: CLOSED / CLOSURE VERIFIED.** ثلاث declaration-rename mutations مجمدة مسبقًا أعطت نتيجة mixed/interface-dependent؛ لا يوجد uniform repair-locality أو maintainability winner. أُغلقت S2c نهائيًا عبر closure PR #33 والـpost-merge run `32071325525` على commit `47b85a2f2f5be6e6e4ede2b600723b8616aeeee4` مع `No update necessary` و8808 jobs.
 
-**S2d — semantic/index mutation resistance: EXECUTED / ARTIFACT VALIDATED / PENDING PR INTEGRATION.**
+**S2d — semantic/index mutation resistance: INTEGRATED / POST-MERGE VERIFIED / CLOSURE IN PROGRESS.**
 
 S2d انطلقت من الخطأ التاريخي الذي عامل `M(t,k+1)` كما لو كانت كتلته `[t,t+k]` بدل `[t+1,t+k+1]`. البروتوكول والـmanifest جُمّدا قبل بناء apparatus وقبل أي observation، ثم دُمجا وتحققا بعد الدمج عبر PR #34.
 
@@ -54,13 +54,15 @@ S2d انطلقت من الخطأ التاريخي الذي عامل `M(t,k+1)` �
 
 **6/6 semantic mutations رُفضت، 0 survivors، 0 proof repairs، 0 dependency-source touches.** الاستنتاج الصحيح محدود: الضوابط المشفرة كشفت perturbations الثلاثة كلها، لكن موقع أول رفض اعتمد على mutation وبنية artifact. لا يجوز تحويل ذلك إلى general semantic-robustness أو architecture-superiority ranking.
 
+PR #35 اجتازت بوابة الدمج على رأسها النهائي `1a5728574f3d2c5101851becfb2500400aa395bd`: run `32078084197`, job `95535434320`, مع `verified_commit` مطابق، `No update necessary`، و**8808 jobs**. ثم دُمجت كـ`891d7b9e51c3ecc1313ee2de8d2a98036841b128`، وهذا الـcommit نفسه اجتاز post-merge push run `32102682942`, job `95606121109`, مع نفس invariants و**8808 jobs**.
+
+إذن **الدليل التجريبي لـS2d مدمج ومتحقق بعد الدمج**. المتبقي فقط PR #36 كإغلاق توثيقي؛ S2e لا تبدأ قبل نجاح exact-head verification لهذه الـclosure، دمجها، ثم التحقق من exact merge commit الناتج.
+
 التفاصيل في:
 
 - `problems/678/S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md`؛
 - `problems/678/S2_SEMANTIC_INDEX_MUTATIONS.yaml`؛
 - `problems/678/S2_SEMANTIC_INDEX_BASELINE.md/.json`.
-
-PR #35 تحمل apparatus والدليل الحالي. يجب أن يمر **رأسها النهائي بعد مزامنة النتائج** بـcanonical Lean Verification قبل الدمج، ثم يُتحقق من exact merge commit على `main`. لا تبدأ S2e قبل إغلاق S2d توثيقيًا بعد ذلك.
 
 ### Public artifact
 
