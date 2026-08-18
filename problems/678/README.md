@@ -2,7 +2,7 @@
 
 > **Mathematical status (2026-08-18): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b CLOSED. S2c CLOSED / CLOSURE VERIFIED. S2d INTEGRATED / POST-MERGE VERIFIED / CLOSURE IN PROGRESS.**
+> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b CLOSED. S2c CLOSED. S2d CLOSED / CLOSURE VERIFIED. S2e PREDECLARED / NOT EXECUTED.**
 >
 > The successful route is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. It is neither a new mathematical proof nor the first Lean formalization. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
@@ -10,116 +10,120 @@
 
 Let `M(n,k) = lcm{n+1,...,n+k}`. The final Lean graph includes `erdos678_unbounded_witnesses`, `erdos678_good_lengths_infinite`, and the stronger Cambie construction. The analytic dependency is pinned to `AxiomMath/PrimeNumberTheoremAnd@2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
 
-## S1 / S2a / S2b / S2c
+## Closed scientific stages
 
-- **S1:** common-environment executable differential verification against the pinned Aristotle/Alexeev formalization; closed and machine-verified.
-- **S2a:** dependency-surface metrics are boundary-sensitive; closed.
-- **S2b:** no stable wall-clock winner under the pinned common environment, with materially different CPU/memory profiles; closed. A computationally green pilot was excluded when required provenance was missing.
-- **S2c:** three prospectively frozen API-reference mutations produced a mixed/interface-dependent repair-locality result; no uniform winner; closed through PR #32 + closure PR #33 and exact-main post-merge verification.
+- **S1:** executable common-environment differential verification against Aristotle/Alexeev; closure-verified.
+- **S2a:** dependency-surface counts are ownership/boundary sensitive; closure-verified.
+- **S2b:** no stable wall-clock winner under the pinned common environment, with materially different CPU/memory profiles; closure-verified.
+- **S2c:** repair-locality result is mixed/interface-dependent; no uniform maintainability winner; closure-verified.
 
-## S2d — semantic/index mutation resistance — INTEGRATED / POST-MERGE VERIFIED / CLOSURE IN PROGRESS
+## S2d — semantic/index mutation resistance — CLOSED / CLOSURE VERIFIED
 
-### Historical motivation
+Three one-unit semantic/index perturbations were frozen before apparatus creation: canonical block-start shift, long-block endpoint drop, and one-unit separation strengthening. The first computationally successful run `32074822049` was excluded in full after audit found a primary classifier defect. Only instrumentation was corrected; the frozen mutations/checks were not redesigned.
 
-The retained 2026-08-14 correction records a type-correct semantic indexing error: an attempted construction treated the block for `M(t,k+1)` as `[t,t+k]`, while the canonical convention is `[t+1,t+k+1]`. S2d prospectively replays bounded one-unit semantic/index drift rather than identifier breakage.
+Credited run `32076614547`, job `95531085803`, on apparatus head `a82ae53b57a9f97844013a9b2e96a9182cee241d` produced **6/6 semantic rejections, 0 survivors, 0 proof repairs, and 0 dependency-source edits**. Artifact `9303987121` has SHA-256 `29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881`, independently revalidated.
 
-### Frozen design
+| mutation | internal first rejection | comparator first rejection |
+|---|---|---|
+| I1 canonical start shift | concrete numerical oracle after mutated primitive source elaborated | `lcmInterval_ge_choose` |
+| I2 long block drops final term | source type mismatch | strong theorem `main_theorem` |
+| I3 stronger separation | source application/type mismatch | `erdos_678_kmn_infinite` |
 
-The protocol and mutation set were integrated and post-merge verified through PR #34 **before** apparatus creation:
+The limited conclusion is that these three frozen perturbations were rejected in both artifacts, at structure- and mutation-dependent locations. I1 specifically demonstrates value from the internal independent numerical oracle beyond primitive type correctness. No general semantic-robustness, proof-complexity, maintainability, or architecture-superiority claim follows.
 
-- protocol: `S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md`;
-- manifest: `S2_SEMANTIC_INDEX_MUTATIONS.yaml`;
-- frozen internal source baseline: `47b85a2f2f5be6e6e4ede2b600723b8616aeeee4`;
-- predeclaration final head: `5aaef5a667ee11cc526beae587cf9ab799727f7e`;
-- predeclaration merge: `2db145226bf530f406e734129fd8a451a2ab3899`.
+Substantive PR #35 final head `1a5728574f3d2c5101851becfb2500400aa395bd` passed run `32078084197` / job `95535434320`, merged as `891d7b9e51c3ecc1313ee2de8d2a98036841b128`, and that exact merge passed run `32102682942` / job `95606121109`.
 
-Exactly three matched mutation pairs were frozen:
+Documentation closure PR #36 final head `46b52c2c8ed1c4dd0623974c82c367071618f71b` passed run `32103456742` / job `95608318715`, merged as `5039d464f6196e6b47494f0a6fae869e3362d082`, and that exact `main` commit passed run `32103947182` / job `95609642835`. Both closure verification points recorded matching `verified_commit`, `No update necessary`, and **8808 jobs**. S2d is fully closed.
 
-1. **I1 — canonical block-start shift left by one.** Same-length block moves from `n+1..n+k` to `n..n+k-1`.
-2. **I2 — long block loses its final term.** The `k+1`-term long block becomes `k` terms with the same start.
-3. **I3 — separation strengthened by one.** `n+k≤m` becomes `n+(k+1)≤m`; this was intentionally allowed to survive if the changed target remained true.
+Full S2d evidence:
 
-No repair phase is allowed. Each observation starts from a pristine baseline and records first semantic rejection or complete survival.
+- `S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md`;
+- `S2_SEMANTIC_INDEX_MUTATIONS.yaml`;
+- `S2_SEMANTIC_INDEX_BASELINE.md/.json`.
 
-### Excluded first pilot
+## S2e — upgrade robustness — PREDECLARED / NOT EXECUTED
 
-Run `32074822049`, job `95525626029`, completed computationally but is excluded **as a whole**. Post-run audit showed an instrumentation error in a primary metric: comparator theorem `main_theorem : MainTheoremStatement` was labeled `local_lemma_or_regression` instead of the frozen `strong_theorem` class.
+### Research question
 
-The run was not relabeled and credited post hoc. Only the classifier was corrected; no mutation, baseline, protocol, proof source, or semantic check changed. All six observations were rerun from pristine baselines.
+For two exact forward Lean/Mathlib upgrade candidates, where does the archived internal #678 artifact first become incompatible, which failures are attributable to external dependency support versus project-owned source, and—only for eligible project-owned failures—what bounded semantic-preserving repair surface restores the frozen verification targets?
 
-### Credited experiment
+S2e is not a comparator benchmark and does not claim to measure general maintainability.
 
-The credit rule was fixed before the rerun: only the `pull_request`-event workflow checking out the exact PR head is credited.
+### Frozen baseline
 
-- apparatus head: `a82ae53b57a9f97844013a9b2e96a9182cee241d`;
-- run: `32076614547`;
-- job: `95531085803`;
-- runner/image: `2.336.0`, `ubuntu24/20260810.271.1`;
-- artifact: `9303987121`;
-- GitHub SHA-256: `29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881`;
-- independently downloaded artifact SHA-256: **exact match**.
+- source: S2d closure merge `5039d464f6196e6b47494f0a6fae869e3362d082`;
+- Lean: `leanprover/lean4:v4.33.0`;
+- Mathlib input/resolved: `v4.33.0` / `db584cd6d46c92f209a44c0f1c829460d327499d`;
+- PNT+: `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`;
+- canonical baseline graph: **8808 jobs**.
 
-The apparatus first revalidated the frozen internal baseline (`mk_all = No update necessary`, full **8808-job** build) and the pinned comparator baseline. It restored pristine source state between observations and again completed the 8808-job graph after the experiment.
+### Frozen candidates
 
-### Credited outcomes
+**U1 — compiler-only forward pressure**
 
-| mutation | artifact | source elaborated? | first rejection | first failing check/declaration |
-|---|---|---:|---|---|
-| I1 start shift | internal | yes | `L1_concrete_semantic_oracle` | `ConcreteTests` |
-| I1 start shift | comparator | yes | local invariant/regression | `lcmInterval_ge_choose` |
-| I2 drop final term | internal | no | `L0_mutation_source_elaboration` | mutated strong endpoint source |
-| I2 drop final term | comparator | yes | strong theorem | `main_theorem` |
-| I3 strengthen separation | internal | no | `L0_mutation_source_elaboration` | mutated canonical endpoint source |
-| I3 strengthen separation | comparator | no | canonical corollary | `erdos_678_kmn_infinite` |
+- Lean `v4.34.0-rc1`;
+- baseline Mathlib input/resolved and PNT identities unchanged;
+- baseline `lakefile.toml` and `lake-manifest.json` unchanged;
+- no `lake update`.
 
-Aggregate:
+**U2 — coordinated root Lean + Mathlib RC**
 
-- observations: **6/6**;
-- semantic rejections: **6**;
-- survivors: **0**;
-- proof repairs: **0**;
-- third-party/dependency source touches: **0**.
+- Lean `v4.34.0-rc1`;
+- Mathlib exact commit `de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11`, provenance tag `v4.34.0-rc1`;
+- PNT+ remains `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`;
+- temporary manifest regeneration must validate those exact resolutions.
 
-### Scientific interpretation
+At predeclaration time PNT+ `main` equals the same baseline commit and declares an older 4.33-era toolchain/dependency stack. Therefore no newer coordinated PNT provider is substituted. If that dependency boundary blocks U1/U2, S2e records `dependency-support-blocked` rather than patching third-party source or misclassifying it as a project proof defect.
 
-The strongest defensible conclusion is:
+### Frozen detection pipeline
 
-> **All three prospectively frozen one-unit semantic/index perturbations were rejected in both artifacts, but the first encoded rejection point depended on the mutation and artifact structure.**
+No repair is allowed until the no-repair pass completes.
 
-I1 is especially informative internally: the mutated primitive definition `erdosM` still elaborated, and the first rejection came from an **independent concrete numerical oracle**. This is direct evidence that such regression oracles can add statement-fidelity protection beyond local type correctness.
+- **D0:** exact candidate environment/provenance;
+- **D1:** package graph / manifest resolution;
+- **D2:** all three independent project-owned Mathlib-only sentinels: `Intervals`, `ValuationBasic`, `Claim4Density`;
+- **D3:** external `PrimeNumberTheoremAnd` support boundary;
+- **D4:** project PNT-boundary target `Claim4RelativePrimePNT`, only if D3 is green;
+- **D5:** `Erdos678Final`, only if D3 is green;
+- **D6:** `mk_all --check` and full `Formalization` build.
 
-I3, despite being designed as a possible semantic-survival control, did not survive in either artifact. This does not establish that every nearby changed-but-true target would be rejected.
+Failures are classified prospectively as apparatus/provenance, package resolution, Lean toolchain, Mathlib/transitive dependency, PNT dependency support, project-owned, or ambiguous.
 
-No cross-artifact ordinal ranking is justified. Internal `L0..L5` stages and comparator monolithic declaration classes are structurally different observables. S2d does **not** establish general semantic robustness, architecture superiority, human debugging speed, proof complexity, maintainability, or upgrade robustness.
+### Frozen repair discipline
 
-Validated report: `S2_SEMANTIC_INDEX_BASELINE.md/.json`. Exact raw `result.json` and per-stage logs remain in GitHub Actions artifact `9303987121`.
+Third-party/dependency source edits are forbidden. Project repair, when eligible, is limited to project-owned Lean sources, starts only after detection, and is bounded by:
 
-### Verified evidence integration
+- **12 repair batches**;
+- **10 project-owned files**;
+- **250 aggregate additions + deletions**.
 
-PR #35 final evidence-synchronized head was `1a5728574f3d2c5101851becfb2500400aa395bd`. Canonical Lean Verification run `32078084197`, job `95535434320`, succeeded on that exact head with:
+`ConcreteTests.lean`, `Erdos678FinalTests.lean`, and `ExternalStatementBridgeTests.lean` are immutable. The declaration headers/types of `cambie_lcm_ratio_eventually_with_large_start_real`, `erdos678_unbounded_witnesses`, `erdos678_good_lengths_infinite`, and `erdos678_formalConjectures_eventual_nonempty` are fingerprinted and must remain unchanged.
 
-- matching `verified_commit`;
-- `No update necessary`;
-- `Build completed successfully (8808 jobs).`.
+Full prospective definitions:
 
-PR #35 then merged as `891d7b9e51c3ecc1313ee2de8d2a98036841b128`. The exact resulting `main` commit passed push run `32102682942`, job `95606121109`, with the same three invariants: matching commit, `No update necessary`, and **8808 jobs**.
+- `S2_UPGRADE_ROBUSTNESS_PROTOCOL.md`;
+- `S2_UPGRADE_ROBUSTNESS_MATRIX.yaml`.
 
-Therefore the substantive S2d experiment and evidence are **integrated and post-merge verified**.
+### Execution gate
 
-### Remaining closure gate
+At this checkpoint:
 
-Documentation-only PR #36 records the integration facts and converts the project checkpoint from “pending integration” to “integrated/post-merge verified.” S2d is not considered closure-verified until the final PR #36 head passes canonical exact-head Lean Verification, PR #36 merges, and the exact resulting `main` commit passes post-merge verification.
+- S2e harness: **not created**;
+- U1 executed: **no**;
+- U2 executed: **no**;
+- upgrade observations: **none**.
 
-S2e remains blocked until that closure gate is complete.
+The predeclaration-only branch must pass canonical exact-head CI, merge, and pass post-merge verification on the exact resulting `main` commit before apparatus creation or candidate execution is permitted.
 
 ## AI-for-science relevance
 
-The process now contains four distinct methodology episodes:
+The methodology record now includes:
 
-1. **S2a:** reproducibility does not rescue a proxy whose ownership/dependency boundary is incomparable.
-2. **S2b:** computational success does not rescue missing predeclared provenance.
-3. **S2c:** a prospective comparison may legitimately yield a mixed result that should be retained.
-4. **S2d:** semantic drift can be rejected by different encoded controls; additionally, a computationally green experiment must still be excluded when its primary rejection classifier is wrong.
+1. a reproducible proxy can still be scientifically invalid when boundaries differ (S2a);
+2. computational success does not rescue missing provenance (S2b);
+3. prospectively defined comparisons may legitimately produce mixed results (S2c);
+4. semantic drift may be caught at different encoded controls, and primary classifier defects can invalidate a green run (S2d);
+5. upgrade compatibility must distinguish project-owned repair from dependency-support lag before line-count or repair-surface claims are interpreted (S2e design).
 
 ## Public artifact and stop rule
 
