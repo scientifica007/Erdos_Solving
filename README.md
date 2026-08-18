@@ -12,61 +12,56 @@
 
 #678 **COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED**.
 
-المسار الناجح هو إعادة بناء برهان Stijn Cambie (2024) وإعادة تنفيذه بصورة مستقلة في Lean، وليس برهانًا رياضيًا جديدًا ولا أول formalization. المدخل التحليلي يعتمد على PNT+ المثبت عند `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed` مع adapter مباشر من `prime_between`.
+المسار الناجح هو إعادة بناء برهان Stijn Cambie (2024) وإعادة تنفيذه بصورة مستقلة في Lean، وليس برهانًا رياضيًا جديدًا ولا أول formalization. المدخل التحليلي يعتمد على PNT+ المثبت عند `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
 
-### S1 — COMPLETE
+### S1 / S2a / S2b / S2c — CLOSED
 
-أُنجز executable differential verification مقابل formalization Aristotle/Alexeev، ثم أُغلقت S1 عبر exact-head/post-merge verification.
+- **S1:** executable differential verification مقابل Aristotle/Alexeev؛ closed and machine-verified.
+- **S2a:** dependency-surface metrics boundary-sensitive؛ لا ranking معماري من raw counts.
+- **S2b:** لا stable wall-clock winner في الجولة المعتمدة، مع اختلاف CPU/memory profile؛ pilot خضراء استُبعدت بسبب provenance ناقصة.
+- **S2c:** repair-locality mixed/interface-dependent؛ لا uniform maintainability winner.
 
-### S2 — ACTIVE على #678 فقط
+### S2d — CLOSED / CLOSURE VERIFIED
 
-**S2a — dependency surface: CLOSED.** raw module/file metrics حساسة لتعريف dependency/ownership boundary؛ لذلك لا يجوز تحويلها إلى حكم على proof complexity أو architecture quality.
+S2d اختبرت ثلاث perturbations دلالية/فهرسية صغيرة جُمّدت قبل التنفيذ. أول run `32074822049` استُبعدت بالكامل بسبب خطأ instrumentation في تصنيف `main_theorem`; لم تتغير mutations أو البروتوكول، وصُحح classifier فقط ثم أُعيدت الحالات الست كاملة.
 
-**S2b — controlled build behavior: CLOSED.** الجولة المعتمدة run `32053575928` لم تجد wall-clock winner ثابتًا، مع اختلاف مادي في CPU/memory profile تحت البيئة المثبتة. pilot خضراء استُبعدت كليًا لأن provenance المحددة مسبقًا كانت ناقصة.
+الجولة المعتمدة `32076614547` / `95531085803` على apparatus head `a82ae53b57a9f97844013a9b2e96a9182cee241d` أعطت:
 
-**S2c — repair locality: CLOSED / CLOSURE VERIFIED.** ثلاث declaration-rename mutations مجمدة مسبقًا أعطت نتيجة mixed/interface-dependent؛ لا يوجد uniform repair-locality أو maintainability winner. أُغلقت S2c نهائيًا عبر closure PR #33 والـpost-merge run `32071325525` على commit `47b85a2f2f5be6e6e4ede2b600723b8616aeeee4` مع `No update necessary` و8808 jobs.
+- **6/6 semantic rejections**؛
+- **0 survivors**؛
+- **0 proof repairs**؛
+- **0 dependency-source touches**؛
+- artifact `9303987121`، SHA-256 `29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881` مع independent digest match.
 
-**S2d — semantic/index mutation resistance: INTEGRATED / POST-MERGE VERIFIED / CLOSURE IN PROGRESS.**
+I1 الداخلية مهمة منهجيًا: تعريف `erdosM` المتحوّر بقي type-correct، لكن independent concrete numerical oracle رفض الانزياح الدلالي. لا يُستنتج من ذلك general semantic-robustness أو architecture superiority.
 
-S2d انطلقت من الخطأ التاريخي الذي عامل `M(t,k+1)` كما لو كانت كتلته `[t,t+k]` بدل `[t+1,t+k+1]`. البروتوكول والـmanifest جُمّدا قبل بناء apparatus وقبل أي observation، ثم دُمجا وتحققا بعد الدمج عبر PR #34.
+PR #35 دمجت الدليل ونجحت exact-head/post-merge verification. ثم closure PR #36 final head `46b52c2c8ed1c4dd0623974c82c367071618f71b` نجحت في run `32103456742`, job `95608318715`، ودُمجت كـ`5039d464f6196e6b47494f0a6fae869e3362d082`. هذا exact `main` commit اجتاز run `32103947182`, job `95609642835` مع `verified_commit` مطابق، `No update necessary`، و**8808 jobs**. بذلك S2d **closure-verified**.
 
-مجموعة perturbations المجمدة:
+### S2e — upgrade robustness: PREDECLARED / NOT EXECUTED
 
-1. `I1` — shift لبداية الكتلة القانونية خطوة إلى اليسار مع الحفاظ على الطول؛
-2. `I2` — حذف الحد الأخير من الكتلة الأطول ذات `k+1` حدًا عند strong endpoint؛
-3. `I3` — تشديد شرط الفصل من `n+k≤m` إلى `n+(k+1)≤m` كـsemantic-survival control.
+S2e تقيس compatibility مع ترقية محددة وبسطح إصلاح project-owned محدود، وليس “maintainability” عامة ولا مقارنة جديدة مع comparator.
 
-أول run، `32074822049`، نجحت حسابيًا لكنها **مستبعدة بالكامل** لأن post-run audit كشف خطأ instrumentation في تصنيف `main_theorem` بالمقارن. لم تتغير mutations أو البروتوكول؛ صُحح classifier فقط وأُعيدت الحالات الست كلها من pristine baselines.
+الباسلاين المجمد هو S2d closure merge `5039d464f6196e6b47494f0a6fae869e3362d082`:
 
-الجولة المعتمدة هي PR-event exact-head run `32076614547`, job `95531085803`, على commit `a82ae53b57a9f97844013a9b2e96a9182cee241d`. artifact `9303987121` لها SHA-256:
+- Lean `v4.33.0`؛
+- Mathlib input `v4.33.0`, resolved `db584cd6d46c92f209a44c0f1c829460d327499d`؛
+- PNT+ `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
 
-`29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881`
+الـcandidateان المجمدان:
 
-وقد طابق التنزيل المستقل نفس digest حرفيًا.
+1. **U1 compiler-only:** Lean `v4.34.0-rc1` مع Mathlib/PNT والـmanifest الحالية ثابتة، ولا `lake update`.
+2. **U2 root Lean+Mathlib RC:** Lean `v4.34.0-rc1` + Mathlib exact `de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11` (tag provenance `v4.34.0-rc1`) مع PNT+ ثابتة عند `2667e414...`.
 
-النتيجة المعتمدة:
+عند لحظة predeclaration، PNT+ `main` نفسها تساوي `2667e414...`؛ لذلك لا توجد newer coordinated provider revision يمكن تبديلها تلقائيًا. إذا توقفت الترقية عند dependency support فهذه نتيجة supply-chain/version-boundary، وليست proof-quality defect، ولا يسمح S2e بترقيع third-party source.
 
-| mutation | internal first rejection | comparator first rejection |
-|---|---|---|
-| I1 start shift | `L1` concrete numerical oracle بعد نجاح source elaboration | `lcmInterval_ge_choose` local invariant |
-| I2 drop final term | `L0` source type mismatch | `main_theorem` strong theorem |
-| I3 strengthen separation | `L0` source application type mismatch | `erdos_678_kmn_infinite` canonical corollary |
+قبل أي repair ستُنفذ detection pass كاملة: environment identity، package resolution، ثلاث Mathlib-only project sentinels، PNT boundary، project PNT boundary، endpoint النهائي، ثم canonical graph. الإصلاح project-owned فقط وبميزانية ثابتة: **12 batches / 10 files / 250 changed lines**، مع theorem-header fingerprints وregression files غير قابلة للتغيير.
 
-**6/6 semantic mutations رُفضت، 0 survivors، 0 proof repairs، 0 dependency-source touches.** الاستنتاج الصحيح محدود: الضوابط المشفرة كشفت perturbations الثلاثة كلها، لكن موقع أول رفض اعتمد على mutation وبنية artifact. لا يجوز تحويل ذلك إلى general semantic-robustness أو architecture-superiority ranking.
+التصميم المجمد في:
 
-PR #35 اجتازت بوابة الدمج على رأسها النهائي `1a5728574f3d2c5101851becfb2500400aa395bd`: run `32078084197`, job `95535434320`, مع `verified_commit` مطابق، `No update necessary`، و**8808 jobs**. ثم دُمجت كـ`891d7b9e51c3ecc1313ee2de8d2a98036841b128`، وهذا الـcommit نفسه اجتاز post-merge push run `32102682942`, job `95606121109`, مع نفس invariants و**8808 jobs**.
+- `problems/678/S2_UPGRADE_ROBUSTNESS_PROTOCOL.md`؛
+- `problems/678/S2_UPGRADE_ROBUSTNESS_MATRIX.yaml`.
 
-إذن **الدليل التجريبي لـS2d مدمج ومتحقق بعد الدمج**. المتبقي فقط PR #36 كإغلاق توثيقي؛ S2e لا تبدأ قبل نجاح exact-head verification لهذه الـclosure، دمجها، ثم التحقق من exact merge commit الناتج.
-
-التفاصيل في:
-
-- `problems/678/S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md`؛
-- `problems/678/S2_SEMANTIC_INDEX_MUTATIONS.yaml`؛
-- `problems/678/S2_SEMANTIC_INDEX_BASELINE.md/.json`.
-
-### Public artifact
-
-المستودع **Public** ومرخص Apache-2.0. comparator يبقى external pinned fetch وغير vendored.
+**لم يُنشأ harness ولم تُنفذ U1 أو U2.** يجب أولًا دمج predeclaration والتحقق من exact `main` commit الناتج؛ بعدها فقط يسمح بإنشاء apparatus وتنفيذ المرشحين.
 
 ## بوابة الانتقال
 
