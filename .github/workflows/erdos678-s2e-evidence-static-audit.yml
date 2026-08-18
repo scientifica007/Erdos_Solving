@@ -44,7 +44,7 @@ jobs:
           assert value['repair_phase']['reason'] == 'no-eligible-project-owned-failure-reached'
           print('json_evidence_validation=PASS')
           PY
-          ruby -e "require 'yaml'; x=YAML.load_file('problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml'); abort unless x['schema_version']==17; abort unless x.dig('s2','s2e_upgrade_robustness','credited_detection','run')==32170243744; abort unless x.dig('s2','s2e_upgrade_robustness','repair_phase','status')=='not_applicable'; puts 'yaml_ledger_validation=PASS'"
+          ruby -e "require 'yaml'; x=YAML.unsafe_load_file('problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml'); abort unless x['schema_version']==17; abort unless x.dig('s2','s2e_upgrade_robustness','credited_detection','run')==32170243744; abort unless x.dig('s2','s2e_upgrade_robustness','repair_phase','status')=='not_applicable'; puts 'yaml_ledger_validation=PASS'"
 
       - name: Verify evidence-only net diff
         run: |
