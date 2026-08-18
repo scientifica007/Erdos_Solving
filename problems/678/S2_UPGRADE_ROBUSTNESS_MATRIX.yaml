@@ -1,0 +1,198 @@
+schema_version: 1
+experiment: erdos-678-s2e-upgrade-robustness
+predeclaration_date: 2026-08-18
+status: predeclared-not-executed
+scope: archived-erdos-678-internal-artifact-only
+
+baseline:
+  repository: scientifica007/Erdos_Solving
+  commit: 5039d464f6196e6b47494f0a6fae869e3362d082
+  lean_toolchain: leanprover/lean4:v4.33.0
+  mathlib_input: v4.33.0
+  mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
+  pnt_repository: AxiomMath/PrimeNumberTheoremAnd
+  pnt_commit: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+  canonical_build_jobs: 8808
+  required_baseline_checks:
+    - exact_checkout_identity
+    - lake_exe_mk_all_check_no_update_necessary
+    - lake_build_Formalization_8808_jobs
+
+upstream_freeze_facts:
+  mathlib_v4_34_0_rc1:
+    tag: v4.34.0-rc1
+    commit: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
+    lean_toolchain: leanprover/lean4:v4.34.0-rc1
+  pnt_main_at_freeze:
+    commit: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+    equals_baseline_pnt: true
+    declared_lean_toolchain: leanprover/lean4:v4.33.0-rc1
+    declared_mathlib_commit: 288f16d9a07189233a9bc5e1c143c38d1f3f4d37
+  coordinated_newer_pnt_provider_available: false
+
+candidates:
+  - id: U1-lean-4.34.0-rc1-compiler-only
+    purpose: compiler-only-forward-pressure
+    lean_toolchain: leanprover/lean4:v4.34.0-rc1
+    root_mathlib_mode: baseline-locked
+    root_mathlib_input: v4.33.0
+    root_mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
+    pnt_commit: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+    lakefile_change: none
+    manifest_change: forbidden
+    lake_update_allowed: false
+    setup_edits:
+      - temporary_lean_toolchain_only
+
+  - id: U2-lean-mathlib-4.34.0-rc1-root-upgrade
+    purpose: coordinated-root-lean-mathlib-release-candidate-upgrade-with-frozen-pnt
+    lean_toolchain: leanprover/lean4:v4.34.0-rc1
+    root_mathlib_mode: exact-candidate-commit
+    root_mathlib_provenance_tag: v4.34.0-rc1
+    root_mathlib_exact_commit: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
+    pnt_commit: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+    lakefile_change: temporary-root-mathlib-rev-to-exact-candidate-commit
+    manifest_change: regenerate-in-temporary-copy
+    lake_update_allowed: true
+    required_resolution_checks:
+      mathlib_resolved_exactly: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
+      pnt_resolved_exactly: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+
+candidate_identity_rules:
+  floating_refs_forbidden: true
+  forbidden_aliases: [master, main, latest, nightly]
+  later_candidate_substitution_forbidden: true
+  newly_appearing_pnt_revision_substitution_forbidden: true
+
+no_repair_detection:
+  D0:
+    name: candidate-environment-identity
+    class_on_failure: apparatus_or_provenance
+  D1:
+    name: package-graph-manifest-resolution
+    class_on_failure: package_resolution
+  D2:
+    name: project-mathlib-only-sentinels
+    attempt_all_independently: true
+    targets:
+      - Formalization.Erdos678.Intervals
+      - Formalization.Erdos678.ValuationBasic
+      - Formalization.Erdos678.Claim4Density
+  D3:
+    name: external-pnt-support-boundary
+    target: PrimeNumberTheoremAnd
+  D4:
+    name: project-pnt-boundary-sentinel
+    prerequisite: D3-green
+    target: Formalization.Erdos678.Claim4RelativePrimePNT
+  D5:
+    name: canonical-erdos-678-endpoint
+    prerequisite: D3-green
+    target: Formalization.Erdos678.Erdos678Final
+  D6:
+    name: canonical-import-and-full-graph
+    prerequisite: required-prior-stages-green
+    commands:
+      - lake exe mk_all --check
+      - lake build Formalization
+
+failure_owner_classes:
+  - apparatus_or_provenance
+  - package_resolution
+  - lean_toolchain
+  - mathlib_or_transitive_dependency
+  - pnt_dependency_support
+  - project_owned
+  - ambiguous
+
+repair_policy:
+  no_repair_before_detection_pass_complete: true
+  dependency_source_edits_allowed: false
+  alternate_pnt_revision_allowed: false
+  project_owned_scope:
+    - formalization/Formalization/Erdos678/**/*.lean
+    - formalization/Formalization.lean:import-only
+  forbidden_repair_targets:
+    - .lake/packages/**
+    - formalization/lakefile.toml:beyond-candidate-setup
+    - formalization/lean-toolchain:beyond-candidate-setup
+    - formalization/lake-manifest.json:beyond-candidate-setup
+    - problems/678/S2_UPGRADE_ROBUSTNESS_PROTOCOL.md
+    - problems/678/S2_UPGRADE_ROBUSTNESS_MATRIX.yaml
+  immutable_regression_files:
+    - formalization/Formalization/Erdos678/ConcreteTests.lean
+    - formalization/Formalization/Erdos678/Erdos678FinalTests.lean
+    - formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean
+  frozen_semantic_endpoint_headers:
+    - cambie_lcm_ratio_eventually_with_large_start_real
+    - erdos678_unbounded_witnesses
+    - erdos678_good_lengths_infinite
+    - erdos678_formalConjectures_eventual_nonempty
+  max_repair_batches: 12
+  max_project_owned_files_touched: 10
+  max_aggregate_line_churn_additions_plus_deletions: 250
+  full_file_rewrite_to_evade_budget: forbidden
+
+repair_tracks:
+  mathlib_only:
+    eligibility: D2-project-owned-failure-with-D0-D1-valid
+    goal: all-D2-sentinels-green
+    remains_interpretable_if_D3_dependency_blocked: true
+  pnt_dependent_full:
+    eligibility: D3-green
+    ordered_targets: [D4, D5, D6]
+    stop_if_dependency_support_fails: true
+
+required_outcomes_per_candidate:
+  provenance:
+    - exact_baseline_commit
+    - exact_candidate_lean
+    - exact_mathlib_identity
+    - exact_pnt_identity
+    - runner_image
+    - runner_version
+    - exact_apparatus_commit
+  detection:
+    - D0_D6_status_where_applicable
+    - all_D2_sentinel_results
+    - first_failing_file_or_declaration_per_stage
+    - primary_failure_owner
+    - deepest_green_stage
+    - full_no_repair_survivor
+  repair:
+    - repair_eligibility
+    - final_repair_class
+    - repair_batch_count
+    - project_owned_files_touched
+    - diff_hunks
+    - additions
+    - deletions
+    - third_party_source_files_touched_must_equal_zero
+    - immutable_regression_files_touched_must_equal_zero
+    - semantic_header_fingerprint_changes_must_equal_zero
+    - final_targets_reached
+
+final_repair_classes:
+  - not_needed
+  - repaired_green
+  - dependency_support_blocked
+  - project_repair_budget_exceeded
+  - apparatus_invalid
+
+scientific_limits:
+  - no_general_maintainability_claim
+  - no_human_repair_time_claim
+  - no_architecture_superiority_claim
+  - no_expected_future_upgrade_cost_claim
+  - no_general_lean_mathlib_compatibility_claim
+  - dependency_support_blocker_is_not_proof_quality_defect
+  - timing_is_not_an_outcome_metric
+
+execution_gate:
+  harness_creation_before_predeclaration_integration: forbidden
+  candidate_execution_before_predeclaration_postmerge_verification: forbidden
+  next_step_after_verified_predeclaration: create-fail-closed-s2e-apparatus-and-execute-exactly-U1-U2
+
+transition_gate:
+  decision: DEC-012
+  new_erdos_problem_authorized: false
