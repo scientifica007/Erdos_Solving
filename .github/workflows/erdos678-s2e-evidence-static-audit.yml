@@ -1,0 +1,70 @@
+name: Erdos 678 S2e Evidence Static Audit
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/erdos678-s2e-evidence-static-audit.yml
+      - PROJECT_STATE.md
+      - README.md
+      - problems/678/README.md
+      - problems/678/PUBLICATION_AND_UPSTREAM_ROADMAP.md
+      - problems/678/S2_UPGRADE_ROBUSTNESS_BASELINE.json
+      - problems/678/S2_UPGRADE_ROBUSTNESS_BASELINE.md
+      - problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml
+
+permissions:
+  contents: read
+
+jobs:
+  static-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate machine-readable evidence
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('problems/678/S2_UPGRADE_ROBUSTNESS_BASELINE.json')
+          value = json.loads(p.read_text())
+          assert value['status'] == 'detection-executed-success-artifact-validated-pending-evidence-integration'
+          assert value['credited_detection']['run'] == 32170243744
+          assert value['credited_detection']['complete_artifact']['id'] == 9337321640
+          assert value['credited_detection']['complete_artifact']['sha256'] == '90f7285496372570e6b7e90e5c3b0dc0437299bcf1a824ddaea33f635171001c'
+          assert value['credited_detection']['complete_artifact']['combine_audit'] == 'PASS'
+          assert value['repair_phase']['status'] == 'not_applicable'
+          assert value['repair_phase']['reason'] == 'no-eligible-project-owned-failure-reached'
+          print('json_evidence_validation=PASS')
+          PY
+          ruby -e "require 'yaml'; x=YAML.load_file('problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml'); abort unless x['schema_version']==17; abort unless x.dig('s2','s2e_upgrade_robustness','credited_detection','run')==32170243744; abort unless x.dig('s2','s2e_upgrade_robustness','repair_phase','status')=='not_applicable'; puts 'yaml_ledger_validation=PASS'"
+
+      - name: Verify evidence-only net diff
+        run: |
+          set -euo pipefail
+          base='eaf77afd8db3e9e3c32770b953eb2c0ef8a61be7'
+          git diff --name-only "$base"...HEAD | sort > /tmp/actual
+          cat > /tmp/expected <<'EOF'
+          .github/workflows/erdos678-s2e-evidence-static-audit.yml
+          PROJECT_STATE.md
+          README.md
+          problems/678/PUBLICATION_AND_UPSTREAM_ROADMAP.md
+          problems/678/README.md
+          problems/678/S2_UPGRADE_ROBUSTNESS_BASELINE.json
+          problems/678/S2_UPGRADE_ROBUSTNESS_BASELINE.md
+          problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml
+          EOF
+          sort -o /tmp/expected /tmp/expected
+          diff -u /tmp/expected /tmp/actual
+          if git diff --name-only "$base"...HEAD | grep -E '(^|/)formalization/|experiments/|S2_UPGRADE_ROBUSTNESS_PROTOCOL.md|S2_UPGRADE_ROBUSTNESS_MATRIX.yaml'; then
+            echo 'forbidden scientific-design/source path changed' >&2
+            exit 1
+          fi
+          echo 'evidence_only_diff=PASS'
