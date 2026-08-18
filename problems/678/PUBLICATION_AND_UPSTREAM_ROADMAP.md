@@ -20,79 +20,79 @@ Durable result: no stable wall-clock winner in six paired runs under the pinned 
 
 ### S2c — repair locality — CLOSED
 
-Durable result: three prospectively frozen API-reference mutations produced a mixed/interface-dependent result; no uniform repair-locality or maintainability winner. S2c is fully closure-verified.
+Durable result: three prospectively frozen API-reference mutations produced a mixed/interface-dependent result; no uniform repair-locality or maintainability winner.
 
-### S2d — semantic/index mutation resistance — INTEGRATED / POST-MERGE VERIFIED / CLOSURE IN PROGRESS
+### S2d — semantic/index mutation resistance — CLOSED / CLOSURE VERIFIED
 
-#### Question and frozen design
+Three prospectively frozen one-unit semantic/index perturbations were all rejected in both artifacts, with mutation- and structure-dependent first rejection locations. I1 provides direct evidence that the internal independent concrete numerical regression layer detects a semantic convention drift that remains type-correct at the primitive definition.
 
-S2d asks where small type-correct semantic/index perturbations are first rejected, motivated by the historical off-by-one interval failure `[t,t+k]` versus `[t+1,t+k+1]`.
+The first computationally successful pilot was excluded in full after a primary comparator-classification instrumentation defect was found; only the classifier was corrected and the complete frozen set was rerun.
 
-The protocol and manifest were frozen and integrated through predeclaration PR #34 before apparatus creation. Three matched mutation pairs were fixed:
+Credited run `32076614547`, job `95531085803`, produced 6 semantic rejections, 0 survivors, 0 proof repairs, and 0 dependency-source touches. Substantive integration PR #35 and documentation closure PR #36 both passed exact-head and exact-main post-merge verification.
 
-1. **I1** canonical same-length block shifted left by one;
-2. **I2** long `k+1` block loses its final term;
-3. **I3** `n+k≤m` strengthened to `n+(k+1)≤m` as a possible semantic-survival control.
+Closure PR #36 final head `46b52c2c8ed1c4dd0623974c82c367071618f71b` passed run `32103456742`, job `95608318715`, then merged as `5039d464f6196e6b47494f0a6fae869e3362d082`. That exact main commit passed run `32103947182`, job `95609642835`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**. S2d is fully closed.
 
-No proof repair is allowed; each observation starts from a pristine baseline.
+### S2e — upgrade robustness — PREDECLARED / NOT EXECUTED
 
-#### Measurement-validity correction
+#### Scientific question
 
-First run `32074822049` completed computationally but is excluded in full because the comparator logical-layer classifier mislabeled `main_theorem : MainTheoremStatement` as a generic local lemma instead of a strong theorem. Since first rejection classification is a primary metric, the result was not edited post hoc.
+For exact frozen forward Lean/Mathlib candidates, determine where compatibility first fails, whether the blocker belongs to dependency support or project-owned source, and—only for eligible project-owned failures—what bounded semantic-preserving repair surface restores the predeclared verification targets.
 
-Only the classifier was corrected. The frozen mutations, baseline, checks, and proof sources were unchanged, and the complete six-observation experiment was rerun.
+This is an internal-artifact version-transition experiment, not a new cross-artifact ranking and not a general maintainability benchmark.
 
-#### Credited evidence
+#### Baseline
 
-Credited exact-head PR-event run:
+S2e starts from exact S2d closure merge `5039d464f6196e6b47494f0a6fae869e3362d082` with:
 
-- apparatus head `a82ae53b57a9f97844013a9b2e96a9182cee241d`;
-- run `32076614547`, job `95531085803`;
-- artifact `9303987121`;
-- SHA-256 `29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881`;
-- independent downloaded digest: exact match;
-- 6 observations, 6 semantic rejections, 0 survivors, 0 proof repairs, 0 dependency-source touches.
+- Lean `v4.33.0`;
+- Mathlib `v4.33.0` / `db584cd6d46c92f209a44c0f1c829460d327499d`;
+- PNT+ `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`;
+- canonical baseline build: **8808 jobs**.
 
-| mutation | internal first rejection | comparator first rejection |
-|---|---|---|
-| I1 start shift | concrete numerical oracle after mutated primitive source elaborated | `lcmInterval_ge_choose` local invariant |
-| I2 drop final term | mutated strong endpoint source type mismatch | `main_theorem` strong theorem |
-| I3 strengthen separation | mutated canonical endpoint source application mismatch | `erdos_678_kmn_infinite` canonical corollary |
+#### Frozen candidates
 
-#### Defensible interpretation
+1. **U1 — compiler-only forward pressure**
+   - Lean `v4.34.0-rc1`;
+   - baseline Mathlib/PNT source and manifest identities fixed;
+   - no `lake update`.
 
-**Established for these mutations:** all three frozen one-unit semantic/index perturbations were rejected by both artifacts, with mutation- and structure-dependent first rejection locations.
+2. **U2 — root Lean + Mathlib release-candidate upgrade**
+   - Lean `v4.34.0-rc1`;
+   - Mathlib exact commit `de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11`, provenance tag `v4.34.0-rc1`;
+   - PNT+ remains exact `2667e414c38e5a5dc9aa1946f16f13001e5cd3ed`.
 
-**Specific useful evidence:** I1 shows that the internal concrete numerical regression layer catches a semantic convention shift that remains syntactically/type-correct at the primitive definition itself.
+At predeclaration time PNT+ `main` is the same baseline commit and has not supplied a newer coordinated 4.34 provider revision. S2e therefore does not invent, vendor, or automatically patch such a provider. A PNT/dependency-support blocker is retained as a supply-chain/version-boundary result, not a proof-quality defect.
 
-**Not established:** general semantic-robustness superiority, general architecture superiority, a common ordinal rejection-depth ranking across modular versus monolithic artifacts, human debugging advantage, maintainability, or upgrade robustness.
+#### Detection taxonomy and stages
 
-The I3 survival control did not survive in either artifact. That outcome is retained; it does not imply every nearby changed-but-true target would be rejected.
+No repair occurs before the complete no-repair detection pass.
 
-Full report: `S2_SEMANTIC_INDEX_BASELINE.md/.json`. Exact raw logs/result remain in artifact `9303987121`.
+- D0 candidate identity/provenance;
+- D1 package graph/manifest resolution;
+- D2 all three project-owned Mathlib-only sentinels (`Intervals`, `ValuationBasic`, `Claim4Density`);
+- D3 external PNT+ support boundary;
+- D4 project PNT boundary `Claim4RelativePrimePNT` when D3 is green;
+- D5 canonical #678 endpoint `Erdos678Final` when D3 is green;
+- D6 `mk_all --check` + full canonical `Formalization` build.
 
-#### Verified integration
+Primary ownership classes are frozen as apparatus/provenance, package resolution, Lean toolchain, Mathlib/transitive dependency, PNT dependency support, project-owned, or ambiguous.
 
-PR #35 final head `1a5728574f3d2c5101851becfb2500400aa395bd` passed canonical Lean Verification run `32078084197`, job `95535434320`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
+#### Repair discipline
 
-PR #35 merged as `891d7b9e51c3ecc1313ee2de8d2a98036841b128`. The exact resulting `main` commit passed push run `32102682942`, job `95606121109`, again with matching `verified_commit`, `No update necessary`, and **8808 jobs**.
+Dependency-source edits are prohibited. Project-owned repair is eligible only after no-repair detection and under one cumulative budget per candidate:
 
-The substantive S2d experiment/evidence integration is therefore complete and post-merge verified.
+- maximum **12 batches**;
+- maximum **10 project-owned files**;
+- maximum **250 aggregate additions + deletions**.
 
-#### Closure gate
+Key verification files remain byte-identical, and canonical semantic endpoint headers are fingerprinted and must remain unchanged. A full candidate blocked at PNT support may still yield interpretable Mathlib-only sentinel/repair evidence; no workaround is introduced to force the PNT-dependent stack green.
 
-Documentation-only PR #36 is now the remaining gate. It must:
+#### Predeclaration artifacts
 
-1. contain only state/evidence documentation changes;
-2. pass canonical exact-head Lean Verification on its final head;
-3. merge only with that verified head unchanged;
-4. pass post-merge verification on the exact resulting `main` commit.
+- `S2_UPGRADE_ROBUSTNESS_PROTOCOL.md`;
+- `S2_UPGRADE_ROBUSTNESS_MATRIX.yaml`.
 
-Only after those conditions are met is S2d `CLOSURE VERIFIED` and S2e permitted to enter predeclaration.
-
-### S2e — upgrade robustness — PLANNED / BLOCKED
-
-Run isolated Lean/Mathlib upgrade probes and measure failure/repair surfaces with project-owned versus dependency-support attribution. **Do not start until S2d documentation closure is verified.**
+At this checkpoint **no S2e harness exists and neither U1 nor U2 has been executed**. Apparatus creation is forbidden until this predeclaration passes exact-head CI, merges, and the exact resulting main commit passes post-merge verification.
 
 ### S2f — independent audit — PLANNED
 
@@ -104,12 +104,13 @@ Candidate title:
 
 **From Failed Conjecture to Machine-Checked Reconstruction: A Long-Horizon AI-Assisted Formalization Case Study of Erdős #678**
 
-S2 now contributes four concrete methodology episodes:
+Methodology episodes now include:
 
-- **S2a:** a reproducible metric may still be scientifically misleading when its proxy boundary is incomparable;
-- **S2b:** a computationally green experiment may be scientifically inadmissible when predeclared provenance is missing;
-- **S2c:** a prospectively defined comparison may yield a mixed result that should be preserved rather than redesigned after observation;
-- **S2d:** type-correct semantic drift can be rejected at different encoded control locations, and a computationally successful run must still be discarded when a primary classifier is instrumented incorrectly.
+- **S2a:** reproducible metrics can be scientifically misleading under incomparable ownership boundaries;
+- **S2b:** computational success can still be scientifically inadmissible when predeclared provenance is absent;
+- **S2c:** prospective comparisons may yield mixed results that must be retained;
+- **S2d:** type-correct semantic drift is caught at different encoded controls, and a primary measurement-classifier defect invalidates a green run;
+- **S2e design:** upgrade evidence must separate dependency-support lag from project-owned compatibility repair before repair counts are interpreted.
 
 These are externally auditable through protocols, commits, CI runs, artifacts, corrections, excluded pilots, and persisted evidence; hidden chain-of-thought is unnecessary.
 
@@ -124,11 +125,11 @@ After S2 evidence stabilizes:
 
 ## Claim ladder
 
-**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; machine-checked statement bridges; executable differential verification; S2a boundary-sensitive structural control; S2b resource-profile baseline with no stable wall-time winner; S2c mixed repair-locality baseline; S2d six-observation semantic/index mutation baseline with all three frozen perturbations rejected in both artifacts and layer-dependent detection; verified integration of the S2d evidence through PR #35 and its exact post-merge `main` commit.
+**Established:** known Cambie mathematics; prior Aristotle/Alexeev formalization; independent Lean reimplementation; machine-checked statement bridges; executable differential verification; closure-verified S2a boundary-sensitive structural control; closure-verified S2b resource baseline with no stable wall-time winner; closure-verified S2c mixed repair-locality baseline; closure-verified S2d six-observation semantic/index baseline with all three frozen perturbations rejected in both artifacts.
 
-**Supported interpretation:** independent numerical/regression controls can add statement-fidelity value beyond primitive type correctness in the observed I1 mutation; measurement provenance/classification auditing is scientifically consequential.
+**Prospectively defined but not yet evidenced:** U1/U2 upgrade-compatibility outcomes, dependency-support blockers, and bounded project-owned repair surface under S2e.
 
-**Still requires later evidence:** general semantic robustness, general maintainability, human repair/debugging effort, upgrade robustness, causal explanations for S2b resource differences, causal benefit of state protocols.
+**Still requires later evidence:** general semantic robustness, general maintainability, human repair/debugging effort, expected future upgrade cost, causal explanations for S2b resource differences, causal benefit of state protocols.
 
 **Unsupported:** new solution, new independent mathematical proof, first Lean formalization, general architecture superiority, universal speed advantage, general maintainability superiority, general semantic-robustness superiority, autonomous AI authorship percentage.
 
@@ -140,8 +141,8 @@ After S2 evidence stabilizes:
   - **S2a:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
   - **S2b:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
   - **S2c:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
-  - **S2d:** COMPLETE / INTEGRATED / POST-MERGE VERIFIED / CLOSURE IN PROGRESS.
-  - **S2e:** NOT STARTED / BLOCKED BY S2d CLOSURE VERIFICATION.
+  - **S2d:** COMPLETE / INTEGRATED / CLOSURE VERIFIED.
+  - **S2e:** PREDECLARED / NOT EXECUTED / PENDING PREDECLARATION INTEGRATION.
   - **S2f:** NOT STARTED.
 - **S3:** NOT STARTED.
 - **S4:** NOT STARTED.
