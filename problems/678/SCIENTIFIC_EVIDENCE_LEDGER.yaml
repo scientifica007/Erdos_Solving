@@ -1,5 +1,5 @@
-schema_version: 14
-snapshot_date: 2026-08-17
+schema_version: 15
+snapshot_date: 2026-08-18
 scope: erdos-678-only
 
 classification:
@@ -42,7 +42,7 @@ s1_differential_verification:
 
 s2:
   status: active
-  current_substage: S2d-integration
+  current_substage: S2d-closure
 
   s2a_dependency_surface:
     status: complete-integrated-postmerge-verified-closure-verified
@@ -145,7 +145,7 @@ s2:
       - not architecture superiority
 
   s2d_semantic_index_mutation:
-    status: executed-success-artifact-validated-pending-pr-integration
+    status: complete-integrated-postmerge-verified-closure-in-progress
     protocol: problems/678/S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md
     mutation_manifest: problems/678/S2_SEMANTIC_INDEX_MUTATIONS.yaml
     baseline_markdown: problems/678/S2_SEMANTIC_INDEX_BASELINE.md
@@ -262,6 +262,26 @@ s2:
       - I1 internal primitive mutation elaborated before independent concrete oracle rejection
       - I3 possible-survival control did not survive in either artifact
       - internal staged strata and comparator monolithic declaration classes are not a common ordinal scale
+    integration:
+      pr: 35
+      final_head: 1a5728574f3d2c5101851becfb2500400aa395bd
+      exact_head_run: 32078084197
+      exact_head_job: 95535434320
+      exact_head_result: success
+      exact_head_commit_match: true
+      exact_head_import_check: no-update-necessary
+      exact_head_build_jobs: 8808
+      merge_commit: 891d7b9e51c3ecc1313ee2de8d2a98036841b128
+      postmerge_run: 32102682942
+      postmerge_job: 95606121109
+      postmerge_result: success
+      postmerge_commit_match: true
+      postmerge_import_check: no-update-necessary
+      postmerge_build_jobs: 8808
+    closure:
+      pr: 36
+      status: in-progress
+      substantive_integration_already_verified: true
     interpretation_limits:
       - not general semantic robustness
       - not general architecture superiority
@@ -295,6 +315,7 @@ allowed_external_claims:
   - prospectively frozen S2d six-observation semantic/index mutation experiment
   - all three frozen S2d perturbations were rejected in both artifacts with layer-dependent detection
   - internal I1 primitive semantic shift elaborated before independent concrete oracle rejected it
+  - S2d substantive experiment/evidence integration is exact-head and post-merge verified
   - computational success and scientifically admissible measurement remain separate gates
 
 claims_requiring_new_experiments:
@@ -317,9 +338,9 @@ forbidden_or_unsupported_claims:
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S2d-integration
+  stage: S2d-closure
   status: in-progress
-  requirement: synchronize validated S2d evidence on PR 35; canonical exact-head Lean Verification on final PR head; merge only if green; exact-main postmerge verification; then documentation-only closure
+  requirement: documentation-only PR 36 must pass canonical exact-head Lean Verification on its final head; merge unchanged; verify exact resulting main commit
   next_after_close: S2e-upgrade-robustness-predeclaration
 
 privacy_and_reproducibility:

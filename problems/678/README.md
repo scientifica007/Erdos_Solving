@@ -1,8 +1,8 @@
 # Erdős Problem #678 — Machine-Checked Cambie Reconstruction
 
-> **Mathematical status (2026-08-17): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
+> **Mathematical status (2026-08-18): COMPLETE / MACHINE-CHECKED / INTEGRATED / POST-MERGE VERIFIED / ARCHIVED.**
 >
-> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b CLOSED. S2c CLOSED / CLOSURE VERIFIED. S2d EXECUTED / ARTIFACT VALIDATED / PENDING PR INTEGRATION.**
+> **Scientific-evaluation status: S1 CLOSED. S2a CLOSED. S2b CLOSED. S2c CLOSED / CLOSURE VERIFIED. S2d INTEGRATED / POST-MERGE VERIFIED / CLOSURE IN PROGRESS.**
 >
 > The successful route is an external-proof reconstruction of Cambie (2024) and an independent Lean reimplementation. It is neither a new mathematical proof nor the first Lean formalization. Per `DEC-012`, no other Erdős problem may be activated without explicit user authorization.
 
@@ -17,7 +17,7 @@ Let `M(n,k) = lcm{n+1,...,n+k}`. The final Lean graph includes `erdos678_unbound
 - **S2b:** no stable wall-clock winner under the pinned common environment, with materially different CPU/memory profiles; closed. A computationally green pilot was excluded when required provenance was missing.
 - **S2c:** three prospectively frozen API-reference mutations produced a mixed/interface-dependent repair-locality result; no uniform winner; closed through PR #32 + closure PR #33 and exact-main post-merge verification.
 
-## S2d — semantic/index mutation resistance — EXECUTED / VALIDATED
+## S2d — semantic/index mutation resistance — INTEGRATED / POST-MERGE VERIFIED / CLOSURE IN PROGRESS
 
 ### Historical motivation
 
@@ -94,9 +94,23 @@ No cross-artifact ordinal ranking is justified. Internal `L0..L5` stages and com
 
 Validated report: `S2_SEMANTIC_INDEX_BASELINE.md/.json`. Exact raw `result.json` and per-stage logs remain in GitHub Actions artifact `9303987121`.
 
-## Current integration gate
+### Verified evidence integration
 
-PR #35 contains the apparatus and validated S2d evidence. The final PR head, after evidence synchronization, must pass canonical exact-head Lean Verification. Merge is allowed only if green, and the exact resulting `main` commit must then pass post-merge verification. A documentation-only closure should record those integration facts before S2e begins.
+PR #35 final evidence-synchronized head was `1a5728574f3d2c5101851becfb2500400aa395bd`. Canonical Lean Verification run `32078084197`, job `95535434320`, succeeded on that exact head with:
+
+- matching `verified_commit`;
+- `No update necessary`;
+- `Build completed successfully (8808 jobs).`.
+
+PR #35 then merged as `891d7b9e51c3ecc1313ee2de8d2a98036841b128`. The exact resulting `main` commit passed push run `32102682942`, job `95606121109`, with the same three invariants: matching commit, `No update necessary`, and **8808 jobs**.
+
+Therefore the substantive S2d experiment and evidence are **integrated and post-merge verified**.
+
+### Remaining closure gate
+
+Documentation-only PR #36 records the integration facts and converts the project checkpoint from “pending integration” to “integrated/post-merge verified.” S2d is not considered closure-verified until the final PR #36 head passes canonical exact-head Lean Verification, PR #36 merges, and the exact resulting `main` commit passes post-merge verification.
+
+S2e remains blocked until that closure gate is complete.
 
 ## AI-for-science relevance
 

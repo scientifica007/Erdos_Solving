@@ -1,8 +1,8 @@
 # Project State
 
-> **Operational checkpoint synchronized on 2026-08-17.**
+> **Operational checkpoint synchronized on 2026-08-18.**
 >
-> **Erdős #678 mathematics, S1, S2a, S2b, and S2c are closed and machine-verified. S2d semantic/index mutation resistance has executed under a prospectively frozen mutation set; the credited artifact is validated and awaits final PR integration.**
+> **Erdős #678 mathematics, S1, S2a, S2b, and S2c are closed and machine-verified. S2d semantic/index mutation evidence is integrated and post-merge verified; its documentation closure is in progress on PR #36.**
 >
 > **No other Erdős problem may be selected, activated, resumed, researched, or formalized without explicit user authorization (`DEC-012`).**
 
@@ -13,7 +13,7 @@ This is the authoritative restart checkpoint. Verification and experimental cred
 ```yaml
 current_problem: 678
 current_phase: archived
-current_stage: scientific-evaluation-s2d-integration
+current_stage: scientific-evaluation-s2d-closure
 proof_frozen: true
 repository_visibility: public
 project_license: Apache-2.0
@@ -59,7 +59,7 @@ s2c_closure_postmerge_commit_match: true
 s2c_closure_postmerge_import_check: no-update-necessary
 s2c_closure_postmerge_build_jobs: 8808
 
-s2d_status: executed-success-artifact-validated-pending-pr-integration
+s2d_status: complete-integrated-postmerge-verified-closure-in-progress
 s2d_protocol: problems/678/S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md
 s2d_mutation_manifest: problems/678/S2_SEMANTIC_INDEX_MUTATIONS.yaml
 s2d_baseline_markdown: problems/678/S2_SEMANTIC_INDEX_BASELINE.md
@@ -104,14 +104,27 @@ s2d_primary_finding: all-three-predeclared-semantic-index-perturbations-rejected
 s2d_scope: three-predeclared-one-unit-type-correct-semantic-index-perturbations-only
 s2d_general_semantic_robustness_claim: unsupported
 s2d_pr: 35
+s2d_final_head: 1a5728574f3d2c5101851becfb2500400aa395bd
+s2d_exact_head_ci_run: 32078084197
+s2d_exact_head_ci_job: 95535434320
+s2d_exact_head_commit_match: true
+s2d_exact_head_import_check: no-update-necessary
+s2d_exact_head_build_jobs: 8808
+s2d_merge_commit: 891d7b9e51c3ecc1313ee2de8d2a98036841b128
+s2d_postmerge_ci_run: 32102682942
+s2d_postmerge_ci_job: 95606121109
+s2d_postmerge_commit_match: true
+s2d_postmerge_import_check: no-update-necessary
+s2d_postmerge_build_jobs: 8808
+s2d_closure_pr: 36
 
-s2e_status: not-started
+s2e_status: not-started-blocked-pending-s2d-closure-verification
 s2f_status: not-started
 s3_status: not-started
 s4_status: not-started
 s5_status: not-started
 user_transition_gate: explicit-authorization-required-for-another-erdos-problem
-next_action: synchronize final S2d evidence on PR 35; require canonical exact-head Lean Verification on the final PR head; merge only if green; verify exact resulting main commit; then perform documentation-only S2d closure before S2e
+next_action: finalize documentation-only S2d closure on PR 36; require canonical exact-head Lean Verification on its final documentation head; merge only if green; verify the exact resulting main commit; only then predeclare S2e within archived problem 678
 ```
 
 ## Governing rules
@@ -145,7 +158,7 @@ S2b controlled build/resource evidence and closure are complete. The credited si
 
 S2c repair-locality evidence and closure are complete. Its result is mixed/interface-dependent and supports no uniform repair-locality or maintainability advantage.
 
-## S2d — semantic/index mutation resistance — EXECUTED / VALIDATED
+## S2d — semantic/index mutation resistance — INTEGRATED / POST-MERGE VERIFIED / CLOSURE IN PROGRESS
 
 The protocol and three matched mutations were frozen and fully integrated through PR #34 before apparatus creation. The frozen internal source baseline is `47b85a2f2f5be6e6e4ede2b600723b8616aeeee4`.
 
@@ -165,15 +178,18 @@ The defensible conclusion is limited: **the three frozen one-unit semantic/index
 
 This does not support a general semantic-robustness ranking. Internal staged modules and comparator monolithic declaration classes are not a shared ordinal robustness scale.
 
+PR #35 final head `1a5728574f3d2c5101851becfb2500400aa395bd` passed canonical run `32078084197`, job `95535434320`, with matching `verified_commit`, `No update necessary`, and **8808 jobs**. It merged as `891d7b9e51c3ecc1313ee2de8d2a98036841b128`. That exact `main` commit passed push run `32102682942`, job `95606121109`, again with matching `verified_commit`, `No update necessary`, and **8808 jobs**. The substantive S2d experiment/evidence integration is therefore verified.
+
+Documentation-only closure PR #36 is now the only remaining S2d gate. S2e remains blocked until PR #36 itself passes exact-head canonical CI, merges, and its resulting exact `main` commit is verified.
+
 Full validated evidence is in `S2_SEMANTIC_INDEX_BASELINE.md/.json`; exact raw `result.json` and logs remain in artifact `9303987121`.
 
 ## Required restart sequence
 
 1. Treat mathematics, S1, S2a, S2b, and S2c as closed and machine-verified.
-2. Treat S2d predeclaration as frozen/integrated and the credited run/artifact above as the executed result.
-3. Complete S2d state/evidence synchronization on PR #35.
-4. Require canonical exact-head Lean Verification on the final PR #35 head; merge only if green.
-5. Verify the exact resulting `main` commit, then close S2d documentation through the same DEC-008/DEC-011 discipline.
-6. Do not start S2e until S2d closure verification is complete.
-7. Continue all scientific work only on archived #678.
-8. **Do not start another Erdős problem without explicit user authorization.**
+2. Treat S2d predeclaration, experiment, and substantive integration as complete and post-merge verified.
+3. Complete documentation-only S2d closure on PR #36.
+4. Require canonical exact-head Lean Verification on the final PR #36 head; merge only if green.
+5. Verify the exact resulting `main` commit; only then mark S2d closure-verified and permit S2e predeclaration.
+6. Continue all scientific work only on archived #678.
+7. **Do not start another Erdős problem without explicit user authorization.**
