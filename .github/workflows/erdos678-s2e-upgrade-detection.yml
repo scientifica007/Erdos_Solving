@@ -1,0 +1,62 @@
+name: Erdos 678 S2e Upgrade Detection
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/erdos678-s2e-upgrade-detection.yml
+
+permissions:
+  contents: read
+
+jobs:
+  detection:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Record workflow and apparatus identities
+        run: |
+          set -euo pipefail
+          printf 'workflow_commit=%s\n' "$(git rev-parse HEAD)"
+          printf 'apparatus_commit=%s\n' "$(git log -1 --format=%H -- problems/678/experiments/s2_upgrade_robustness.py)"
+
+      - name: Install Elan only
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          lake-package-directory: formalization
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          mk_all-check: false
+          use-mathlib-cache: false
+          use-github-cache: false
+          check-reservoir-eligibility: false
+          leanchecker: false
+          lean4checker: false
+          nanoda: false
+
+      - name: Execute frozen no-repair detection
+        id: detection
+        run: |
+          set -euo pipefail
+          python3 problems/678/experiments/s2_upgrade_robustness.py \
+            --phase detection \
+            --candidate all \
+            --repo . \
+            --output "${RUNNER_TEMP}/s2e-upgrade-artifact"
+
+      - name: Upload exact S2e detection artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: erdos678-s2e-detection-${{ github.run_id }}
+          path: ${{ runner.temp }}/s2e-upgrade-artifact
+          if-no-files-found: error
+          retention-days: 90
