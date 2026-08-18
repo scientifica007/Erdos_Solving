@@ -1,0 +1,137 @@
+name: Erdos 678 S2e Artifact Transport Static Audit
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/erdos678-s2e-artifact-transport-static-audit.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  synthetic-producer:
+    name: synthetic-${{ matrix.short }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        short: [U1, U2]
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Build synthetic non-observational candidate fixture
+        env:
+          SHORT: ${{ matrix.short }}
+          OUT: ${{ runner.temp }}/fixture
+        run: |
+          set -euo pipefail
+          mkdir -p "$OUT"
+          python3 - <<'PY'
+          import json, os, pathlib, subprocess
+          short = os.environ['SHORT']
+          out = pathlib.Path(os.environ['OUT'])
+          ids = {
+              'U1': 'U1-lean-4.34.0-rc1-compiler-only',
+              'U2': 'U2-lean-mathlib-4.34.0-rc1-root-upgrade',
+          }
+          head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          provenance = {
+              'repository': 'scientifica007/Erdos_Solving',
+              'workflow_commit': head,
+              'apparatus_commit': 'fdfee69c0672067469d6916f630c61e345579ed7',
+              'baseline_commit': '5039d464f6196e6b47494f0a6fae869e3362d082',
+              'predeclaration_head': 'c733ac4baae1a53b20d2e395eaab5c938683a74a',
+              'predeclaration_merge': '0fcefd7ea8cb3753a80a3f93c2498841b1938e55',
+              'protocol_sha256': 'e81c6905693d7407dcf325bbe61e4709178b5f5479acac74cfcc41fe3bafbf96',
+              'matrix_sha256': 'c774e472855bbc21765ef342e6b700d46b168e6337ed6cd4386d9dbe11927e3a',
+          }
+          detection = {
+              'candidate_id': ids[short],
+              'D0': {'stage': 'D0', 'status': 'green'},
+              'D1': {'stage': 'D1', 'status': 'failed', 'failure': {'owner': 'package_resolution'}},
+              'D2': [],
+              'D3': {'stage': 'D3', 'status': 'not_applicable'},
+              'D4': {'stage': 'D4', 'status': 'not_applicable'},
+              'D5': {'stage': 'D5', 'status': 'not_applicable'},
+              'D6': {'stage': 'D6', 'status': 'not_applicable'},
+              'deepest_green_stage': 'D0',
+              'full_no_repair_survivor': False,
+          }
+          payload = {
+              'schema_version': 1,
+              'experiment': 'erdos-678-s2e-upgrade-robustness',
+              'phase': 'detection',
+              'provenance': provenance,
+              'baseline': {'status': 'green'},
+              'candidates': [{
+                  'candidate_id': ids[short],
+                  'detection': detection,
+                  'primary_failure_owner': 'package_resolution',
+                  'repair_eligibility': {},
+              }],
+              'scientific_limits': ['synthetic-transport-audit-only'],
+          }
+          (out / 'result.json').write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n')
+          print(f'synthetic_fixture={short}')
+          print(f'workflow_commit={head}')
+          PY
+
+      - name: Upload synthetic fixture
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: erdos678-s2e-transport-${{ matrix.short }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/fixture
+          if-no-files-found: error
+          retention-days: 7
+
+  synthetic-aggregate:
+    name: synthetic-aggregate
+    needs: synthetic-producer
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Download synthetic U1 artifact using pinned official action
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: erdos678-s2e-transport-U1-${{ github.run_id }}
+          path: ${{ runner.temp }}/inputs/U1
+
+      - name: Download synthetic U2 artifact using pinned official action
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: erdos678-s2e-transport-U2-${{ github.run_id }}
+          path: ${{ runner.temp }}/inputs/U2
+
+      - name: Combine synthetic pair fail-closed
+        run: |
+          set -euo pipefail
+          python3 problems/678/experiments/s2_upgrade_robustness_combine.py \
+            --u1 "${RUNNER_TEMP}/inputs/U1" \
+            --u2 "${RUNNER_TEMP}/inputs/U2" \
+            --output "${RUNNER_TEMP}/combined" | tee "${RUNNER_TEMP}/combine.stdout"
+          grep -q '"candidate_count": 2' "${RUNNER_TEMP}/combine.stdout"
+          test -f "${RUNNER_TEMP}/combined/result.json"
+          test -f "${RUNNER_TEMP}/combined/SUMMARY.md"
+          test -f "${RUNNER_TEMP}/combined/COMBINE_AUDIT.json"
+          grep -q '"status": "PASS"' "${RUNNER_TEMP}/combined/COMBINE_AUDIT.json"
+          printf 'artifact_transport_static_audit=PASS\n'
+
+      - name: Upload synthetic aggregate audit artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: erdos678-s2e-transport-audit-${{ github.run_id }}
+          path: ${{ runner.temp }}/combined
+          if-no-files-found: error
+          retention-days: 7
