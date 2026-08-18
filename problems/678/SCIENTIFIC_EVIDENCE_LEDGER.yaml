@@ -1,4 +1,4 @@
-schema_version: 16
+schema_version: 17
 snapshot_date: 2026-08-18
 scope: erdos-678-only
 
@@ -14,10 +14,11 @@ internal_artifact:
   repository: scientifica007/Erdos_Solving
   visibility: public
   license: Apache-2.0
-  lean_version: 4.33.0
+  canonical_lean_version: 4.33.0
   mathlib_input: v4.33.0
   mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
   pnt_revision: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+  canonical_build_jobs: 8808
 
 external_comparator:
   repository: plby/lean-proofs
@@ -33,16 +34,16 @@ s1_differential_verification:
   status: complete-integrated-postmerge-verified
   experiment_run: 32028006457
   experiment_job: 95381414710
-  canonical_build_jobs: 8808
   closure_pr: 27
   closure_merge_commit: 7aff8d8d8680e90b34be64650c68c0fc778749fc
   closure_postmerge_run: 32045885504
+  canonical_build_jobs: 8808
   selected_axiom_footprint_both_artifacts: [propext, Classical.choice, Quot.sound]
   result: common-environment-differential-verification-success
 
 s2:
   status: active
-  current_substage: S2e-predeclaration
+  current_substage: S2e-evidence-integration
 
   s2a_dependency_surface:
     status: complete-integrated-postmerge-verified-closure-verified
@@ -65,35 +66,23 @@ s2:
     baseline_json: problems/678/S2_BUILD_BEHAVIOR_BASELINE.json
     excluded_pilot:
       run: 32052134207
-      jobs_success: 6
       exclusion_scope: entire-run
       reason: runner-version-missing-from-predeclared-result-provenance
-      performance_selected_exclusion: false
     credited_experiment:
       apparatus_commit: c2ef703c954e462096162a3b4a59a5e0f8d48488
       run: 32053575928
-      result: success
       replicates: 6
       retries: 0
       exclusions: 0
-    wall_result:
-      internal_cold_median_s: 159.575
-      comparator_cold_median_s: 156.280
-      paired_difference_range_s: [-10.68, 11.73]
-      conclusion: no-stable-wall-clock-winner
-    resource_result:
-      internal_total_cpu_median_s: 241.155
-      comparator_total_cpu_median_s: 486.475
-      internal_max_rss_median_kib: 7183766
-      comparator_max_rss_median_kib: 7828930
-      conclusion: materially-different-cpu-user-system-and-memory-profile-under-pinned-common-environment
+    finding:
+      - no-stable-wall-clock-winner
+      - materially-different-cpu-user-system-and-memory-profile-under-pinned-common-environment
     closure:
       pr: 31
       merge_commit: cc55073fceddb51e3fa2c1854f797fe989523985
       postmerge_run: 32060186755
       postmerge_job: 95479480527
       result: success
-      commit_match: true
       import_check: no-update-necessary
       build_jobs: 8808
     limits:
@@ -107,14 +96,11 @@ s2:
     baseline_markdown: problems/678/S2_REPAIR_LOCALITY_BASELINE.md
     baseline_json: problems/678/S2_REPAIR_LOCALITY_BASELINE.json
     experiment:
-      predeclaration_commit: a2d1d11c3c2ad5d39b44be829add4c3a1d75abe1
-      apparatus_commit: 00d340d3ccdc13418615b6526e9b736d9f9e03e7
       run: 32062501296
       job: 95486770197
       artifact_id: 9299556049
       artifact_digest: sha256:0369ec66c689572307660765b0c84cd86b6339f4f4d26a788c560ca11f7b7f4b
-    validations:
-      observation_count: 6
+      observations: 6
       observable_breaks: 6
       legal_repairs_green: 6
       third_party_dependency_files_touched_total: 0
@@ -124,19 +110,14 @@ s2:
       - raw totals are not a maintainability ranking
     integration:
       pr: 32
-      exact_head_run: 32065778293
       merge_commit: bf54f5eb16e477d1b41b336e68ce82a729c98912
       postmerge_run: 32067478680
     closure:
       pr: 33
-      exact_head: 3439b58f1e05e2cb21ee1c9374857eb3b4197163
-      exact_head_run: 32070637072
-      exact_head_job: 95512851767
       merge_commit: 47b85a2f2f5be6e6e4ede2b600723b8616aeeee4
       postmerge_run: 32071325525
       postmerge_job: 95514986697
       result: success
-      commit_match: true
       import_check: no-update-necessary
       build_jobs: 8808
     limits:
@@ -150,155 +131,94 @@ s2:
     mutation_manifest: problems/678/S2_SEMANTIC_INDEX_MUTATIONS.yaml
     baseline_markdown: problems/678/S2_SEMANTIC_INDEX_BASELINE.md
     baseline_json: problems/678/S2_SEMANTIC_INDEX_BASELINE.json
-    scope: three-predeclared-one-unit-type-correct-semantic-index-perturbations-only
-    historical_anchor:
-      document: problems/678/FORMALIZATION_CORRECTION_2026-08-14.md
-      error: shifted-M-t-k-plus-one-block-left-one
-      correct_block: "[t+1,t+k+1]"
-      rejected_block: "[t,t+k]"
     predeclaration:
-      internal_baseline: 47b85a2f2f5be6e6e4ede2b600723b8616aeeee4
       head: 5aaef5a667ee11cc526beae587cf9ab799727f7e
       pr: 34
-      exact_head_run: 32073161789
-      exact_head_job: 95520595880
       merge: 2db145226bf530f406e734129fd8a451a2ab3899
       postmerge_run: 32073820006
       postmerge_job: 95522556326
-      protocol_sha256: 04e5b4051650636847df979bde1a16c46018cf46f73c62a9763a4a88605699f6
-      manifest_sha256: d624e93eb51f9229f5d5304365cf39b777f2ee813b9798f939ca26788d1d103f
-      postmerge_verified: true
-    experiment_contract:
-      mutation_count: 3
-      observations: 6
-      proof_repairs_allowed: false
-      pristine_reset_between_observations: true
-      dependency_edits: forbidden
     excluded_pilot:
-      experiment_commit: 22aa85900b6f395b96d47cace7f9322976c1a2e3
       run: 32074822049
       job: 95525626029
       artifact_id: 9303487756
       artifact_digest: sha256:815e676189486afa15876589043e563f9a1d69d18a27c72e766c660993e40faf
-      artifact_digest_independent_match: true
-      computation_result: success
       exclusion_scope: entire-run
       reason: comparator-main-theorem-logical-classification-defect
-      posthoc_relabel_used: false
       mutation_or_protocol_changed_after_observation: false
     credited_experiment:
       apparatus_head: a82ae53b57a9f97844013a9b2e96a9182cee241d
-      pr: 35
       run: 32076614547
       job: 95531085803
-      trigger: pull_request
-      credit_rule: pull-request-event-exact-head-only
-      result: success
-      runner_version: 2.336.0
-      runner_image: ubuntu24/20260810.271.1
       artifact_id: 9303987121
-      artifact_size_bytes: 74518
       artifact_digest: sha256:29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881
       artifact_digest_independent_match: true
-      comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
-      comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
     results:
       observations: 6
       semantic_rejections: 6
       semantic_survivors: 0
       proof_repairs: 0
       third_party_dependency_source_touches: 0
-      I1_internal:
-        source_elaborated: true
-        first_rejection: L1_concrete_semantic_oracle
-        first_check: concrete_semantic_oracle
-      I1_comparator:
-        source_elaborated: true
-        first_rejection: local_lemma_or_regression
-        first_declaration: lcmInterval_ge_choose
-      I2_internal:
-        source_elaborated: false
-        first_rejection: L0_mutation_source_elaboration
-        diagnostic: type_mismatch
-      I2_comparator:
-        source_elaborated: true
-        first_rejection: strong_theorem
-        first_declaration: main_theorem
-      I3_internal:
-        source_elaborated: false
-        first_rejection: L0_mutation_source_elaboration
-        diagnostic: application_type_mismatch
-      I3_comparator:
-        source_elaborated: false
-        first_rejection: canonical_corollary
-        first_declaration: erdos_678_kmn_infinite
-    finding:
-      - all three predeclared semantic/index perturbations were rejected in both artifacts
-      - first rejection location depends on mutation and artifact structure
-      - I1 internal primitive mutation elaborated before independent concrete oracle rejection
-      - internal staged strata and comparator monolithic declaration classes are not a common ordinal scale
+      finding:
+        - all-three-predeclared-semantic-index-perturbations-rejected-in-both-artifacts
+        - first-rejection-location-is-mutation-and-structure-dependent
+        - I1-internal-elaborated-before-independent-concrete-oracle-rejection
     integration:
       pr: 35
       final_head: 1a5728574f3d2c5101851becfb2500400aa395bd
       exact_head_run: 32078084197
       exact_head_job: 95535434320
-      exact_head_result: success
-      exact_head_commit_match: true
-      exact_head_import_check: no-update-necessary
-      exact_head_build_jobs: 8808
       merge_commit: 891d7b9e51c3ecc1313ee2de8d2a98036841b128
       postmerge_run: 32102682942
       postmerge_job: 95606121109
-      postmerge_result: success
-      postmerge_commit_match: true
-      postmerge_import_check: no-update-necessary
-      postmerge_build_jobs: 8808
     closure:
       pr: 36
       final_head: 46b52c2c8ed1c4dd0623974c82c367071618f71b
       exact_head_run: 32103456742
       exact_head_job: 95608318715
-      exact_head_result: success
-      exact_head_commit_match: true
-      exact_head_import_check: no-update-necessary
-      exact_head_build_jobs: 8808
-      merge_commit: 5039d464f6196e6b47494f0a6fae869e3362d082
+      merge_commit: 5039d464f6196e6e4ede2b600723b8616aeeee4
       postmerge_run: 32103947182
       postmerge_job: 95609642835
-      postmerge_result: success
-      postmerge_commit_match: true
-      postmerge_import_check: no-update-necessary
-      postmerge_build_jobs: 8808
+      result: success
+      import_check: no-update-necessary
+      build_jobs: 8808
     interpretation_limits:
       - not general semantic robustness
-      - not general architecture superiority
+      - not architecture superiority
       - not human debugging or repair time
       - not proof complexity
       - not maintainability
       - not upgrade robustness
 
   s2e_upgrade_robustness:
-    status: predeclared-not-executed-pending-integration
+    status: detection-executed-success-artifact-validated-pending-evidence-integration
     protocol: problems/678/S2_UPGRADE_ROBUSTNESS_PROTOCOL.md
     candidate_matrix: problems/678/S2_UPGRADE_ROBUSTNESS_MATRIX.yaml
+    baseline_markdown: problems/678/S2_UPGRADE_ROBUSTNESS_BASELINE.md
+    baseline_json: problems/678/S2_UPGRADE_ROBUSTNESS_BASELINE.json
     internal_only: true
+
     baseline:
       commit: 5039d464f6196e6b47494f0a6fae869e3362d082
       lean_toolchain: leanprover/lean4:v4.33.0
       mathlib_input: v4.33.0
       mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
       pnt_commit: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+      import_check: no-update-necessary
       canonical_build_jobs: 8808
-    upstream_freeze_facts:
-      mathlib_v4_34_0_rc1_tag: v4.34.0-rc1
-      mathlib_v4_34_0_rc1_commit: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
-      candidate_lean_toolchain: leanprover/lean4:v4.34.0-rc1
-      pnt_main_at_freeze: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
-      pnt_main_equals_baseline: true
-      pnt_declared_toolchain: leanprover/lean4:v4.33.0-rc1
-      pnt_declared_mathlib_commit: 288f16d9a07189233a9bc5e1c143c38d1f3f4d37
-      coordinated_newer_pnt_provider_available: false
-    candidates:
+
+    predeclaration:
+      pr: 38
+      head: c733ac4baae1a53b20d2e395eaab5c938683a74a
+      exact_head_run: 32105032799
+      exact_head_job: 95612654549
+      merge: 0fcefd7ea8cb3753a80a3f93c2498841b1938e55
+      postmerge_run: 32105520785
+      postmerge_job: 95614030394
+      protocol_sha256: e81c6905693d7407dcf325bbe61e4709178b5f5479acac74cfcc41fe3bafbf96
+      matrix_sha256: c774e472855bbc21765ef342e6b700d46b168e6337ed6cd4386d9dbe11927e3a
+      postmerge_verified: true
+
+    frozen_candidates:
       U1-lean-4.34.0-rc1-compiler-only:
         lean_toolchain: leanprover/lean4:v4.34.0-rc1
         mathlib_mode: baseline-locked
@@ -309,31 +229,23 @@ s2:
         mathlib_exact_commit: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
         mathlib_provenance_tag: v4.34.0-rc1
         pnt_commit: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+      pnt_main_at_freeze: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+      coordinated_newer_pnt_provider_available_at_freeze: false
+
     no_repair_detection:
       D0: candidate-environment-identity
       D1: package-graph-manifest-resolution
-      D2:
-        name: project-mathlib-only-sentinels
-        targets:
-          - Formalization.Erdos678.Intervals
-          - Formalization.Erdos678.ValuationBasic
-          - Formalization.Erdos678.Claim4Density
-      D3:
-        name: external-pnt-support-boundary
-        target: PrimeNumberTheoremAnd
-      D4:
-        name: project-pnt-boundary
-        target: Formalization.Erdos678.Claim4RelativePrimePNT
-        prerequisite: D3-green
-      D5:
-        name: canonical-erdos-678-endpoint
-        target: Formalization.Erdos678.Erdos678Final
-        prerequisite: D3-green
-      D6:
-        name: canonical-import-and-full-graph
-        commands:
-          - lake exe mk_all --check
-          - lake build Formalization
+      D2_targets:
+        - Formalization.Erdos678.Intervals
+        - Formalization.Erdos678.ValuationBasic
+        - Formalization.Erdos678.Claim4Density
+      D3_target: PrimeNumberTheoremAnd
+      D4_target: Formalization.Erdos678.Claim4RelativePrimePNT
+      D5_target: Formalization.Erdos678.Erdos678Final
+      D6_commands:
+        - lake exe mk_all --check
+        - lake build Formalization
+
     failure_owner_classes:
       - apparatus_or_provenance
       - package_resolution
@@ -342,6 +254,7 @@ s2:
       - pnt_dependency_support
       - project_owned
       - ambiguous
+
     repair_contract:
       no_repair_before_detection_complete: true
       dependency_source_edits_allowed: false
@@ -358,21 +271,187 @@ s2:
         - erdos678_unbounded_witnesses
         - erdos678_good_lengths_infinite
         - erdos678_formalConjectures_eventual_nonempty
-    experiment_status:
-      harness_created: false
-      U1_executed: false
-      U2_executed: false
-      observations: 0
-    execution_gate:
-      harness_creation_before_predeclaration_integration: forbidden
-      candidate_execution_before_predeclaration_postmerge_verification: forbidden
+
+    apparatus_and_instrumentation:
+      core_apparatus_pr: 40
+      core_apparatus_commit: 1b241344377d80e9cc4532ec1b92f884e71dc837
+      core_apparatus_merge: 570f0eb6f27ce384bebbd6bce2d631c1c046fedd
+      core_postmerge_run: 32113963783
+      core_postmerge_job: 95639244235
+      runtime_v2_pr: 46
+      runtime_v2_merge: a00fafc10c914255f77dff663aff11ead0ffa7c8
+      runtime_v2_postmerge_run: 32160806779
+      runtime_v2_postmerge_job: 95788974756
+      runtime_primary_owner_wrapper_commit: fdfee69c0672067469d6916f630c61e345579ed7
+      hardened_combiner_commit: 4e18481d34ccf609cd5ee7ea2726f2ef1a7f0c63
+      primary_owner_fix_pr: 49
+      primary_owner_fix_head: 2195bb99a3680d5bbfd1c8b7f6d43ba2c78f967b
+      primary_owner_fix_exact_head_run: 32163031819
+      primary_owner_fix_exact_head_job: 95796228287
+      integrated_main_commit: eaf77afd8db3e9e3c32770b953eb2c0ef8a61be7
+      integrated_main_postmerge_run: 32164784651
+      integrated_main_postmerge_job: 95801720316
+      integrated_main_postmerge_verified: true
+
+    excluded_execution_sets:
+      - pr: 42
+        run: 32114757196
+        job: 95641647630
+        artifact_id: 9317541063
+        artifact_digest: sha256:5b3a760a681fafe9f5b04c826a538368e8b2048e72aef929d04648333d7cd061
+        exclusion_scope: entire-run
+        reason: baseline-full-build-exceeded-2400s-instrumentation-timeout-before-candidates
+        credited_u1: 0
+        credited_u2: 0
+      - pr: 45
+        run: 32139077608
+        job: 95717175646
+        artifact_id: 9329881083
+        artifact_digest: sha256:617e1c7ccfab90231542859954838eb919b967fbe8bf1e084e939625bf422e31
+        exclusion_scope: entire-run
+        reason: baseline-full-build-exceeded-7200s-instrumentation-timeout-before-candidates
+        credited_u1: 0
+        credited_u2: 0
+      - pr: 48
+        run: 32161655865
+        diagnostic_u2_job: 95791719193
+        diagnostic_u2_artifact_id: 9334138232
+        diagnostic_u2_artifact_digest: sha256:bd3fc72a91b9645a3250c907c45b1c36755f63471f76d3e9001190c6bc67baaa
+        exclusion_scope: complete-candidate-set
+        reason: D1-package-resolution-primary-owner-classifier-defect
+        posthoc_relabel_used: false
+        candidate_or_protocol_changed_after_observation: false
+        credited_u1: 0
+        credited_u2: 0
+      - pr: 51
+        run: 32168529883
+        aggregate_job: 95817854779
+        diagnostic_u1_artifact_id: 9336727544
+        diagnostic_u1_artifact_digest: sha256:7dd6db5f1b2b368ab6d4f8155ed4e93043517f77c7112851ee3a178bc91e9a15
+        diagnostic_u2_artifact_id: 9336789944
+        diagnostic_u2_artifact_digest: sha256:3748707c1530f48038a404f9b44c883195cc41aa9f6ae9bf86e6e1d53ff93eb7
+        exclusion_scope: complete-candidate-set
+        reason: required-complete-set-aggregate-artifact-not-produced-due-http-401-transport-failure-before-combiner
+        candidate_scientific_outputs_used: false
+        credited_u1: 0
+        credited_u2: 0
+
+    artifact_transport_audit:
+      pr: 52
+      run: 32170073082
+      u1_synthetic_job: 95818813826
+      u2_synthetic_job: 95818813880
+      aggregate_job: 95818872837
+      exact_download_action: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      candidate_execution: false
+      combiner_result: PASS
+      aggregate_artifact_id: 9336911899
+      aggregate_artifact_digest: sha256:6db56bcae1ff73c799544e30805a9d35d4585a515bd0a93c9f20a559c15b501e
+
+    credited_detection:
+      execution_pr: 53
+      execution_pr_merged: false
+      workflow_commit: dfb7d1122e0e482626c9849f0e083ecbe71e58be
+      run: 32170243744
+      u1_job: 95819384522
+      u2_job: 95819384599
+      aggregate_job: 95822552072
+      result: success
+      credited_candidate_count: 2
+      u1_artifact:
+        id: 9337314559
+        size_bytes: 32730
+        digest: sha256:d06ce516f34f509d307ab121242c60b7dca95ecff6646355783a544caa846ac7
+        result_sha256: e142963b42bcc24d2361d54bbcbd5a29430c74c83a124ea2712f65bf810a9148
+      u2_artifact:
+        id: 9337277099
+        size_bytes: 18865
+        digest: sha256:fadbb09d97c96292838d25ed1cf89297a14918dfe4c24772e3e880ed464470c7
+        result_sha256: 2ebb741302ef11ba7dbaacfb501620185f64c9da4a64548075353ecd27138092
+      complete_artifact:
+        id: 9337321640
+        size_bytes: 58933
+        digest: sha256:90f7285496372570e6b7e90e5c3b0dc0437299bcf1a824ddaea33f635171001c
+        independent_digest_match: true
+        retained_files: 40
+        combine_audit: PASS
+        ownership_validation: PASS
+        apparatus_failures: 0
+        provenance_mismatches: []
+        repair_outputs_present: 0
+      candidate_worktrees_pristine_and_isolated: true
+      tracked_repository_diff_after_run: empty
+      third_party_dependency_source_touches: 0
+
+    results:
+      U1-lean-4.34.0-rc1-compiler-only:
+        D0: green
+        D1: green
+        D2:
+          Intervals:
+            status: failed
+            first_failure: Batteries/Data/List/Basic.lean:577
+            owner: mathlib_or_transitive_dependency
+          ValuationBasic:
+            status: failed
+            first_failure: Batteries/Data/Float/Basic.lean:16
+            owner: mathlib_or_transitive_dependency
+          Claim4Density:
+            status: failed
+            first_failure: Batteries/Data/Float/Basic.lean:16
+            owner: mathlib_or_transitive_dependency
+        D3:
+          status: failed
+          first_failure: Mathlib/Tactic/Linter/Whitespace.lean:49
+          owner: mathlib_or_transitive_dependency
+        D4: not_applicable
+        D5: not_applicable
+        D6: not_applicable
+        deepest_green_stage: D1
+        primary_failure_owner: mathlib_or_transitive_dependency
+        full_no_repair_survivor: false
+        dependency_support_blocked: true
+        project_owned_failure_reached: false
+      U2-lean-mathlib-4.34.0-rc1-root-upgrade:
+        D0: green
+        D1:
+          status: failed
+          owner: package_resolution
+          exact_mathlib_candidate_selected: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
+          diagnostic: dependency-version-mismatch-warnings-followed-by-mathlib-failed-to-fetch-cache
+        D2: not_applicable
+        D3: not_applicable
+        D4: not_applicable
+        D5: not_applicable
+        D6: not_applicable
+        deepest_green_stage: D0
+        primary_failure_owner: package_resolution
+        full_no_repair_survivor: false
+        project_owned_failure_reached: false
+
+    repair_phase:
+      status: not_applicable
+      reason: no-eligible-project-owned-failure-reached
+      repair_batches: 0
+      project_owned_files_touched: 0
+      aggregate_line_churn: 0
+      third_party_source_touches: 0
+      repair_surface_metric_available: false
+
+    finding:
+      - both exact prospectively frozen forward candidates were blocked at dependency-or-package boundaries before an eligible project-owned repair surface was reached
+      - U1 reached D1 but no project-owned proof failure
+      - U2 stopped at D1 package resolution after exact candidate selection
+      - repair phase is legitimately null under the frozen eligibility rules
+
     interpretation_limits:
-      - not general maintainability
-      - not human repair time
-      - not expected future upgrade cost
-      - not architecture superiority
       - not general Lean/Mathlib compatibility
-      - dependency-support blocker is not a proof-quality defect
+      - not general maintainability
+      - not expected future upgrade cost
+      - not human repair difficulty or speed
+      - not proof-quality criticism of dependencies or PNT maintainers
+      - not architecture superiority
+      - timing is apparatus metadata only
 
 verification_credit_audit:
   status: corrected-and-active
@@ -384,6 +463,12 @@ verification_credit_audit:
       action: excluded-entire-pilot-and-reran-fail-closed
     - episode: s2d-comparator-logical-classifier
       action: excluded-entire-pilot-and-reran-complete-frozen-set
+    - episode: s2e-baseline-timeouts
+      action: excluded-two-pre-candidate-runs-and-repaired-runtime-instrumentation-only
+    - episode: s2e-D1-primary-owner-classifier
+      action: excluded-complete-candidate-set-fixed-instrumentation-and-reran-complete-set
+    - episode: s2e-aggregate-transport
+      action: excluded-complete-candidate-set-audited-transport-with-synthetic-data-and-reran-complete-set
 
 public_artifact:
   visibility: public
@@ -398,16 +483,16 @@ allowed_external_claims:
   - closure-verified S2c mixed interface-dependent repair result with no uniform winner
   - closure-verified S2d six-observation semantic/index mutation baseline
   - all three frozen S2d perturbations were rejected in both artifacts with layer-dependent detection
-  - internal I1 primitive semantic shift elaborated before independent concrete oracle rejected it
-  - S2e U1/U2 protocol and interpretation boundaries are prospectively frozen before execution
+  - S2e complete-set detection artifact is independently validated for exactly two prospectively frozen candidates
+  - S2e U1 is blocked after D1 by Mathlib/transitive dependency compatibility under the exact frozen compiler-only candidate
+  - S2e U2 is blocked at D1 package resolution under the exact frozen root Lean-Mathlib candidate and pinned PNT/project graph
+  - neither S2e candidate reached an eligible project-owned repair failure, so the repair phase is not applicable
 
-claims_requiring_new_experiments:
-  - S2e U1 compiler-only compatibility outcome
-  - S2e U2 root Lean-Mathlib RC compatibility outcome
-  - S2e dependency-support blockers
-  - S2e bounded project-owned repair surface
+claims_requiring_new_experiments_or_audit:
+  - independent S2f audit of the S2e interpretation boundary
   - general semantic robustness superiority
   - general maintainability superiority
+  - general Lean/Mathlib compatibility
   - human debugging or repair-time advantage
   - expected future upgrade cost
   - causal explanation of S2b resource-profile differences
@@ -422,24 +507,25 @@ forbidden_or_unsupported_claims:
   - uniform repair-locality advantage
   - general semantic-robustness superiority
   - general maintainability superiority
+  - general Lean/Mathlib incompatibility
   - autonomous AI authorship percentage
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S2e-predeclaration
-  status: pending-integration
-  requirement: predeclaration-only PR must pass canonical exact-head Lean Verification, merge unchanged, and verify exact resulting main commit before any S2e apparatus or candidate execution
-  next_after_gate: create-fail-closed-S2e-apparatus-and-execute-exactly-U1-U2
+  stage: S2e-evidence-integration
+  status: pending-exact-head-and-postmerge-verification
+  requirement: evidence-only PR must pass canonical exact-head Lean Verification, merge unchanged, and verify the exact resulting main commit
+  next_after_gate: documentation-only-S2e-closure-before-S2f
 
 privacy_and_reproducibility:
   repository_visibility: public
   project_owned_license: Apache-2.0
   publish_hidden_chain_of_thought: false
   process_data_policy: >-
-    Publish externally observable hypotheses, protocols, mutations, candidates, actions,
-    artifacts, commits, CI results, corrections, excluded pilots, dependency blockers,
-    repairs, mixed/null/surviving results, and human intervention categories; do not
-    publish hidden model chain-of-thought.
+    Publish externally observable hypotheses, protocols, candidates, actions, artifacts,
+    commits, CI results, corrections, excluded runs, dependency blockers, null repairs,
+    mixed/surviving results, and human intervention categories; do not publish hidden
+    model chain-of-thought.
 
 transition_gate:
   decision: DEC-012
