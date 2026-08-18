@@ -1,4 +1,4 @@
-schema_version: 15
+schema_version: 16
 snapshot_date: 2026-08-18
 scope: erdos-678-only
 
@@ -42,7 +42,7 @@ s1_differential_verification:
 
 s2:
   status: active
-  current_substage: S2d-closure
+  current_substage: S2e-predeclaration
 
   s2a_dependency_surface:
     status: complete-integrated-postmerge-verified-closure-verified
@@ -145,7 +145,7 @@ s2:
       - not architecture superiority
 
   s2d_semantic_index_mutation:
-    status: complete-integrated-postmerge-verified-closure-in-progress
+    status: complete-integrated-postmerge-verified-closure-verified
     protocol: problems/678/S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md
     mutation_manifest: problems/678/S2_SEMANTIC_INDEX_MUTATIONS.yaml
     baseline_markdown: problems/678/S2_SEMANTIC_INDEX_BASELINE.md
@@ -170,24 +170,10 @@ s2:
       postmerge_verified: true
     experiment_contract:
       mutation_count: 3
-      planned_observations: 6
+      observations: 6
       proof_repairs_allowed: false
       pristine_reset_between_observations: true
-      post_observation_mutation_redesign: forbidden
       dependency_edits: forbidden
-      surviving_mutations_retained: true
-    mutations:
-      I1-canonical-start-left-shift:
-        family: interval-start-index
-        role: primitive-canonical-interval-semantics
-        historical_replay: closest
-      I2-long-block-drop-final-term:
-        family: interval-length-index
-        role: strong-cambie-endpoint
-      I3-strengthen-canonical-separation-one:
-        family: separation-index
-        role: canonical-unbounded-or-infinitude-endpoint
-        control: possible-semantic-survival
     excluded_pilot:
       experiment_commit: 22aa85900b6f395b96d47cace7f9322976c1a2e3
       run: 32074822049
@@ -216,12 +202,6 @@ s2:
       artifact_digest_independent_match: true
       comparator_commit: 6f906fef432892db5c910c48ad1a3728dd42cdac
       comparator_blob: f2331e8bcc71bc36cce7724a0c54fafd8d64d480
-      comparator_source_sha256: 186a651174c7f8f7ef1e7d7d86f262ff51889a55c6767ca116b08a009fe8a4db
-    baseline_validations:
-      internal_mk_all_no_update: true
-      internal_full_build_jobs: 8808
-      comparator_compile_green: true
-      final_internal_restore_build_jobs: 8808
     results:
       observations: 6
       semantic_rejections: 6
@@ -232,12 +212,10 @@ s2:
         source_elaborated: true
         first_rejection: L1_concrete_semantic_oracle
         first_check: concrete_semantic_oracle
-        diagnostic: tactic_failure
       I1_comparator:
         source_elaborated: true
         first_rejection: local_lemma_or_regression
         first_declaration: lcmInterval_ge_choose
-        diagnostic: unsolved_goals
       I2_internal:
         source_elaborated: false
         first_rejection: L0_mutation_source_elaboration
@@ -246,7 +224,6 @@ s2:
         source_elaborated: true
         first_rejection: strong_theorem
         first_declaration: main_theorem
-        diagnostic: unsolved_goals
       I3_internal:
         source_elaborated: false
         first_rejection: L0_mutation_source_elaboration
@@ -255,12 +232,10 @@ s2:
         source_elaborated: false
         first_rejection: canonical_corollary
         first_declaration: erdos_678_kmn_infinite
-        diagnostic: unsolved_goals
     finding:
       - all three predeclared semantic/index perturbations were rejected in both artifacts
       - first rejection location depends on mutation and artifact structure
       - I1 internal primitive mutation elaborated before independent concrete oracle rejection
-      - I3 possible-survival control did not survive in either artifact
       - internal staged strata and comparator monolithic declaration classes are not a common ordinal scale
     integration:
       pr: 35
@@ -280,8 +255,20 @@ s2:
       postmerge_build_jobs: 8808
     closure:
       pr: 36
-      status: in-progress
-      substantive_integration_already_verified: true
+      final_head: 46b52c2c8ed1c4dd0623974c82c367071618f71b
+      exact_head_run: 32103456742
+      exact_head_job: 95608318715
+      exact_head_result: success
+      exact_head_commit_match: true
+      exact_head_import_check: no-update-necessary
+      exact_head_build_jobs: 8808
+      merge_commit: 5039d464f6196e6b47494f0a6fae869e3362d082
+      postmerge_run: 32103947182
+      postmerge_job: 95609642835
+      postmerge_result: success
+      postmerge_commit_match: true
+      postmerge_import_check: no-update-necessary
+      postmerge_build_jobs: 8808
     interpretation_limits:
       - not general semantic robustness
       - not general architecture superiority
@@ -289,6 +276,103 @@ s2:
       - not proof complexity
       - not maintainability
       - not upgrade robustness
+
+  s2e_upgrade_robustness:
+    status: predeclared-not-executed-pending-integration
+    protocol: problems/678/S2_UPGRADE_ROBUSTNESS_PROTOCOL.md
+    candidate_matrix: problems/678/S2_UPGRADE_ROBUSTNESS_MATRIX.yaml
+    internal_only: true
+    baseline:
+      commit: 5039d464f6196e6b47494f0a6fae869e3362d082
+      lean_toolchain: leanprover/lean4:v4.33.0
+      mathlib_input: v4.33.0
+      mathlib_resolved: db584cd6d46c92f209a44c0f1c829460d327499d
+      pnt_commit: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+      canonical_build_jobs: 8808
+    upstream_freeze_facts:
+      mathlib_v4_34_0_rc1_tag: v4.34.0-rc1
+      mathlib_v4_34_0_rc1_commit: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
+      candidate_lean_toolchain: leanprover/lean4:v4.34.0-rc1
+      pnt_main_at_freeze: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+      pnt_main_equals_baseline: true
+      pnt_declared_toolchain: leanprover/lean4:v4.33.0-rc1
+      pnt_declared_mathlib_commit: 288f16d9a07189233a9bc5e1c143c38d1f3f4d37
+      coordinated_newer_pnt_provider_available: false
+    candidates:
+      U1-lean-4.34.0-rc1-compiler-only:
+        lean_toolchain: leanprover/lean4:v4.34.0-rc1
+        mathlib_mode: baseline-locked
+        pnt_mode: baseline-locked
+        lake_update_allowed: false
+      U2-lean-mathlib-4.34.0-rc1-root-upgrade:
+        lean_toolchain: leanprover/lean4:v4.34.0-rc1
+        mathlib_exact_commit: de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11
+        mathlib_provenance_tag: v4.34.0-rc1
+        pnt_commit: 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed
+    no_repair_detection:
+      D0: candidate-environment-identity
+      D1: package-graph-manifest-resolution
+      D2:
+        name: project-mathlib-only-sentinels
+        targets:
+          - Formalization.Erdos678.Intervals
+          - Formalization.Erdos678.ValuationBasic
+          - Formalization.Erdos678.Claim4Density
+      D3:
+        name: external-pnt-support-boundary
+        target: PrimeNumberTheoremAnd
+      D4:
+        name: project-pnt-boundary
+        target: Formalization.Erdos678.Claim4RelativePrimePNT
+        prerequisite: D3-green
+      D5:
+        name: canonical-erdos-678-endpoint
+        target: Formalization.Erdos678.Erdos678Final
+        prerequisite: D3-green
+      D6:
+        name: canonical-import-and-full-graph
+        commands:
+          - lake exe mk_all --check
+          - lake build Formalization
+    failure_owner_classes:
+      - apparatus_or_provenance
+      - package_resolution
+      - lean_toolchain
+      - mathlib_or_transitive_dependency
+      - pnt_dependency_support
+      - project_owned
+      - ambiguous
+    repair_contract:
+      no_repair_before_detection_complete: true
+      dependency_source_edits_allowed: false
+      alternate_pnt_revision_allowed: false
+      max_repair_batches: 12
+      max_project_owned_files_touched: 10
+      max_aggregate_line_churn: 250
+      immutable_regression_files:
+        - formalization/Formalization/Erdos678/ConcreteTests.lean
+        - formalization/Formalization/Erdos678/Erdos678FinalTests.lean
+        - formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean
+      frozen_semantic_endpoint_headers:
+        - cambie_lcm_ratio_eventually_with_large_start_real
+        - erdos678_unbounded_witnesses
+        - erdos678_good_lengths_infinite
+        - erdos678_formalConjectures_eventual_nonempty
+    experiment_status:
+      harness_created: false
+      U1_executed: false
+      U2_executed: false
+      observations: 0
+    execution_gate:
+      harness_creation_before_predeclaration_integration: forbidden
+      candidate_execution_before_predeclaration_postmerge_verification: forbidden
+    interpretation_limits:
+      - not general maintainability
+      - not human repair time
+      - not expected future upgrade cost
+      - not architecture superiority
+      - not general Lean/Mathlib compatibility
+      - dependency-support blocker is not a proof-quality defect
 
 verification_credit_audit:
   status: corrected-and-active
@@ -312,17 +396,20 @@ allowed_external_claims:
   - closure-verified S2a boundary-sensitive dependency baseline
   - closure-verified S2b six-replicate resource baseline with no stable wall-time winner
   - closure-verified S2c mixed interface-dependent repair result with no uniform winner
-  - prospectively frozen S2d six-observation semantic/index mutation experiment
+  - closure-verified S2d six-observation semantic/index mutation baseline
   - all three frozen S2d perturbations were rejected in both artifacts with layer-dependent detection
   - internal I1 primitive semantic shift elaborated before independent concrete oracle rejected it
-  - S2d substantive experiment/evidence integration is exact-head and post-merge verified
-  - computational success and scientifically admissible measurement remain separate gates
+  - S2e U1/U2 protocol and interpretation boundaries are prospectively frozen before execution
 
 claims_requiring_new_experiments:
+  - S2e U1 compiler-only compatibility outcome
+  - S2e U2 root Lean-Mathlib RC compatibility outcome
+  - S2e dependency-support blockers
+  - S2e bounded project-owned repair surface
   - general semantic robustness superiority
   - general maintainability superiority
   - human debugging or repair-time advantage
-  - better upgrade robustness
+  - expected future upgrade cost
   - causal explanation of S2b resource-profile differences
   - causal benefit of state protocols
 
@@ -334,23 +421,25 @@ forbidden_or_unsupported_claims:
   - universal speed advantage
   - uniform repair-locality advantage
   - general semantic-robustness superiority
+  - general maintainability superiority
   - autonomous AI authorship percentage
   - proof of genealogical independence from public formalization
 
 next_scientific_gate:
-  stage: S2d-closure
-  status: in-progress
-  requirement: documentation-only PR 36 must pass canonical exact-head Lean Verification on its final head; merge unchanged; verify exact resulting main commit
-  next_after_close: S2e-upgrade-robustness-predeclaration
+  stage: S2e-predeclaration
+  status: pending-integration
+  requirement: predeclaration-only PR must pass canonical exact-head Lean Verification, merge unchanged, and verify exact resulting main commit before any S2e apparatus or candidate execution
+  next_after_gate: create-fail-closed-S2e-apparatus-and-execute-exactly-U1-U2
 
 privacy_and_reproducibility:
   repository_visibility: public
   project_owned_license: Apache-2.0
   publish_hidden_chain_of_thought: false
   process_data_policy: >-
-    Publish externally observable hypotheses, protocols, mutations, actions, artifacts,
-    commits, CI results, corrections, excluded pilots, mixed/null/surviving results,
-    and human intervention categories; do not publish hidden model chain-of-thought.
+    Publish externally observable hypotheses, protocols, mutations, candidates, actions,
+    artifacts, commits, CI results, corrections, excluded pilots, dependency blockers,
+    repairs, mixed/null/surviving results, and human intervention categories; do not
+    publish hidden model chain-of-thought.
 
 transition_gate:
   decision: DEC-012
