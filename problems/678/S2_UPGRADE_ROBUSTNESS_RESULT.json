@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "experiment": "erdos-678-s2e-upgrade-robustness",
+  "status": "credited-complete-set-detection-artifact-independently-validated",
+  "scope": "internal-artifact-only-two-prospectively-frozen-candidates",
+  "protocol": {
+    "path": "problems/678/S2_UPGRADE_ROBUSTNESS_PROTOCOL.md",
+    "sha256": "e81c6905693d7407dcf325bbe61e4709178b5f5479acac74cfcc41fe3bafbf96"
+  },
+  "candidate_matrix": {
+    "path": "problems/678/S2_UPGRADE_ROBUSTNESS_MATRIX.yaml",
+    "sha256": "c774e472855bbc21765ef342e6b700d46b168e6337ed6cd4386d9dbe11927e3a"
+  },
+  "baseline": {
+    "source_commit": "5039d464f6196e6b47494f0a6fae869e3362d082",
+    "lean": "leanprover/lean4:v4.33.0",
+    "mathlib_input": "v4.33.0",
+    "mathlib_resolved": "db584cd6d46c92f209a44c0f1c829460d327499d",
+    "pnt_resolved": "2667e414c38e5a5dc9aa1946f16f13001e5cd3ed",
+    "mk_all_marker": "No update necessary",
+    "canonical_build_jobs": 8808,
+    "credited_candidate_baselines_green": 2
+  },
+  "predeclaration": {
+    "head": "c733ac4baae1a53b20d2e395eaab5c938683a74a",
+    "exact_head_run": 32105032799,
+    "exact_head_job": 95612654549,
+    "merge_commit": "0fcefd7ea8cb3753a80a3f93c2498841b1938e55",
+    "postmerge_run": 32105520785,
+    "postmerge_job": 95614030394
+  },
+  "apparatus": {
+    "frozen_core_commit": "1b241344377d80e9cc4532ec1b92f884e71dc837",
+    "runtime_v2_apparatus_commit": "fdfee69c0672067469d6916f630c61e345579ed7",
+    "download_artifact_action_commit": "d3f86a106a0bac45b974a628896c90dbdf5c8093",
+    "transport_static_audit": {
+      "run": 32170073082,
+      "aggregate_job": 95818872837,
+      "result": "PASS",
+      "candidate_execution": false,
+      "artifact_id": 9336911899,
+      "artifact_sha256": "6db56bcae1ff73c799544e30805a9d35d4585a515bd0a93c9f20a559c15b501e"
+    }
+  },
+  "excluded_complete_runs": [
+    {
+      "run": 32114757196,
+      "reason": "baseline-full-build-timeout-2400-seconds-before-candidate-execution",
+      "credited_observations": 0
+    },
+    {
+      "run": 32139077608,
+      "reason": "baseline-full-build-timeout-under-original-cold-runtime-before-candidate-execution",
+      "credited_observations": 0
+    },
+    {
+      "run": 32161655865,
+      "reason": "primary-owner-classifier-omitted-valid-D1-package-resolution-failure",
+      "credited_observations": 0
+    },
+    {
+      "run": 32168529883,
+      "reason": "mandatory-complete-set-aggregate-transport-failed-http-401-before-combiner",
+      "credited_observations": 0
+    }
+  ],
+  "credited_execution": {
+    "execution_carrier_pr": 53,
+    "execution_carrier_merged": false,
+    "workflow_commit": "dfb7d1122e0e482626c9849f0e083ecbe71e58be",
+    "run": 32170243744,
+    "u1_job": 95819384522,
+    "u2_job": 95819384599,
+    "aggregate_job": 95822552072,
+    "workflow_result": "success",
+    "canonical_exact_head_verification": {
+      "run": 32170243621,
+      "job": 95819384164,
+      "verified_commit": "dfb7d1122e0e482626c9849f0e083ecbe71e58be",
+      "result": "success",
+      "mk_all_marker": "No update necessary",
+      "build_jobs": 8808
+    }
+  },
+  "credited_artifact": {
+    "name": "erdos678-s2e-detection-complete-32170243744",
+    "artifact_id": 9337321640,
+    "size_bytes": 58933,
+    "github_sha256": "90f7285496372570e6b7e90e5c3b0dc0437299bcf1a824ddaea33f635171001c",
+    "independent_download_sha256": "90f7285496372570e6b7e90e5c3b0dc0437299bcf1a824ddaea33f635171001c",
+    "independent_digest_match": true,
+    "retained_file_count": 40,
+    "combine_audit": {
+      "status": "PASS",
+      "accepted_candidates": ["U1", "U2"],
+      "input_apparatus_failures": 0,
+      "ownership_validation": "PASS",
+      "provenance_mismatches": [],
+      "repair_outputs_present": 0
+    },
+    "raw_result_sha256": {
+      "U1": "e142963b42bcc24d2361d54bbcbd5a29430c74c83a124ea2712f65bf810a9148",
+      "U2": "2ebb741302ef11ba7dbaacfb501620185f64c9da4a64548075353ecd27138092"
+    }
+  },
+  "candidates": [
+    {
+      "short_id": "U1",
+      "candidate_id": "U1-lean-4.34.0-rc1-compiler-only",
+      "lean": "leanprover/lean4:v4.34.0-rc1",
+      "mathlib_mode": "baseline-locked",
+      "pnt_mode": "baseline-locked",
+      "D0": "green",
+      "D1": "green",
+      "D2": {
+        "Formalization.Erdos678.Intervals": {
+          "status": "failed",
+          "owner": "mathlib_or_transitive_dependency",
+          "first_retained_file": "Batteries/Data/List/Basic.lean",
+          "first_retained_line": 577
+        },
+        "Formalization.Erdos678.ValuationBasic": {
+          "status": "failed",
+          "owner": "mathlib_or_transitive_dependency",
+          "first_retained_file": "Batteries/Data/Float/Basic.lean",
+          "first_retained_line": 16
+        },
+        "Formalization.Erdos678.Claim4Density": {
+          "status": "failed",
+          "owner": "mathlib_or_transitive_dependency",
+          "first_retained_file": "Batteries/Data/Float/Basic.lean",
+          "first_retained_line": 16
+        }
+      },
+      "D3": {
+        "status": "failed",
+        "owner": "mathlib_or_transitive_dependency",
+        "retained_dependency_diagnostic": "Mathlib/Tactic/Linter/Whitespace.lean:49"
+      },
+      "D4": "not_applicable",
+      "D5": "not_applicable",
+      "D6": "not_applicable",
+      "deepest_green_stage": "D1",
+      "full_no_repair_survivor": false,
+      "primary_failure_owner": "mathlib_or_transitive_dependency",
+      "repair_eligibility": {
+        "dependency_support_blocked": true,
+        "mathlib_only": false,
+        "pnt_dependent_full": false
+      },
+      "project_owned_failure_observed": false,
+      "legal_project_repair_phase_entered": false,
+      "scientific_boundary": "external-dependency-support-before-project-owned-proof-incompatibility"
+    },
+    {
+      "short_id": "U2",
+      "candidate_id": "U2-lean-mathlib-4.34.0-rc1-root-upgrade",
+      "lean": "leanprover/lean4:v4.34.0-rc1",
+      "mathlib_exact_commit": "de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11",
+      "pnt_resolved": "2667e414c38e5a5dc9aa1946f16f13001e5cd3ed",
+      "D0": "green",
+      "D1": {
+        "status": "failed",
+        "owner": "package_resolution"
+      },
+      "D2": "not_attempted",
+      "D3": "not_applicable",
+      "D4": "not_applicable",
+      "D5": "not_applicable",
+      "D6": "not_applicable",
+      "deepest_green_stage": "D0",
+      "full_no_repair_survivor": false,
+      "primary_failure_owner": "package_resolution",
+      "repair_eligibility": {
+        "dependency_support_blocked": false,
+        "mathlib_only": false,
+        "pnt_dependent_full": false
+      },
+      "project_owned_failure_observed": false,
+      "legal_project_repair_phase_entered": false,
+      "scientific_boundary": "package-resolution-before-project-compilation"
+    }
+  ],
+  "repair_disposition": {
+    "repair_outputs_present": 0,
+    "project_source_repairs": 0,
+    "third_party_source_repairs": 0,
+    "U1": "dependency-support-blocked-no-legal-project-repair",
+    "U2": "repair-phase-not-entered-D1-package-resolution-not-legally-eligible"
+  },
+  "reporting_schema_gap": {
+    "present": true,
+    "scope": "repair-final-class-enum-only",
+    "description": "The frozen final repair-class enum has no dedicated label for a valid D1 package_resolution stop before source compilation.",
+    "post_observation_protocol_change_made": false,
+    "u2_misreported_as_apparatus_invalid": false,
+    "retained_detection_owner": "package_resolution"
+  },
+  "finding": [
+    "U1 reaches D1 then encounters Mathlib/transitive dependency source incompatibility under Lean 4.34.0-rc1 before any project-owned proof incompatibility is established.",
+    "U2 reaches D0 then fails the frozen package-resolution step before project compilation.",
+    "Neither exact frozen candidate exposes a legal project-owned repair surface, so bounded project repair effort is not measurable for this candidate set."
+  ],
+  "scientific_limits": [
+    "no general Lean/Mathlib compatibility claim",
+    "no general maintainability claim",
+    "no architecture superiority claim",
+    "no proof-quality defect inferred from dependency or package blockers",
+    "no human repair-time claim",
+    "no expected future upgrade-cost claim",
+    "no claim about a future coordinated PNT+/Mathlib/Lean release",
+    "no claim that project proof code will require zero repair after dependency compatibility is restored"
+  ],
+  "transition_gate": {
+    "decision": "DEC-012",
+    "new_erdos_problem_authorized": false
+  }
+}
