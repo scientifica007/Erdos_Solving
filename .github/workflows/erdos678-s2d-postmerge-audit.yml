@@ -96,7 +96,8 @@ jobs:
                   f"lean job {job['id']} status={job.get('status')} conclusion={job.get('conclusion')}"
               )
 
-          log_req = urllib.request.Request(job["logs_url"], headers=headers)
+          log_url = f"{api}/repos/{repo}/actions/jobs/{job['id']}/logs"
+          log_req = urllib.request.Request(log_url, headers=headers)
           with urllib.request.urlopen(log_req, timeout=60) as r:
               raw = r.read()
           text = raw.decode("utf-8", errors="replace")
