@@ -14,6 +14,12 @@ no cache prefetch from this wrapper.  It also raises lake-build subprocess
 headroom so an otherwise valid candidate compile is not truncated by the old
 instrumentation cutoff.
 
+A later excluded complete-set run exposed one classifier defect in the frozen
+core: ``candidate_primary_owner`` skipped D1, so a retained D1
+``package_resolution`` failure was emitted with a null top-level primary owner.
+This wrapper corrects only that classifier wiring; it does not change D1 setup,
+resolution commands, candidate identities, or any compatibility stage.
+
 Candidate identities, D0--D6, sentinels, package-resolution rules, ownership
 taxonomy, repair scope/budgets, statement-fidelity guards, and interpretation
 rules remain entirely in the integrated frozen core apparatus.
@@ -25,7 +31,7 @@ import importlib.util
 import sys
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Iterator, Sequence
+from typing import Any, Callable, Iterator, Sequence
 
 WRAPPER_REL = "problems/678/experiments/s2_upgrade_robustness_runtimefix_v2.py"
 CORE_REL = "problems/678/experiments/s2_upgrade_robustness.py"
@@ -44,12 +50,33 @@ def load_core() -> Any:
     return module
 
 
+def primary_owner_with_d1(
+    detection: dict[str, Any],
+    owner_classes: set[str] | frozenset[str],
+    fallback: Callable[[dict[str, Any]], str | None],
+) -> str | None:
+    """Return the protocol primary owner while repairing only the omitted D1 case.
+
+    D0 is an apparatus/provenance validity gate and is rejected by the
+    complete-set combiner if it is not green.  For a valid D0 followed by a D1
+    failure, the frozen D1 failure owner is the primary scientific owner.  All
+    D2--D6 behavior delegates unchanged to the integrated core classifier.
+    """
+
+    d1 = detection.get("D1")
+    if isinstance(d1, dict) and d1.get("status") == "failed":
+        owner = d1.get("failure", {}).get("owner")
+        return owner if owner in owner_classes else "ambiguous"
+    return fallback(detection)
+
+
 def main() -> int:
     core = load_core()
 
     original_command_with_log = core.command_with_log
     original_validate_baseline = core.validate_baseline
     original_baseline_worktree = core.baseline_worktree
+    original_candidate_primary_owner = core.candidate_primary_owner
 
     def command_with_runtime_headroom(
         cmd: Sequence[str], *args: Any, **kwargs: Any
@@ -108,8 +135,16 @@ def main() -> int:
         finally:
             core.baseline_worktree = previous
 
+    def candidate_primary_owner_with_d1(detection: dict[str, Any]) -> str | None:
+        return primary_owner_with_d1(
+            detection,
+            core.OWNER_CLASSES,
+            original_candidate_primary_owner,
+        )
+
     core.command_with_log = command_with_runtime_headroom
     core.validate_baseline = validate_baseline_with_private_cache
+    core.candidate_primary_owner = candidate_primary_owner_with_d1
     core.APPARATUS = WRAPPER_REL
     return int(core.main())
 
