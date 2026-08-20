@@ -71,6 +71,32 @@ if manifest:
     if classification.get("first_formalization_claim") is not False:
         fail("first-formalization claim must remain false")
 
+    provenance = manifest.get("verification_provenance", {})
+    expected_status_context = provenance.get("exact_main_status_context")
+    if expected_status_context != "erdos678/post-merge-verification":
+        fail("exact-main status context drift")
+    if provenance.get("publish_event") != "push":
+        fail("exact-main status must be published only from push events")
+    if provenance.get("publish_branch") != "main":
+        fail("exact-main status must target main")
+
+    workflow_path = REPO_ROOT / ".github" / "workflows" / "lean.yml"
+    if not workflow_path.is_file():
+        fail("canonical Lean workflow missing")
+    else:
+        workflow_text = workflow_path.read_text(encoding="utf-8")
+        required_workflow_tokens = [
+            "statuses: write",
+            "Publish exact-main verification status",
+            str(expected_status_context),
+            "github.event_name == 'push'",
+            "github.ref == 'refs/heads/main'",
+            "/statuses/${GITHUB_SHA}",
+        ]
+        for token in required_workflow_tokens:
+            if token not in workflow_text:
+                fail(f"exact-main provenance workflow token missing: {token}")
+
     environment = manifest.get("environment", {})
     expected_toolchain = environment.get("lean_toolchain")
     actual_toolchain_path = REPO_ROOT / "formalization" / "lean-toolchain"

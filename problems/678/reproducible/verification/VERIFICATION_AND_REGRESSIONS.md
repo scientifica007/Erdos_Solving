@@ -68,6 +68,22 @@ The closed formalization roadmap records the mathematical integration and post-m
 
 The job count is historical reference metadata. The reproducibility invariant is that the exact checked-out graph is synchronized and builds successfully under its pinned dependencies.
 
+## Machine-readable exact-main verification status
+
+The canonical workflow publishes a commit status on the exact `main` SHA for every `push` to `main` under the context:
+
+`erdos678/post-merge-verification`
+
+The status is emitted only after the workflow has attempted the package validator and canonical Lean verification path. Its semantics are:
+
+- `success` — the reproducibility-package validator, `lake exe mk_all --check`, and the full `Formalization` build all succeeded for that exact `main` SHA;
+- `failure` — an earlier required verification step failed;
+- absent — no post-merge verification credit should be inferred.
+
+The status `target_url` points to the exact GitHub Actions run that produced the status. This makes exact-main verification readable from commit-status APIs even when a client cannot enumerate `push`-triggered workflow runs directly.
+
+`REPRODUCIBILITY_MANIFEST.json` records this context, and `scripts/verify_package.py` checks that the workflow still has `statuses: write`, still publishes this exact context, and still restricts publication to `push` events on `main`.
+
 ## Differential verification
 
 S1 compares the internal artifact with a pinned public Aristotle/Boris Alexeev artifact in a controlled common environment.
