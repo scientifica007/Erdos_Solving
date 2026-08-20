@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "paper": "Paper 1 - Formal Verification / Proof Engineering",
+  "candidate": "CPP 2027 Submission Candidate v1",
+  "candidate_date": "2026-08-20",
+  "status": "source-complete-not-submitted",
+  "title": "Lean Reconstruction and Differential Verification of Cambie's Solution to Erdos Problem #678",
+  "venue": {
+    "name": "14th ACM SIGPLAN International Conference on Certified Programs and Proofs",
+    "short_name": "CPP 2027",
+    "conference_dates": ["2027-01-11", "2027-01-12"],
+    "location": "Mexico City, Mexico",
+    "abstract_deadline": "2026-09-03 AoE",
+    "paper_deadline": "2026-09-10 AoE",
+    "format": "acmart sigplan 10pt anonymous review",
+    "main_page_limit": 12,
+    "bibliography_excluded_from_limit": true,
+    "clearly_marked_appendices_excluded_from_limit": true,
+    "lightweight_double_blind": true,
+    "supplement_archive_required_instead_of_url": true
+  },
+  "local_candidate_audit": {
+    "compiled": true,
+    "total_pdf_pages_including_bibliography_and_appendix": 7,
+    "overfull_hbox_count": 0,
+    "anonymous_pdf_source_audit": "pass",
+    "forbidden_repository_owner_token_present": false
+  },
+  "scientific_claim_policy": {
+    "new_mathematics": false,
+    "first_formalization": false,
+    "independent_mathematical_proof": false,
+    "general_architecture_superiority": false,
+    "general_speed_superiority": false,
+    "general_maintainability_superiority": false,
+    "general_semantic_robustness_superiority": false,
+    "general_upgrade_compatibility_claim": false
+  },
+  "authors": {
+    "status": "human-input-required-before-abstract-submission",
+    "pdf_anonymized": true,
+    "do_not_infer_from_repository_identity": true
+  },
+  "ai_use": {
+    "disclosure_in_main_paper": true,
+    "systems_are_authors": false,
+    "scope": [
+      "repository analysis",
+      "evidence synthesis",
+      "literature and venue auditing",
+      "manuscript drafting"
+    ],
+    "responsibility": "human authors remain accountable for originality, accuracy, and integrity"
+  },
+  "submission_state": {
+    "hotcrp_submission_created": false,
+    "concurrent_submission_assertion": "must be rechecked by human authors at submission time",
+    "anonymous_supplement_archive": "builder prepared; exact archive generated only from final submission commit",
+    "permanent_archive_or_doi": "deferred; not a CPP review-format blocker"
+  },
+  "fallback_venue": "Journal of Automated Reasoning",
+  "fallback_rule": "not concurrently submitted while CPP submission is active"
+}
