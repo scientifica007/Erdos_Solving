@@ -1,0 +1,329 @@
+\documentclass[sigplan,10pt,anonymous,review]{acmart}
+\settopmatter{printfolios=true,printccs=false,printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{microtype}
+\emergencystretch=2em
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\tpath}[1]{\path{#1}}
+\newcommand{\M}{M}
+
+\title{Lean Reconstruction and Differential Verification of Cambie's Solution to Erd\H{o}s Problem \#678}
+\acmConference[CPP '27]{14th ACM SIGPLAN International Conference on Certified Programs and Proofs}{January 11--12, 2027}{Mexico City, Mexico}
+\acmYear{2027}
+
+\begin{document}
+\begin{abstract}
+Stijn Cambie resolved Erd\H{o}s Problem \#678 in 2024 by proving a stronger least-common-multiple inequality for separated intervals of consecutive integers. We report a separately structured Lean 4 reimplementation of Cambie's argument, with machine-checked bridges between the development's length-oriented interval API and public \code{Finset.Ioc} statement conventions. The formalization proves witnesses for arbitrarily large block length and hence infinitely many good lengths.
+
+We differentially verify the reconstruction against a pinned, unchanged prior Aristotle/Boris Alexeev Lean artifact in a controlled common environment, including selected theorem-level axiom-footprint checks. We then report a prospectively controlled proof-engineering evaluation covering dependency surface, paired artifact-owned cold rebuilds, repair locality, semantic/index perturbations, and two exact forward-version candidates. The outcomes are deliberately bounded: dependency counts are packaging-sensitive; six paired builds show no stable wall-clock winner, while the reconstruction uses substantially less median total CPU time and somewhat less peak memory in the pinned environment; repair locality is mixed; all six frozen semantic/index observations are rejected; and the forward-version tests stop at dependency/package boundaries before an eligible project-owned repair surface is reached.
+
+Finally, we bind verification credit to exact source identity through canonical import-graph checks, exact-head CI, exact-main post-merge verification, and a curated reproduction package. The contribution is formal-verification and proof-engineering evidence around a known result, not new mathematics or first-formalization priority.
+\end{abstract}
+
+\keywords{Lean 4, formalized mathematics, proof reconstruction, differential verification, reproducibility, proof engineering}
+
+\maketitle
+
+\section{Introduction}
+For natural numbers $n$ and $k$, write
+\[
+  \M(n,k)=\operatorname{lcm}\{n+1,\ldots,n+k\}.
+\]
+Erd\H{o}s asked whether, for arbitrarily large block length $k$, a shorter interval can have larger least common multiple than a longer interval beginning sufficiently far to its right. In the formulation used here, one seeks $n,m,k$ satisfying
+\[
+  n+k\le m
+  \qquad\text{and}\qquad
+  \M(n,k)>\M(m,k+1).
+\]
+Cambie answered the question affirmatively in 2024 and proved a stronger statement in which the relevant LCM ratio can be made arbitrarily large~\cite{cambie2024}. The successful mathematics in this paper is therefore Cambie's. A public Lean formalization by Aristotle and Boris Alexeev also predates the present artifact. We claim neither new mathematics nor first-formalization priority.
+
+The scientific object studied here is different: what additional evidence can be obtained when a published proof is reimplemented in a separately structured Lean development, connected to public statement conventions by explicit theorem-level bridges, compared against a pinned prior formal artifact, and then subjected to predeclared proof-engineering experiments? This question separates four obligations that are often conflated. \emph{Kernel correctness} asks whether Lean accepts the formal proposition. \emph{Statement fidelity} asks whether the formal proposition matches the intended mathematics, including indexing and quantifiers. \emph{Artifact provenance} asks which exact source and dependency graph were checked. \emph{Scientific admissibility} asks whether an empirical observation satisfied its frozen protocol before it is used to support a claim.
+
+Erd\H{o}s \#678 is a useful case because its statement is elementary but its successful proof combines prime-density input, Chinese-remainder constructions, $p$-adic valuations, interval products, and asymptotic inequalities. It is also unusually sensitive to one-unit interval shifts. A plausible-looking off-by-one translation can change the proposition while preserving much of the surrounding syntax.
+
+Our contributions are:
+\begin{enumerate}
+\item a separately structured Lean 4 reimplementation of Cambie's proof, culminating in unbounded witnesses and infinitely many good block lengths;
+\item explicit machine-checked bridges from the internal length-oriented interval API to public \code{Finset.Ioc} semantics;
+\item closure of the analytic prime-distribution input through a pinned \tpath{PrimeNumberTheoremAnd} dependency rather than a project-local opaque assumption;
+\item controlled differential verification against a pinned prior Aristotle/Boris Alexeev artifact;
+\item a prospectively frozen empirical evaluation of dependency surface, build behavior, repair locality, semantic/index perturbations, and exact forward-version candidates; and
+\item a provenance discipline that binds verification credit to canonical import reachability, exact pull-request head identity, and exact resulting \code{main} identity.
+\end{enumerate}
+
+A recurring interpretation rule is essential: favorable bounded observations are publishable evidence, but they are not automatically general superiority claims. In particular, the resource contrast reported below does not establish universal speed, maintainability, robustness, or architectural superiority.
+
+\section{Mathematical and Formalization Structure}
+\subsection{Canonical endpoint}
+The Lean theorem \tpath{erdos678_unbounded_witnesses} establishes, in mathematical notation,
+\[
+\forall B\in\mathbb N,\ \exists n,m,k\in\mathbb N
+\]
+such that
+\[
+B\le k,\quad 3\le n,\quad 3\le m,\quad 3\le k,\quad n+k\le m,
+\]
+and
+\[
+\M(m,k+1)<\M(n,k).
+\]
+The development derives \tpath{erdos678_good_lengths_infinite}, asserting that the set of block lengths admitting such witnesses is infinite. This unbounded-witness formulation makes the source of infinitude explicit and avoids an incorrect fixed-$k$ reading.
+
+Two finite regressions guard semantics. The positive witness
+\[
+  \M(36,8)>\M(47,9)
+\]
+is machine checked. A historically tempting candidate is retained as a negative regression:
+\[
+  \neg(\M(495,8)>\M(504,9)).
+\]
+Neither finite example proves infinitude; they are semantic guardrails.
+
+\subsection{Reconstructed proof architecture}
+Cambie's argument proves more than the benchmark inequality. The formalization first establishes a stronger eventual statement parameterized by a positive multiplicative factor $C$, and only later specializes to $C=1$ and translates interval starts to the benchmark variables.
+
+At a high level the dependency path is:
+\[
+\begin{array}{c}
+\text{pinned prime-density consequence}\\
+\downarrow\\
+\text{relative-prime provider}\\
+\downarrow\\
+\text{five disjoint prime strips}\\
+\downarrow\\
+\text{Claim 4 density/CRT construction}\\
+\downarrow\\
+\text{residue and placement interfaces}\\
+\downarrow\\
+\text{Claim 5 $p$-adic valuation identity}\\
+\downarrow\\
+\text{product/LCM estimate}\\
+\downarrow\\
+\text{strong Cambie theorem}\\
+\downarrow\\
+\text{unbounded benchmark witnesses}.
+\end{array}
+\]
+
+Claim~4 acts as a \emph{producer}: it selects compatible residue data modulo controlled primes and turns them into actual representatives in prescribed windows. Formalization makes explicit obligations that are easy to suppress on paper, including nonzero/unit conditions for CRT coordinates, exclusion budgets, positivity, ordering, separation, and the distinction between normalized residues and affine representatives.
+
+Claim~5 acts as a \emph{consumer}: it uses those interfaces to compare $p$-adic valuation contributions across prime ranges. Once the exact valuation identity is established, cancellation and quantitative interval estimates yield the strict LCM-ratio inequality. We do not claim that this producer/consumer organization is universally optimal; it is the structure that made the obligations of this proof explicit and later supplied meaningful mutation/repair boundaries.
+
+\subsection{Pinned analytic dependency}
+The canonical theorem reaches \code{PrimeNumberTheoremAnd} at PNT+ commit prefix \code{2667e414c38e\ldots}; the environment pins Lean 4.33.0 and Mathlib at prefix \code{db584cd6d46c\ldots}. Full 40-character revisions are part of the submission supplement and package manifest.
+Thus the prime-distribution input is explicit, versioned, reachable, and included in the canonical build. This does not minimize or re-prove the entire dependency ecosystem; it closes the analytic dependency used by the project endpoint.
+
+
+\section{Formalization Choices and Alternatives}
+CPP evaluates formalization papers partly by whether design choices and rejected alternatives are made explicit. Four choices were consequential in this development.
+
+\subsection{Preserve the stronger theorem, not only the benchmark corollary}
+A tempting engineering strategy is to target the benchmark statement directly. We instead retained Cambie's stronger $C$-parameterized eventual ratio theorem and derived the benchmark only after the difficult construction was complete. This keeps the mathematically substantive part close to the published proof and isolates the final index normalization. The alternative direct-target organization would mix the construction, the specialization $C=1$, and the translation from interval starts to $(n,m)$; in an off-by-one-sensitive problem, that is a poor place to hide bookkeeping.
+
+\subsection{Turn interval normalization into theorems}
+Another tempting strategy is to treat equivalent-looking interval notations as harmless syntactic variants. Earlier project exploration produced exactly the kind of plausible one-unit mismatch that makes this unsafe. The final development therefore makes interval endpoints and lengths explicit and proves bridges to the public \code{Finset.Ioc} convention. Positive and negative finite regressions remain in the canonical graph. The design cost is extra interface code; the benefit is that statement translation becomes kernel-checkable rather than a prose assertion.
+
+\subsection{Expose Claim 4/Claim 5 contracts}
+A monolithic proof could pass CRT witnesses directly into valuation algebra. We instead expose producer/consumer interfaces between the construction and arithmetic layers. This makes side conditions---nonzero coordinates, residue membership, representative placement, ordering, and separation---visible at the boundary where they are needed. It also provides a stable location for tests and for the later repair-locality experiment. We do not infer that finer modularity is universally superior: S2a shows that file/module counts are packaging-sensitive, and S2c yields mixed repair-locality outcomes.
+
+\subsection{Close analytic input through a pinned dependency}
+During formal development, it is convenient to isolate a difficult analytic ingredient behind a local assumption. That is useful for decomposition but insufficient for final verification credit. The released endpoint instead reaches the required prime-distribution input through pinned PNT+. This choice increases dependency surface but removes an opaque project-local premise from the credited theorem chain.
+
+\subsection{Lean-specific observations}
+Lean's existing interval, finite-set LCM, valuation, arithmetic automation, and package tooling were sufficient to express the full proof. The main engineering friction was not a missing logical principle; it was alignment among APIs with different index conventions and preservation of side conditions across construction layers. In this case, small bridge lemmas and explicit data-carrying interfaces were more valuable than increasingly aggressive local automation.
+
+The project also benefited from Lake's explicit manifests and from a generated canonical import graph: these make dependency versions and reachability machine-checkable. Conversely, a successful isolated file build is too weak a notion of project verification, which motivates the exact import-graph and exact-commit checks described later. These observations are case-specific feedback, not claims about Lean relative to other proof assistants.
+
+\section{Statement Fidelity}
+The public comparator and Formal Conjectures~\cite{formalconjectures678} use \code{Finset.Ioc}-style intervals. The project uses a length-oriented internal API. The core semantic bridge proves
+\[
+  \M(n,k)=\operatorname{lcm}_{i\in(n,n+k]} i,
+\]
+implemented by equality between \code{erdosM n k} and the corresponding \code{Finset.Ioc} LCM. The bridge is itself compiled and regression-tested.
+
+This matters because
+\[
+  \M(t,k+1)=\operatorname{lcm}\{t+1,\ldots,t+k+1\},
+\]
+not the left-shifted block $\{t,\ldots,t+k\}$. The final reconstruction therefore preserves interval endpoints and lengths as theorem data rather than relying on prose-level visual similarity.
+
+The theorem \tpath{erdos678_formalConjectures_eventual_nonempty} exposes an eventual-nonemptiness form compatible with the audited Formal Conjectures convention: for all sufficiently large $k$, at least one pair $(m,n)$ satisfies the separation and LCM inequality. The separate unbounded-length and infinitude endpoints prevent confusion between varying-$k$ eventual existence and fixed-$k$ infinitude.
+
+For selected public endpoints, the recorded axiom footprint is
+\[
+  [\texttt{propext},\ \texttt{Classical.choice},\ \texttt{Quot.sound}].
+\]
+The same selected footprint is observed for both artifacts in the controlled differential check. This is a theorem-level cross-check, not a claim that the two implementations are definitionally identical.
+
+\section{Differential Verification}
+\subsection{Comparator and protocol}
+The comparator is the public artifact~\cite{alexeevartifact}
+\texttt{plby/lean-proofs} at \code{6f906fef4328\ldots},
+file \tpath{src/latest/ErdosProblems/Erdos678.lean}. Its source credits Stijn Cambie as informal author and Aristotle/Boris Alexeev as formal authors. The credited experiment treats this source as immutable: it is pinned and byte-validated rather than edited to fit the project.
+
+The common setup uses Lean 4.33.0 and the pinned Mathlib revision. The internal reconstruction additionally reaches its pinned PNT+ dependency. The credited S1 run is \code{32028006457}. Three bounded conclusions are supported: both artifacts compile in the controlled setup; the project's explicit bridges connect its internal endpoint to the public interval convention; and selected endpoint axiom footprints agree at the standard footprint above.
+
+These observations strengthen confidence that two distinct Lean artifacts implement compatible formal content for the same known mathematics. They do not establish independent mathematical discovery, first formalization, or historical proof genealogy.
+
+\subsection{Verification credit}
+During the broader project, a green run initially supported a weaker provenance statement than surrounding metadata implied. The computation was successful, but the question ``which exact source receives verification credit?'' was not yet resolved to the later standard. The record was corrected rather than treating a green badge as sufficient provenance.
+
+This motivates a distinction used throughout the study:
+\[
+  \text{proof verification}\neq\text{verification-credit provenance}.
+\]
+Kernel acceptance answers a logical question. A scientific artifact additionally needs a stable association among source commit, dependency graph, workflow event, and credited result.
+
+\section{Prospectively Controlled Proof-Engineering Evaluation}
+The S2 program was designed after the mathematical proof was closed. Each stage froze its question, environment/comparator, measurement or mutation set, credit rules, and interpretation limits before the credited observation. The experiments intentionally ask different questions rather than collapsing ``architecture quality'' into one score.
+
+\subsection{S2a: dependency surface}
+Controlled module/file/line/dependency counts are highly sensitive to the boundary between project-owned and dependency-owned code and to packaging choices. A modular artifact can expose more intermediate files while a monolithic artifact may place comparable reasoning in fewer files; imported support can move apparent complexity outside the measured boundary. The supported conclusion is therefore methodological: dependency-surface metrics require ownership and packaging context before interpretation.
+
+\subsection{S2b: paired artifact-owned cold rebuilds}
+S2b uses six prospectively controlled paired replicates. Dependencies and prerequisites are prepared outside the timed region. Both targets are prebuilt; cold cleanup removes only the relevant artifact-owned Lake outputs while preserving prepared dependency outputs. The internal target is the project\'s \code{Erdos678Final} target; the byte-validated comparator is exposed through a dedicated benchmark target in the same pinned project environment. Exact module names are retained in the supplement. The measurement therefore concerns artifact-owned rebuild behavior \emph{as packaged}; it is not an isolated causal benchmark of architecture.
+
+The credited run \code{32053575928} has zero retries and zero exclusions. Wall-clock results do not yield a stable winner:
+\begin{itemize}
+\item internal median: $159.575$ s;
+\item comparator median: $156.280$ s;
+\item paired internal-minus-comparator range: $-10.68$ s to $+11.73$ s.
+\end{itemize}
+The changing sign of paired differences is more informative than the small median gap.
+
+Resource profiles differ materially:
+\begin{itemize}
+\item median total CPU: $241.155$ s internal vs.\ $486.475$ s comparator;
+\item median maximum RSS: $7{,}183{,}766$ KiB internal vs.\ $7{,}828{,}930$ KiB comparator.
+\end{itemize}
+Thus the internal reconstruction consumes roughly half the measured median total CPU time and somewhat less peak memory in this exact environment, without a stable wall-time advantage. The result is a bounded resource-profile contrast, not universal speed or maintainability superiority.
+
+A pilot in which all six jobs completed was excluded because predeclared runner-version provenance was missing. The exclusion was not performance-selected; the entire pilot was removed before the credited run.
+
+\subsection{S2c: repair locality}
+Three frozen API-reference mutations were applied to both artifacts, producing six observations. Each mutation caused an observable break, and each legal repair returned the artifact to green without third-party dependency-source edits. Repair-reference blast radius was mixed and interface-dependent; no uniform winner emerged. Human debugging time was not prospectively measured, so reference counts cannot be converted into maintenance cost.
+
+\subsection{S2d: semantic/index perturbations}
+Three frozen one-unit semantic/index perturbations were applied to each artifact. Proof repair was forbidden. In the credited experiment all six observations were rejected, with zero survivors and zero repairs. Rejection layers differed across artifacts and mutations; these locations are not a shared ordinal robustness score. A prior pilot was excluded because its primary logical classifier was defective, after which the apparatus was corrected and the frozen mutation set rerun. The supported conclusion is only that both artifacts rejected all three predeclared perturbations in the credited experiment.
+
+\subsection{S2e: exact forward-version candidates}
+Two exact candidates were frozen:
+\begin{itemize}
+\item U1: Lean \code{v4.34.0-rc1} with the baseline dependency graph otherwise locked;
+\item U2: Lean \code{v4.34.0-rc1} plus an exact Mathlib \code{v4.34.0-rc1} commit while retaining the available PNT+ state.
+\end{itemize}
+U1 reaches dependency source and encounters dependency-owned failures before project-owned proof incompatibility is established. U2 stops earlier at package resolution. Neither candidate reaches an eligible project-owned repair surface. Zero project repair batches therefore means ``not reached'', not ``future upgrades require zero repairs''.
+
+\begin{table*}[t]
+\small
+\caption{Controlled verification/evaluation program and bounded conclusions.}
+\label{tab:summary}
+\begin{tabular}{@{}p{0.06\textwidth}p{0.22\textwidth}p{0.28\textwidth}p{0.32\textwidth}@{}}
+\toprule
+Stage & Question & Credited observation & Unsupported extrapolation\\
+\midrule
+S1 & Differential verification & Both artifacts compile in the controlled setup; statement bridges and selected endpoint axiom footprints are compatible. & New mathematics, first formalization, proof genealogy.\\
+S2a & Dependency surface & Counts are ownership- and packaging-boundary sensitive. & Architecture-quality ranking from raw counts.\\
+S2b & Cold rebuild behavior & No stable wall-time winner; internal median CPU $241.155$ s vs.\ $486.475$ s and lower median max RSS. & Universal speed or maintainability superiority.\\
+S2c & Repair locality & Six breaks, six legal green repairs; mixed/interface-dependent locality. & General maintainability or human-effort ranking.\\
+S2d & Semantic/index perturbations & Six rejections, zero survivors, zero proof repairs. & General semantic-robustness ranking.\\
+S2e & Forward-version candidates & U1 stops in dependency-owned source; U2 at package resolution; no eligible project repair surface reached. & General upgrade compatibility or zero future repair cost.\\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section{Reproducibility and Provenance}
+The curated package fixes the key environment, theorem endpoints, regressions, claim/evidence mapping, S1/S2 evidence index, and reproduction commands. Its canonical check is:
+\begin{quote}
+\small\texttt{bash }\path{problems/678/reproducible/scripts/reproduce.sh}
+\end{quote}
+which validates the package, runs \code{lake exe mk\_all --check}, and builds the canonical \code{Formalization} target. The historical closed graph built 8,808 jobs; that count is provenance metadata rather than a universal requirement under all caching/tooling states.
+
+Verification credit uses three gates. First, the theorem must be reachable from the canonical generated import graph. Second, before merge the exact pull-request head SHA must pass package validation and the full Lean build. Third, the exact resulting \code{main} SHA is independently verified after merge. The workflow then publishes a machine-readable commit status
+\tpath{erdos678/post-merge-verification}
+on that exact SHA, with the Actions run as target.
+
+This mechanism encodes a broader empirical rule. A successful computation, an admissible observation, and the inference licensed by that observation are different objects. Several pilots in this study were excluded or corrected because predeclared provenance, classifier, or instrumentation requirements were defective. Preserving those exclusions prevents a computationally green result from being silently promoted into a stronger scientific claim.
+
+\paragraph{AI-assisted workflow disclosure.}
+AI systems assisted repository analysis, evidence synthesis, literature/venue auditing, and manuscript drafting during this project. They are not authors. The mathematical theorem endpoints are kernel checked; empirical results are tied to archived protocols/runs; bibliographic and venue-policy claims used for submission preparation were rechecked against primary sources. The human authors remain accountable for the originality, accuracy, and integrity of the submitted work. This disclosure is intentionally conservative because AI assistance occurred beyond copy editing and interacted with the research workflow.
+
+\paragraph{Data and artifact availability.}
+The project repository is public under Apache-2.0. The submission supplement is designed as a self-contained archive rather than a reviewer-dependent URL. It contains the curated reproducibility manifest, claim/evidence matrix, exact dependency pins, theorem/regression index, protocol/result pointers, and scripts needed to validate the package and rebuild the canonical Lean graph. A non-anonymous permanent repository/archive identifier can be added after the lightweight double-blind review stage without weakening the anonymous supplement.
+
+\section{Related Work}
+Large formalization projects such as Flyspeck~\cite{hales2017}, formalized perfectoid spaces~\cite{buzzard2020}, and the Liquid Tensor Experiment~\cite{scholze2022} demonstrate that proof assistants can support substantial contemporary mathematics. Formal Conjectures~\cite{firsching2026} emphasizes statement curation and fidelity at benchmark scale; its Erd\H{o}s \#678 entry is directly relevant to the quantifier and interval conventions audited here.
+
+Other work provides precedents for ingredients of our methodology. LeanArchitect~\cite{zhu2026} develops tooling for synchronized informal/formal dependency structure. Gallicchio et al.~\cite{gallicchio2026} provide end-to-end Lean verification of Keller's conjecture. Freer~\cite{freer2026} formalizes three routes to de Finetti's theorem with a shared interface that provides a cross-check during development. Bodingbauer et al.~\cite{bodingbauer2026} reconstruct Vampire proofs as trusted Lean proofs. Each addresses a different verification setting, but together they show that reconstruction, interface design, executable cross-checking, and artifact infrastructure are established concerns.
+
+We make no first-of-kind claim for any individual ingredient. The contribution studied here is their combination in one auditable case: a separately structured reimplementation of known mathematics, theorem-level semantic bridges, controlled differential verification against a pinned prior artifact, prospectively frozen bounded experiments, and exact verification-credit provenance. A finite literature audit did not establish priority for this exact combination, and we do not infer priority from absence of an identified precedent.
+
+\section{Threats to Validity and Discussion}
+\paragraph{Single-case scope.}
+The study concerns one theorem, one reconstruction, and one pinned comparator. Erd\H{o}s \#678 combines arithmetic, CRT, valuations, and analytic prime input, but it is not representative of all Lean developments.
+
+\paragraph{Known-proof reconstruction.}
+The successful route reconstructs Cambie's published proof after earlier exploratory work did not yield the final proof. The study therefore evaluates formal reconstruction, not independent theorem discovery or a new mathematical proof.
+
+\paragraph{Structural non-equivalence.}
+The artifacts differ in modularity, file boundaries, packaging, and dependency organization. S2a shows why raw structural counts are boundary-sensitive; S2b measures complete artifact-owned rebuild behavior as packaged and cannot isolate architecture as a causal variable.
+
+\paragraph{Finite replicate and mutation sets.}
+S2b has six credited pairs; S2c and S2d each use three predeclared mutations per artifact. These samples justify the reported observations but do not estimate behavior over arbitrary machines, edits, or faults.
+
+\paragraph{Forward-version limits.}
+S2e tests only two exact RC-based candidates, both blocked before eligible project-owned repair. It supplies no general estimate of future upgrade effort.
+
+\paragraph{Runner and ecosystem effects.}
+Timing, CPU accounting, memory, caches, runner images, package resolution, and upstream repositories are environmental variables. Resource values are observations of a pinned setup, not hardware-independent constants.
+
+\paragraph{Researcher/apparatus bias.}
+The same project designed the formalization and experiments. Prospective freezing, immutable comparator pins, archived evidence, explicit exclusions, and exact-head/exact-main checks reduce post-hoc selection but do not replace independent replication or peer review.
+
+Three lessons emerge. First, statement fidelity is a verification obligation distinct from kernel acceptance: one-unit interval shifts justify theorem-level bridges and semantic regressions. Second, build-graph reachability and commit identity are part of scientific proof credit when claims are attached to evolving software artifacts. Third, bounded engineering advantages should be reported precisely rather than erased or generalized: S2b contains a substantial CPU/memory contrast and simultaneously no stable wall-time winner.
+
+
+\section{Lessons for Future Formalizations}
+The case suggests several practices that are portable without claiming universal optimality.
+
+\paragraph{Treat statement interfaces as first-class proof objects.}
+When a project, benchmark, and source paper use different interval or indexing conventions, prove the translation where feasible and keep executable regressions for historically fragile cases.
+
+\paragraph{Separate mathematical strength from benchmark normalization.}
+If the source proof naturally establishes a stronger statement, formalizing that structure can localize the final benchmark translation and make proof reuse clearer. The stronger endpoint should not be weakened merely to match a Boolean benchmark surface.
+
+\paragraph{Define experimental ownership before measuring engineering properties.}
+Dependency counts, rebuild time, and repair locality can measure different things depending on what is classified as project-owned, dependency-owned, or prebuilt. Those boundaries should be frozen before observation.
+
+\paragraph{Record exclusions as scientific data.}
+A green computation with defective provenance or classification is not automatically admissible evidence. Preserving excluded pilots and rerunning corrected protocols reduces the incentive to reinterpret unsuccessful methodology after the fact.
+
+\paragraph{Bind public claims to exact artifacts.}
+For software-backed formal mathematics, canonical reachability and commit identity can be part of scientific provenance. Exact-head and exact-main verification are inexpensive relative to the cost of later ambiguity about which artifact was actually checked.
+
+\section{Conclusion}
+We presented a separately structured Lean 4 reimplementation of Stijn Cambie's solution to Erd\H{o}s Problem \#678, linked its internal interval semantics to public conventions by machine-checked bridges, and proved unbounded witnesses and infinitely many good block lengths. Controlled differential verification against a pinned prior Aristotle/Boris Alexeev artifact provides an executable cross-check under a common setup.
+
+The prospectively frozen S2 program reports a profile rather than a leaderboard: dependency-surface counts are boundary-sensitive; paired builds show no stable wall-clock winner while the internal artifact has a favorable CPU/memory profile in the pinned environment; repair locality is mixed; all six frozen semantic/index observations are rejected; and two exact forward-version candidates stop before project-owned repair can be measured.
+
+The resulting contribution is not a new solution or first formalization. It is a reproducible study of how proof reconstruction, statement fidelity, differential verification, bounded empirical evaluation, and exact artifact provenance can strengthen the evidence surrounding a machine-checked mathematical result.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\appendix
+\section{Submission-Supplement Interface}
+The anonymous supplement is intended to expose the following reviewer-facing checks without requiring repository-history reconstruction:
+\begin{enumerate}
+\item the exact theorem endpoints for unbounded witnesses, infinite good lengths, the Formal-Conjectures-style eventual statement, and the strong real-factor Cambie theorem (full Lean identifiers are recorded in the supplement manifest);
+\item the positive and negative finite semantic regressions;
+\item the exact Lean, Mathlib, and PNT+ revisions;
+\item the pinned comparator revision and source digest;
+\item the S1/S2 protocol/result index and archived run/artifact identifiers;
+\item the claim/evidence allowlist and publication-disallowed controls; and
+\item the package validator and canonical build commands.
+\end{enumerate}
+The main paper is intended to remain scientifically self-contained without this appendix or supplement; these materials provide audit depth and executable reproduction.
+\end{document}

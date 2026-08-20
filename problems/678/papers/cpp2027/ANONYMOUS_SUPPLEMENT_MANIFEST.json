@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "supplement": "Paper 1 CPP 2027 anonymous supplement",
+  "status": "builder-defined-not-yet-frozen-to-submission-commit",
+  "scope": "Erdos #678 only",
+  "exact_environment": {
+    "lean": "leanprover/lean4:v4.33.0",
+    "mathlib": "db584cd6d46c92f209a44c0f1c829460d327499d",
+    "pnt_plus": "2667e414c38e5a5dc9aa1946f16f13001e5cd3ed"
+  },
+  "external_comparator": {
+    "repository": "plby/lean-proofs",
+    "commit": "6f906fef432892db5c910c48ad1a3728dd42cdac",
+    "file": "src/latest/ErdosProblems/Erdos678.lean"
+  },
+  "formal_conjectures_context": {
+    "commit": "9f5ee773841921f460b4a26a3552f5eca4accaa0",
+    "file": "FormalConjectures/ErdosProblems/678.lean",
+    "blob": "b6612bf9419ab37830cad78fa8e46280236182ac"
+  },
+  "canonical_endpoints": [
+    "erdos678_unbounded_witnesses",
+    "erdos678_good_lengths_infinite",
+    "erdos678_formalConjectures_eventual_nonempty",
+    "cambie_lcm_ratio_eventually_with_large_start_real"
+  ],
+  "canonical_reproduction": [
+    "python3 problems/678/reproducible/scripts/verify_package.py",
+    "cd formalization && lake exe mk_all --check",
+    "cd formalization && lake build Formalization"
+  ],
+  "evidence_authorities": [
+    "problems/678/reproducible/REPRODUCIBILITY_MANIFEST.json",
+    "problems/678/reproducible/CLAIM_EVIDENCE_MATRIX.json",
+    "problems/678/reproducible/evidence/EVIDENCE_INDEX.json",
+    "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"
+  ],
+  "credited_runs": {
+    "S1": 32028006457,
+    "S2a": 32047324807,
+    "S2b": 32053575928,
+    "S2c": 32062501296,
+    "S2d": 32076614547,
+    "S2e": 32170243744
+  },
+  "archive_policy": {
+    "generated_from_exact_submission_commit_only": true,
+    "fail_on_identity_token": true,
+    "exclude_publication_planning_directory": "problems/678/papers",
+    "do_not_include_git_history": true,
+    "manual_spot_check_required_before_upload": true
+  }
+}
