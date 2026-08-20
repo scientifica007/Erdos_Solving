@@ -20,6 +20,6 @@
     "C-UNSUPPORTED-FIRST-FORMALIZATION",
     "C-UNSUPPORTED-GENERAL-SUPERIORITY"
   ],
-  "primary_contribution": "Independent Lean reconstruction, statement fidelity, differential verification, reproducibility, and bounded proof-engineering evaluation.",
+  "primary_contribution": "Separately structured Lean reconstruction, statement fidelity, differential verification, reproducibility, and bounded proof-engineering evaluation.",
   "drafting_rule": "Every central abstract/introduction/results claim must map to an allowed claim ID and preserve its scope/limitation."
 }

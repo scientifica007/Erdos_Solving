@@ -1,6 +1,6 @@
 # Erdős #678 — Two-Paper Publication Workplan
 
-**Document status:** active publication plan — synchronized 2026-08-20  
+**Document status:** active publication plan — synchronized 2026-08-20 after Paper 1 P4  
 **Established:** 2026-08-19  
 **Scope:** Erdős Problem #678 only  
 **Governing constraint:** `DEC-012` remains binding; this plan does not authorize work on another Erdős problem.  
@@ -26,15 +26,15 @@ As of 2026-08-20:
 | Phase | Status | Notes |
 |---|---|---|
 | P0 — scope/claim boundaries | **complete** | Contribution boundary and prohibited claims frozen. |
-| P1 — Claim–Evidence Matrix | **complete** | Machine-readable matrix and paper-specific allowlists integrated. |
+| P1 — Claim–Evidence Matrix | **complete** | Machine-readable matrix and paper-specific allowlists integrated; P4 terminology hardened to “separately structured” rather than ambiguous publication use of “independent”. |
 | P2 — literature/novelty/venue audit | **complete for Paper 1** | Recorded in `PAPER_1_LITERATURE_NOVELTY_VENUE_AUDIT_2026-08-20.md`. Paper 2 P2 remains future work. |
-| P3 — Paper 1 Draft 1 | **complete as Draft 1 in this publication cycle** | End-to-end draft exists; next gate is adversarial review. |
-| P4 — adversarial review | **next** | Must be completed before submission-candidate work. |
+| P3 — Paper 1 Draft 1 | **complete** | End-to-end Draft 1 was integrated and exact-main verified. |
+| P4 — adversarial review | **complete for Paper 1** | Recorded in `PAPER_1_ADVERSARIAL_REVIEW_2026-08-20.md`; Draft 2 resolves all high-severity internal objections. |
 | P5 — Paper 1 reproducibility package | **repository-level complete** | `problems/678/reproducible/` is integrated-postmerge-verified; external archival DOI/snapshot remains for final submission strengthening. |
-| P6 — Paper 1 submission candidate | **not started** | Venue-specific package follows P4. |
+| P6 — Paper 1 submission candidate | **not started** | Next gated publication phase; requires separate authorization and venue-specific work. |
 | P7–P11 — Paper 2/final sequence | **not started** | Remain gated behind Paper 1 progress. |
 
-The execution record for the current Paper 1 cycle is `PAPER_1_EXECUTION_PLAN_2026-08-20.md`.
+The execution record for the Draft 1 cycle is `PAPER_1_EXECUTION_PLAN_2026-08-20.md`. The P4 review/closure record is `PAPER_1_ADVERSARIAL_REVIEW_2026-08-20.md`.
 
 ## 3. Phase P0 — Freeze scope and claim boundaries
 
@@ -44,11 +44,13 @@ Establish the scientific identity of each paper before persuasive prose is writt
 ### Paper 1 boundary
 Primary contribution:
 
-- independent Lean reconstruction of Cambie's 2024 solution to Erdős #678;
+- separately structured Lean reconstruction of Cambie's 2024 solution to Erdős #678;
 - formal statement bridges and fidelity checks;
 - differential verification against a prior Lean formalization in a common environment;
 - bounded proof-engineering evaluation through S1 and S2a–S2e;
 - reproducibility and verification-credit provenance.
+
+Publication wording must not use “independent” in a way that could imply an independent mathematical proof, independent discovery, or genealogically unrelated proof. The machine-readable historical classification `independent-lean-reimplementation` is interpreted narrowly as a separately structured project implementation and is not a novelty claim.
 
 Paper 1 must not claim:
 
@@ -91,6 +93,8 @@ Canonical sources:
 
 No central claim may bypass this classification.
 
+P4 hardened `C-FORMAL-001` and the Paper 1 prose to “separately structured Lean reimplementation” so that implementation structure is not confused with independent mathematical discovery or proof genealogy.
+
 **Status:** complete.
 
 ## 5. Phase P2 — Literature, novelty, and venue audit
@@ -111,7 +115,7 @@ Paper 1's audit was completed on 2026-08-20 and records:
 
 Defensible positioning:
 
-> The contribution is the combination studied in this case: independently structured Lean reconstruction, explicit semantic bridging, controlled differential verification against a pinned prior artifact, prospectively frozen bounded proof-engineering experiments, and exact verification-credit provenance. No first-of-kind claim is made.
+> The contribution is the combination studied in this case: separately structured Lean reconstruction, explicit semantic bridging, controlled differential verification against a pinned prior artifact, prospectively frozen bounded proof-engineering experiments, and exact verification-credit provenance. No first-of-kind claim is made.
 
 ### Paper 1 venue ranking
 
@@ -159,7 +163,7 @@ Required section order:
 - venue-policy-compatible draft abstract and keyword set;
 - AI-use disclosure placeholder for later venue-specific finalization.
 
-**Status:** Draft 1 complete on 2026-08-20; integration verification is part of the current publication change.
+**Status:** Draft 1 complete and integrated on 2026-08-20. P4 produced the current Draft 2 without changing mathematics, Lean source, dependency pins, or frozen S1/S2 observations.
 
 ## 7. Phase P4 — Adversarial scientific review of Paper 1
 
@@ -168,7 +172,7 @@ Review Draft 1 as a skeptical expert reviewer.
 
 Required questions:
 
-- Is “independent reconstruction” narrowly and defensibly defined?
+- Is the separately structured reconstruction claim narrowly and defensibly defined?
 - Is Cambie's mathematical authorship unmistakable?
 - Is prior Aristotle/Boris Alexeev formalization credited fairly?
 - Are statement-equivalence claims supported by exact Lean bridges?
@@ -181,10 +185,28 @@ Required questions:
 - Are limitations visible in the main text?
 - Can an external researcher understand the paper without reconstructing repository history?
 
+### P4 execution record
+
+`PAPER_1_ADVERSARIAL_REVIEW_2026-08-20.md` records:
+
+- three high-severity objections found and corrected;
+- four medium objections found and corrected;
+- one non-blocking upstream/prose discrepancy recorded;
+- an independent recheck of all printed S1/S2 numbers;
+- an independent primary-source recheck of the Draft 1 bibliography;
+- a comparator-fairness audit for S2b;
+- exact freezing of the Formal Conjectures statement-context revision.
+
+The three high-severity corrections were:
+
+1. remove ambiguous “Independent” wording from the Paper 1 title/lead and use “separately structured” in publication prose;
+2. separate formalization provenance from what S1 experimentally establishes;
+3. make S2b's timed unit and comparator-fairness controls visible in the manuscript before interpreting the CPU/memory contrast.
+
 ### Exit criterion
 No unresolved high-severity attribution, statement-fidelity, reproducibility, numerical, comparator-fairness, or validity objection remains.
 
-**Status:** next phase.
+**Status:** complete for Paper 1; P4 verdict **PASS** after Draft 2 revisions, with zero unresolved high-severity findings.
 
 ## 8. Phase P5 — Paper 1 reproducibility package
 
@@ -222,7 +244,7 @@ Tasks include:
 
 - final venue decision;
 - target template and length constraints;
-- bibliography metadata verification;
+- bibliography metadata verification/reformatting against the selected venue;
 - figure/table finalization;
 - appendices/supplementary material;
 - author/contribution/competing-interest metadata;
@@ -233,7 +255,7 @@ Tasks include:
 
 If CPP 2027 is selected, P6 must include an explicit compression audit proving that the 12-page main paper remains self-contained and does not hide material limitations. If JAR remains primary, the full scientific structure should be preserved.
 
-**Status:** not started.
+**Status:** not started; separate authorization required.
 
 ## 10. Phase P7 — Publication-grade case dataset for Paper 2
 
@@ -278,8 +300,10 @@ Default sequence:
 
 ## 15. Immediate next action
 
-After the current Draft 1 documentation change passes exact-head CI, is merged unchanged, and receives exact-main `erdos678/post-merge-verification = success`, the next scientific action is:
+P4 is complete only after its documentation/Draft 2 change passes exact-head CI, is merged unchanged, and the exact resulting `main` SHA receives `erdos678/post-merge-verification = success`.
 
-> **P4 — adversarial scientific review of Paper 1.**
+After that gate closes, the next publication phase is:
 
-Do not begin P6 venue-specific submission packaging until P4 closes all high-severity claim, attribution, comparator-fairness, reproducibility, and validity objections.
+> **P6 — Paper 1 submission-candidate preparation.**
+
+Do not begin P6, Paper 2 drafting, or work on another Erdős problem without separate authorization.
