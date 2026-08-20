@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "package_id": "erdos-678-reproducible-research-package",
+  "package_version": "v1",
+  "scope": "Erdos Problem #678 only",
+  "source_of_truth": {
+    "historical_record": "problems/678/",
+    "formalization_root": "formalization/Formalization/Erdos678/",
+    "duplicate_lean_sources_in_package": false
+  },
+  "classification": {
+    "mathematical_result": "known",
+    "mathematical_author": "Stijn Cambie",
+    "successful_project_mode": "external-proof-reconstruction",
+    "project_formalization": "independent-lean-reimplementation",
+    "new_mathematical_proof_claim": false,
+    "first_formalization_claim": false
+  },
+  "environment": {
+    "lean_toolchain": "leanprover/lean4:v4.33.0",
+    "mathlib_input": "v4.33.0",
+    "mathlib_resolved": "db584cd6d46c92f209a44c0f1c829460d327499d",
+    "pnt_plus_resolved": "2667e414c38e5a5dc9aa1946f16f13001e5cd3ed"
+  },
+  "canonical_commands": {
+    "import_graph_check": "lake exe mk_all --check",
+    "full_build": "lake build Formalization",
+    "working_directory": "formalization"
+  },
+  "reference_build": {
+    "import_graph_expected_message": "No update necessary",
+    "reference_completed_jobs": 8808,
+    "job_count_is_historical_metadata_not_a_strict_reproduction_assertion": true
+  },
+  "canonical_endpoints": [
+    {
+      "name": "erdos678_unbounded_witnesses",
+      "path": "formalization/Formalization/Erdos678/Erdos678Final.lean"
+    },
+    {
+      "name": "erdos678_good_lengths_infinite",
+      "path": "formalization/Formalization/Erdos678/Erdos678Final.lean"
+    },
+    {
+      "name": "erdos678_formalConjectures_eventual_nonempty",
+      "path": "formalization/Formalization/Erdos678/ExternalStatementBridge.lean"
+    },
+    {
+      "name": "cambie_lcm_ratio_eventually_with_large_start_real",
+      "path": "formalization/Formalization/Erdos678/ExternalStatementBridge.lean"
+    }
+  ],
+  "regression_files": [
+    "formalization/Formalization/Erdos678/ConcreteTests.lean",
+    "formalization/Formalization/Erdos678/Erdos678FinalTests.lean",
+    "formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean"
+  ],
+  "regression_semantics": {
+    "positive_witness": "erdosM 36 8 > erdosM 47 9",
+    "rejected_candidate": "not (erdosM 495 8 > erdosM 504 9)"
+  },
+  "external_comparator": {
+    "repository": "plby/lean-proofs",
+    "commit": "6f906fef432892db5c910c48ad1a3728dd42cdac",
+    "file": "src/latest/ErdosProblems/Erdos678.lean",
+    "formal_authors": ["Aristotle", "Boris Alexeev"]
+  },
+  "scientific_evaluation": {
+    "S1": "complete-integrated-postmerge-verified",
+    "S2a": "complete-integrated-postmerge-verified-closure-verified",
+    "S2b": "complete-integrated-postmerge-verified-closure-verified",
+    "S2c": "complete-integrated-postmerge-verified-closure-verified",
+    "S2d": "complete-integrated-postmerge-verified-closure-verified",
+    "S2e": "complete-integrated-postmerge-verified-closure-verified"
+  },
+  "evidence_roots": [
+    "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml",
+    "problems/678/LEAN_FORMALIZATION_ROADMAP.md",
+    "problems/678/S1_DIFFERENTIAL_VERIFICATION_RESULT.md",
+    "problems/678/S2_UPGRADE_ROBUSTNESS_RESULT.md",
+    "problems/678/PUBLICATION_AND_UPSTREAM_ROADMAP.md"
+  ],
+  "publication": {
+    "shared_fact_base": "problems/678/reproducible/papers/SHARED_FACT_BASE.md",
+    "paper_1_claims": "problems/678/reproducible/papers/PAPER_1_CLAIMS.json",
+    "paper_2_claims": "problems/678/reproducible/papers/PAPER_2_CLAIMS.json"
+  },
+  "governance": {
+    "new_problem_activation": false,
+    "transition_requires_explicit_user_authorization": true
+  }
+}

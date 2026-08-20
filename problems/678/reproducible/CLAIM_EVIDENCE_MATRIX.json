@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "claims": [
+    {
+      "id": "C-MATH-001",
+      "claim": "The successful mathematics used by this project is Stijn Cambie's 2024 solution of Erdős Problem #678.",
+      "class": "established",
+      "publication_allowed": true,
+      "evidence": ["problems/678/CAMBIE_PROOF_ANALYSIS.md", "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"],
+      "scope": "mathematical attribution",
+      "limitation": "This does not attribute the project's Lean implementation to Cambie."
+    },
+    {
+      "id": "C-FORMAL-001",
+      "claim": "The repository contains an independently structured Lean reimplementation of Cambie's proof, not an independent new mathematical proof.",
+      "class": "established",
+      "publication_allowed": true,
+      "evidence": ["problems/678/LEAN_FORMALIZATION_ROADMAP.md", "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"],
+      "scope": "formalization provenance",
+      "limitation": "No genealogical-independence claim beyond the recorded reconstruction process."
+    },
+    {
+      "id": "C-FORMAL-002",
+      "claim": "The machine-checked endpoint gives witnesses for arbitrarily large block length k and proves infinitely many good lengths.",
+      "class": "established",
+      "publication_allowed": true,
+      "evidence": ["formalization/Formalization/Erdos678/Erdos678Final.lean", "formalization/Formalization/Erdos678/Erdos678FinalTests.lean"],
+      "scope": "canonical Erdős #678 endpoint",
+      "limitation": "Use the exact indexing and domain conditions stated in the theorem."
+    },
+    {
+      "id": "C-FORMAL-003",
+      "claim": "The repository's length-based interval definition is formally bridged to the public Finset.Ioc statement convention.",
+      "class": "established",
+      "publication_allowed": true,
+      "evidence": ["formalization/Formalization/Erdos678/ExternalStatementBridge.lean", "formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean"],
+      "scope": "statement fidelity",
+      "limitation": "This is a statement-semantics bridge, not a claim that the proof implementations are identical."
+    },
+    {
+      "id": "C-VERIFY-001",
+      "claim": "The final #678 formalization was integrated only after canonical import-graph and full-build verification, followed by exact-main post-merge verification.",
+      "class": "established",
+      "publication_allowed": true,
+      "evidence": ["problems/678/LEAN_FORMALIZATION_ROADMAP.md", "problems/678/CI_VERIFICATION_PROVENANCE_CORRECTION_2026-08-17.md"],
+      "scope": "repository verification credit",
+      "limitation": "Run and commit identities must be cited when making exact historical verification claims."
+    },
+    {
+      "id": "C-S1-001",
+      "claim": "A controlled common-environment differential verification was executed against the pinned Aristotle/Boris Alexeev public formal artifact.",
+      "class": "established",
+      "publication_allowed": true,
+      "evidence": ["problems/678/S1_DIFFERENTIAL_VERIFICATION_RESULT.md", "problems/678/DIFFERENTIAL_VERIFICATION_EVIDENCE.yaml", "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"],
+      "scope": "S1 controlled comparison",
+      "limitation": "Differential verification does not establish mathematical novelty or proof genealogy."
+    },
+    {
+      "id": "C-S2A-001",
+      "claim": "Observed dependency-surface counts are ownership- and packaging-boundary sensitive.",
+      "class": "bounded-observation",
+      "publication_allowed": true,
+      "evidence": ["problems/678/S2_DEPENDENCY_SURFACE_BASELINE.md", "problems/678/S2A_CLOSURE_NOTE.md"],
+      "scope": "frozen S2a comparison",
+      "limitation": "Raw counts are not a proof-complexity or architecture-quality ranking."
+    },
+    {
+      "id": "C-S2B-001",
+      "claim": "In six credited paired runs there was no stable wall-clock winner, while CPU and memory profiles differed materially in the pinned common environment.",
+      "class": "bounded-observation",
+      "publication_allowed": true,
+      "evidence": ["problems/678/S2_BUILD_BEHAVIOR_BASELINE.md", "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"],
+      "scope": "six credited S2b paired replicates",
+      "limitation": "No universal speed or maintainability claim."
+    },
+    {
+      "id": "C-S2C-001",
+      "claim": "The frozen S2c repair-locality experiment produced a mixed, interface-dependent result with no uniform winner.",
+      "class": "bounded-observation",
+      "publication_allowed": true,
+      "evidence": ["problems/678/S2_REPAIR_LOCALITY_BASELINE.md", "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"],
+      "scope": "three frozen API-reference mutations across two artifacts",
+      "limitation": "Not a general maintainability result."
+    },
+    {
+      "id": "C-S2D-001",
+      "claim": "All six credited observations from three frozen semantic/index perturbations across two artifacts were rejected; zero semantic survivors and zero proof repairs were recorded.",
+      "class": "bounded-observation",
+      "publication_allowed": true,
+      "evidence": ["problems/678/S2_SEMANTIC_INDEX_BASELINE.md", "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"],
+      "scope": "the frozen S2d perturbation set only",
+      "limitation": "Not a general semantic-robustness ranking."
+    },
+    {
+      "id": "C-S2E-001",
+      "claim": "For the two exact frozen forward-version candidates, failure occurred at dependency/package boundaries before an eligible project-owned repair surface was reached.",
+      "class": "bounded-observation",
+      "publication_allowed": true,
+      "evidence": ["problems/678/S2_UPGRADE_ROBUSTNESS_RESULT.md", "problems/678/S2_UPGRADE_ROBUSTNESS_RESULT.json", "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"],
+      "scope": "U1 and U2 exact frozen candidates only",
+      "limitation": "No general Lean/Mathlib compatibility, future repair-cost, or maintainability conclusion."
+    },
+    {
+      "id": "C-AISCI-001",
+      "claim": "In this case study, computational success was not sufficient for scientific credit when required provenance, classification, or aggregation controls were defective.",
+      "class": "established",
+      "publication_allowed": true,
+      "evidence": ["problems/678/AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md", "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"],
+      "scope": "documented excluded/corrected #678 episodes",
+      "limitation": "The broader causal value of individual governance controls remains a hypothesis."
+    },
+    {
+      "id": "C-HYP-001",
+      "claim": "Externalized state, negative regressions, and explicit interfaces improve restart reliability and reduce repeated failure in long-horizon AI-assisted formalization.",
+      "class": "hypothesis",
+      "publication_allowed": true,
+      "evidence": ["problems/678/AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md"],
+      "scope": "discussion/hypothesis only",
+      "limitation": "No causal comparison was prospectively designed to establish this claim."
+    },
+    {
+      "id": "C-UNSUPPORTED-NEW-SOLUTION",
+      "claim": "This project produced a new mathematical solution or new independent mathematical proof of Erdős #678.",
+      "class": "unsupported",
+      "publication_allowed": false,
+      "evidence": ["problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"],
+      "scope": "forbidden novelty claim",
+      "limitation": "Successful route is external-proof reconstruction."
+    },
+    {
+      "id": "C-UNSUPPORTED-FIRST-FORMALIZATION",
+      "claim": "This project produced the first Lean formalization of Erdős #678.",
+      "class": "unsupported",
+      "publication_allowed": false,
+      "evidence": ["problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml", "problems/678/S1_DIFFERENTIAL_VERIFICATION_RESULT.md"],
+      "scope": "forbidden priority claim",
+      "limitation": "A prior public Aristotle/Boris Alexeev artifact is recorded."
+    },
+    {
+      "id": "C-UNSUPPORTED-GENERAL-SUPERIORITY",
+      "claim": "The internal proof architecture is generally faster, more maintainable, more robust, or superior to alternatives.",
+      "class": "unsupported",
+      "publication_allowed": false,
+      "evidence": ["problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"],
+      "scope": "forbidden generalization",
+      "limitation": "S2 results are bounded, mixed, and ownership/environment sensitive."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "paper": "Paper 2 — AI-Assisted Scientific Production",
+  "claim_ids": [
+    "C-MATH-001",
+    "C-FORMAL-001",
+    "C-FORMAL-002",
+    "C-VERIFY-001",
+    "C-S1-001",
+    "C-S2A-001",
+    "C-S2B-001",
+    "C-S2C-001",
+    "C-S2D-001",
+    "C-S2E-001",
+    "C-AISCI-001"
+  ],
+  "discussion_only_hypotheses": [
+    "C-HYP-001"
+  ],
+  "prohibited_claim_ids": [
+    "C-UNSUPPORTED-NEW-SOLUTION",
+    "C-UNSUPPORTED-FIRST-FORMALIZATION",
+    "C-UNSUPPORTED-GENERAL-SUPERIORITY"
+  ],
+  "primary_contribution": "Auditable longitudinal case study of long-horizon AI-assisted formal scientific production, provenance, failure handling, experimental governance, and scientific-credit control.",
+  "drafting_rule": "Observed episodes may support bounded descriptive findings; causal benefit of workflow controls must remain hypothesis-level unless new prospective evidence is obtained."
+}

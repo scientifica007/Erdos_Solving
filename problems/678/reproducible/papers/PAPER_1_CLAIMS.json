@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "paper": "Paper 1 — Formal Verification / Proof Engineering",
+  "claim_ids": [
+    "C-MATH-001",
+    "C-FORMAL-001",
+    "C-FORMAL-002",
+    "C-FORMAL-003",
+    "C-VERIFY-001",
+    "C-S1-001",
+    "C-S2A-001",
+    "C-S2B-001",
+    "C-S2C-001",
+    "C-S2D-001",
+    "C-S2E-001"
+  ],
+  "discussion_only_hypotheses": [],
+  "prohibited_claim_ids": [
+    "C-UNSUPPORTED-NEW-SOLUTION",
+    "C-UNSUPPORTED-FIRST-FORMALIZATION",
+    "C-UNSUPPORTED-GENERAL-SUPERIORITY"
+  ],
+  "primary_contribution": "Independent Lean reconstruction, statement fidelity, differential verification, reproducibility, and bounded proof-engineering evaluation.",
+  "drafting_rule": "Every central abstract/introduction/results claim must map to an allowed claim ID and preserve its scope/limitation."
+}
