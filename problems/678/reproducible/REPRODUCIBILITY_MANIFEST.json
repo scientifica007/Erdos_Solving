@@ -32,6 +32,13 @@
     "reference_completed_jobs": 8808,
     "job_count_is_historical_metadata_not_a_strict_reproduction_assertion": true
   },
+  "verification_provenance": {
+    "exact_main_status_context": "erdos678/post-merge-verification",
+    "publish_event": "push",
+    "publish_branch": "main",
+    "success_semantics": "package validator + mk_all --check + full Formalization build",
+    "target_url_semantics": "exact GitHub Actions run"
+  },
   "canonical_endpoints": [
     {
       "name": "erdos678_unbounded_witnesses",
