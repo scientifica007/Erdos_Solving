@@ -1,12 +1,13 @@
-# Independent Lean Reconstruction and Differential Verification of Cambie's Solution to Erdős Problem #678
+# Lean Reconstruction and Differential Verification of Cambie's Solution to Erdős Problem #678
 
 ## Manuscript status
 
 **Paper 1 — Formal Verification / Proof Engineering**  
-**Status:** Draft 1 — complete end-to-end scientific draft; not yet submission-ready  
+**Status:** Draft 2 — P4 adversarial review complete; not yet submission-ready  
 **Draft date:** 2026-08-20  
 **Experimental evidence cutoff:** 2026-08-18 for the completed S1/S2 program  
 **Publication/reproducibility infrastructure cutoff:** 2026-08-20  
+**P4 review record:** `PAPER_1_ADVERSARIAL_REVIEW_2026-08-20.md`  
 **Primary target for full-paper development:** Journal of Automated Reasoning  
 **Accelerated option:** CPP 2027, subject to a successful 12-page compression audit  
 
@@ -14,7 +15,7 @@ This draft preserves the manuscript architecture established in the scaffold at 
 
 ## Contribution boundary
 
-The successful mathematics is Stijn Cambie's 2024 solution of Erdős Problem #678. This paper reports an independently structured Lean reimplementation of that proof, explicit statement-fidelity bridges, controlled differential verification against a prior public Aristotle/Boris Alexeev Lean artifact, a bounded proof-engineering evaluation, and a reproducibility/provenance discipline.
+The successful mathematics is Stijn Cambie's 2024 solution of Erdős Problem #678. This paper reports a separately structured Lean reimplementation of that proof, explicit statement-fidelity bridges, controlled differential verification against a prior public Aristotle/Boris Alexeev Lean artifact, a bounded proof-engineering evaluation, and a reproducibility/provenance discipline.
 
 The paper does **not** claim a new mathematical solution, a new independent mathematical proof, the first Lean formalization, general architectural superiority, universal speed superiority, general maintainability superiority, general semantic-robustness superiority, or general Lean/Mathlib upgrade compatibility.
 
@@ -24,7 +25,7 @@ A recurring interpretation rule is therefore:
 
 ## Abstract
 
-Stijn Cambie resolved Erdős Problem #678 in 2024 by proving a stronger least-common-multiple inequality for separated intervals of consecutive integers. We report an independently structured Lean reimplementation of Cambie's argument, with explicit bridges between the development's interval API and public `Finset.Ioc` statement conventions. The formalization proves witnesses for arbitrarily large block length and hence infinitely many good lengths. We differentially verified the reconstruction against a pinned, unchanged prior Aristotle/Boris Alexeev Lean artifact in a controlled common environment and audited selected theorem-level axiom footprints. We then ran a prospectively controlled proof-engineering evaluation covering dependency surface, build behavior, repair locality, semantic/index mutations, and two exact forward-version candidates. The results are deliberately bounded: dependency counts were packaging-sensitive; six paired builds produced no stable wall-clock winner, although the reconstruction used substantially less median total CPU time and somewhat less peak memory in the pinned environment; repair locality was mixed; all six frozen semantic/index observations were rejected; and forward-version tests stopped at dependency/package boundaries before an eligible project-owned repair surface was reached. Finally, we make verification credit auditable through canonical import-graph checks, full builds, exact-head verification, exact-main post-merge status, and a reproducibility package. The contribution is formal-verification and proof-engineering evidence, not new mathematics or first-formalization priority.
+Stijn Cambie resolved Erdős Problem #678 in 2024 by proving a stronger least-common-multiple inequality for separated intervals of consecutive integers. We report a separately structured Lean reimplementation of Cambie's argument, with explicit bridges between the development's interval API and public `Finset.Ioc` statement conventions. The formalization proves witnesses for arbitrarily large block length and hence infinitely many good lengths. We differentially verified the reconstruction against a pinned, unchanged prior Aristotle/Boris Alexeev Lean artifact in a controlled common environment and audited selected theorem-level axiom footprints. We then ran a prospectively controlled proof-engineering evaluation covering dependency surface, build behavior, repair locality, semantic/index mutations, and two exact forward-version candidates. The results are deliberately bounded: dependency counts were packaging-sensitive; six paired builds produced no stable wall-clock winner, although the reconstruction used substantially less median total CPU time and somewhat less peak memory in the pinned environment; repair locality was mixed; all six frozen semantic/index observations were rejected; and forward-version tests stopped at dependency/package boundaries before an eligible project-owned repair surface was reached. Finally, we make verification credit auditable through canonical import-graph checks, full builds, exact-head verification, exact-main post-merge status, and a reproducibility package. The contribution is formal-verification and proof-engineering evidence, not new mathematics or first-formalization priority.
 
 **Keywords:** Lean 4; formalized mathematics; proof reconstruction; differential verification; reproducibility; proof engineering
 
@@ -60,7 +61,7 @@ First, **proof correctness** asks whether the kernel accepts a proof of the form
 
 Erdős #678 is a useful case because its mathematical statement looks elementary while the successful proof combines prime-density input, Chinese-remainder constructions, p-adic valuation arguments, interval products, and asymptotic inequalities. The problem is also sensitive to off-by-one interval conventions: shifting a block by one integer can turn a plausible statement into a false one. A reconstruction therefore provides more than a binary “Lean accepts” signal. It makes the interfaces among the published proof, internal definitions, public statement conventions, analytic dependencies, and final benchmark endpoint explicit and checkable.
 
-Independent implementation is also useful for a different reason. A second artifact can expose assumptions or semantic choices that are invisible when one only recompiles the original artifact. Here “independent” is intentionally limited: the project reimplements Cambie's published mathematics in a separately structured Lean development; it does not claim an independent discovery of the mathematics or a genealogically unrelated proof.
+A separately structured implementation is also useful for a different reason. A second artifact can expose assumptions or semantic choices that are invisible when one only recompiles the original artifact. Here “separately structured” describes implementation organization and repository provenance only: the project reimplements Cambie's published mathematics in its own Lean development; it does not claim independent discovery, a genealogically unrelated proof, or an independent new mathematical proof.
 
 Finally, formal artifacts are executable software objects. They can be compared under frozen environments, perturbed by prospectively specified mutations, and tested under controlled upgrade candidates. Such measurements can reveal engineering contrasts, but only within the scope of the experiment. A central methodological stance of this paper is that raw measurements should not be promoted into general architecture rankings without a design that supports that inference.
 
@@ -68,7 +69,7 @@ Finally, formal artifacts are executable software objects. They can be compared 
 
 This paper makes seven contributions.
 
-1. **Independent Lean reconstruction.** We provide a separately structured Lean 4 reimplementation of Cambie's proof under pinned dependencies, culminating in an unbounded-witness theorem and an infinitude theorem for good block lengths.
+1. **Separately structured Lean reconstruction.** We provide a separately structured Lean 4 reimplementation of Cambie's proof under pinned dependencies, culminating in an unbounded-witness theorem and an infinitude theorem for good block lengths.
 
 2. **Explicit statement fidelity.** We prove bridges between the development's length-based interval semantics and the public `Finset.Ioc` convention, including the index translation from the strong theorem to the canonical Erdős variables.
 
@@ -180,7 +181,7 @@ Three kinds of credit are deliberately separated.
 
 - **Mathematical authorship:** Stijn Cambie, for the 2024 solution used here [1].
 - **Prior public formalization:** Aristotle and Boris Alexeev, as recorded in the pinned `plby/lean-proofs` source used as our comparator.
-- **Present project artifact:** an independently structured Lean reimplementation of Cambie's mathematics, developed separately and later compared against the pinned public artifact.
+- **Present project artifact:** a separately structured Lean reimplementation of Cambie's mathematics in this repository, later compared against the pinned public artifact; no genealogical-independence claim is made beyond the recorded reconstruction process.
 
 The current Formal Conjectures Erdős #678 file also records the prior Alexeev/Aristotle formalization and points to the public proof. Thus neither mathematical novelty nor first-formalization priority is part of the present contribution.
 
@@ -308,11 +309,9 @@ The credited S1 experiment is GitHub Actions run `32028006457` (job `95381414710
 
 ### 5.2 What differential verification establishes
 
-S1 supports four bounded conclusions.
+Two evidence layers must be kept distinct. Repository provenance establishes that the project formalization is separately housed and structured and that the comparator is fetched as an immutable external source rather than vendored into the project. S1 itself supports three bounded experimental conclusions. First, both artifacts compile under the controlled setup used by the experiment. Second, the project's explicit statement bridges connect its internal endpoint to the public interval convention used for comparison. Third, selected endpoint axiom footprints agree at `[propext, Classical.choice, Quot.sound]`.
 
-First, the project artifact is a separately structured Lean reimplementation rather than a vendored copy of the comparator. Second, both artifacts compile under the controlled setup used by the experiment. Third, the project's explicit statement bridges connect its internal endpoint to the public interval convention. Fourth, selected endpoint axiom footprints agree at `[propext, Classical.choice, Quot.sound]`.
-
-These observations strengthen confidence that two different Lean developments implement compatible formal content for the same known mathematics. They do **not** establish an independent mathematical discovery, a first formalization, or proof genealogy in the historical sense.
+Together, the provenance record and S1 observations strengthen confidence that two different Lean developments implement compatible formal content for the same known mathematics. They do **not** establish an independent mathematical discovery, a first formalization, or proof genealogy in the historical sense.
 
 ### 5.3 Verification-credit correction
 
@@ -345,6 +344,8 @@ The credited S2a experiment is run `32047324807`. Its publication-level conclusi
 ### 6.2 S2b — controlled build behavior
 
 S2b evaluates cold-build behavior under a pinned common environment using prospectively controlled paired replicates. A pilot run in which all six jobs completed successfully was excluded because required runner-version provenance was absent from the predeclared result metadata. The exclusion was not performance-selected: the entire pilot was removed for provenance reasons before the credited experiment.
+
+The timed unit is artifact-owned recompilation, not dependency installation or an isolated architecture microbenchmark. External/prerequisite dependencies are prepared and both targets are prebuilt outside the timed region. For a cold measurement, the workflow removes only the relevant artifact-owned Lake outputs, preserves prepared dependency outputs, and rebuilds the internal target `Formalization.Erdos678.Erdos678Final` or the byte-validated comparator source exposed as `Formalization.Erdos678Benchmark.Comparator` inside the same pinned project environment. The resulting timings and resource measurements therefore describe the two packaged artifacts' rebuild behavior under this protocol; they do not identify proof architecture as the causal source of any difference.
 
 The credited experiment, run `32053575928`, contains six paired observations with zero retries and zero exclusions. The wall-clock result does not support a stable winner:
 
@@ -471,7 +472,7 @@ Table 1 summarizes the controlled verification/evaluation program. “Frozen” 
 |---|---|---:|---:|---|---|
 | S1 | Can the reconstruction and pinned prior artifact be differentially checked in a controlled common setup? | Yes | `32028006457` | Both artifacts compile in the controlled setup; statement bridges and selected endpoint axiom footprints are compatible. | New mathematics, first formalization, proof genealogy. |
 | S2a | What does a structural dependency-surface comparison show? | Yes | `32047324807` | Raw module/file/line/dependency counts are ownership- and packaging-boundary sensitive. | Proof-complexity or architecture-quality ranking from raw counts. |
-| S2b | How do paired cold builds behave in the pinned environment? | Yes | `32053575928` | No stable wall-clock winner; internal median total CPU `241.155 s` vs comparator `486.475 s`; internal median max RSS `7,183,766 KiB` vs comparator `7,828,930 KiB`. | Universal speed or maintainability superiority. |
+| S2b | How do paired artifact-owned cold rebuilds behave in the pinned environment? | Yes | `32053575928` | No stable wall-clock winner; internal median total CPU `241.155 s` vs comparator `486.475 s`; internal median max RSS `7,183,766 KiB` vs comparator `7,828,930 KiB`. | Universal speed or maintainability superiority. |
 | S2c | How local are repairs for three frozen API-reference mutations? | Yes | `32062501296` | Six observable breaks; six legal green repairs; mixed/interface-dependent repair locality; no uniform winner. | General maintainability ranking or human repair-cost inference. |
 | S2d | Do three frozen semantic/index perturbations survive existing checks? | Yes | `32076614547` | Six rejections, zero survivors, zero proof repairs; first rejection layer varies by mutation/artifact. | General semantic-robustness ranking. |
 | S2e | What happens for two exact forward-version candidates? | Yes | `32170243744` | U1 stops in dependency-owned source after D1; U2 stops at package resolution after D0; neither reaches eligible project-owned repair. | General upgrade compatibility/incompatibility or zero future repair cost. |
@@ -512,7 +513,7 @@ LeanArchitect [6] automates blueprint extraction and synchronization between Lea
 
 The literature contains clear precedents for each broad ingredient: substantial mathematical formalization, reconstruction, multiple-route cross-checking, statement benchmarks, blueprints, end-to-end verification, and proof-assistant performance/engineering analysis. We therefore do not claim that any individual ingredient is new.
 
-The contribution studied here is their specific combination in a single auditable case: an independently structured Lean reimplementation of a known proof, an explicit semantic bridge to public statement conventions, controlled differential verification against a pinned prior artifact, prospectively frozen bounded proof-engineering experiments, and exact verification-credit provenance. Our literature audit did not identify an exact precedent containing this complete combination, but absence from a finite search is not evidence of first-of-kind priority; the manuscript intentionally makes no such claim.
+The contribution studied here is their specific combination in a single auditable case: a separately structured Lean reimplementation of a known proof, an explicit semantic bridge to public statement conventions, controlled differential verification against a pinned prior artifact, prospectively frozen bounded proof-engineering experiments, and exact verification-credit provenance. Our literature audit did not identify an exact precedent containing this complete combination, but absence from a finite search is not evidence of first-of-kind priority; the manuscript intentionally makes no such claim.
 
 ---
 
@@ -550,7 +551,7 @@ S2c measures reference/blast-radius properties under defined legal repairs. It d
 
 ### 10.8 Researcher and apparatus bias
 
-The same project designed the formalization and the evaluation protocols. Prospective freezing, immutable comparator pins, archived artifacts, explicit exclusions, and exact-head/exact-main checks reduce opportunities for post-hoc selection but do not substitute for independent external replication. P4 therefore requires adversarial review, and a publication-grade release should facilitate third-party reproduction.
+The same project designed the formalization and the evaluation protocols. Prospective freezing, immutable comparator pins, archived artifacts, explicit exclusions, and exact-head/exact-main checks reduce opportunities for post-hoc selection but do not substitute for independent external replication. The internal P4 adversarial review reduces manuscript-level claim and provenance risk but does not substitute for external replication or peer review; a publication-grade release should facilitate third-party reproduction.
 
 ---
 
@@ -588,7 +589,7 @@ These results suggest that future proof-engineering comparisons should define ow
 
 ### 11.6 Formal verification can make epistemic contributions without new mathematics
 
-The underlying theorem here was already solved, and a public Lean artifact already existed. The present work is still scientifically testable because it asks different questions: Can the proof be reconstructed under an independently structured implementation? Does the internal statement provably match the public convention? Do two pinned artifacts survive a controlled differential check? What engineering behavior is observed under frozen experiments? Can verification provenance itself be made reproducible?
+The underlying theorem here was already solved, and a public Lean artifact already existed. The present work is still scientifically testable because it asks different questions: Can the proof be reconstructed under a separately structured implementation? Does the internal statement provably match the public convention? Do two pinned artifacts survive a controlled differential check? What engineering behavior is observed under frozen experiments? Can verification provenance itself be made reproducible?
 
 These are epistemic and engineering questions about formal mathematical knowledge. Their value does not depend on relabeling known mathematics as new.
 
@@ -596,11 +597,11 @@ These are epistemic and engineering questions about formal mathematical knowledg
 
 ## 12. Conclusion
 
-We presented an independently structured Lean reimplementation of Stijn Cambie's 2024 solution to Erdős Problem #678 and connected its internal interval semantics to public statement conventions through explicit machine-checked bridges. The formalization proves witnesses for arbitrarily large block length and hence infinitely many good lengths, while retaining a stronger parameterized LCM-ratio theorem before the benchmark corollary.
+We presented a separately structured Lean reimplementation of Stijn Cambie's 2024 solution to Erdős Problem #678 and connected its internal interval semantics to public statement conventions through explicit machine-checked bridges. The formalization proves witnesses for arbitrarily large block length and hence infinitely many good lengths, while retaining a stronger parameterized LCM-ratio theorem before the benchmark corollary.
 
 A controlled differential verification against a pinned prior Aristotle/Boris Alexeev artifact provided an executable cross-check of the two formalizations under a common setup. The subsequent S2 program measured several proof-engineering dimensions without collapsing them into a global ranking. Dependency-surface counts were boundary-sensitive; paired builds had no stable wall-clock winner while exhibiting a favorable CPU/memory profile for the internal artifact in the pinned environment; repair locality was mixed; all six frozen semantic/index observations were rejected; and two exact forward-version candidates stopped at dependency/package boundaries before project-owned repair could be measured.
 
-The reproducibility package binds these claims to exact theorem endpoints, dependency revisions, archived experimental evidence, canonical build commands, and exact-head/exact-main verification provenance. The result is not a new solution or first formalization of Erdős #678. It is a reproducible case study in how independent reconstruction, semantic fidelity, differential verification, bounded empirical evaluation, and provenance controls can strengthen the evidence surrounding a machine-checked mathematical artifact.
+The reproducibility package binds these claims to exact theorem endpoints, dependency revisions, archived experimental evidence, canonical build commands, and exact-head/exact-main verification provenance. The result is not a new solution or first formalization of Erdős #678. It is a reproducible case study in how separately structured reconstruction, semantic fidelity, differential verification, bounded empirical evaluation, and provenance controls can strengthen the evidence surrounding a machine-checked mathematical artifact.
 
 ---
 
@@ -622,9 +623,9 @@ Stage-specific S1/S2 protocols, results, exclusions, artifact identifiers, and h
 
 ## Draft AI-use disclosure placeholder
 
-This manuscript was prepared with AI assistance during repository analysis, evidence synthesis, literature/venue auditing, and drafting. AI systems are not authors. Final authors must verify every mathematical, experimental, bibliographic, and policy claim and retain responsibility for the submitted text. The final disclosure wording will be adapted during P6 to the selected venue's then-current policy. For the current primary target, the Journal of Automated Reasoning, Springer guidance requires generative LLM use to be documented in a Methods section or suitable alternative section and does not treat LLMs as authors.
+This manuscript was prepared with AI assistance during repository analysis, evidence synthesis, literature/venue auditing, and drafting. AI systems are not authors. Final authors must verify every mathematical, experimental, bibliographic, and policy claim and retain responsibility for the submitted text. Current Springer journal guidance does not treat LLMs as authors and requires generative-AI use beyond AI-assisted copy editing to be transparently documented. Because publisher/venue wording is mutable, the exact disclosure placement and wording will be frozen during P6 against the selected venue's then-current policy.
 
-## References — Draft 1
+## References — Draft 2 / P4-audited
 
 [1] Stijn Cambie. **Resolution of an Erdős' problem on least common multiples.** arXiv:2410.09138, 2024. DOI: https://doi.org/10.48550/arXiv.2410.09138
 
@@ -636,7 +637,7 @@ This manuscript was prepared with AI assistance during repository analysis, evid
 
 [5] Moritz Firsching, Paul Lezeau, Salvatore Mercuri, Miklós Z. Horváth, Yaël Dillies, Calle Sönne, Eric Wieser, Fred Zhang, Thomas Hubert, Blaise Agüera y Arcas, and Pushmeet Kohli. **Formal Conjectures: An Open and Evolving Benchmark for Verified Discovery in Mathematics.** arXiv:2605.13171, 2026. https://arxiv.org/abs/2605.13171
 
-[6] Thomas Zhu, Pietro Monticone, Jeremy Avigad, and Sean Welleck. **LeanArchitect: Automating Blueprint Generation for Humans and AI.** ITP 2026; arXiv:2601.22554, 2026. https://arxiv.org/abs/2601.22554
+[6] Thomas Zhu, Pietro Monticone, Sean Welleck, and Jeremy Avigad. **LeanArchitect: Automating Blueprint Generation for Humans and AI.** In *17th International Conference on Interactive Theorem Proving (ITP 2026)*, LIPIcs 382, 25:1–25:16, 2026. DOI: https://doi.org/10.4230/LIPIcs.ITP.2026.25; arXiv:2601.22554.
 
 [7] James Gallicchio, Cayden Codel, Jeremy Avigad, and Marijn J. H. Heule. **An End-To-End Verification of Keller's Conjecture.** In *17th International Conference on Interactive Theorem Proving (ITP 2026)*, LIPIcs 382, 26:1–26:20, 2026. DOI: https://doi.org/10.4230/LIPIcs.ITP.2026.26
 
@@ -646,7 +647,7 @@ This manuscript was prepared with AI assistance during repository analysis, evid
 
 [10] Aristotle and Boris Alexeev. **Lean formalization of Cambie's solution to Erdős Problem #678.** Pinned comparison artifact: `plby/lean-proofs`, commit `6f906fef432892db5c910c48ad1a3728dd42cdac`, file `src/latest/ErdosProblems/Erdos678.lean`.
 
-[11] Formal Conjectures contributors. **Erdős Problem 678.** `google-deepmind/formal-conjectures`, `FormalConjectures/ErdosProblems/678.lean`. Exact citation revision to be frozen at submission-candidate stage.
+[11] Formal Conjectures contributors. **Erdős Problem 678.** `google-deepmind/formal-conjectures`, commit `9f5ee773841921f460b4a26a3552f5eca4accaa0`, file `FormalConjectures/ErdosProblems/678.lean`, blob `b6612bf9419ab37830cad78fa8e46280236182ac` (audited 2026-08-20).
 
 ---
 
@@ -676,7 +677,7 @@ Publication-disallowed controls:
 - `C-UNSUPPORTED-FIRST-FORMALIZATION` — explicitly negated;
 - `C-UNSUPPORTED-GENERAL-SUPERIORITY` — explicitly negated and guarded by the bounded-advantages interpretation rule.
 
-### Draft 1 submission-readiness checklist
+### Draft 2 submission-readiness checklist
 
 - [x] literature/novelty audit completed for Paper 1;
 - [x] current venue shortlist established;
@@ -686,10 +687,11 @@ Publication-disallowed controls:
 - [x] key S2b numerical values checked against the scientific evidence ledger;
 - [x] abstract drafted after results/limitations stabilized and kept within current JAR length guidance;
 - [x] primary-source draft bibliography established;
-- [ ] run P4 adversarial scientific review;
-- [ ] independently recheck every numerical value and citation during P4/P6;
+- [x] run P4 adversarial scientific review;
+- [x] independently recheck every numerical value and Draft 1 citation during P4;
+- [x] freeze exact Formal Conjectures statement-context revision used in Draft 2;
 - [ ] decide JAR versus accelerated CPP 2027 strategy after compression risk review;
-- [ ] freeze exact bibliography revisions/URLs and convert to venue style;
+- [ ] repeat final bibliography/URL/policy audit at P6 and convert to venue style;
 - [ ] create immutable archival release/DOI or equivalent long-term identifier;
 - [ ] finalize author/contribution/competing-interest metadata;
 - [ ] finalize AI-use disclosure against selected venue policy immediately before submission;

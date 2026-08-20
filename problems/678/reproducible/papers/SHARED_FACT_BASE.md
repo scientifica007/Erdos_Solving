@@ -12,7 +12,7 @@ This file defines facts that should remain synchronized across both planned manu
 
 ## Formalization identity
 
-- Project artifact: independent Lean reimplementation.
+- Project artifact: separately structured Lean reimplementation of Cambie's published mathematics; no genealogical independence is claimed.
 - Prior public formal artifact recorded by the project: Aristotle/Boris Alexeev in `plby/lean-proofs` at the pinned comparator commit.
 - First-formalization claim: false.
 - Canonical internal endpoints:
@@ -44,12 +44,12 @@ The internal length-based interval API is formally bridged to the public `Finset
 
 ## S1 identity
 
-A pinned common-environment differential verification against the Aristotle/Boris Alexeev artifact was completed and closure-verified. This supports controlled statement/formal-artifact comparison, not mathematical novelty or proof genealogy.
+A pinned common-environment differential verification against the Aristotle/Boris Alexeev artifact was completed and closure-verified. This supports controlled statement/formal-artifact comparison, not mathematical novelty or proof genealogy. The separately structured/non-vendored status of the project implementation is a provenance fact and must not be presented as an experimental output of S1 itself.
 
 ## S2 identity
 
 - S2a: dependency-surface metrics are ownership/boundary sensitive.
-- S2b: six credited paired replicates show no stable wall-clock winner; CPU/memory profiles differ materially under the pinned environment.
+- S2b: six credited paired replicates show no stable wall-clock winner; CPU/memory profiles differ materially under the pinned environment. The timed unit is artifact-owned rebuild behavior after dependencies/prerequisites are prepared; it is not a causal estimate of architecture quality.
 - S2c: repair locality is mixed/interface-dependent; no uniform winner.
 - S2d: all six credited frozen semantic/index perturbation observations were rejected; zero survivors and zero proof repairs.
 - S2e: U1 stopped at Mathlib/transitive dependency support after D1; U2 stopped at package resolution after D0; neither reached an eligible project-owned repair surface.
@@ -72,7 +72,7 @@ Primary scientific object: the formal proof artifact and its verification/evalua
 
 Core topics:
 
-- independent Lean reconstruction;
+- separately structured Lean reconstruction;
 - statement fidelity;
 - proof architecture;
 - differential verification;

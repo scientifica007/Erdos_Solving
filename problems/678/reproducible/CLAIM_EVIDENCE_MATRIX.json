@@ -12,7 +12,7 @@
     },
     {
       "id": "C-FORMAL-001",
-      "claim": "The repository contains an independently structured Lean reimplementation of Cambie's proof, not an independent new mathematical proof.",
+      "claim": "The repository contains a separately structured Lean reimplementation of Cambie's proof, not an independent new mathematical proof.",
       "class": "established",
       "publication_allowed": true,
       "evidence": ["problems/678/LEAN_FORMALIZATION_ROADMAP.md", "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml"],
