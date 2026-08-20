@@ -32,6 +32,9 @@ jobs:
           set -euo pipefail
           printf 'verified_commit=%s\n' "$(git rev-parse HEAD)"
 
+      - name: Verify Erdős #678 reproducibility package
+        run: python3 ../problems/678/reproducible/scripts/verify_package.py
+
       - name: Build canonical Lean graph
         uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9 # v1
         with:

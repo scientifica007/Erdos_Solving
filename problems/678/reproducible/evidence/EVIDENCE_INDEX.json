@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "evidence": [
+    {
+      "id": "E-MATH-ANALYSIS",
+      "kind": "mathematical-analysis",
+      "path": "problems/678/CAMBIE_PROOF_ANALYSIS.md",
+      "role": "proof architecture, attribution, and historical mathematical analysis"
+    },
+    {
+      "id": "E-FORMAL-ROADMAP",
+      "kind": "formalization-closure",
+      "path": "problems/678/LEAN_FORMALIZATION_ROADMAP.md",
+      "role": "authoritative closed A-E roadmap and canonical verification checkpoints",
+      "historical_math_merge": "8fd1b20541ac7782f52429db3a2cc4c887547372",
+      "historical_postmerge_run": 32011189766
+    },
+    {
+      "id": "E-FINAL-LEAN",
+      "kind": "lean-source",
+      "path": "formalization/Formalization/Erdos678/Erdos678Final.lean",
+      "role": "canonical unbounded-witness and infinitude endpoints"
+    },
+    {
+      "id": "E-BRIDGE-LEAN",
+      "kind": "lean-source",
+      "path": "formalization/Formalization/Erdos678/ExternalStatementBridge.lean",
+      "role": "public statement and real-factor strong-theorem bridges"
+    },
+    {
+      "id": "E-REGRESSIONS",
+      "kind": "lean-tests",
+      "paths": [
+        "formalization/Formalization/Erdos678/ConcreteTests.lean",
+        "formalization/Formalization/Erdos678/Erdos678FinalTests.lean",
+        "formalization/Formalization/Erdos678/ExternalStatementBridgeTests.lean"
+      ],
+      "role": "positive/negative concrete semantics, final endpoint, and bridge regressions"
+    },
+    {
+      "id": "E-LEDGER",
+      "kind": "scientific-evidence-ledger",
+      "path": "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml",
+      "role": "primary structured evidence record for attribution, S1/S2, exclusions, runs, artifacts, and interpretation limits"
+    },
+    {
+      "id": "E-S1",
+      "kind": "differential-verification",
+      "path": "problems/678/S1_DIFFERENTIAL_VERIFICATION_RESULT.md",
+      "experiment_run": 32028006457,
+      "role": "common-environment comparator verification"
+    },
+    {
+      "id": "E-S2A",
+      "kind": "dependency-surface",
+      "paths": [
+        "problems/678/S2_DEPENDENCY_SURFACE_PROTOCOL.md",
+        "problems/678/S2_DEPENDENCY_SURFACE_BASELINE.md"
+      ],
+      "experiment_run": 32047324807,
+      "role": "ownership-sensitive structural baseline"
+    },
+    {
+      "id": "E-S2B",
+      "kind": "build-behavior",
+      "paths": [
+        "problems/678/S2_BUILD_BEHAVIOR_PROTOCOL.md",
+        "problems/678/S2_BUILD_BEHAVIOR_BASELINE.md"
+      ],
+      "credited_run": 32053575928,
+      "role": "six credited paired build/resource replicates"
+    },
+    {
+      "id": "E-S2C",
+      "kind": "repair-locality",
+      "paths": [
+        "problems/678/S2_REPAIR_LOCALITY_PROTOCOL.md",
+        "problems/678/S2_REPAIR_LOCALITY_BASELINE.md",
+        "problems/678/S2_REPAIR_LOCALITY_MUTATIONS.yaml"
+      ],
+      "credited_run": 32062501296,
+      "artifact_id": 9299556049,
+      "role": "three frozen API-reference mutations across two artifacts"
+    },
+    {
+      "id": "E-S2D",
+      "kind": "semantic-index-mutation",
+      "paths": [
+        "problems/678/S2_SEMANTIC_INDEX_MUTATION_PROTOCOL.md",
+        "problems/678/S2_SEMANTIC_INDEX_BASELINE.md",
+        "problems/678/S2_SEMANTIC_INDEX_MUTATIONS.yaml"
+      ],
+      "credited_run": 32076614547,
+      "artifact_id": 9303987121,
+      "artifact_sha256": "29f9cd51e8862dd028dcc92086dc795450c1585938bc379688a2cf99dbc59881",
+      "role": "six credited semantic/index rejection observations"
+    },
+    {
+      "id": "E-S2E",
+      "kind": "upgrade-robustness",
+      "paths": [
+        "problems/678/S2_UPGRADE_ROBUSTNESS_PROTOCOL.md",
+        "problems/678/S2_UPGRADE_ROBUSTNESS_MATRIX.yaml",
+        "problems/678/S2_UPGRADE_ROBUSTNESS_RESULT.md",
+        "problems/678/S2_UPGRADE_ROBUSTNESS_RESULT.json"
+      ],
+      "credited_run": 32170243744,
+      "artifact_id": 9337321640,
+      "artifact_sha256": "90f7285496372570e6b7e90e5c3b0dc0437299bcf1a824ddaea33f635171001c",
+      "role": "two exact frozen forward-version boundary observations"
+    },
+    {
+      "id": "E-AI-CASE",
+      "kind": "longitudinal-case-study",
+      "path": "problems/678/AI_ASSISTED_SCIENTIFIC_PRODUCTION_CASE_STUDY.md",
+      "role": "externally auditable long-horizon AI-assisted scientific-production narrative"
+    },
+    {
+      "id": "E-PUBLICATION-PLAN",
+      "kind": "publication-governance",
+      "path": "problems/678/papers/PUBLICATION_WORKPLAN.md",
+      "role": "two-paper separation and publication phase plan"
+    }
+  ],
+  "exclusion_register": {
+    "source": "problems/678/SCIENTIFIC_EVIDENCE_LEDGER.yaml",
+    "principle": "Computational success is excluded from scientific credit when frozen provenance, classifier, aggregation, or apparatus requirements are not satisfied."
+  }
+}
