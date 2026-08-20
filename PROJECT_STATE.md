@@ -1,8 +1,10 @@
 # Project State
 
-> **Operational checkpoint synchronized on 2026-08-18.**
+> **Operational checkpoint synchronized on 2026-08-20.**
 >
 > **Erdős #678 mathematics and scientific evaluation S1 / S2a / S2b / S2c / S2d / S2e are closed and machine-verified. S2 is complete.**
+>
+> **Project methodology: `ERDOS_PROBLEM_SOLVING_PROTOCOL.md` v1 is the standard operational protocol under `DEC-013`, promoted from the #678 lessons.**
 >
 > **No other Erdős problem may be selected, activated, resumed, researched, or formalized without explicit user authorization (`DEC-012`).**
 
@@ -17,6 +19,12 @@ current_stage: scientific-evaluation-complete-await-user-authorization
 proof_frozen: true
 repository_visibility: public
 project_license: Apache-2.0
+
+methodology_protocol: ERDOS_PROBLEM_SOLVING_PROTOCOL.md
+methodology_protocol_version: v1
+methodology_status: adopted
+methodology_origin: erdos-678-postmortem
+methodology_decision: DEC-013
 
 s1_status: complete-integrated-postmerge-verified
 s2_status: complete
@@ -90,8 +98,9 @@ next_action: none-without-explicit-user-authorization
 
 ## Governing rules
 
+- `DEC-013`: `ERDOS_PROBLEM_SOLVING_PROTOCOL.md` v1 is the standard operational lifecycle for future mathematical benchmarks; stricter governing/problem-specific rules still control.
 - `DEC-011`: substantive integration uses a branch/PR, canonical exact-head CI, merge unchanged, then exact-main post-merge verification.
-- `DEC-012`: completion/evaluation of #678 never authorizes another Erdős problem.
+- `DEC-012`: completion/evaluation of #678 and adoption of the protocol never authorize another Erdős problem.
 - `DEC-008`: documentation/state synchronization is an integration gate.
 - `lake exe mk_all --check` plus the full reachable Lean build define canonical machine verification.
 - Infrastructure, package-resolution, dependency-support, and project-owned failures are classified separately.
@@ -99,6 +108,14 @@ next_action: none-without-explicit-user-authorization
 - A computationally successful run can still be scientifically excluded when a primary measurement or provenance/aggregation contract is invalid.
 - S2e forbids third-party source repair and permits project-owned repair only after an eligible project-owned detection failure.
 - Timing is metadata, not an S2e outcome metric.
+
+## Project methodology — Protocol v1
+
+The durable lessons of #678 are now promoted from a problem-specific postmortem into a reusable project method. `ERDOS_PROBLEM_SOLVING_PROTOCOL.md` defines gates `G0`–`G10` from authorization/state synchronization through statement audit, research-mode separation, falsification-first testing, proof stabilization, provenance, formalization, exact-head verification, scientific experiment governance where applicable, integration, archival closure, and postmortem.
+
+The protocol preserves the central #678 controls: exact statement/indexing fidelity, negative regressions, witness-versus-infinitude separation, producer/consumer interfaces, pinned dependencies, canonical build-graph liveness, exact-head CI credit, bounded provenance language, failure-owner classification, and documentation synchronization.
+
+Protocol adoption is methodological only. It does not reopen #678 mathematics, resume S2, or activate a new target.
 
 ## Closed checkpoints
 
@@ -122,4 +139,4 @@ The bounded conclusion is an exact-version dependency/package-boundary observati
 
 ## Restart rule
 
-Treat mathematics, S1, and S2 as complete. Do not resume S2 experimentation or start another Erdős problem unless the user explicitly authorizes new work. `DEC-012` remains binding.
+Treat mathematics, S1, and S2 as complete. Apply `ERDOS_PROBLEM_SOLVING_PROTOCOL.md` to future authorized benchmarks, but do not resume S2 experimentation or start another Erdős problem unless the user explicitly authorizes new work. `DEC-012` remains binding.
