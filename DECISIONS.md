@@ -56,3 +56,13 @@ Following the user's explicit instruction on 2026-08-17, completion of Erdős #6
 - No other benchmark may be selected as active, resumed, researched, or formalized without that explicit authorization.
 - Repository hygiene and verification work needed to close or preserve #678 may continue without reopening its mathematics.
 - Candidate problems may not be pre-activated under the label of planning or preparation; any transition to a new mathematical target requires explicit user permission first.
+
+## DEC-013 — Erdős Problem Solving Protocol v1
+
+Following the completed #678 benchmark and the user's explicit authorization on 2026-08-20 to preserve its methodological legacy, `ERDOS_PROBLEM_SOLVING_PROTOCOL.md` is adopted as the standard operational protocol for future mathematical benchmarks in this repository.
+
+- The protocol converts durable lessons from #678 into reusable gates covering authorization/state synchronization, canonical-statement audit, research-mode separation, falsification-first testing, proof stabilization, provenance classification, formalization architecture, exact-head verification, scientific-experiment governance when applicable, integration, closure, and postmortem.
+- Future benchmark work must follow the protocol unless a stricter problem-specific rule applies or a deviation is explicitly recorded and justified.
+- Protocol compliance does not itself confer mathematical credit; each theorem, experiment, and provenance claim still requires its own evidence.
+- `CONSTITUTION.md` and existing decisions remain higher-level governing constraints. If a conflict appears, the stricter governing rule applies until the conflict is explicitly resolved.
+- Adoption of the protocol does **not** authorize a new Erdős problem. `DEC-012` remains fully binding, and the next target still requires explicit user authorization.
